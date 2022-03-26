@@ -40,11 +40,11 @@ workflows:
   build-save-image-wf:
     jobs:
       - build-save-image
-  deply-wf:
+  deploy-wf:
     jobs:
       - aws-ecs/deploy-service-update:
           cluster-name: 'sep4-cluster'
           container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
           family: 'sep4-task-definition'
           requires:
-            - build-save-image
+            - build-save-image-wf
