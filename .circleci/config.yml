@@ -1,8 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.4.0
-  aws-ecs: circleci/aws-ecs@0.0.11
-
+  aws-ecs: circleci/aws-ecs@2.2.1
 jobs:
   build_and_deploy:
     working_directory: ~/project/DAI/Data Web Service
@@ -19,7 +18,7 @@ jobs:
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
       - run:
           name: Install dependencies for project
-          command: mvn install -Pprod
+          command: mvn install
       - run:
           name: Install dependencies for AWS
           command: |
@@ -36,6 +35,10 @@ jobs:
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push ${FULL_IMAGE_NAME}
+      - aws-ecs/deploy-service-update:
+          cluster-name: 'sep4-cluster'
+          container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
+          family: 'sep4-task-definition'
 workflows:
   build-deploy-qa:
     jobs:
