@@ -14,7 +14,6 @@
 variable "name" {
   description = "Name of the database"
   type        = string
-  default     = "sep4-data-warehouse"
 }
 
 variable "region" {
@@ -41,10 +40,6 @@ variable "password" {
   type        = string
 }
 
-variable "database_name" {
-  description = "Name of the database to be created"
-  type        = string
-}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
@@ -54,13 +49,7 @@ variable "database_name" {
 variable "engine_name" {
   description = "Name of the database engine"
   type        = string
-  default     = "mysql"
-}
-
-variable "family" {
-  description = "Family of the database"
-  type        = string
-  default     = "mysql5.7"
+  default     = "sqlserver-ex"
 }
 
 variable "port" {
@@ -69,28 +58,22 @@ variable "port" {
   default     = 3306
 }
 
-variable "major_engine_version" {
-  description = "MAJOR.MINOR version of the DB engine"
-  type        = string
-  default     = "5.7"
-}
-
 variable "engine_version" {
   description = "Version of the database to be launched"
-  default     = "5.7.21"
+  default     = "14.00.3401.7.v1"
   type        = string
 }
 
 variable "allocated_storage" {
   description = "Disk space to be allocated to the DB instance"
   type        = number
-  default     = 5
+  default     = 20
 }
 
 variable "license_model" {
   description = "License model of the DB instance"
   type        = string
-  default     = "general-public-license"
+  default     = "license-included"
 }
 
 variable "instance_class" {
