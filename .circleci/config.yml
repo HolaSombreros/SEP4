@@ -30,12 +30,12 @@ jobs:
       - run:
           name: Build image
           command: |
-            docker build -t $FULL_IMAGE_NAME .
+            docker build -t ${FULL_IMAGE_NAME} .
       - run:
           name: Push image
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-            docker push $FULL_IMAGE_NAME
+            docker push ${FULL_IMAGE_NAME}
 workflows:
   build-deploy-qa:
     jobs:
