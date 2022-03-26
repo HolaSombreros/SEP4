@@ -4,10 +4,12 @@ orbs:
   aws-ecs: circleci/aws-ecs@0.0.11
 
 jobs:
-  build:
-    working_directory: ~/project/DAI/Data\ Web\ Service
+  build_and_deploy:
     docker:
-      - image: circleci/openjdk:17-jdk
+      - image: circleci/openjdk:12-jdk
+
+    working_directory: ~/project/DAI/Data\ Web\ Service
+
     steps:
       - checkout
       - setup_remote_docker
