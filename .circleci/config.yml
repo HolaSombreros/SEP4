@@ -18,7 +18,7 @@ jobs:
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
       - run:
           name: Change working directory
-          command: cd ./DAI/Data\ Web\ Service && pwn
+          command: cd ./DAI/Data\ Web\ Service && pwd
       - run:
           name: Install dependencies for project
           command: mvn install -Pprod
