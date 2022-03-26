@@ -42,7 +42,7 @@ workflows:
       - build-save-image
       - aws-ecs/deploy-service-update:
           cluster-name: 'sep4-cluster'
-          container-image-name-updates: 'container=sep4-data-service'
+          container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
           family: 'sep4-task-definition'
           requires:
             - build-save-image
