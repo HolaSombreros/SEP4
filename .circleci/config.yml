@@ -19,7 +19,7 @@ jobs:
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
       - run:
           name: Install dependencies for project
-          command: mvn install "-Pprod"
+          command: mvn install -Pprod
       - run:
           name: Install dependencies for AWS
           command: |
