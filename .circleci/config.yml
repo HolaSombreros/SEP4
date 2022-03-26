@@ -21,7 +21,7 @@ jobs:
           command: cd ./DAI/Data\ Web\ Service && pwd
       - run:
           name: Install dependencies for project
-          command: mvn install -Pprod
+          command: pwd && mvn install -Pprod
       - run:
           name: Install dependencies for AWS
           command: |
