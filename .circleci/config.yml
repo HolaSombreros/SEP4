@@ -35,7 +35,7 @@ jobs:
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push ${FULL_IMAGE_NAME}
-  - aws-ecs/deploy-service-update:
+    aws-ecs/deploy-service-update:
       cluster-name: 'sep4-cluster'
       container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
       family: 'sep4-task-definition'
