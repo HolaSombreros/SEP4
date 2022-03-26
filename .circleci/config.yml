@@ -13,7 +13,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Change working directory
-          command: cd ./DAI/Data Web Service
+          command: cd ./DAI/Data\ Web\ Service
       - run:
           name: Setup common environment variables
           command: |
