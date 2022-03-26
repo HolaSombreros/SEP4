@@ -61,15 +61,15 @@ resource "aws_route_table" "PublicRT" {
   }
 }
 
-#Route table for Private Subnet 's
-resource "aws_route_table" "PrivateRT" {
-  # Creating RT for Private Subnet
-  vpc_id = aws_vpc.SEP4.id
-  route {
-    cidr_block     = "0.0.0.0/0"             # Traffic from Private Subnet reaches Internet via NAT Gateway
-    nat_gateway_id = aws_nat_gateway.NATgw.id
-  }
-}
+##Route table for Private Subnet 's
+#resource "aws_route_table" "PrivateRT" {
+#  # Creating RT for Private Subnet
+#  vpc_id = aws_vpc.SEP4.id
+#  route {
+#    cidr_block     = "0.0.0.0/0"             # Traffic from Private Subnet reaches Internet via NAT Gateway
+#    nat_gateway_id = aws_nat_gateway.NATgw.id
+#  }
+#}
 
 #Route table Association with Public Subnet 's
 resource "aws_route_table_association" "PublicRTassociation1" {
@@ -83,21 +83,16 @@ resource "aws_route_table_association" "PublicRTassociation2" {
   route_table_id = aws_route_table.PublicRT.id
 }
 
-#Route table Association with Private Subnet 's
-resource "aws_route_table_association" "PrivateRTassociation" {
-  subnet_id      = aws_subnet.privatesubnets.id
-  route_table_id = aws_route_table.PrivateRT.id
-}
+##Route table Association with Private Subnet 's
+#resource "aws_route_table_association" "PrivateRTassociation" {
+#  subnet_id      = aws_subnet.privatesubnets.id
+#  route_table_id = aws_route_table.PrivateRT.id
+#}
 
-resource "aws_eip" "nateIP" {
-  vpc = true
-}
+#resource "aws_eip" "nateIP" {
+#  vpc = true
+#}
 
-#Creating the NAT Gateway using subnet_id and allocation_id
-resource "aws_nat_gateway" "NATgw" {
-  allocation_id = aws_eip.nateIP.id
-  subnet_id     = aws_subnet.publicsubnet1.id
-}
 
 resource "aws_db_subnet_group" "sep4_subnet_group" {
   name       = "sep4_public_subnet_group"
