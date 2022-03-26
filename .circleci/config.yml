@@ -5,14 +5,15 @@ orbs:
 
 jobs:
   build_and_deploy:
-    working_directory: ~/DAI/Data Web Service
     docker:
       - image: circleci/openjdk:8-jdk
 
     steps:
-      - checkout:
-          path: ~/DAI
+      - checkout
       - setup_remote_docker
+      - run:
+          name: Change working directory
+          command: cd ./DAI/Data Web Service
       - run:
           name: Setup common environment variables
           command: |
