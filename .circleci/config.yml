@@ -5,10 +5,9 @@ orbs:
 
 jobs:
   build_and_deploy:
+    working_directory: ~/project/DAI/Data\ Web\ Service
     docker:
       - image: circleci/openjdk:8-jdk
-
-    working_directory: ~/project/DAI/Data\ Web\ Service
 
     steps:
       - checkout
@@ -18,9 +17,6 @@ jobs:
           command: |
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
-      - run:
-          name: Change working directory
-          command: cd ./DAI/Data\ Web\ Service
       - run:
           name: Install dependencies for project
           command: mvn install -Pprod
