@@ -37,11 +37,9 @@ jobs:
             docker push ${FULL_IMAGE_NAME}
 
 workflows:
-  build-save-image-wf:
+  wf:
     jobs:
       - build-save-image
-  deploy-wf:
-    jobs:
       - aws-ecs/deploy-service-update:
           cluster-name: 'sep4-cluster'
           container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
