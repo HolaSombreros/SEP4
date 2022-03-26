@@ -10,7 +10,8 @@ jobs:
       - image: circleci/openjdk:8-jdk
 
     steps:
-      - checkout
+      - checkout:
+          path: ~/DAI
       - setup_remote_docker
       - run:
           name: Setup common environment variables
