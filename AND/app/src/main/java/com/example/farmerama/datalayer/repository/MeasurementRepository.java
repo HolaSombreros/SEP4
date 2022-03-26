@@ -11,7 +11,7 @@ public class MeasurementRepository {
 
     private MeasurementDAO measurementDAO;
 
-    public MutableLiveData<List<Measurement>> getLatestMeasurement() {
-        return measurementDAO.getLatestMeasurements();
+    public MutableLiveData<List<Measurement>> getLatestMeasurement(int areaId) {
+        return measurementDAO.getLatestMeasurements(areaId);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MeasurementDAO {
 
-    public MutableLiveData<List<Measurement>> getLatestMeasurements() {
+    public MutableLiveData<List<Measurement>> getLatestMeasurements(int areaId) {
         return null;
     }
 }
