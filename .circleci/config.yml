@@ -1,9 +1,9 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.4.0
-  aws-ecs: circleci/aws-ecs@2.2.1
+  aws-ecs: circleci/aws-ecs@2.0
 jobs:
-  build_and_deploy:
+  build-save-image:
     working_directory: ~/project/DAI/Data Web Service
     docker:
       - image: 'cimg/openjdk:17.0'
@@ -35,14 +35,16 @@ jobs:
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push ${FULL_IMAGE_NAME}
+
+workflows:
+  build-save-image-wf:
+    jobs:
+      - build-save-image
+  deply-wf:
+    jobs:
       - aws-ecs/deploy-service-update:
           cluster-name: 'sep4-cluster'
           container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
           family: 'sep4-task-definition'
-workflows:
-  build-deploy-qa:
-    jobs:
-      - build_and_deploy:
-          filters:
-            branches:
-              only: Tomas
+          requires:
+            - build-save-image
