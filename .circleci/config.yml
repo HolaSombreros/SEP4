@@ -4,10 +4,10 @@ orbs:
   aws-ecs: circleci/aws-ecs@0.0.11
 
 jobs:
-  build_and_deploy:
+  build:
+    working_directory: ~/project/DAI/Data\ Web\ Service
     docker:
-      - image: circleci/openjdk:8-jdk
-
+      - image: circleci/openjdk:17-jdk
     steps:
       - checkout
       - setup_remote_docker
@@ -18,10 +18,10 @@ jobs:
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
       - run:
           name: Change working directory
-          command: cd ./DAI/Data\ Web\ Service && pwd
+          command: cd ./DAI/Data\ Web\ Service
       - run:
           name: Install dependencies for project
-          command: pwd && mvn install -Pprod
+          command: mvn install -Pprod
       - run:
           name: Install dependencies for AWS
           command: |
