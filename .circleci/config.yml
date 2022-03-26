@@ -42,7 +42,7 @@ workflows:
       - build-save-image
       - aws-ecs/deploy-service-update:
           cluster-name: 'sep4-cluster'
-          container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX}-service,image=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}
+          container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},image=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}
           family: 'sep4-task-definition'
           requires:
             - build-save-image
