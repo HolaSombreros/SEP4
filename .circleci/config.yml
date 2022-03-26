@@ -5,10 +5,9 @@ orbs:
 
 jobs:
   build_and_deploy:
-    working_directory: ~/project/DAI/Data\ Web\ Service
+    working_directory: ~/project/DAI/Data Web Service
     docker:
       - image: circleci/openjdk:8-jdk
-
     steps:
       - checkout
       - setup_remote_docker
