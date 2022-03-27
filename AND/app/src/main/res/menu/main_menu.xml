@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--The menu for the drawer-->
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item android:title="@string/home"
+            android:id="@+id/home_id"
+            android:icon="@drawable/ic_baseline_home_24"/>
+
+        <item android:title="@string/my_account"
+            android:id="@+id/my_account_id"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            />
+
+        <item android:title="@string/sensors"
+            android:id="@+id/sensors_id"
+            android:icon="@drawable/ic_baseline_edgesensor_high_24"
+            />
+
+        <item android:title="@string/employees"
+            android:id="@+id/employees_id"
+            android:icon="@drawable/ic_baseline_supervisor_account_24"
+            />
+
+        <item android:title="@string/areas"
+            android:id="@+id/areas_id"
+            android:icon="@drawable/ic_baseline_location_on_24"/>
+</menu>
