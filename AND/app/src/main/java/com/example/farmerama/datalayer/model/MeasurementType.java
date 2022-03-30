@@ -3,15 +3,15 @@ package com.example.farmerama.datalayer.model;
 import androidx.annotation.NonNull;
 
 public enum MeasurementType {
-    TEMPERATURE
-    private String role;
+    TEMPERATURE("Temperature");
+    private String type;
 
-    Role(String name) {
-        this.role = role;
+    MeasurementType(String type) {
+        this.type = type;
     }
 
     @NonNull
     public String toString() {
-        return role;
+        return type;
     }
 }
