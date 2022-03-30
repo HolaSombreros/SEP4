@@ -1,6 +1,5 @@
 package com.example.farmerama.domainlayer;
 
-
 import androidx.lifecycle.ViewModel;
 
 import com.example.farmerama.datalayer.model.User;
@@ -16,6 +15,18 @@ public class RegisterViewModel extends ViewModel
     }
 
     public void registerUser(User employee) {
-        repository.register(employee);
+
+        try{
+            repository.getUserByEmail(employee.getEmail());
+            User user = repository.getEmployee().getValue();
+            int size = employee.getPassword().length();
+            if(user == null && size>=6 )
+            {
+                repository.register(employee);
+            }
+        }
+        catch (Exception e){
+
+        }
     }
 }
