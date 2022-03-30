@@ -1,4 +1,4 @@
-package com.example.farmerama;
+package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.farmerama.R;
 
 public class EmployeesFragment extends Fragment {
 

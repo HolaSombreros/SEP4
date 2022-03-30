@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.homeFragment,
-                R.id.accountFragment)
+                R.id.accountFragment,
+                R.id.areasFragment,
+                R.id.employeesFragment,
+                R.id.sensorsFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 

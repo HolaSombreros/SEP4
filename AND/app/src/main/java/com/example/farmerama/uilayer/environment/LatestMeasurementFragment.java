@@ -38,7 +38,7 @@ public class LatestMeasurementFragment extends Fragment {
 
     private void initializeViews(View view) {
         tabLayout = view.findViewById(R.id.tabLayout);
-        temperatureTab = view.findViewById(R.id.latestTemperature);
+//        temperatureTab = view.findViewById(R.id.latestTemperature);
         textView = view.findViewById(R.id.measurement);
         areaSpinner = view.findViewById(R.id.area_spinner);
         timeText = view.findViewById(R.id.timeText);

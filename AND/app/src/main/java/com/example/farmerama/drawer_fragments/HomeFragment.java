@@ -1,4 +1,4 @@
-package com.example.farmerama;
+package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
 
@@ -8,14 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SensorsFragment extends Fragment {
+import com.example.farmerama.R;
 
-    public SensorsFragment(){}
+public class HomeFragment extends Fragment {
 
- @Override
+    public HomeFragment(){ }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sensors, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }
