@@ -38,3 +38,5 @@ build/
 *.tfstate.*
 .terraform.locl.hcl
 *.tfvars
+
+*-dev.properties

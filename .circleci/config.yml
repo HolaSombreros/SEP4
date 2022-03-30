@@ -1,48 +1,68 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@6.4.0
-  aws-ecs: circleci/aws-ecs@2.0
-jobs:
-  build-save-image:
-    working_directory: ~/project/DAI/Data Web Service
-    docker:
-      - image: 'cimg/openjdk:17.0'
-    steps:
-      - checkout:
-          path: ~/project
-      - setup_remote_docker
-      - run:
-          name: Setup common environment variables
-          command: |
-            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
-            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
-      - run:
-          name: Install dependencies for project
-          command: mvn install
-      - run:
-          name: Install dependencies for AWS
-          command: |
-            sudo apt-get update
-            sudo apt-get -y -qq install awscli
-            sudo apt-get install python3-pip
-            sudo pip3 install --upgrade awscli
-      - run:
-          name: Build image
-          command: |
-            docker build -t ${FULL_IMAGE_NAME} .
-      - run:
-          name: Push image
-          command: |
-            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-            docker push ${FULL_IMAGE_NAME}
+  aws-ecr: circleci/aws-ecr@6.15
+  aws-ecs: circleci/aws-ecs@2.0.0
 
 workflows:
-  wf:
+  build-and-deploy:
     jobs:
-      - build-save-image
+      - aws-ecr/build_and_push_image:
+          account-url: "931417283309.dkr.ecr.eu-central-1.amazonaws.com"
+          repo: "sep4-data-service"
+          region: "eu-central-1"
       - aws-ecs/deploy-service-update:
-          cluster-name: 'sep4-cluster'
-          container-image-name-updates: 'image=931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service'
-          family: 'sep4-task-definition'
+          cluster-name: 'sep4-clusterino'
+          container-image-name-updates: 'container=sep4-data-service-container,tag=${CIRCLE_SHA1}'
+          family: 'sep4-data-service-task-definition'
+          verify-revision-is-deployed: true
           requires:
-            - build-save-image
+            - aws-ecr/build-and-push-image
+
+#2version: 2.1
+#orbs:
+#  aws-ecr: circleci/aws-ecr@6.4.0
+#  aws-ecs: circleci/aws-ecs@2.0
+#jobs:
+#  build-save-image:
+#    working_directory: ~/project/DAI/Data Web Service
+#    docker:
+#      - image: 'cimg/openjdk:17.0'
+#    steps:
+#      - checkout:
+#          path: ~/project
+#      - setup_remote_docker
+#      - run:
+#          name: Setup common environment variables
+#          command: |
+#            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
+#            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
+#      - run:
+#          name: Install dependencies for project
+#          command: mvn install
+#      - run:
+#          name: Install dependencies for AWS
+#          command: |
+#            sudo apt-get update
+#            sudo apt-get -y -qq install awscli
+#            sudo apt-get install python3-pip
+#            sudo pip3 install --upgrade awscli
+#      - run:
+#          name: Build image
+#          command: |
+#            docker build -t ${FULL_IMAGE_NAME} .
+#      - run:
+#          name: Push image
+#          command: |
+#            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+#            docker push ${FULL_IMAGE_NAME}
+#
+#workflows:
+#  wf:
+#    jobs:
+#      - build-save-image
+#      - aws-ecs/deploy-service-update:
+#          cluster-name: 'sep4-cluster'
+#          container-image-name-updates: container=${AWS_RESOURCE_NAME_PREFIX},image-and-tag=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}
+#          family: 'sep4-task-definition'
+#          requires:
+#            - build-save-image
