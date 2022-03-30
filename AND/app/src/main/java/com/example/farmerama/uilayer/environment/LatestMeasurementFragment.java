@@ -18,7 +18,6 @@ public class LatestMeasurementFragment extends Fragment {
     private ViewPager2 viewPager2;
     private ViewPagerAdapter adapter;
     private TabLayout tabLayout;
-    //private TabItem temperatureTab;
     private Spinner areaSpinner;
 
     @Override

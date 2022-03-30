@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Farmerama</string>
-    <string name="latest_temperature">Temperature</string>
-    <string name="measurement">measurement</string>
+    <string name="home">Home</string>
+    <string name="my_account">My Account</string>
+    <string name="sensors">Sensors</string>
+    <string name="employees">Employees</string>
+    <string name="areas">Areas</string>
+    <string name="latest_temperature">Latest temperature</string>
+    <string name="measurement">Measurement</string>
 </resources>
