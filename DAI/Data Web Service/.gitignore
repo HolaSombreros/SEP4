@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Terraform ###
+/.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.locl.hcl
+*.tfvars
+
+*-dev.properties
