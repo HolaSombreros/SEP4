@@ -7,4 +7,5 @@
     <string name="areas">Areas</string>
     <string name="latest_temperature">Latest temperature</string>
     <string name="measurement">Measurement</string>
+    <string name="latest_measurements">Latest Measurements</string>
 </resources>
