@@ -6,28 +6,37 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp"
+    android:paddingVertical="8dp"
     >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Spinner
+                android:id="@+id/area_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="36dp"
-                app:layout_constraintBottom_toTopOf="@+id/timeText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/area_spinner"
-                app:tabContentStart="56dp"
                 app:tabMode="scrollable">
 
                 <com.google.android.material.tabs.TabItem
@@ -40,56 +49,22 @@
                     android:layout_height="wrap_content"
                     android:text="next" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="next" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="next" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="next" />
             </com.google.android.material.tabs.TabLayout>
 
-            <EditText
-                android:id="@+id/timeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="time"
-                app:layout_constraintBottom_toTopOf="@+id/measurement"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
-            <TextView
-                android:id="@+id/measurement"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/measurement"
-                android:textAppearance="?attr/textAppearanceHeadline6"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timeText" />
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <Spinner
-                android:id="@+id/area_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/tabLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            </androidx.viewpager2.widget.ViewPager2>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

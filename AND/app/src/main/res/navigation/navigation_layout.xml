@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_drawer"
+    app:startDestination="@id/latestMeasurementFragment">
+    <fragment
+        android:id="@+id/latestMeasurementFragment"
+        android:name="com.example.farmerama.uilayer.environment.LatestMeasurementFragment"
+        android:label="fragment_latest_data"
+        tools:layout="@layout/fragment_latest_data" />
+    <fragment
+        android:id="@+id/latestTemperatureFragment"
+        android:name="com.example.farmerama.uilayer.environment.LatestTemperatureFragment"
+        android:label="fragment_latest_temperature"
+        tools:layout="@layout/fragment_latest_temperature" />
+    <fragment
+        android:id="@+id/latestHumidityFragment"
+        android:name="com.example.farmerama.uilayer.environment.LatestHumidityFragment"
+        android:label="fragment_latest_humidity"
+        tools:layout="@layout/fragment_latest_humidity" />
+</navigation>
