@@ -24,7 +24,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public Future<User> create(User user) {
+    public Future<User> create(@RequestBody User user) {
         try {
             return userModel.create(user);
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class UsersController {
 
 
     @PutMapping(value = "/{id}")
-    public User update(@PathVariable(name = "id") int id, User user) {
+    public User update(@PathVariable(name = "id") int id,@RequestBody User user) {
         try {
             user.setId(id);
             return userModel.update(user);
@@ -73,7 +73,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "/login")
-    public void login(User user) {
+    public void login(@RequestBody User user) {
         try {
             userModel.login(user);
         } catch (Exception e) {
