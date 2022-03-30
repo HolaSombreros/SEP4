@@ -1,7 +1,7 @@
 package com.dai.dao.user;
 
-import com.dai.model.User;
-import com.dai.model.UserRole;
+import com.dai.shared.User;
+import com.dai.shared.UserRole;
 import com.dai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -24,8 +24,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Async
-    public Future<User> create(String name, String email, String password, UserRole role) {
-        return new AsyncResult<>(repository.save(new User(name, email,password, role)));
+    public Future<User> create(User user) {
+        return new AsyncResult<>(repository.save(user));
     }
 
     @Override

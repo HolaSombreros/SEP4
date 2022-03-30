@@ -1,7 +1,6 @@
-package com.dai.model;
+package com.dai.shared;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "area")
@@ -32,4 +31,43 @@ public class Area {
         this.numberOfPigs = numberOfPigs;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Barn getBarn() {
+        return barn;
+    }
+
+    public void setBarn(Barn barn) {
+        this.barn = barn;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getNumberOfPigs() {
+        return numberOfPigs;
+    }
+
+    public void setNumberOfPigs(int numberOfPigs) {
+        this.numberOfPigs = numberOfPigs;
+    }
 }

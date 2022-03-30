@@ -1,8 +1,7 @@
-package com.dai.model;
+package com.dai.shared;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "measurement")
@@ -18,8 +17,9 @@ public class Measurement {
     private double value;
     @Column(name = "measured_date")
     private LocalDateTime measuredDate;
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name = "hardware_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "hardware_id")
     private Hardware hardware;
 
 
@@ -51,6 +51,26 @@ public class Measurement {
 
     public Hardware getHardware() {
         return hardware;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setType(MeasurementType type) {
+        this.type = type;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setMeasuredDate(LocalDateTime measuredDate) {
+        this.measuredDate = measuredDate;
+    }
+
+    public void setHardware(Hardware hardware) {
+        this.hardware = hardware;
     }
 }
 

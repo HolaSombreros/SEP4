@@ -1,8 +1,8 @@
 package com.dai.dao.measurement;
 
-import com.dai.model.Hardware;
-import com.dai.model.Measurement;
-import com.dai.model.MeasurementType;
+import com.dai.shared.Hardware;
+import com.dai.shared.Measurement;
+import com.dai.shared.MeasurementType;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.Future;

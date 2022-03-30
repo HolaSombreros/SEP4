@@ -1,4 +1,4 @@
-package com.dai.model;
+package com.dai.shared;
 
 public enum MeasurementType {
     TEMPERATURE,
