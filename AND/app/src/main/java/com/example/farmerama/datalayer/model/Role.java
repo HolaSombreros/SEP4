@@ -3,7 +3,7 @@ package com.example.farmerama.datalayer.model;
 import androidx.annotation.NonNull;
 
 public enum Role {
-    GUEST("Guest"), EMPLOYEE("Employee"), OWNER("Owner");
+    EMPLOYEE("Employee"), OWNER("Owner");
     private String role;
 
     Role(String role) {
