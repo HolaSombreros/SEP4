@@ -1,6 +1,6 @@
 variable "image_url" {
   type = string
-  default = "931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service"
+  default = "931417283309.dkr.ecr.eu-central-1.amazonaws.com/sep4-data-service-repo"
 }
 
 variable "aws_region" {
@@ -10,7 +10,7 @@ variable "aws_region" {
 
 variable "image_tag" {
   type = number
-#  default = 84
+  default = 96
 }
 
 variable "task_name" {
