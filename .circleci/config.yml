@@ -57,7 +57,7 @@ jobs:
 workflows:
   wf:
     jobs:
-      - build-save-image
+      - build-save-image:
           filters:
             branches:
-              only: master
+              only: "master"
