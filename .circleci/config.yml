@@ -1,0 +1,63 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.4.0
+  aws-ecs: circleci/aws-ecs@2.0
+jobs:
+  build-save-image:
+    working_directory: ~/project/DAI/Data Web Service
+    docker:
+      - image: 'cimg/openjdk:17.0'
+    steps:
+      - checkout:
+          path: ~/project
+      - setup_remote_docker
+      - run:
+          name: Setup common environment variables
+          command: |
+            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
+            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:<< pipeline.number >>"' >> $BASH_ENV
+            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
+            echo 'export DB_PASSWORD="${DB_PASSWORD}"' >> $BASH_ENV
+            echo 'export DB_SCHEMA="${DB_SCHEMA}"' >> $BASH_ENV
+            echo 'export DB_USERNAME="${DB_USERNAME}"' >> $BASH_ENV
+            echo 'export DB_URL="${DB_URL}"' >> $BASH_ENV
+      - run:
+          name: Install dependencies for project
+          command: mvn install -Pprod
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            sudo apt-get update
+            sudo apt-get -y -qq install awscli
+            sudo apt-get install python3-pip
+            sudo pip3 install --upgrade awscli
+
+      - run:
+          name: Install terraform
+          command: |
+            sudo wget https://releases.hashicorp.com/terraform/1.1.4/terraform_1.1.4_linux_amd64.zip
+            sudo unzip terraform_1.1.4_linux_amd64.zip -d /usr/local/bin
+            terraform -v
+      - run:
+          name: Build image
+          command: |
+            docker build -t ${FULL_IMAGE_NAME} .
+      - run:
+          name: Push image
+          command: |
+            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+            docker push ${FULL_IMAGE_NAME}
+      - run:
+          name: Update service
+          command: |
+            cd ./infrastructure
+            terraform init
+            terraform apply -var image_tag=<< pipeline.number >> -auto-approve
+
+workflows:
+  wf:
+    jobs:
+      - build-save-image
+#          filters:
+#            branches:
+#              only: master
