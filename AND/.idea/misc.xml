@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2555" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2555" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable/temparature_launcher_background.xml" value="0.2555" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable/temperature.xml" value="0.2555" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout-land/activity_main.xml" value="0.30687830687830686" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout-land/fragment_daily_recipe.xml" value="0.30687830687830686" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout-land/fragment_latest_data.xml" value="0.2" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout-land/fragment_my_followers.xml" value="0.30687830687830686" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_account.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_add_area.xml" value="0.36666666666666664" />
@@ -15,6 +23,23 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/register_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/content_main.xml" value="0.264" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_account.xml" value="0.28020833333333334" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_areas.xml" value="0.28020833333333334" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_employees.xml" value="0.28020833333333334" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_latest_data.xml" value="0.13425925925925927" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_latest_humidity.xml" value="0.264" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_latest_temperature.xml" value="0.3625" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/fragment_sensors.xml" value="0.3625" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/latest_data.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/menu_header.xml" value="0.1" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/new_activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/menu/bottom_navigation.xml" value="0.3625" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/menu/main_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/add_employee.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/login_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/register_layout.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

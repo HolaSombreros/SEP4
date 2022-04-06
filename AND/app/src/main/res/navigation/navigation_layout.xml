@@ -52,4 +52,16 @@
         android:label="AddArea"
         tools:layout="@layout/fragment_add_area">
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.farmerama.uilayer.LoginFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/login_layout"
+    />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.farmerama.uilayer.RegisterFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/register_layout"
+    />
 </navigation>

@@ -18,17 +18,16 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MeasurementRepository {
 
-    private static MeasurementRepository instance;
-    //private MutableLiveData<List<Measurement>> measurements;
+    private MutableLiveData<List<Measurement>> measurements;
     private MutableLiveData<Measurement> measurement;
+    private static MeasurementRepository instance;
 
     private MeasurementRepository() {
-        //measurements = new MutableLiveData<>();
+        measurements = new MutableLiveData<>();
         measurement = new MutableLiveData<>();
     }
-
-    public static synchronized MeasurementRepository getInstance() {
-        if (instance == null) {
+    public static MeasurementRepository getInstance() {
+        if(instance == null) {
             instance = new MeasurementRepository();
         }
         return instance;
