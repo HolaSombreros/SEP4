@@ -22,18 +22,22 @@ public class Measurement {
     private double sound;
     @ManyToOne(fetch = FetchType.LAZY)
     private Hardware hardware;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Area area;
+
 
 
     protected Measurement() {
     }
 
-    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware) {
+    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware, Area area) {
         this.measuredDate = measuredDate;
         this.temperature = temperature;
         this.humidity = humidity;
         this.co2 = co2;
         this.sound = sound;
         this.hardware = hardware;
+        this.area = area;
     }
 
     public int getId() {
@@ -90,6 +94,14 @@ public class Measurement {
 
     public void setSound(double sound) {
         this.sound = sound;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 }
 

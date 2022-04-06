@@ -18,14 +18,18 @@ public class Area {
     private String description;
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
-    //private List<Measurement> measurements;
-
 
     protected Area() {
     }
 
     public Area(Barn barn, String name, String description, int numberOfPigs) {
         this.barn = barn;
+        this.name = name;
+        this.description = description;
+        this.numberOfPigs = numberOfPigs;
+    }
+
+    public Area(int barnId, String name, String description, int numberOfPigs) {
         this.name = name;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
