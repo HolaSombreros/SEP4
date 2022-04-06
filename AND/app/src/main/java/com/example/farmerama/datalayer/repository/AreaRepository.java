@@ -14,12 +14,24 @@ import retrofit2.internal.EverythingIsNonNull;
 public class AreaRepository {
     private final MutableLiveData<List<Area>> areas;
     private final MutableLiveData<Area> specificArea;
+    private static AreaRepository instance;
 
     public AreaRepository() {
         areas = new MutableLiveData<>();
         specificArea = new MutableLiveData<>();
 
     }
+    public AreaRepository getInstance() {
+        if(instance == null) {
+            return new AreaRepository();
+        }
+        return instance;
+    }
+
+    public MutableLiveData<Area> getSpecificArea() {
+        return specificArea;
+    }
+
     public void getAreas() {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<List<Area>> call = areaApi.getAreas();
