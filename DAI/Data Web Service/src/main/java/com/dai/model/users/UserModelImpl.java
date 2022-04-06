@@ -17,17 +17,14 @@ public class UserModelImpl implements UserModel {
     public UserModelImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-
     @Override
     public Future<User> create(User user) {
         return userDao.create(user);
     }
-
     @Override
     public Future<User> read(int id) {
         return userDao.read(id);
     }
-
     @Override
     public User update(User user) {
         return userDao.update(user);
