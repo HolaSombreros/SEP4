@@ -23,7 +23,7 @@
             android:gravity="center"
             android:textColor="#20284e"
             android:textStyle="bold"
-            android:text="@string/farmerama"
+            android:text="@string/app_name"
             android:textSize="30sp"
             />
 
