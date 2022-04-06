@@ -9,6 +9,12 @@ public class Area {
     private String description;
     private int noOfPigs;
 
+    public Area(String name, String description, int noOfPigs) {
+        this.name = name;
+        this.description = description;
+        this.noOfPigs = noOfPigs;
+    }
+
     public Area(int id, String name, String description, int noOfPigs) {
         this.id = id;
         this.name = name;
