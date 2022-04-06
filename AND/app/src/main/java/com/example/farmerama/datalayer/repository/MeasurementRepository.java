@@ -5,7 +5,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.datalayer.dao.MeasurementDAO;
 import com.example.farmerama.datalayer.model.Measurement;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
@@ -23,7 +22,7 @@ public class MeasurementRepository {
     private MutableLiveData<Measurement> measurement;
     private static MeasurementRepository instance;
 
-    public MeasurementRepository() {
+    private MeasurementRepository() {
         measurements = new MutableLiveData<>();
         measurement = new MutableLiveData<>();
     }

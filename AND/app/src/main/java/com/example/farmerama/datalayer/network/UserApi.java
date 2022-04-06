@@ -18,5 +18,5 @@ public interface UserApi {
     Call<User> getEmployeeByEmail(@Path("email") String email);
 
     @POST
-    Call<User> register(User user);
+    Call<User> register(User employee);
 }
