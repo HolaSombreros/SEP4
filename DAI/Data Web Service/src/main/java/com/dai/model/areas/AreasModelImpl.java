@@ -17,13 +17,21 @@ public class AreasModelImpl implements AreasModel {
     @Autowired
     public AreasModelImpl(AreaDao areasDao ) {
         this.areasDao = areasDao;
+        //this.barnDao = barnDao;
     }
 
     @Override
     public Future<Area> create(Area area) {
+        Barn barn;
+        Area areal;
         //search for the barn
-        Barn barn; //= barnDao.get
-        return areasDao.create(1, area.getName(), area.getDescription(), area.getNumberOfPigs() );
+        //barn = barnDao.get(area.getBarn().getId();
+        if(!barn==null)
+        {
+            return areasDao.create(barn.getId(), area.getName(), area.getDescription(), area.getNumberOfPigs() );
+
+        }
+
     }
     @Override
     public Future<Area> read(int id) {
