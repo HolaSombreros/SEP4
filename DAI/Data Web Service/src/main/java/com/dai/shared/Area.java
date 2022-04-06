@@ -18,8 +18,6 @@ public class Area {
     private String description;
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
-    //private List<Measurement> measurements;
-
 
     protected Area() {
     }

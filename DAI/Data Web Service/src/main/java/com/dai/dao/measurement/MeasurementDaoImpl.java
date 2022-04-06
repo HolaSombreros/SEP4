@@ -1,8 +1,10 @@
 package com.dai.dao.measurement;
 
+import com.dai.shared.Area;
 import com.dai.shared.Hardware;
 import com.dai.shared.Measurement;
 import com.dai.repository.MeasurementRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,15 +18,15 @@ import java.util.concurrent.Future;
 public class MeasurementDaoImpl implements MeasurementDao{
 
     private MeasurementRepository repository;
-
+    @Autowired
     public MeasurementDaoImpl(MeasurementRepository repository) {
         this.repository = repository;
     }
 
     @Override
     @Async
-    public Future<Measurement> create(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware) {
-        return new AsyncResult<>(repository.save(new Measurement(measuredDate, temperature,humidity, co2, sound, hardware)));
+    public Future<Measurement> create(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware, Area area) {
+        return new AsyncResult<>(repository.save(new Measurement(measuredDate, temperature,humidity, co2, sound, hardware, area)));
     }
 
     @Override
@@ -44,7 +46,7 @@ public class MeasurementDaoImpl implements MeasurementDao{
 
     @Override
     @Async
-    public Future<Measurement> getLatestByType() {
+    public Future<Measurement> getLatestMeasurement() {
         return new AsyncResult<>(repository.getFirstByOrderByIdDesc());
     }
 }

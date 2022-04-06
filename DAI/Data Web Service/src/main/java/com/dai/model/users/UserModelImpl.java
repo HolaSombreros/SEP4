@@ -18,12 +18,10 @@ public class UserModelImpl implements UserModel {
     public UserModelImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-
     @Override
     public User create(User user) throws Exception {
         return Helper.await(userDao.create(user));
     }
-
     @Override
     public User read(int id) throws Exception {
         User await;
@@ -35,7 +33,6 @@ public class UserModelImpl implements UserModel {
 
         return await;
     }
-
     @Override
     public User update(User user) throws Exception {
         return Helper.await(userDao.update(user));

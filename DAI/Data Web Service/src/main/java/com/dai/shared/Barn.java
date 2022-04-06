@@ -15,8 +15,7 @@ public class Barn {
     public Barn() {
     }
 
-    public Barn(int id, String name) {
-        this.id = id;
+    public Barn(String name) {
         this.name = name;
     }
 
