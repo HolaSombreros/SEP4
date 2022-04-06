@@ -21,7 +21,7 @@ public class AreaDaoImpl implements AreaDao{
 
     @Override
     @Async
-    public Future<Area> create(int barn, String name, String description, int numberOfPigs) {
+    public Future<Area> create(Barn barn, String name, String description, int numberOfPigs) {
         return new AsyncResult<>(repository.save(new Area(barn, name, description, numberOfPigs)));
     }
 
