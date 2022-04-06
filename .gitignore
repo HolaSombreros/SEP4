@@ -87,3 +87,11 @@ fabric.properties
 *.tar.gz
 *.rar
 *.iml
+
+.env
+
+# Terraform
+*.tfvars
+.terraform
+*.terraform.tfstate
+*.terraform.lock.hcl
