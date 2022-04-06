@@ -8,4 +8,12 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="login">Login</string>
+    <string name="home">Home</string>
+    <string name="my_account">My Account</string>
+    <string name="sensors">Sensors</string>
+    <string name="employees">Employees</string>
+    <string name="areas">Areas</string>
+    <string name="latest_temperature">Latest temperature</string>
+    <string name="measurement">Measurement</string>
+    <string name="latest_measurements">Latest Measurements</string>
 </resources>
