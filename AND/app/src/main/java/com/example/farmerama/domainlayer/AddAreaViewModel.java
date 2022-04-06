@@ -13,7 +13,8 @@ public class AddAreaViewModel extends ViewModel {
     private MutableLiveData<String> errorMessage;
 
     public AddAreaViewModel() {
-        //repository = AreaRepository.getInstance();
+        repository = AreaRepository.getInstance();
+        errorMessage = new MutableLiveData<>();
     }
 
     public boolean createNewArea(String name, String description, String noOfPigs) {
@@ -23,19 +24,21 @@ public class AddAreaViewModel extends ViewModel {
         }
 
 
-       /* for (Area area : repository.getAreas()) {
+       for (Area area : repository.getAreas().getValue()) {
             if (area.equals(name)) {
                 errorMessage.setValue("There is already an area with this name");
                 return false;
             }
-        }*/
+        }
 
         if (description == null || description.isEmpty()) {
             errorMessage.setValue("Please specify the description of the area");
+            return false;
         }
 
         if (noOfPigs == null || noOfPigs.isEmpty()) {
             errorMessage.setValue("Please specify the number of the pigs");
+            return false;
         }
 
         try {
