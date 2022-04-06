@@ -2,7 +2,6 @@ package com.dai.dao.measurement;
 
 import com.dai.shared.Hardware;
 import com.dai.shared.Measurement;
-import com.dai.shared.MeasurementType;
 import com.dai.repository.MeasurementRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -46,6 +45,6 @@ public class MeasurementDaoImpl implements MeasurementDao{
     @Override
     @Async
     public Future<Measurement> getLatestByType() {
-        return new AsyncResult<>(repository.getLatestMeasurement());
+        return new AsyncResult<>(repository.getFirstByOrderByIdDesc());
     }
 }

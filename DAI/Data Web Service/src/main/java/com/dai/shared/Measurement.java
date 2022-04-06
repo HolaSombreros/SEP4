@@ -10,7 +10,6 @@ public class Measurement {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "measurement_id")
     private int id;
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "measured_date")
     private LocalDateTime measuredDate;
     @Column(name = "temperature")
@@ -21,7 +20,6 @@ public class Measurement {
     private int co2;
     @Column(name = "sound")
     private double sound;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Hardware hardware;
 
@@ -60,6 +58,38 @@ public class Measurement {
 
     public void setHardware(Hardware hardware) {
         this.hardware = hardware;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    public int getCo2() {
+        return co2;
+    }
+
+    public void setCo2(int co2) {
+        this.co2 = co2;
+    }
+
+    public double getSound() {
+        return sound;
+    }
+
+    public void setSound(double sound) {
+        this.sound = sound;
     }
 }
 
