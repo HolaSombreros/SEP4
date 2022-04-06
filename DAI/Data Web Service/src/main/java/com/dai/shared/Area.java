@@ -29,12 +29,6 @@ public class Area {
         this.numberOfPigs = numberOfPigs;
     }
 
-    public Area(int barnId, String name, String description, int numberOfPigs) {
-        this.name = name;
-        this.description = description;
-        this.numberOfPigs = numberOfPigs;
-    }
-
     public int getId() {
         return id;
     }

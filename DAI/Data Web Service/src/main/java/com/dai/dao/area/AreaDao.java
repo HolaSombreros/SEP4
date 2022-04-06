@@ -6,7 +6,7 @@ import com.dai.shared.Barn;
 import java.util.concurrent.Future;
 
 public interface AreaDao {
-    Future<Area> create(int barn, String name, String description, int numberOfPigs);
+    Future<Area> create(Barn barn, String name, String description, int numberOfPigs);
     Future<Area> read(int id);
     Area update(Area area);
     void delete(int id);

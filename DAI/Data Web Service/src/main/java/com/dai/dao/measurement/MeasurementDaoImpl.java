@@ -4,6 +4,7 @@ import com.dai.shared.Area;
 import com.dai.shared.Hardware;
 import com.dai.shared.Measurement;
 import com.dai.repository.MeasurementRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -17,7 +18,7 @@ import java.util.concurrent.Future;
 public class MeasurementDaoImpl implements MeasurementDao{
 
     private MeasurementRepository repository;
-
+    @Autowired
     public MeasurementDaoImpl(MeasurementRepository repository) {
         this.repository = repository;
     }
