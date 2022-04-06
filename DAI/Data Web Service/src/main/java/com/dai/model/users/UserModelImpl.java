@@ -2,10 +2,8 @@ package com.dai.model.users;
 
 import com.dai.dao.user.UserDao;
 import com.dai.shared.User;
-import com.dai.shared.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.concurrent.Future;
