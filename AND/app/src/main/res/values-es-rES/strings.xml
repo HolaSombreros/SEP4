@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Farmerama</string>
+    <string name="home">Casa</string>
+    <string name="my_account">Mi cuenta</string>
+    <string name="sensors">Sensores</string>
+    <string name="employees">Empleados</string>
+    <string name="areas">Áreas</string>
+    <string name="latest_temperature">Última temperatura</string>
+    <string name="measurement">Medición</string>
+    <string name="latest_measurements">Últimas medidas</string>
+</resources>

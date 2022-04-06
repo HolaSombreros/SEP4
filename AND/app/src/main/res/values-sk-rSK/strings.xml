@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Farmerama</string>
+    <string name="home">Domov</string>
+    <string name="my_account">Môj účet</string>
+    <string name="sensors">Senzory</string>
+    <string name="employees">Zamestnancov</string>
+    <string name="areas">Oblasti</string>
+    <string name="latest_temperature">Najnovšia teplota</string>
+    <string name="measurement">Meranie</string>
+    <string name="latest_measurements">Najnovšie merania</string>
+</resources>

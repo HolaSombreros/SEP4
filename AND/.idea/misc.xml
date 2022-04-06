@@ -26,6 +26,16 @@
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/new_activity_main.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/menu/bottom_navigation.xml" value="0.3625" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/menu/main_menu.xml" value="0.3625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_areas.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_employees.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_latest_humidity.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_latest_temperature.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_sensors.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/menu_header.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/new_activity_main.xml" value="0.2947916666666667" />
       </map>
     </option>
   </component>

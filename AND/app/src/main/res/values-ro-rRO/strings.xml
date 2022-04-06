@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Farmerama</string>
+    <string name="home">Acasă</string>
+    <string name="my_account">Contul meu</string>
+    <string name="sensors">Senzori</string>
+    <string name="employees">Angajati</string>
+    <string name="areas">Zone</string>
+    <string name="latest_temperature">Ultima temperatură</string>
+    <string name="measurement">Măsurare</string>
+    <string name="latest_measurements">Ultimele măsurători</string>
+</resources>
