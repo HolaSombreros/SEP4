@@ -95,3 +95,18 @@ fabric.properties
 .terraform
 *.terraform.tfstate
 *.terraform.lock.hcl
+
+# IoT
+[Dd]ebug/
+[Rr]elease/
+
+*.o
+*.d
+*.eep
+*.elf
+*.hex
+*.map
+*.srec
+
+*.atsuo
+IoT.componentinfo.xml
