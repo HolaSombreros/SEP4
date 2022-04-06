@@ -19,25 +19,21 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MeasurementRepository {
 
-    private MeasurementDAO measurementDAO;
-    private static MeasurementRepository instance;
-    private static Object lock = new Object();
-    //private MutableLiveData<List<Measurement>> measurements;
+    private MutableLiveData<List<Measurement>> measurements;
     private MutableLiveData<Measurement> measurement;
+    private static MeasurementRepository instance;
 
-    private MeasurementRepository() {
-        //measurements = new MutableLiveData<>();
+    public MeasurementRepository() {
+        measurements = new MutableLiveData<>();
         measurement = new MutableLiveData<>();
     }
-
     public static MeasurementRepository getInstance() {
-        if(instance == null){
-            synchronized (lock) {
-                instance = new MeasurementRepository();
-            }
+        if(instance == null) {
+            instance = new MeasurementRepository();
         }
         return instance;
     }
+
 
     public LiveData<Measurement> getLatestTemperature() {
         return measurement;

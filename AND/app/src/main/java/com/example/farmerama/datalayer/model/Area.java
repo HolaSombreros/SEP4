@@ -1,6 +1,5 @@
 package com.example.farmerama.datalayer.model;
 
-import java.util.List;
 
 public class Area {
 

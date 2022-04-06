@@ -7,6 +7,7 @@ public class ServiceGenerator {
     private static String url = "https://localhost/api/";
     private static UserApi userApi;
     private static MeasurementApi measurementApi;
+    private static AreaApi areaApi;
 
     public static UserApi getUserApi() {
         if (userApi == null) {
@@ -28,5 +29,16 @@ public class ServiceGenerator {
                     .create(MeasurementApi.class);
         }
         return measurementApi;
+    }
+
+    public static AreaApi getAreaApi() {
+        if (areaApi == null) {
+            areaApi = new Retrofit.Builder()
+                    .baseUrl(url + "areas")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(AreaApi.class);
+        }
+        return areaApi;
     }
 }
