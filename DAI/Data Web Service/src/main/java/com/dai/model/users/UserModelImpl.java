@@ -2,10 +2,8 @@ package com.dai.model.users;
 
 import com.dai.dao.user.UserDao;
 import com.dai.shared.User;
-import com.dai.shared.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -19,17 +17,14 @@ public class UserModelImpl implements UserModel {
     public UserModelImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-
     @Override
     public Future<User> create(User user) {
         return userDao.create(user);
     }
-
     @Override
     public Future<User> read(int id) {
         return userDao.read(id);
     }
-
     @Override
     public User update(User user) {
         return userDao.update(user);

@@ -2,7 +2,6 @@ package com.dai.model.users;
 
 
 import com.dai.shared.User;
-import com.dai.shared.UserRole;
 
 import java.util.List;
 import java.util.concurrent.Future;
