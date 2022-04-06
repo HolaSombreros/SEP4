@@ -9,20 +9,20 @@
     android:background="#AB4">
 
     <EditText
-        android:id="@+id/timeText"
+        android:id="@+id/latestHumidityTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:enabled="false"
         android:inputType="time"
-        android:text="timeeeeeee"
+        android:text="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/measurement"
+        android:id="@+id/latestHumidityValue"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeText"
+        app:layout_constraintTop_toBottomOf="@+id/latestHumidityTime"
         app:layout_constraintVertical_bias="0.065" />
 
 
