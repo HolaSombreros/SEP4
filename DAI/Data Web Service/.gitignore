@@ -32,4 +32,10 @@ build/
 ### VS Code ###
 .vscode/
 
-application-dev.properties
+### Terraform ###
+/.terraform/
+*.tfstate
+*.tfstate.*
+variables.tf
+.terraform.locl.hcl
+*.tfvars

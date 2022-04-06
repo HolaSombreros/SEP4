@@ -10,39 +10,34 @@ public class Measurement {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "measurement_id")
     private int id;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "type")
-    private MeasurementType type;
-    @Column(name = "value")
-    private double value;
     @Column(name = "measured_date")
     private LocalDateTime measuredDate;
-
+    @Column(name = "temperature")
+    private double temperature;
+    @Column(name = "humidity")
+    private double humidity;
+    @Column(name = "co2")
+    private int co2;
+    @Column(name = "sound")
+    private double sound;
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "hardware_id")
     private Hardware hardware;
 
 
     protected Measurement() {
     }
 
-    public Measurement(MeasurementType type, double value, LocalDateTime measuredDate, Hardware hardware) {
-        this.type = type;
-        this.value = value;
+    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware) {
         this.measuredDate = measuredDate;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.co2 = co2;
+        this.sound = sound;
         this.hardware = hardware;
     }
 
     public int getId() {
         return id;
-    }
-
-    public MeasurementType getType() {
-        return type;
-    }
-
-    public double getValue() {
-        return value;
     }
 
     public LocalDateTime getMeasuredDate() {
@@ -57,20 +52,44 @@ public class Measurement {
         this.id = id;
     }
 
-    public void setType(MeasurementType type) {
-        this.type = type;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public void setMeasuredDate(LocalDateTime measuredDate) {
         this.measuredDate = measuredDate;
     }
 
     public void setHardware(Hardware hardware) {
         this.hardware = hardware;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    public int getCo2() {
+        return co2;
+    }
+
+    public void setCo2(int co2) {
+        this.co2 = co2;
+    }
+
+    public double getSound() {
+        return sound;
+    }
+
+    public void setSound(double sound) {
+        this.sound = sound;
     }
 }
 
