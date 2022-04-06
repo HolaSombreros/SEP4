@@ -1,4 +1,4 @@
-package com.dai.model;
+package com.dai.shared;
 
 import javax.persistence.*;
 
@@ -16,6 +16,22 @@ public class Hardware {
     }
 
     public Hardware(int portNumber) {
+        this.portNumber = portNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPortNumber() {
+        return portNumber;
+    }
+
+    public void setPortNumber(int portNumber) {
         this.portNumber = portNumber;
     }
 }

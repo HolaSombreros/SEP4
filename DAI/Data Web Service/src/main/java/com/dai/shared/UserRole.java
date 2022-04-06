@@ -1,6 +1,4 @@
-package com.dai.model;
-
-import java.security.SecureRandom;
+package com.dai.shared;
 
 public enum UserRole {
     ADMINISTRATOR("administrator"),

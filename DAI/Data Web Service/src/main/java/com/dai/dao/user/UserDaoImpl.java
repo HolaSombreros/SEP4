@@ -1,7 +1,7 @@
 package com.dai.dao.user;
 
-import com.dai.model.User;
-import com.dai.model.UserRole;
+import com.dai.shared.User;
+import com.dai.shared.UserRole;
 import com.dai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Future;
 
 @Repository
-@EnableAsync
 public class UserDaoImpl implements UserDao {
     private UserRepository repository;
 
@@ -24,34 +24,43 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Async
-    public Future<User> create(String name, String email, String password, UserRole role) {
-        return new AsyncResult<>(repository.save(new User(name, email,password, role)));
+    public Future<User> create(User user) {
+        return new AsyncResult<>(repository.save(user));
     }
 
     @Override
     @Async
     public Future<User> read(int id) {
-        return new AsyncResult<>(repository.getById(id));
-    }
-
-    @Override
-    public User update(User employee) {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public List<User> getAll() {
-        return null;
+        Optional<User> byId = repository.findById(id);
+        return new AsyncResult<>(byId.get());
     }
 
     @Override
     @Async
-    public Future<User> getUserByEmailAndPassword(User user) {
-        return new AsyncResult<>(repository.getUserByEmailAndPassword(user.getEmail(), user.getPassword()));
+    public Future<User> update(User employee) {
+        User byId = repository.getById(employee.getId());
+        byId.setName(employee.getName());
+        byId.setEmail(employee.getEmail());
+        byId.setPassword(employee.getPassword());
+        return new AsyncResult<>(repository.save(byId));
     }
+
+    @Override
+    @Async
+    public Future<User> delete(int id) {
+        return new AsyncResult<>(repository.deleteById(id));
+    }
+
+    @Override
+    @Async
+    public Future<List<User>> getAll() {
+        return new AsyncResult<>(repository.findAll());
+    }
+
+    @Override
+    @Async
+    public Future<User> getUserByMail(String email) {
+        return new AsyncResult<>(repository.findFirstByEmail(email));
+    }
+
 }
