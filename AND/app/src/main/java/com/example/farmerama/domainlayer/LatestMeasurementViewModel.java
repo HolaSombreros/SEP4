@@ -15,8 +15,8 @@ public class LatestMeasurementViewModel extends ViewModel {
         this.measurementRepository = measurementRepository;
     }
 
-    public MutableLiveData<List<Measurement>> getLatestMeasurement(int areaId) {
-        return measurementRepository.getLatestMeasurement(areaId);
-    }
+    /*public MutableLiveData<List<Measurement>> getLatestMeasurement(int areaId) {
+        return measurementRepository.getLatestTemperature();
+    }*/
 
 }

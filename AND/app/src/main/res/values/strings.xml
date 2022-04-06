@@ -8,4 +8,12 @@
     <string name="latest_temperature">Latest temperature</string>
     <string name="measurement">Measurement</string>
     <string name="latest_measurements">Latest Measurements</string>
+    <string name="farmerama">Farmerama</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="password">Password</string>
+    <string name="e_mail">E-mail</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="login">Login</string>
 </resources>
