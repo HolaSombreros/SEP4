@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.farmerama.datalayer.model.Area;
+import com.example.farmerama.datalayer.repository.AreaRepository;
 
 public class AddAreaViewModel extends ViewModel {
 
@@ -12,7 +13,7 @@ public class AddAreaViewModel extends ViewModel {
     private MutableLiveData<String> errorMessage;
 
     public AddAreaViewModel() {
-        repository = AreaRepository.getInstance();
+        //repository = AreaRepository.getInstance();
     }
 
     public boolean createNewArea(String name, String description, String noOfPigs) {
@@ -21,12 +22,13 @@ public class AddAreaViewModel extends ViewModel {
             return false;
         }
 
-        for (Area area : repository.getAreas()) {
+
+       /* for (Area area : repository.getAreas()) {
             if (area.equals(name)) {
                 errorMessage.setValue("There is already an area with this name");
                 return false;
             }
-        }
+        }*/
 
         if (description == null || description.isEmpty()) {
             errorMessage.setValue("Please specify the description of the area");

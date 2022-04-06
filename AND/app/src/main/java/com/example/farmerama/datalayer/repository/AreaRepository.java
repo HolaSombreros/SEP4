@@ -20,6 +20,7 @@ public class AreaRepository {
         specificArea = new MutableLiveData<>();
 
     }
+
     public void getAreas() {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<List<Area>> call = areaApi.getAreas();

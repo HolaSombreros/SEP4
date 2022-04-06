@@ -26,6 +26,7 @@ public class MeasurementRepository {
         measurements = new MutableLiveData<>();
         measurement = new MutableLiveData<>();
     }
+
     public static MeasurementRepository getInstance() {
         if(instance == null) {
             instance = new MeasurementRepository();
