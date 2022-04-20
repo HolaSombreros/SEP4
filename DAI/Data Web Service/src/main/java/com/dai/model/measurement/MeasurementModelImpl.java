@@ -18,6 +18,6 @@ private MeasurementDao measurementDao;
 
     @Override
     public Future<Measurement> readLastMeasurement() {
-        return null;//measurementDao.getLatestMeasurement();
+        return measurementDao.getLatestMeasurement();
     }
 }

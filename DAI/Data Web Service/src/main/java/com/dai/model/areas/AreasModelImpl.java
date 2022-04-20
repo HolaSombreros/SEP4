@@ -1,6 +1,7 @@
 package com.dai.model.areas;
 
 import com.dai.dao.area.AreaDao;
+import com.dai.dao.barn.BarnDao;
 import com.dai.shared.Area;
 import com.dai.shared.Barn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +13,24 @@ import java.util.concurrent.Future;
 public class AreasModelImpl implements AreasModel {
 
     private AreaDao areasDao;
-    //private BarnDao barnDao;
+    private BarnDao barnDao;
 
     @Autowired
-    public AreasModelImpl(AreaDao areasDao ) {
+    public AreasModelImpl(AreaDao areasDao,BarnDao barnDao ) {
         this.areasDao = areasDao;
-        //this.barnDao = barnDao;
+        this.barnDao = barnDao;
     }
 
     @Override
     public Future<Area> create(Area area) {
-        Barn barn;
-        Area areal;
-        //search for the barn
-        //barn = barnDao.get(area.getBarn().getId();
-        if(!barn==null)
-        {
-            return areasDao.create(barn.getId(), area.getName(), area.getDescription(), area.getNumberOfPigs() );
+        Barn barn = (Barn) barnDao.read(area.getBarn().getId());
 
+        if(barn!=null)
+        {
+            return areasDao.create(barn, area.getName(), area.getDescription(), area.getNumberOfPigs() );
+        }
+        else{
+            throw new IllegalStateException("Barn not found");
         }
 
     }

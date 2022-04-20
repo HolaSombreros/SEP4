@@ -4,13 +4,12 @@ package com.dai.model.users;
 import com.dai.shared.User;
 
 import java.util.List;
-import java.util.concurrent.Future;
 
 public interface UserModel {
-    Future<User> create(User user);
-    Future<User> read(int id);
-    User update(User employee);
-    void delete(int id);
-    List<User> getAll();
-    void login(User user);
+    User create(User user) throws Exception;
+    User read(int id) throws Exception;
+    User update(User employee) throws Exception;
+    User delete(int id) throws Exception;
+    List<User> getAll() throws Exception;
+    User login(User user) throws Exception;
 }
