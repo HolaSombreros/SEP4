@@ -23,11 +23,12 @@ public class AddAreaViewModel extends ViewModel {
             return false;
         }
 
-
-       for (Area area : repository.getAreas().getValue()) {
-            if (area.equals(name)) {
-                errorMessage.setValue("There is already an area with this name");
-                return false;
+        if (!repository.getAreas().getValue().isEmpty()) {
+            for (Area area : repository.getAreas().getValue()) {
+                if (area.equals(name)) {
+                    errorMessage.setValue("There is already an area with this name");
+                    return false;
+                }
             }
         }
 
