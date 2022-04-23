@@ -6,8 +6,10 @@ import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.concurrent.Future;
 
 @RequestMapping("/temperatures")
@@ -20,10 +22,10 @@ public class TemperaturesController {
         this.temperatureModel = temperatureModel;
     }
 
-    @GetMapping
-    public SentMeasurement readLastTemperature(){
+    @GetMapping(value = "/latestMeasurement")
+    public SentMeasurement readLastTemperature(@RequestParam("areaId") Optional<Integer> areaId){
         try{
-            return temperatureModel.readLatestTemperature();
+            return temperatureModel.readLatestTemperature(areaId.get());
         }
         catch (Exception e){
             throw new BadRequestException();

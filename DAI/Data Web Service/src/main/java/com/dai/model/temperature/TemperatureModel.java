@@ -5,5 +5,5 @@ import com.dai.shared.SentMeasurement;
 import java.util.concurrent.Future;
 
 public interface TemperatureModel {
-    SentMeasurement readLatestTemperature() throws Exception;
+    SentMeasurement readLatestTemperature(int areaId) throws Exception;
 }

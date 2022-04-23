@@ -17,7 +17,8 @@ public class TemperatureModelImpl implements TemperatureModel{
     }
 
     @Override
-    public SentMeasurement readLatestTemperature() throws Exception {
-            return Helper.await(temperatureDao.getLatestTemperatureMeasurement());
+    public SentMeasurement readLatestTemperature(int areaId) throws Exception {
+            return Helper.await(temperatureDao.getLatestTemperatureMeasurement(areaId));
+
     }
 }
