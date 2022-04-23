@@ -18,6 +18,7 @@ public class Area {
     private String description;
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
+    //TODO: add hardware
 
     protected Area() {
     }
