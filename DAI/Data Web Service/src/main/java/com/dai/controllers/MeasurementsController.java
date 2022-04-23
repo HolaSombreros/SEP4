@@ -20,6 +20,7 @@ public class MeasurementsController {
         this.measurementModel = measurementModel;
     }
 
+    //TODO Change rout to include last flag. Something like this: /area/{id}/measurements?latest=true
     @GetMapping
     public Future<Measurement> readLastMeasurement()
     {

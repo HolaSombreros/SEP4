@@ -1,28 +1,35 @@
 package com.dai.shared;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
+    @NotNull(message = "Please fill in all the required fields")
     @Column(name = "name")
     private String name;
 
+    @NotNull(message = "Please fill in all the required fields")
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Email is not valid")
     @Column(name = "email")
     private String email;
 
+    @NotNull(message = "Please fill in all the required fields")
+    @Size(min = 6, message = "Password is not valid")
     @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private UserRole role;
+    private UserRole role = UserRole.EMPLOYEE;
 
     protected User() {
     }

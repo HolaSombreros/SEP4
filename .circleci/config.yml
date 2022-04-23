@@ -60,4 +60,6 @@ workflows:
       - build-save-image:
           filters:
             branches:
-              only: "master"
+              only:
+                - master
+                - data
