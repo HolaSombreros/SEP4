@@ -4,6 +4,7 @@ import com.dai.Helper;
 import com.dai.exceptions.BadRequestException;
 import com.dai.exceptions.UnauthorizedException;
 import com.dai.model.users.UserModel;
+import com.dai.shared.LoginUser;
 import com.dai.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
@@ -28,7 +30,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         try {
             return userModel.create(user);
         } catch (Exception e) {
@@ -73,8 +75,8 @@ public class UsersController {
         }
     }
 
-    @PostMapping(value = "/login")
-    public User login(@RequestBody User user) {
+    @PostMapping(value = "login")
+    public User login(@Valid @RequestBody LoginUser user) {
         try {
             return userModel.login(user);
         } catch (Exception e) {

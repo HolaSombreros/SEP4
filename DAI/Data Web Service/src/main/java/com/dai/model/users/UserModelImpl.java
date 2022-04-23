@@ -2,6 +2,7 @@ package com.dai.model.users;
 
 import com.dai.Helper;
 import com.dai.dao.user.UserDao;
+import com.dai.shared.LoginUser;
 import com.dai.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,26 @@ public class UserModelImpl implements UserModel {
     public UserModelImpl(UserDao userDao) {
         this.userDao = userDao;
     }
+
     @Override
     public User create(User user) throws Exception {
+//        The email must:
+//        contain “@” and “.” characters
+//
+//        The password must:
+//        contain at least 6 characters
+
+
+        //TODO Validate email address
+//        Email already exists
+        //TODO Validate password
+
+        //TODO Required fields
+
+        User userExistingCheck = Helper.await(userDao.getUserByMail(user.getEmail()));
+        if (userExistingCheck != null) {
+            throw new Exception("Email already exists");
+        }
         return Helper.await(userDao.create(user));
     }
     @Override
@@ -30,7 +49,6 @@ public class UserModelImpl implements UserModel {
         } catch (Exception e) {
             throw new Exception("User with the given ID doesn't exist");
         }
-
         return await;
     }
     @Override
@@ -49,14 +67,14 @@ public class UserModelImpl implements UserModel {
     }
 
     @Override
-    public User login(User user) throws Exception {
+    public User login(LoginUser user) throws Exception {
         Future<User> userFuture = userDao.getUserByMail(user.getEmail());
         User dbUser = Helper.await(userFuture);
         if (dbUser == null)
         {
-            throw new Exception("User with the given email doesn't exist!");
+            throw new Exception("Email not registered");
         } else if(!dbUser.getPassword().equals(user.getPassword())) {
-            throw new Exception("Password is incorrect");
+            throw new Exception("Invalid email/password combination");
         }
         return dbUser;
     }

@@ -21,8 +21,10 @@ public class Measurement {
     @Column(name = "sound")
     private double sound;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hardware_id")
     private Hardware hardware;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "area_id")
     private Area area;
 
 

@@ -1,5 +1,6 @@
 package com.dai.shared;
 
+
 import java.time.LocalDateTime;
 
 public class SentMeasurement {

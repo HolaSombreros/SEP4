@@ -34,7 +34,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
           "name": "DB_SCHEMA"
         },
         {
-          "value": "jdbc:mysql://sep4-service-database.chdijkbljcqv.eu-central-1.rds.amazonaws.com:3300",
+          "value": "jdbc:mysql://sep4-service-database.chdijkbljcqv.eu-central-1.rds.amazonaws.com:3300/SEP4",
           "name": "DB_URL"
         },
         {
