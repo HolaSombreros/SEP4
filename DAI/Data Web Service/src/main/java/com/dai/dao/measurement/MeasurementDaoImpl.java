@@ -30,8 +30,9 @@ public class MeasurementDaoImpl implements MeasurementDao{
     }
 
     @Override
+    @Async
     public Future<Measurement> read(int id) {
-        return null;
+        return new AsyncResult<>(repository.findById(id).get());
     }
 
     @Override
