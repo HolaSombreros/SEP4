@@ -29,7 +29,7 @@ public class BarnDaoImpl implements BarnDao {
     @Override
     @Async
     public Future<Barn> read(int id) {
-        return new AsyncResult<>(barnRepository.getById(id));
+        return new AsyncResult<>(barnRepository.findById(id).get());
     }
 
     @Override

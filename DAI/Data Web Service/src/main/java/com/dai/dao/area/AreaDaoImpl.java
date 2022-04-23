@@ -27,7 +27,7 @@ public class AreaDaoImpl implements AreaDao{
 
     @Override
     public Future<Area> read(int id) {
-        return new AsyncResult<>(repository.getById(id));
+        return new AsyncResult<>(repository.findById(id).get());
     }
 
     @Override
