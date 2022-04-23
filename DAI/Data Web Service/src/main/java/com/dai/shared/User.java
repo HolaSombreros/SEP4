@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
@@ -27,10 +27,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-//    @NotNull(message = "Please fill in all the required fields")
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private UserRole role;
+    private UserRole role = UserRole.EMPLOYEE;
 
     protected User() {
     }
