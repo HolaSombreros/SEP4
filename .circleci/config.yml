@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Deploy new version
           command: |
-            aws elasticbeanstalk update-environment --application-name "sep4-data-server-ebs" --environment-name "Sep4dataserverebs-env-1" --version-label=1
+            aws elasticbeanstalk update-environment --application-name "sep4-data-server-ebs" --environment-name "sep4-data-service-enviroment" --version-label=1
 #      - run:
 #          name: Update service
 #          command: |

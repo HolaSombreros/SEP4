@@ -13,6 +13,6 @@ public class HealthCheckController {
 
     @GetMapping
     public String read() {
-        return "Balabalala";
+        return "Health Check";
     }
 }
