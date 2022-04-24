@@ -4,6 +4,7 @@ import com.dai.repository.HumidityRepository;
 import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,6 @@ public class HumidityDaoImpl implements HumidityDao{
     @Override
     @Async
     public Future<SentMeasurement> getLatestHumidityMeasurement(int areaId) {
-        return null;
+        return new AsyncResult<>(humidityRepository.findFirstHumidityMeasuredDateOrderByIdDesc(areaId));
     }
 }
