@@ -50,11 +50,15 @@ jobs:
             docker tag ${FULL_IMAGE_NAME} ${FULL_IMAGE_NAME}:<< pipeline.number >>
             docker push ${FULL_IMAGE_NAME}:<< pipeline.number >>
       - run:
-          name: Update service
+          name: Deploy new version
           command: |
-            cd ./infrastructure
-            terraform init
-            terraform apply -var image_tag=<< pipeline.number >> -auto-approve
+            aws elasticbeanstalk update-environment --application-name "sep4-data-server-ebs" --environment-name "Sep4dataserverebs-env-1" --version-label=1
+#      - run:
+#          name: Update service
+#          command: |
+#            cd ./infrastructure
+#            terraform init
+#            terraform apply -var image_tag=<< pipeline.number >> -auto-approve
 
 #TODO remove Tomas trigger branch
 workflows:
