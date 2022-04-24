@@ -15,7 +15,7 @@ jobs:
           name: Setup common environment variables
           command: |
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
-            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:<< pipeline.number >>"' >> $BASH_ENV
+            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}"' >> $BASH_ENV
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             echo 'export DB_PASSWORD="${DB_PASSWORD}"' >> $BASH_ENV
             echo 'export DB_SCHEMA="${DB_SCHEMA}"' >> $BASH_ENV
@@ -42,7 +42,10 @@ jobs:
           name: Build image
           command: |
             docker build -t ${FULL_IMAGE_NAME} .
-            docker tag ${FULL_IMAGE_NAME} latest
+            docker push ${FULL_IMAGE_NAME}
+
+            docker tag ${FULL_IMAGE_NAME} ${FULL_IMAGE_NAME}:<< pipeline.number >>
+            docker push ${FULL_IMAGE_NAME}:<< pipeline.number >>
       - run:
           name: Push image
           command: |
