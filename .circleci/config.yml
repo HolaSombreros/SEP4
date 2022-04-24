@@ -48,6 +48,7 @@ jobs:
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push ${FULL_IMAGE_NAME}
+            docker push latest
       - run:
           name: Update service
           command: |
@@ -55,6 +56,7 @@ jobs:
             terraform init
             terraform apply -var image_tag=<< pipeline.number >> -auto-approve
 
+//TODO remove Tomas trigger branch
 workflows:
   wf:
     jobs:
@@ -64,3 +66,4 @@ workflows:
               only:
                 - master
                 - data
+                - Tomas
