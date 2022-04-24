@@ -56,7 +56,7 @@ jobs:
             terraform init
             terraform apply -var image_tag=<< pipeline.number >> -auto-approve
 
-//TODO remove Tomas trigger branch
+#TODO remove Tomas trigger branch
 workflows:
   wf:
     jobs:
