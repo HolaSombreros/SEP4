@@ -23,7 +23,6 @@ public class TemperatureDaoImpl implements TemperatureDao{
     @Override
     @Async
     public Future<SentMeasurement> getLatestTemperatureMeasurement(int areaId) {
-        return new AsyncResult<>(repository.findFirstTemperatureAndMeasuredDateOrderByIdDesc(areaId));
-//        return null;
+        return new AsyncResult<>(repository.findFirstTemperatureAndMeasuredDateByAreaIdOrderByIdDesc(areaId));
     }
 }

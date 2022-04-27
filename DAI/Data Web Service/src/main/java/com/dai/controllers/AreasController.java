@@ -3,9 +3,11 @@ package com.dai.controllers;
 import com.dai.exceptions.BadRequestException;
 import com.dai.model.areas.AreasModel;
 import com.dai.shared.Area;
+import com.dai.shared.AreaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 @RequestMapping("/areas")
@@ -36,7 +38,6 @@ public class AreasController {
     }
 
     @GetMapping(value = "{id}")
-
     public Future<Area> read(@PathVariable int id){
 
     try{
@@ -44,6 +45,16 @@ public class AreasController {
     }
     catch (Exception e){
         throw new BadRequestException();
+    }
+    }
+
+    @GetMapping
+    public List<Area> getAll(){
+    try {
+        return areasModel.getAll();
+    }
+        catch (Exception e){
+                    throw new BadRequestException();
     }
     }
 

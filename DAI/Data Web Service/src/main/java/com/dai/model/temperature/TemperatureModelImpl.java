@@ -6,7 +6,6 @@ import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Future;
 @Component
 public class TemperatureModelImpl implements TemperatureModel{
     private TemperatureDao temperatureDao;
