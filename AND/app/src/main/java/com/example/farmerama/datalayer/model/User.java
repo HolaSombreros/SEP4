@@ -3,27 +3,38 @@ package com.example.farmerama.datalayer.model;
 public class User {
 
     private int id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String email;
     private String password;
-    private Role role;
+    private String role;
 
-    public User(String firstName, String lastName, String email, String password, Role role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String name, String email, String password, String role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+    public User(String firstname,String lastname, String email, String password,String role) {
+        this.name = firstname + " " + lastname;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public User(int id, String firstName, String lastName, String email, String password, Role role) {
+    public User(int id, String name, String email, String password, String role) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
+        this.name = name;
         this.password = password;
         this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -32,22 +43,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -66,11 +61,13 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
+
+
 }

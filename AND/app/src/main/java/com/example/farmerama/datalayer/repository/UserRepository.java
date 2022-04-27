@@ -6,9 +6,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.User;
+import com.example.farmerama.datalayer.model.UserResponse;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 import com.example.farmerama.datalayer.network.UserApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,18 +47,22 @@ public class UserRepository {
 
     public void retrieveAllEmployees() {
         UserApi userApi = ServiceGenerator.getUserApi();
-        Call<List<User>> call = userApi.getAllEmployees();
-        call.enqueue(new Callback<List<User>>() {
+        Call<List<UserResponse>> call = userApi.getAllEmployees();
+        call.enqueue(new Callback<List<UserResponse>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
+                List<User> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    users.setValue(response.body());
+                    for(UserResponse user : response.body()) {
+                        list.add(user.getUser());
+                    }
+                    users.setValue(list);
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });

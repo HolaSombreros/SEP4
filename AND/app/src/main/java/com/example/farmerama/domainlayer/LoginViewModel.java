@@ -10,7 +10,7 @@ import java.util.List;
 public class LoginViewModel extends ViewModel {
 
     private final UserRepository repository;
-    List<User> users;
+    private List<User> users;
 
     public LoginViewModel() {
         repository = UserRepository.getInstance();

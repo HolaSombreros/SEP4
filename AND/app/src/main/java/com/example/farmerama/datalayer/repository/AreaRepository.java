@@ -1,6 +1,8 @@
 package com.example.farmerama.datalayer.repository;
 
 import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.datalayer.model.Area;
 import com.example.farmerama.datalayer.network.AreaApi;
@@ -21,18 +23,21 @@ public class AreaRepository {
         specificArea = new MutableLiveData<>();
 
     }
-    public AreaRepository getInstance() {
+    public static AreaRepository getInstance() {
         if(instance == null) {
             return new AreaRepository();
         }
         return instance;
     }
 
-    public MutableLiveData<Area> getSpecificArea() {
+    public LiveData<Area> getSpecificArea() {
         return specificArea;
     }
+    public LiveData<List<Area>> getAreas(){
+        return areas;
+    }
 
-    public void getAreas() {
+    public void getAllAreas() {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<List<Area>> call = areaApi.getAreas();
         call.enqueue(new Callback<List<Area>>() {
@@ -51,9 +56,9 @@ public class AreaRepository {
         });
     }
 
-    public void getSpecificArea(int id) {
+    public void getSpecificArea(String name) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<Area> call = areaApi.getSpecificArea(id);
+        Call<Area> call = areaApi.getSpecificArea(name);
         call.enqueue(new Callback<Area>() {
             @EverythingIsNonNull
             @Override
