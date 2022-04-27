@@ -13,9 +13,9 @@ import retrofit2.http.Path;
 
 public interface UserApi {
 
-    @GET(".")
+    @GET("users")
     Call<List<UserResponse>> getAllEmployees();
-
+    
     @GET("{email}")
     Call<UserResponse> getEmployeeByEmail(@Path("email") String email);
 
@@ -24,4 +24,5 @@ public interface UserApi {
 
     @POST
     Call<UserResponse> register(User user);
+
 }

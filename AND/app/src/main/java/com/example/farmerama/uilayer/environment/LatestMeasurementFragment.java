@@ -1,72 +1,71 @@
 package com.example.farmerama.uilayer.environment;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
-import com.example.farmerama.R;
-import com.example.farmerama.datalayer.model.Area;
-import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class LatestMeasurementFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+import com.example.farmerama.R;
+import com.example.farmerama.datalayer.model.MeasurementType;
+import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
+
+
+public class LatestMeasurementFragment extends Fragment {
+    private MeasurementType measurementType;
+    private EditText timeText;
+    private TextView measurementTextView;
+    private TextView typeTextView;
     private LatestMeasurementViewModel viewModel;
-    private ViewPager2 viewPager2;
-    private ViewPagerAdapter adapter;
-    private TabLayout tabLayout;
-    private Spinner areaSpinner;
     private SharedPreferences sharedPreferences;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return (ViewGroup)inflater.inflate(R.layout.fragment_latest_data, container, false);
+    public LatestMeasurementFragment(int position) {
+        switch (position) {
+            case 0:
+                measurementType = MeasurementType.TEMPERATURE;
+                break;
+            case 1:
+                measurementType = MeasurementType.HUMIDITY;
+                break;
+        }
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return (ViewGroup) inflater.inflate(R.layout.fragment_latest_measurement, container, false);
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(LatestMeasurementViewModel.class);
-        sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
         initializeViews(view);
-        adapter = new ViewPagerAdapter(getActivity());
-        viewPager2.setAdapter(adapter);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
-               android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        areaSpinner.setAdapter(adapter2);
-
-        String[] tabTitles = {"Temperature", "Humidity"};
-        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
-            tab.setText(tabTitles[position]);
-        }).attach();
-
+        setUpViews();
     }
 
     private void initializeViews(View view) {
-        tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager2= view.findViewById(R.id.viewPager);
-        areaSpinner = view.findViewById(R.id.area_spinner);
+        measurementTextView = view.findViewById(R.id.latestTemperature_value);
+        timeText = view.findViewById(R.id.latestTemperature_time);
+        typeTextView = view.findViewById(R.id.latestTemperature_measurementType);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
-        viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId());
-    }
+    private void setUpViews() {
+        sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+        viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 0), measurementType);
+
+        viewModel.getLatestMeasurement(measurementType).observe(getViewLifecycleOwner(), measurement -> {
+            measurementTextView.setText(String.valueOf(measurement.getValue()));
+            typeTextView.setText(measurement.getMeasurementType().toString());
+        });
+
 
     }
 }

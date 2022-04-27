@@ -21,7 +21,7 @@ public class AreaRepository {
     private final MutableLiveData<Area> specificArea;
     private static AreaRepository instance;
 
-    public AreaRepository() {
+    private AreaRepository() {
         areas = new MutableLiveData<>();
         specificArea = new MutableLiveData<>();
 
@@ -36,7 +36,18 @@ public class AreaRepository {
     public LiveData<Area> getSpecificArea() {
         return specificArea;
     }
+
     public LiveData<List<Area>> getAreas(){
+        // TODO don't mock data
+        List<Area> list = new ArrayList<>();
+        Area area = new Area("Farmerama", "aaa", 120);
+        area.setId(1);
+        list.add(area);
+        Area area2 = new Area("Farm", "bbb", 130);
+        area.setId(20);
+        list.add(area2);
+        areas.setValue(list);
+
         return areas;
     }
 

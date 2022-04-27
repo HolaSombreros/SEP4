@@ -6,10 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.Measurement;
+import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,14 +17,13 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MeasurementRepository {
 
-    private MutableLiveData<List<Measurement>> measurements;
     private MutableLiveData<Measurement> measurement;
     private static MeasurementRepository instance;
 
-    public MeasurementRepository() {
-        measurements = new MutableLiveData<>();
+    private MeasurementRepository() {
         measurement = new MutableLiveData<>();
     }
+
     public static MeasurementRepository getInstance() {
         if(instance == null) {
             instance = new MeasurementRepository();
@@ -33,19 +31,23 @@ public class MeasurementRepository {
         return instance;
     }
 
-
     public LiveData<Measurement> getLatestTemperature() {
         return measurement;
     }
 
-    public void retrieveLatestTemperature(int areaId) {
+    public LiveData<Measurement> getLatestHumidity() {
+        return measurement;
+    }
+
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
-        Call<Measurement> call = measurementApi.getLatestTemperature(areaId);
+        Call<Measurement> call = getMeasurementCall(measurementApi, type, areaId);
         call.enqueue(new Callback<Measurement>() {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<Measurement> call, Response<Measurement> response) {
                 if (response.isSuccessful()) {
+                    response.body().setMeasurementType(type);
                     measurement.setValue(response.body());
                 }
             }
@@ -55,5 +57,16 @@ public class MeasurementRepository {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
+    }
+
+    private Call<Measurement> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId) {
+        switch (type) {
+            case TEMPERATURE:
+                return measurementApi.getLatestTemperature(areaId);
+            case HUMIDITY:
+                return measurementApi.getLatestHumidity(areaId);
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
     }
 }
