@@ -15,13 +15,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new LatestTemperatureFragment();
-            case 1:
-                return new LatestHumidityFragment();
-        }
-        return null;
+        return new LatestMeasurementFragment(position);
     }
 
     @Override
