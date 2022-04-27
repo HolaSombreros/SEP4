@@ -12,7 +12,7 @@ public class Area {
     public Area(String name, String description, int noOfPigs) {
         this.name = name;
         this.description = description;
-        this.noOfPigs = noOfPigs;
+        this.numberOfPigs = noOfPigs;
     }
 
     public Area(int barnId,int id, String name, String description, int noOfPigs) {

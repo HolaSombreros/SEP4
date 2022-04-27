@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer.environment;
+package com.example.farmerama.drawer_fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;

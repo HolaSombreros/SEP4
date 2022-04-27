@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.User;
-import com.example.farmerama.datalayer.model.UserResponse;
+import com.example.farmerama.datalayer.model.response.UserResponse;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 import com.example.farmerama.datalayer.network.UserApi;
 
@@ -107,9 +107,9 @@ public class UserRepository {
         });
     }
 
-    public void getUserByEmail(String email) {
+    public void getUserByEmail(String email, String password) {
         UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.getEmployeeByEmail(email);
+        Call<UserResponse> call = userApi.getEmployeeByEmail(email, password);
         call.enqueue(new Callback<UserResponse>() {
             @EverythingIsNonNull
             @Override

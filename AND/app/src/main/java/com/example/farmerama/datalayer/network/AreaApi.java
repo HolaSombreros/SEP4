@@ -1,7 +1,7 @@
 package com.example.farmerama.datalayer.network;
 
 import com.example.farmerama.datalayer.model.Area;
-import com.example.farmerama.datalayer.model.AreaResponse;
+import com.example.farmerama.datalayer.model.response.AreaResponse;
 
 import java.util.List;
 

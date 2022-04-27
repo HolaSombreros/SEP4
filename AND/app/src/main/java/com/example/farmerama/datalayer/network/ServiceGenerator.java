@@ -12,7 +12,7 @@ public class ServiceGenerator {
     public static UserApi getUserApi() {
         if (userApi == null) {
             userApi = new Retrofit.Builder()
-                    .baseUrl(url)
+                    .baseUrl(url + "users/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(UserApi.class);
         }

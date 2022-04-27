@@ -36,7 +36,7 @@ public class RegisterViewModel extends AndroidViewModel
     public void registerUser(User employee) {
 
         try{
-            repository.getUserByEmail(employee.getEmail());
+            repository.getUserByEmail(employee.getEmail(), employee.getPassword());
             User user = repository.getEmployee().getValue();
             int size = employee.getPassword().length();
             if(user == null && size>=6 )

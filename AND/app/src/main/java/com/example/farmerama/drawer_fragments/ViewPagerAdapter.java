@@ -1,9 +1,11 @@
-package com.example.farmerama.uilayer.environment;
+package com.example.farmerama.drawer_fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.farmerama.drawer_fragments.LatestMeasurementFragment;
 
 
 public class ViewPagerAdapter extends FragmentStateAdapter {

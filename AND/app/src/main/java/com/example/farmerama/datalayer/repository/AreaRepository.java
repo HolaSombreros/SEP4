@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.datalayer.model.Area;
-import com.example.farmerama.datalayer.model.AreaResponse;
+import com.example.farmerama.datalayer.model.response.AreaResponse;
 import com.example.farmerama.datalayer.network.AreaApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 

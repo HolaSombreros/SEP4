@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer;
+package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,7 +37,7 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
         email = view.findViewById(R.id.RegisterEmailAddress);
         firstName = view.findViewById(R.id.RegisterFirstName);
         lastName = view.findViewById(R.id.RegisterLastName);

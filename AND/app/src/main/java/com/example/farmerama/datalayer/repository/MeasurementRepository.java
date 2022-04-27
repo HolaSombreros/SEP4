@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.Measurement;
+import com.example.farmerama.datalayer.model.response.MeasurementResponse;
 import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
@@ -41,25 +42,24 @@ public class MeasurementRepository {
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
-        Call<Measurement> call = getMeasurementCall(measurementApi, type, areaId);
-        call.enqueue(new Callback<Measurement>() {
+        Call<MeasurementResponse> call = getMeasurementCall(measurementApi, type, areaId);
+        call.enqueue(new Callback<MeasurementResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+            public void onResponse(Call<MeasurementResponse> call, Response<MeasurementResponse> response) {
                 if (response.isSuccessful()) {
-                    response.body().setMeasurementType(type);
-                    measurement.setValue(response.body());
+                    measurement.setValue(response.body().getMeasurement());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Measurement> call, Throwable t) {
+            public void onFailure(Call<MeasurementResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
     }
 
-    private Call<Measurement> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId) {
+    private Call<MeasurementResponse> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId) {
         switch (type) {
             case TEMPERATURE:
                 return measurementApi.getLatestTemperature(areaId);

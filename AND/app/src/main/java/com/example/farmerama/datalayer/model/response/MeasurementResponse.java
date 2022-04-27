@@ -1,4 +1,6 @@
-package com.example.farmerama.datalayer.model;
+package com.example.farmerama.datalayer.model.response;
+
+import com.example.farmerama.datalayer.model.Measurement;
 
 public class MeasurementResponse {
     private double value;

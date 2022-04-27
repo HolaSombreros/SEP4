@@ -6,17 +6,17 @@
     app:startDestination="@id/latestMeasurementFragment">
     <fragment
         android:id="@+id/latestMeasurementFragment"
-        android:name="com.example.farmerama.uilayer.environment.LatestDataFragment"
+        android:name="com.example.farmerama.drawer_fragments.LatestDataFragment"
         android:label="Latest Measurements"
         tools:layout="@layout/fragment_latest_data" />
     <fragment
         android:id="@+id/latestTemperatureFragment"
-        android:name="com.example.farmerama.uilayer.environment.LatestMeasurementFragment"
+        android:name="com.example.farmerama.drawer_fragments.LatestMeasurementFragment"
         android:label="fragment_latest_temperature"
         tools:layout="@layout/fragment_latest_measurement" />
     <fragment
         android:id="@+id/latestHumidityFragment"
-        android:name="com.example.farmerama.uilayer.environment.LatestHumidityFragment"
+        android:name="com.example.farmerama.uilayer.fragments.LatestHumidityFragment"
         android:label="fragment_latest_humidity"
         tools:layout="@layout/fragment_latest_humidity" />
     <fragment
@@ -48,19 +48,19 @@
     </fragment>
     <fragment
         android:id="@+id/addAreaFragment"
-        android:name="com.example.farmerama.uilayer.environment.AddAreaFragment"
+        android:name="com.example.farmerama.drawer_fragments.AddAreaFragment"
         android:label="AddArea"
         tools:layout="@layout/fragment_add_area">
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.farmerama.uilayer.LoginFragment"
+        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_login"
     />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.farmerama.uilayer.RegisterFragment"
+        android:name="com.example.farmerama.drawer_fragments.RegisterFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_register"
     />
