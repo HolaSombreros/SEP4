@@ -1,15 +1,19 @@
 package com.dai.shared;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 @Entity
 @Table(name = "area")
-public class Area {
+public class Area implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "area_id")
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name="barn_id")
     private Barn barn;
     @Column(name = "name")
@@ -18,7 +22,9 @@ public class Area {
     private String description;
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
-    //TODO: add hardware
+//    @OneToOne
+//    @JoinColumn(name = "hardware_id")
+//    private Hardware hardware;
 
     protected Area() {
     }
@@ -30,6 +36,14 @@ public class Area {
         this.numberOfPigs = numberOfPigs;
     }
 
+    public Area(int id, Barn barn, String name, String description, int numberOfPigs, Hardware hardware) {
+        this.id = id;
+        this.barn = barn;
+        this.name = name;
+        this.description = description;
+        this.numberOfPigs = numberOfPigs;
+//        this.hardware = hardware;
+    }
     public int getId() {
         return id;
     }
@@ -69,4 +83,13 @@ public class Area {
     public void setNumberOfPigs(int numberOfPigs) {
         this.numberOfPigs = numberOfPigs;
     }
+//
+//    public Hardware getHardware() {
+//        return hardware;
+//    }
+//
+//    public void setHardware(Hardware hardware) {
+//        this.hardware = hardware;
+//    }
+
 }
