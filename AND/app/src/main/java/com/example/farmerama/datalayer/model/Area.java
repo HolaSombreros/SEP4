@@ -1,21 +1,34 @@
 package com.example.farmerama.datalayer.model;
 
-import java.util.List;
 
 public class Area {
 
+    private int barnId;
     private int id;
     private String name;
     private String description;
     private int noOfPigs;
-    private List<Measurement> measurements;
 
-    public Area(int id, String name, String description, int noOfPigs, List<Measurement> measurements) {
+    public Area(String name, String description, int noOfPigs) {
+        this.name = name;
+        this.description = description;
+        this.noOfPigs = noOfPigs;
+    }
+
+    public Area(int barnId,int id, String name, String description, int noOfPigs) {
+        barnId = barnId;
         this.id = id;
         this.name = name;
         this.description = description;
         this.noOfPigs = noOfPigs;
-        this.measurements = measurements;
+    }
+
+    public int getBarnId() {
+        return barnId;
+    }
+
+    public void setBarnId(int barnId) {
+        this.barnId = barnId;
     }
 
     public int getId() {
@@ -48,13 +61,5 @@ public class Area {
 
     public void setNoOfPigs(int noOfPigs) {
         this.noOfPigs = noOfPigs;
-    }
-
-    public List<Measurement> getMeasurements() {
-        return measurements;
-    }
-
-    public void setMeasurements(List<Measurement> measurements) {
-        this.measurements = measurements;
     }
 }

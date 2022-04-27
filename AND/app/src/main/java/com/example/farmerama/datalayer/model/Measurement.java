@@ -9,6 +9,8 @@ public class Measurement {
     private LocalDateTime dateTime;
     private UnitOfMeasurement unitOfMeasurement;
     private MeasurementType measurementType;
+    private double temperature;
+    private double humidity;
 
     public Measurement(int id, double value, LocalDateTime dateTime, UnitOfMeasurement unitOfMeasurement, MeasurementType measurementType) {
         this.id = id;
