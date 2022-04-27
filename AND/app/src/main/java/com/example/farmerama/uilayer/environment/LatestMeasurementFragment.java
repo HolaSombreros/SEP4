@@ -1,5 +1,7 @@
 package com.example.farmerama.uilayer.environment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,17 +14,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.farmerama.R;
+import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
 
 
 public class LatestMeasurementFragment extends Fragment {
+    private MeasurementType measurementType;
     private EditText timeText;
     private TextView measurementTextView;
     private TextView typeTextView;
-    private LatestMeasurementViewModel latestMeasurement;
+    private LatestMeasurementViewModel viewModel;
+    private SharedPreferences sharedPreferences;
 
     public LatestMeasurementFragment(int position) {
-
+        switch (position) {
+            case 0:
+                measurementType = MeasurementType.TEMPERATURE;
+                break;
+            case 1:
+                measurementType = MeasurementType.HUMIDITY;
+                break;
+        }
     }
 
     @Override
@@ -33,7 +45,7 @@ public class LatestMeasurementFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        latestMeasurement = new ViewModelProvider(getActivity()).get(LatestMeasurementViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(LatestMeasurementViewModel.class);
         initializeViews(view);
         setUpViews();
     }
@@ -45,11 +57,15 @@ public class LatestMeasurementFragment extends Fragment {
     }
 
     private void setUpViews() {
-        latestMeasurement.getLatestMeasurement(0).observe(getViewLifecycleOwner(), measurement ->{
-            timeText.setText(measurement.getDateTime().toString());
-            //TODO: check to display temperature not random value from measurement
+        sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
+
+        viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 0), measurementType);
+
+        viewModel.getLatestMeasurement(measurementType).observe(getViewLifecycleOwner(), measurement -> {
             measurementTextView.setText(String.valueOf(measurement.getValue()));
             typeTextView.setText(measurement.getMeasurementType().toString());
         });
+
+
     }
 }

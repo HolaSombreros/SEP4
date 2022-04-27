@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.datalayer.model.Area;
 import com.example.farmerama.datalayer.network.AreaApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
+
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +35,18 @@ public class AreaRepository {
     public LiveData<Area> getSpecificArea() {
         return specificArea;
     }
+
     public LiveData<List<Area>> getAreas(){
+        // TODO don't mock data
+        List<Area> list = new ArrayList<>();
+        Area area = new Area("Farmerama", "aaa", 120);
+        area.setId(1);
+        list.add(area);
+        Area area2 = new Area("Farm", "bbb", 130);
+        area.setId(20);
+        list.add(area2);
+        areas.setValue(list);
+
         return areas;
     }
 

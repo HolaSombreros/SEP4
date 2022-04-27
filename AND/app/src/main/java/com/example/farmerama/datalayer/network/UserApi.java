@@ -12,12 +12,12 @@ import retrofit2.http.Path;
 
 public interface UserApi {
 
-    @GET(".")
+    @GET("users")
     Call<List<UserResponse>> getAllEmployees();
 
-    @GET("{email}")
+    @GET("users/{email}")
     Call<User> getEmployeeByEmail(@Path("email") String email);
 
-    @POST
+    @POST("users")
     Call<User> register(User employee);
 }

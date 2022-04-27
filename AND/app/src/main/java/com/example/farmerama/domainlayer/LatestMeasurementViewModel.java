@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.farmerama.datalayer.dao.MeasurementDAO;
 import com.example.farmerama.datalayer.model.Area;
 import com.example.farmerama.datalayer.model.Measurement;
+import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.repository.AreaRepository;
 import com.example.farmerama.datalayer.repository.MeasurementRepository;
-import com.example.farmerama.datalayer.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,19 @@ public class LatestMeasurementViewModel extends ViewModel {
         this.areaRepository = AreaRepository.getInstance();
     }
 
-    public LiveData<Measurement> getLatestMeasurement() {
-        return measurementRepository.getLatestTemperature();
+    public LiveData<Measurement> getLatestMeasurement(MeasurementType type) {
+        switch (type) {
+            case TEMPERATURE:
+                return measurementRepository.getLatestTemperature();
+            case HUMIDITY:
+                return measurementRepository.getLatestHumidity();
+            default:
+                throw new IllegalArgumentException("No type defined");
+        }
     }
-    public void retrieveLatestMeasurement(int areaId) {
-        measurementRepository.retrieveLatestTemperature(areaId);
+
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
+        measurementRepository.retrieveLatestMeasurement(areaId, type);
     }
 
     public LiveData<List<Area>> getAreas() {

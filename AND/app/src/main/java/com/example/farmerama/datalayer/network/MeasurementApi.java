@@ -12,4 +12,7 @@ public interface MeasurementApi {
 
     @GET("{areaId}/temperature/latest")
     Call<Measurement> getLatestTemperature(@Path("areaId") int areaId);
+
+    @GET("{areaId}/humidity/latest")
+    Call<Measurement> getLatestHumidity(@Path("areaId") int areaId);
 }
