@@ -24,7 +24,7 @@ public class RegisterFragment extends Fragment {
     private EditText firstName;
     private EditText lastName;
     private EditText password;
-    private  Button registerButton;
+    private Button registerButton;
 
     @Nullable
     @Override
@@ -50,7 +50,7 @@ public class RegisterFragment extends Fragment {
 
     public void registerUser(View v){
 
-        viewModel.registerUser(new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), Role.EMPLOYEE));
+        viewModel.registerUser(new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), "EMPLOYEE"));
 
     }
 }

@@ -30,15 +30,14 @@ public class AreaRepository {
         return instance;
     }
 
-    public LiveData<List<Area>> getAreas() {
-        return areas;
-    }
-
     public LiveData<Area> getSpecificArea() {
         return specificArea;
     }
+    public LiveData<List<Area>> getAreas(){
+        return areas;
+    }
 
-    public void retrieveAreas() {
+    public void getAllAreas() {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<List<Area>> call = areaApi.getAreas();
         call.enqueue(new Callback<List<Area>>() {
@@ -57,9 +56,9 @@ public class AreaRepository {
         });
     }
 
-    public void retrieveSpecificArea(int id) {
+    public void getSpecificArea(String name) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<Area> call = areaApi.getSpecificArea(id);
+        Call<Area> call = areaApi.getSpecificArea(name);
         call.enqueue(new Callback<Area>() {
             @EverythingIsNonNull
             @Override

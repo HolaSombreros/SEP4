@@ -15,7 +15,7 @@ public interface AreaApi {
     @GET
     Call<List<Area>> getAreas();
 
-    @GET("{id}")
-    Call<Area> getSpecificArea(@Path("id") int id);
+    @GET("{name}")
+    Call<Area> getSpecificArea(@Path("name") String name);
 
 }

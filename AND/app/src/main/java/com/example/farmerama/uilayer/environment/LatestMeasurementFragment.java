@@ -31,7 +31,6 @@ public class LatestMeasurementFragment extends Fragment {
         return (ViewGroup) inflater.inflate(R.layout.fragment_latest_measurement, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         latestMeasurement = new ViewModelProvider(getActivity()).get(LatestMeasurementViewModel.class);
