@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -16,8 +17,11 @@ public interface UserApi {
     Call<List<UserResponse>> getAllEmployees();
 
     @GET("{email}")
-    Call<User> getEmployeeByEmail(@Path("email") String email);
+    Call<UserResponse> getEmployeeByEmail(@Path("email") String email);
+
+    @GET("{id}")
+    Call<UserResponse> getEmployeeById(@Path("id") int id);
 
     @POST
-    Call<User> register(User user);
+    Call<UserResponse> register(User user);
 }

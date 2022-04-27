@@ -1,6 +1,7 @@
 package com.example.farmerama.datalayer.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Measurement {
 
@@ -8,14 +9,16 @@ public class Measurement {
     private double value;
     private LocalDateTime dateTime;
     private MeasurementType measurementType;
-    private double temperature;
-    private double humidity;
 
     public Measurement(int id, double value, LocalDateTime dateTime, MeasurementType measurementType) {
         this.id = id;
         this.value = value;
         this.dateTime = dateTime;
         this.measurementType = measurementType;
+    }
+    public Measurement(double value, String measuredDate) {
+        this.value = value;
+        //TODO: format date
     }
 
     public int getId() {

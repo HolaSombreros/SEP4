@@ -23,6 +23,15 @@ public class RegisterViewModel extends AndroidViewModel
     public LiveData<List<User>> getAllEmployees(){
         return repository.getAllEmployees();
     }
+    public void retrieveAllEmployees(){
+        repository.retrieveAllEmployees();
+    }
+    public void getUserById(int id) {
+        repository.getUserById(id);
+    }
+    public LiveData<User> getEmployee(){
+        return repository.getEmployee();
+    }
 
     public void registerUser(User employee) {
 

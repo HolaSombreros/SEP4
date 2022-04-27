@@ -68,20 +68,40 @@ public class UserRepository {
         });
     }
 
-    public void register(User employee) {
+    public void getUserById(int id) {
         UserApi userApi = ServiceGenerator.getUserApi();
-        Call<User> call = userApi.register(employee);
-        call.enqueue(new Callback<User>() {
+        Call<UserResponse> call = userApi.getEmployeeById(id);
+        call.enqueue(new Callback<UserResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
-                    user.setValue(response.body());
+                    user.setValue( response.body().getUser());
+                    Log.w("test2", user.getValue().toString());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.i("Retrofit", "could not retrieve shit");
+            }
+        });
+    }
+
+    public void register(User employee) {
+        UserApi userApi = ServiceGenerator.getUserApi();
+        Call<UserResponse> call = userApi.register(employee);
+        call.enqueue(new Callback<UserResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.isSuccessful()) {
+                    user.setValue(response.body().getUser());
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
@@ -89,18 +109,18 @@ public class UserRepository {
 
     public void getUserByEmail(String email) {
         UserApi userApi = ServiceGenerator.getUserApi();
-        Call<User> call = userApi.getEmployeeByEmail(email);
-        call.enqueue(new Callback<User>() {
+        Call<UserResponse> call = userApi.getEmployeeByEmail(email);
+        call.enqueue(new Callback<UserResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
-                    user.setValue(response.body());
+                    user.setValue(response.body().getUser());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
