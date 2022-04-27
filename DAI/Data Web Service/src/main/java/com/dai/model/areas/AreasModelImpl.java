@@ -5,7 +5,6 @@ import com.dai.dao.area.AreaDao;
 import com.dai.dao.barn.BarnDao;
 import com.dai.exceptions.BadRequestException;
 import com.dai.shared.Area;
-import com.dai.shared.AreaDTO;
 import com.dai.shared.Barn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
