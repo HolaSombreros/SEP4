@@ -30,7 +30,7 @@ public class HardwareDaoImpl implements HardwareDao{
     @Override
     @Async
     public Future<Hardware> read(int id) {
-        return new AsyncResult<>(hardwareRepository.getById(id));
+        return new AsyncResult<>(hardwareRepository.findById(id).get());
     }
 
     @Override

@@ -3,11 +3,13 @@ package com.dai.dao.area;
 import com.dai.repository.AreaRepository;
 import com.dai.shared.Area;
 import com.dai.shared.Barn;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 @Repository
@@ -15,6 +17,7 @@ import java.util.concurrent.Future;
 public class AreaDaoImpl implements AreaDao{
     private AreaRepository repository;
 
+    @Autowired
     public AreaDaoImpl(AreaRepository repository) {
         this.repository = repository;
     }
@@ -27,7 +30,7 @@ public class AreaDaoImpl implements AreaDao{
 
     @Override
     public Future<Area> read(int id) {
-        return new AsyncResult<>(repository.getById(id));
+        return new AsyncResult<>(repository.findById(id).get());
     }
 
     @Override
@@ -38,5 +41,9 @@ public class AreaDaoImpl implements AreaDao{
     @Override
     public void delete(int id) {
 
+    }
+    @Override
+    public Future<List<Area>> getAll() {
+        return new AsyncResult<>(repository.findAll());
     }
 }
