@@ -4,29 +4,30 @@ import com.dai.exceptions.BadRequestException;
 import com.dai.model.temperature.TemperatureModel;
 import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RequestMapping("/temperatures")
 @RestController
 public class TemperaturesController {
 
     private TemperatureModel temperatureModel;
+
     @Autowired
     public TemperaturesController(TemperatureModel temperatureModel) {
         this.temperatureModel = temperatureModel;
     }
 
-    @GetMapping(value = "/latestMeasurement")
-    public SentMeasurement readLastTemperature(@RequestParam("areaId") Optional<Integer> areaId){
-        try{
-            return temperatureModel.readLatestTemperature(areaId.get());
-        }
-        catch (Exception e){
+    @GetMapping(value = "/areas/{id}/temperatures")
+    public SentMeasurement readLastTemperature(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
+        try {
+            if (isLatest.isPresent() && isLatest.get()) {
+                return temperatureModel.readLatestTemperature(id);
+            } else {
+                //TODO return all temperatures for the given area
+                return null;
+            }
+        } catch (Exception e) {
             throw new BadRequestException();
         }
     }
