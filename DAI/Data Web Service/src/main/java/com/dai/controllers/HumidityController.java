@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RequestMapping("/humidity")
 @RestController
 public class HumidityController {
     private HumidityModel humidityModel;
@@ -18,14 +17,18 @@ public class HumidityController {
     public HumidityController(HumidityModel humidityModel) {
         this.humidityModel = humidityModel;
     }
-    @GetMapping(value = "latestMeasurement")
-    public SentMeasurement readLastHumidity(@RequestParam("areaId") Optional<Integer> areaId) {
+
+    @GetMapping("/areas/{id}/humidity")
+    public SentMeasurement readLastHumidity(@PathVariable("id") int areaId, @RequestParam("latest") Optional<Boolean> isLatest) {
         try {
-            return humidityModel.readLatestHumidity(areaId.get());
+            if (isLatest.isPresent() && isLatest.get()) {
+                return humidityModel.readLatestHumidity(areaId);
+            } else {
+                //TODO return all temperatures for the given area
+                return null;
+            }
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-
-
 }
