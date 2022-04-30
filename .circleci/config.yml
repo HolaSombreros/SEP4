@@ -70,4 +70,3 @@ workflows:
               only:
                 - master
                 - data
-                - Tomas
