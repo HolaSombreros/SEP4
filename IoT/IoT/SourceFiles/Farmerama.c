@@ -46,6 +46,8 @@ void farmerama_runTask(void) {
 	xMessageBufferReset(_humidityBuffer);
 	xMessageBufferReset(_temperatureBuffer);
 	
+	printf("Humidity before builder: %d\n", humidity);
+	
 	uplinkMessageBuilder_setHumidityData(humidity);
 	uplinkMessageBuilder_setTemperatureData(temperature);
 	

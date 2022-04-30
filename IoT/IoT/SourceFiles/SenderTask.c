@@ -38,14 +38,14 @@ void senderTask_runTask() {
 	xMessageBufferReceive(_senderHandle, &uplinkPayload, sizeof(uplinkPayload), pdMS_TO_TICKS(300000UL));
 	xMessageBufferReset(_senderHandle);
 	
-	lora_driver_returnCode_t returnCode;
-	if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
-		
-	} else if (returnCode == LORA_MAC_RX) {
-		
-	}
+	//lora_driver_returnCode_t returnCode;
+	//if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
+		//
+	//} else if (returnCode == LORA_MAC_RX) {
+		//
+	//}
 	
-	printf("Humidity: %d | Temperature: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[2]);
+	printf("Humidity high: %d Humidity low: %d | Temperature: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[3]);
 }
 
 static void _run(void* params) {
