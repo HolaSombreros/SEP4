@@ -1,23 +1,24 @@
 package com.example.farmerama.datalayer.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Measurement {
 
     private int id;
     private double value;
     private LocalDateTime dateTime;
-    private UnitOfMeasurement unitOfMeasurement;
     private MeasurementType measurementType;
-    private double temperature;
-    private double humidity;
 
-    public Measurement(int id, double value, LocalDateTime dateTime, UnitOfMeasurement unitOfMeasurement, MeasurementType measurementType) {
+    public Measurement(int id, double value, LocalDateTime dateTime, MeasurementType measurementType) {
         this.id = id;
         this.value = value;
         this.dateTime = dateTime;
-        this.unitOfMeasurement = unitOfMeasurement;
         this.measurementType = measurementType;
+    }
+    public Measurement(double value, String measuredDate) {
+        this.value = value;
+        //TODO: format date
     }
 
     public int getId() {
@@ -42,14 +43,6 @@ public class Measurement {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public UnitOfMeasurement getUnitOfMeasurement() {
-        return unitOfMeasurement;
-    }
-
-    public void setUnitOfMeasurement(UnitOfMeasurement unitOfMeasurement) {
-        this.unitOfMeasurement = unitOfMeasurement;
     }
 
     public MeasurementType getMeasurementType() {

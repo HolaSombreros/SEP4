@@ -16,4 +16,10 @@
     <string name="last_name">Last Name</string>
     <string name="login">Login</string>
     <string name="continue_as_a_guest">Continue as a guest</string>
+    <string name="add_area">Add New Area</string>
+    <string name="area_name">Area Name</string>
+    <string name="description">Description</string>
+    <string name="noPigs">Number Of Pigs</string>
+    <string name="create">Create</string>
+    <string name="measurementType">type</string>
 </resources>

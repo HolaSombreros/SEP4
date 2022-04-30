@@ -8,8 +8,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import android.os.Bundle;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_activity_main);
+        setContentView(R.layout.menu_drawer);
         initViews();
         setupNavigation();
 

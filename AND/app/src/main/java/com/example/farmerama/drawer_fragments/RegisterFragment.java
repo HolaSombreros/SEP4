@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer;
+package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,12 +24,12 @@ public class RegisterFragment extends Fragment {
     private EditText firstName;
     private EditText lastName;
     private EditText password;
-    private  Button registerButton;
+    private Button registerButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.register_layout, container,false);
+        return inflater.inflate(R.layout.fragment_register, container,false);
 
     }
 
@@ -38,7 +37,7 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
         email = view.findViewById(R.id.RegisterEmailAddress);
         firstName = view.findViewById(R.id.RegisterFirstName);
         lastName = view.findViewById(R.id.RegisterLastName);
@@ -51,7 +50,7 @@ public class RegisterFragment extends Fragment {
 
     public void registerUser(View v){
 
-        viewModel.registerUser(new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), Role.EMPLOYEE));
+        viewModel.registerUser(new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), "EMPLOYEE"));
 
     }
 }

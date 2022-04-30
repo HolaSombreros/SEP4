@@ -7,14 +7,20 @@ public class Area {
     private int id;
     private String name;
     private String description;
-    private int noOfPigs;
+    private int numberOfPigs;
+
+    public Area(String name, String description, int noOfPigs) {
+        this.name = name;
+        this.description = description;
+        this.numberOfPigs = noOfPigs;
+    }
 
     public Area(int barnId,int id, String name, String description, int noOfPigs) {
         barnId = barnId;
         this.id = id;
         this.name = name;
         this.description = description;
-        this.noOfPigs = noOfPigs;
+        this.numberOfPigs = noOfPigs;
     }
 
     public int getBarnId() {
@@ -50,10 +56,10 @@ public class Area {
     }
 
     public int getNoOfPigs() {
-        return noOfPigs;
+        return numberOfPigs;
     }
 
     public void setNoOfPigs(int noOfPigs) {
-        this.noOfPigs = noOfPigs;
+        this.numberOfPigs = noOfPigs;
     }
 }
