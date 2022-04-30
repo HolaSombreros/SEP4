@@ -1,40 +1,54 @@
 #include <stdio.h>
 #include <avr/io.h>
-
-#include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-
 #include <stdio_driver.h>
 #include <serial.h>
 
-#include <status_leds.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <task.h>
+#include <message_buffer.h>
+#include <event_groups.h>
 
-// Drivers
-#include <mh_z19.h>
-#include <hih8120.h>
+#include <Farmerama.h>
+#include <HumidityTemperature.h>
+#include <HumidityTemperatureTask.h>
+#include <SenderTask.h>
 
+static MessageBufferHandle_t humidityHandle;
+static MessageBufferHandle_t temperatureHandle;
+static MessageBufferHandle_t senderHandle;
 
-/*-----------------------------------------------------------*/
-static void _initialize(void) {
-	puts("Starting...");
-	
-	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
-	stdio_initialise(ser_USART0);
-	
-	status_leds_initialise(5); // what is this?
+static EventGroupHandle_t actHandle;
+static EventGroupHandle_t doneHandle;
+
+static void _initializeDrivers(void) {
+	puts("Initializing drivers...");
+	humidityTemperature_initializeDriver();
+	//lora_driver_initialise(ser_USART1, NULL);
 }
 
 static void _createTasks(void) {
 	puts("Creating tasks...");
-	humidityTemperatureTask_create();
-	senderTask_create();
+	farmerama_create(senderHandle, humidityHandle, temperatureHandle, actHandle, doneHandle);
+	humidityTemperatureTask_create(humidityHandle, temperatureHandle, actHandle, doneHandle);
+	senderTask_create(senderHandle);
 }
 
-/*-----------------------------------------------------------*/
-int main(void) {
-	_initialize();
+static void _createMessageBuffers(void) {
+	puts("Creating message buffers...");
+}
+
+static void _createEventGroups(void) {
+	puts("Creating event groups...");
 	
-	_createTasks(); // Must be done as the very first thing!!
+}
+
+int main(void) {
+	stdio_initialise(ser_USART0);
+	
+	_initializeDrivers();
+	_createMessageBuffers();
+	_createEventGroups();
+	_createTasks();
 	
 	puts("Starting tasks...");
 	vTaskStartScheduler();
