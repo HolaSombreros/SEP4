@@ -47,7 +47,7 @@ public class MeasurementDaoImpl implements MeasurementDao{
 
     @Override
     @Async
-    public Future<Measurement> getLatestMeasurement() {
-        return new AsyncResult<>(repository.getFirstByOrderByIdDesc());
+    public Future<Measurement> getLatestMeasurement(int id) {
+        return new AsyncResult<>(repository.findTopByAreaIdOrderByMeasuredDateDesc(id));
     }
 }

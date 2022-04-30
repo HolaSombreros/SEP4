@@ -18,7 +18,7 @@ public class HumidityController {
         this.humidityModel = humidityModel;
     }
 
-    @GetMapping("/areas/{id}/humidity")
+    @GetMapping("/areas/{id}/humidities")
     public SentMeasurement readLastHumidity(@PathVariable("id") int areaId, @RequestParam("latest") Optional<Boolean> isLatest) {
         try {
             if (isLatest.isPresent() && isLatest.get()) {

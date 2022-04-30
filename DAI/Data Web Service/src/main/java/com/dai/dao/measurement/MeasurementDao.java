@@ -13,5 +13,5 @@ public interface MeasurementDao {
     Future<Measurement> read(int id);
     Future<Measurement> update(Measurement measurement);
     void delete(int id);
-    Future<Measurement> getLatestMeasurement();
+    Future<Measurement> getLatestMeasurement(int id);
 }
