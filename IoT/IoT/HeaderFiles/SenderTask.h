@@ -9,6 +9,6 @@
 #include <message_buffer.h>
 #include <event_groups.h>
 
-taskReturnCode_t senderTask_create(MessageBufferHandle_t senderHandle);
+void senderTask_create(MessageBufferHandle_t senderHandle);
 void senderTask_initTask(void* params);
 void senderTask_runTask(void);

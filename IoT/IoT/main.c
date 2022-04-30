@@ -7,6 +7,7 @@
 #include <task.h>
 #include <message_buffer.h>
 #include <event_groups.h>
+#include <lora_driver.h>
 
 #include <Farmerama.h>
 #include <HumidityTemperature.h>
@@ -23,23 +24,26 @@ static EventGroupHandle_t doneHandle;
 static void _initializeDrivers(void) {
 	puts("Initializing drivers...");
 	humidityTemperature_initializeDriver();
-	//lora_driver_initialise(ser_USART1, NULL);
+	lora_driver_initialise(ser_USART1, NULL);
 }
 
 static void _createTasks(void) {
-	puts("Creating tasks...");
 	farmerama_create(senderHandle, humidityHandle, temperatureHandle, actHandle, doneHandle);
 	humidityTemperatureTask_create(humidityHandle, temperatureHandle, actHandle, doneHandle);
 	senderTask_create(senderHandle);
 }
 
 static void _createMessageBuffers(void) {
-	puts("Creating message buffers...");
+	size_t size = 100;
+	
+	humidityHandle = xMessageBufferCreate(size);
+	temperatureHandle = xMessageBufferCreate(size);
+	senderHandle = xMessageBufferCreate(size);
 }
 
 static void _createEventGroups(void) {
-	puts("Creating event groups...");
-	
+	actHandle = xEventGroupCreate();
+	doneHandle = xEventGroupCreate();
 }
 
 int main(void) {
@@ -50,6 +54,6 @@ int main(void) {
 	_createEventGroups();
 	_createTasks();
 	
-	puts("Starting tasks...");
+	puts("Starting...");
 	vTaskStartScheduler();
 }

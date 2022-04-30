@@ -6,7 +6,7 @@
 
 measurementReturnCode_t humidityTemperature_initializeDriver(void) {
 	if (hih8120_initialise() == HIH8120_OK) {
-		puts("Humidity/Temperature driver initialized!");
+		//puts("Humidity/Temperature driver initialized!");
 		return MEASUREMENT_OK;
 	} else {
 		puts("Failed to initialize driver...");
@@ -19,6 +19,7 @@ measurementReturnCode_t humidityTemperature_measure(void) {
 		vTaskDelay(100);
 		
 		if (hih8120_measure() == HIH8120_OK) {
+			vTaskDelay(2);
 			return MEASUREMENT_OK;
 		} else {
 			puts("Failed to measure...");

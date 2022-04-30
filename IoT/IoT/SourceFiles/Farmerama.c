@@ -1,16 +1,17 @@
 #include <Farmerama.h>
 #include <UplinkMessageBuilder.h>
+#include <stdio.h>
 
-#define TASK_NAME "HumidityTemperatureTask"
+#define TASK_NAME "FarmeramaTask"
 #define TASK_PRIORITY 1
-#define TASK_INTERVAL 5000UL // 300000UL
+#define TASK_INTERVAL 300000UL
 #define PORT 1
 
 static void _run(void* params);
 
-MessageBufferHandle_t _senderBuffer;
-MessageBufferHandle_t _humidityBuffer;
-MessageBufferHandle_t _temperatureBuffer;
+static MessageBufferHandle_t _senderBuffer;
+static MessageBufferHandle_t _humidityBuffer;
+static MessageBufferHandle_t _temperatureBuffer;
 static EventGroupHandle_t _actHandle;
 static EventGroupHandle_t _doneHandle;
 
@@ -30,17 +31,20 @@ void farmerama_initTask(void* params) {
 
 void farmerama_runTask(void) {
 	xEventGroupSetBits(_actHandle, 1);
-	xEventGroupWaitBits(_doneHandle, 1, pdTRUE, pdTRUE, pdMS_TO_TICKS(100));
+	xEventGroupWaitBits(_doneHandle, 1, pdTRUE, pdTRUE, pdMS_TO_TICKS(300000UL));
 	
-	uint16_t humidity = NULL;
+	uint16_t humidity;
 	if (xMessageBufferIsEmpty(_humidityBuffer) == pdFALSE) {
 		xMessageBufferReceive(_humidityBuffer, &humidity, sizeof(humidity), pdMS_TO_TICKS(100));
 	}
 	
-	int16_t temperature = NULL;
+	int16_t temperature;
 	if (xMessageBufferIsEmpty(_temperatureBuffer) == pdFALSE) {
 		xMessageBufferReceive(_temperatureBuffer, &temperature, sizeof(temperature), pdMS_TO_TICKS(100));
 	}
+	
+	xMessageBufferReset(_humidityBuffer);
+	xMessageBufferReset(_temperatureBuffer);
 	
 	uplinkMessageBuilder_setHumidityData(humidity);
 	uplinkMessageBuilder_setTemperatureData(temperature);
