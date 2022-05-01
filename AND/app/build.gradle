@@ -28,7 +28,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
@@ -40,6 +39,14 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+
+    // new dependencies added for navigation component
+    implementation "androidx.navigation:navigation-fragment:2.4.2"
+    implementation 'androidx.navigation:navigation-ui:2.4.2'
+
+    // JUnit
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "com.google.android.material:material:1.1.0-beta01"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -51,7 +58,15 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.25.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+
+    // Espresso
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Robolectric environment
+    testImplementation "org.robolectric:robolectric:4.7"
+
+    // Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.25.0'
 
 
 }
