@@ -40,9 +40,9 @@ public class MeasurementRepository {
         return measurement;
     }
 
-    public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
-        Call<MeasurementResponse> call = getMeasurementCall(measurementApi, type, areaId);
+        Call<MeasurementResponse> call = getMeasurementCall(measurementApi, type, areaId, latest);
         call.enqueue(new Callback<MeasurementResponse>() {
             @EverythingIsNonNull
             @Override
@@ -59,12 +59,12 @@ public class MeasurementRepository {
         });
     }
 
-    private Call<MeasurementResponse> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId) {
+    private Call<MeasurementResponse> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId, boolean latest) {
         switch (type) {
             case TEMPERATURE:
-                return measurementApi.getLatestTemperature(areaId);
+                return measurementApi.getLatestTemperature(areaId, latest);
             case HUMIDITY:
-                return measurementApi.getLatestHumidity(areaId);
+                return measurementApi.getLatestHumidity(areaId, latest);
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
         }

@@ -7,10 +7,10 @@ public class Measurement {
 
     private int id;
     private double value;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private MeasurementType measurementType;
 
-    public Measurement(int id, double value, LocalDateTime dateTime, MeasurementType measurementType) {
+    public Measurement(int id, double value, String dateTime, MeasurementType measurementType) {
         this.id = id;
         this.value = value;
         this.dateTime = dateTime;
@@ -18,7 +18,7 @@ public class Measurement {
     }
     public Measurement(double value, String measuredDate) {
         this.value = value;
-        //TODO: format date
+        this.dateTime = measuredDate;
     }
 
     public int getId() {
@@ -37,11 +37,11 @@ public class Measurement {
         this.value = value;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
