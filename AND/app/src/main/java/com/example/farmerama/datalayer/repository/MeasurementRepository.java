@@ -39,9 +39,9 @@ public class MeasurementRepository {
         return measurement;
     }
 
-    public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
-        Call<Measurement> call = adapter.retrieveLatestMeasurement(type, areaId);
-        call.enqueue(new Callback<Measurement>() {
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
+        Call<MeasurementResponse> call = adapter.retrieveLatestMeasurement(type, areaId, latest);
+        call.enqueue(new Callback<MeasurementResponse>() {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<MeasurementResponse> call, Response<MeasurementResponse> response) {

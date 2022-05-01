@@ -22,7 +22,7 @@ public class ServiceGenerator {
     public static MeasurementApi getMeasurementApi() {
         if (measurementApi == null) {
             measurementApi = new Retrofit.Builder()
-                    .baseUrl(url + "measurements/")
+                    .baseUrl(url + "areas/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(MeasurementApi.class);

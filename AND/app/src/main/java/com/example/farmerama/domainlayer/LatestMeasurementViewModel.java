@@ -26,8 +26,8 @@ public class LatestMeasurementViewModel extends ViewModel {
         return measurementRepository.getLatestMeasurement();
     }
 
-    public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
-        measurementRepository.retrieveLatestMeasurement(areaId, type);
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
+        measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
     }
 
     public LiveData<List<Area>> getAreas() {
