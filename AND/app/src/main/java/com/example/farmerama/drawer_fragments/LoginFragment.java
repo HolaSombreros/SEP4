@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer;
+package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.farmerama.R;
-import com.example.farmerama.datalayer.model.Role;
 import com.example.farmerama.datalayer.model.User;
 import com.example.farmerama.domainlayer.LoginViewModel;
 
@@ -27,14 +26,13 @@ public class LoginFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.login_layout, container,false);
+        return inflater.inflate(R.layout.fragment_login, container,false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
         email= view.findViewById(R.id.LoginEmailAddress);
         password = view.findViewById(R.id.LoginPassword);
         loginButton = view.findViewById(R.id.loginButton);

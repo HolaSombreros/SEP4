@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.Measurement;
+import com.example.farmerama.datalayer.model.response.MeasurementResponse;
+import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,12 +18,10 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MeasurementRepository {
 
-    private MutableLiveData<List<Measurement>> measurements;
     private MutableLiveData<Measurement> measurement;
     private static MeasurementRepository instance;
 
     private MeasurementRepository() {
-        measurements = new MutableLiveData<>();
         measurement = new MutableLiveData<>();
     }
 
@@ -38,22 +36,37 @@ public class MeasurementRepository {
         return measurement;
     }
 
-    public void retrieveLatestTemperature(int areaId) {
+    public LiveData<Measurement> getLatestHumidity() {
+        return measurement;
+    }
+
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
-        Call<Measurement> call = measurementApi.getLatestTemperature(areaId);
-        call.enqueue(new Callback<Measurement>() {
+        Call<MeasurementResponse> call = getMeasurementCall(measurementApi, type, areaId, latest);
+        call.enqueue(new Callback<MeasurementResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+            public void onResponse(Call<MeasurementResponse> call, Response<MeasurementResponse> response) {
                 if (response.isSuccessful()) {
-                    measurement.setValue(response.body());
+                    measurement.setValue(response.body().getMeasurement());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Measurement> call, Throwable t) {
+            public void onFailure(Call<MeasurementResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
+    }
+
+    private Call<MeasurementResponse> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId, boolean latest) {
+        switch (type) {
+            case TEMPERATURE:
+                return measurementApi.getLatestTemperature(areaId, latest);
+            case HUMIDITY:
+                return measurementApi.getLatestHumidity(areaId, latest);
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
     }
 }

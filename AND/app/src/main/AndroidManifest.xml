@@ -9,6 +9,7 @@
         android:icon="@mipmap/application_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/application_launcher"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Farmerama">
         <activity
