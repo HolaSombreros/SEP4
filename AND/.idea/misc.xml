@@ -11,7 +11,7 @@
         <entry key="app/src/main/res/layout-land/fragment_daily_recipe.xml" value="0.30687830687830686" />
         <entry key="app/src/main/res/layout-land/fragment_latest_data.xml" value="0.2" />
         <entry key="app/src/main/res/layout-land/fragment_my_followers.xml" value="0.30687830687830686" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.264" />
         <entry key="app/src/main/res/layout/fragment_account.xml" value="0.28020833333333334" />
         <entry key="app/src/main/res/layout/fragment_areas.xml" value="0.28020833333333334" />
@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_latest_temperature.xml" value="0.3625" />
         <entry key="app/src/main/res/layout/fragment_sensors.xml" value="0.3625" />
         <entry key="app/src/main/res/layout/latest_data.xml" value="0.22826086956521738" />
+        <entry key="app/src/main/res/layout/login_layout.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/menu_header.xml" value="0.3625" />
         <entry key="app/src/main/res/layout/new_activity_main.xml" value="0.1762917933130699" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.3625" />
