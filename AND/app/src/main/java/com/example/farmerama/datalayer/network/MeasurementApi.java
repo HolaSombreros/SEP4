@@ -1,18 +1,17 @@
 package com.example.farmerama.datalayer.network;
 
-import com.example.farmerama.datalayer.model.Measurement;
-
-import java.util.List;
+import com.example.farmerama.datalayer.model.response.MeasurementResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface MeasurementApi {
 
-    @GET("{areaId}/temperature/latest")
-    Call<Measurement> getLatestTemperature(@Path("areaId") int areaId);
+    @GET("{areaId}/temperatures")
+    Call<MeasurementResponse> getLatestTemperature(@Path("areaId") int areaId, @Query("latest") boolean latest);
 
-    @GET("{areaId}/humidity/latest")
-    Call<Measurement> getLatestHumidity(@Path("areaId") int areaId);
+    @GET("{areaId}/humidities")
+    Call<MeasurementResponse> getLatestHumidity(@Path("areaId") int areaId, @Query("latest") boolean latest);
 }

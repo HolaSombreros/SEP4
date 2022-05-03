@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.datalayer.model.Area;
+import com.example.farmerama.datalayer.model.response.AreaResponse;
 import com.example.farmerama.datalayer.network.AreaApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 
@@ -42,18 +43,22 @@ public class AreaRepository {
 
     public void getAllAreas() {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<List<Area>> call = areaApi.getAreas();
-        call.enqueue(new Callback<List<Area>>() {
+        Call<List<AreaResponse>> call = areaApi.getAreas();
+        call.enqueue(new Callback<List<AreaResponse>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<List<Area>> call, Response<List<Area>> response) {
+            public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
-                    areas.setValue(response.body());
+                    List<Area> list = new ArrayList<>();
+                    for(AreaResponse areaResponse : response.body()) {
+                        list.add(areaResponse.getArea());
+                    }
+                    areas.setValue(list);
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<List<Area>> call, Throwable t) {
+            public void onFailure(Call<List<AreaResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
@@ -61,18 +66,18 @@ public class AreaRepository {
 
     public void getSpecificArea(String name) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<Area> call = areaApi.getSpecificArea(name);
-        call.enqueue(new Callback<Area>() {
+        Call<AreaResponse> call = areaApi.getSpecificArea(name);
+        call.enqueue(new Callback<AreaResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Area> call, Response<Area> response) {
+            public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                 if (response.isSuccessful()) {
-                    specificArea.setValue(response.body());
+                    specificArea.setValue(response.body().getArea());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Area> call, Throwable t) {
+            public void onFailure(Call<AreaResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
@@ -80,18 +85,18 @@ public class AreaRepository {
 
     public void createArea(Area area) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<Area> call = areaApi.createArea(area);
-        call.enqueue(new Callback<Area>() {
+        Call<AreaResponse> call = areaApi.createArea(area);
+        call.enqueue(new Callback<AreaResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Area> call, Response<Area> response) {
+            public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                 if (response.isSuccessful()) {
-                    specificArea.setValue(response.body());
+                    specificArea.setValue(response.body().getArea());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Area> call, Throwable t) {
+            public void onFailure(Call<AreaResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });

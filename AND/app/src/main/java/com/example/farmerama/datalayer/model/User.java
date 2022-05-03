@@ -1,6 +1,8 @@
 package com.example.farmerama.datalayer.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private int id;
     private String name;

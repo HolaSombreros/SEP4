@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.datalayer.adapter.MeasurementApiAdapter;
 import com.example.farmerama.datalayer.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.datalayer.model.Measurement;
+import com.example.farmerama.datalayer.model.response.MeasurementResponse;
 import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
@@ -39,20 +40,20 @@ public class MeasurementRepository {
         return measurement;
     }
 
-    public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
-        Call<Measurement> call = adapter.retrieveLatestMeasurement(type, areaId);
-        call.enqueue(new Callback<Measurement>() {
+    public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
+        Call<MeasurementResponse> call = adapter.retrieveLatestMeasurement(type, areaId, latest);
+        call.enqueue(new Callback<MeasurementResponse>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+            public void onResponse(Call<MeasurementResponse> call, Response<MeasurementResponse> response) {
                 if (response.isSuccessful()) {
-                    response.body().setMeasurementType(type);
-                    measurement.setValue(response.body());
+                    response.body().getMeasurement().setMeasurementType(type);
+                    measurement.setValue(response.body().getMeasurement());
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<Measurement> call, Throwable t) {
+            public void onFailure(Call<MeasurementResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });

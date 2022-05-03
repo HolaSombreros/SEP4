@@ -12,10 +12,9 @@ public class ServiceGenerator {
     public static UserApi getUserApi() {
         if (userApi == null) {
             userApi = new Retrofit.Builder()
-                    .baseUrl(url)
+                    .baseUrl(url + "users/")
                     .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(UserApi.class);
+                    .build().create(UserApi.class);
         }
         return userApi;
     }
@@ -23,7 +22,7 @@ public class ServiceGenerator {
     public static MeasurementApi getMeasurementApi() {
         if (measurementApi == null) {
             measurementApi = new Retrofit.Builder()
-                    .baseUrl(url + "measurements/")
+                    .baseUrl(url + "areas/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(MeasurementApi.class);

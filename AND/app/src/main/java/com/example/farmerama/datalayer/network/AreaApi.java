@@ -1,6 +1,7 @@
 package com.example.farmerama.datalayer.network;
 
 import com.example.farmerama.datalayer.model.Area;
+import com.example.farmerama.datalayer.model.response.AreaResponse;
 
 import java.util.List;
 
@@ -10,12 +11,12 @@ import retrofit2.http.*;
 public interface AreaApi {
 
     @POST
-    Call<Area> createArea(Area area);
+    Call<AreaResponse> createArea(Area area);
 
     @GET
-    Call<List<Area>> getAreas();
+    Call<List<AreaResponse>> getAreas();
 
     @GET("{name}")
-    Call<Area> getSpecificArea(@Path("name") String name);
+    Call<AreaResponse> getSpecificArea(@Path("name") String name);
 
 }

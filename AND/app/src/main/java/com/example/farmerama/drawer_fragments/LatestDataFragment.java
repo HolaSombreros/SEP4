@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer.environment;
+package com.example.farmerama.drawer_fragments;
 
 
 import android.content.Context;
@@ -62,8 +62,10 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
-                viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE);
+                //sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
+                sharedPreferences.edit().putInt("areaId", 1).apply();
+                //viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE, true);
+                viewModel.retrieveLatestMeasurement(1, MeasurementType.TEMPERATURE, true);
             }
 
             @Override

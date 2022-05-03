@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer;
+package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,8 +32,7 @@ public class LoginFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
         email= view.findViewById(R.id.LoginEmailAddress);
         password = view.findViewById(R.id.LoginPassword);
         loginButton = view.findViewById(R.id.loginButton);

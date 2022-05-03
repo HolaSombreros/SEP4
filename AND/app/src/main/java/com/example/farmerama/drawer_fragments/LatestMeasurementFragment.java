@@ -1,4 +1,4 @@
-package com.example.farmerama.uilayer.environment;
+package com.example.farmerama.drawer_fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -58,12 +58,13 @@ public class LatestMeasurementFragment extends Fragment {
 
     private void setUpViews() {
         sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
-
-        viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 0), measurementType);
+        //TODO: destroy viewmodel when the tabs are switched back
+        //viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 0), measurementType, true);
+        viewModel.retrieveLatestMeasurement(1, measurementType, true);
 
         viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
             measurementTextView.setText(String.valueOf(measurement.getValue()));
-            typeTextView.setText(measurement.getMeasurementType().toString());
+            //typeTextView.setText(measurement.getMeasurementType().toString());
         });
 
 
