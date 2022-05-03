@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.datalayer.adapter.MeasurementApiAdapter;
+import com.example.farmerama.datalayer.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.datalayer.model.Measurement;
 import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.network.MeasurementApi;
@@ -19,9 +21,11 @@ public class MeasurementRepository {
 
     private MutableLiveData<Measurement> measurement;
     private static MeasurementRepository instance;
+    private MeasurementApiAdapter adapter;
 
     private MeasurementRepository() {
         measurement = new MutableLiveData<>();
+        adapter = new MeasurementApiAdapterClass();
     }
 
     public static MeasurementRepository getInstance() {
@@ -31,17 +35,12 @@ public class MeasurementRepository {
         return instance;
     }
 
-    public LiveData<Measurement> getLatestTemperature() {
-        return measurement;
-    }
-
-    public LiveData<Measurement> getLatestHumidity() {
+    public LiveData<Measurement> getLatestMeasurement() {
         return measurement;
     }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type) {
-        MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
-        Call<Measurement> call = getMeasurementCall(measurementApi, type, areaId);
+        Call<Measurement> call = adapter.retrieveLatestMeasurement(type, areaId);
         call.enqueue(new Callback<Measurement>() {
             @EverythingIsNonNull
             @Override
@@ -57,16 +56,5 @@ public class MeasurementRepository {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
-    }
-
-    private Call<Measurement> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId) {
-        switch (type) {
-            case TEMPERATURE:
-                return measurementApi.getLatestTemperature(areaId);
-            case HUMIDITY:
-                return measurementApi.getLatestHumidity(areaId);
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
     }
 }
