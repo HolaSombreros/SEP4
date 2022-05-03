@@ -44,13 +44,15 @@ public class EmployeeAreasFragment extends Fragment {
     private void setUpViews() {
         viewModel = new ViewModelProvider(getActivity()).get(AreaViewModel.class);
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
-            viewModel.getAllAreas();
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            areaSpinnerForEmployee.setAdapter(adapter);
             textView.setText(viewModel.getAreas().getValue().get(0).getName());
         });
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        areaSpinnerForEmployee.setAdapter(adapter);*/
+        viewModel.getAllAreas();
+
+
 
     }
 }

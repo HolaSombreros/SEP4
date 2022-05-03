@@ -33,9 +33,10 @@ public class AreaViewModel extends ViewModel {
 
     public LiveData<List<String>> getAreasName() {
         List<String> list = new ArrayList<>();
-        getAllAreas();
-        for(Area area : getAreas().getValue()) {
-            list.add(area.getName());
+        if(repository.getAreas().getValue() != null) {
+            for(Area area : repository.getAreas().getValue()) {
+                list.add(area.getName());
+            }
         }
         return new MutableLiveData<>(list);
     }
