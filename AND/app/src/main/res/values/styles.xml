@@ -8,25 +8,6 @@
 <!--        <item name="android:typeface">monospace</item>-->
     </style>
 
-    Text(
-    text = "Farmerama",
-    textAlign = TextAlign.Center,
-    fontSize = 32.sp,
-    textDecoration = TextDecoration.None,
-    letterSpacing = -1.sp,
-
-    overflow = TextOverflow.Ellipsis,
-    modifier = Modifier
-
-    .width(199.dp)
-
-    //.height(39.dp)
-
-    .alpha(1f),
-
-    fontWeight = FontWeight.Black,
-    fontStyle = FontStyle.Normal,
-    )
 
 
 </resources>
