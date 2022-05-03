@@ -15,13 +15,17 @@
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/add_employee.xml" value="0.36666666666666664" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/content_main.xml" value="0.264" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_account.xml" value="0.28020833333333334" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_add_area.xml" value="0.36666666666666664" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_areas.xml" value="0.28020833333333334" />
-        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_areas_employee.xml" value="0.36666666666666664" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_areas_employee.xml" value="0.1" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_employee_areas.xml" value="0.18" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_employees.xml" value="0.28020833333333334" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
-        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_latest_data.xml" value="0.13425925925925927" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_latest_data.xml" value="0.1" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_latest_humidity.xml" value="0.264" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_latest_measurement.xml" value="0.3619791666666667" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_latest_temperature.xml" value="0.3625" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/fragment_sensors.xml" value="0.3625" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/latest_data.xml" value="0.22826086956521738" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/login_layout.xml" value="0.33" />
@@ -29,7 +33,7 @@
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/new_activity_main.xml" value="0.1762917933130699" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/layout/register_layout.xml" value="0.25" />
         <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/menu/bottom_navigation.xml" value="0.3625" />
-        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/menu/main_menu.xml" value="0.3625" />
+        <entry key="..\:/SEM4/SEP4/AND/app/src/main/res/menu/main_menu.xml" value="0.1" />
       </map>
     </option>
   </component>

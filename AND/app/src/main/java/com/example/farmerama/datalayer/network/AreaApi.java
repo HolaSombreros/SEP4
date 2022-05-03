@@ -13,7 +13,7 @@ public interface AreaApi {
     @POST
     Call<AreaResponse> createArea(Area area);
 
-    @GET
+    @GET(".")
     Call<List<AreaResponse>> getAreas();
 
     @GET("{name}")

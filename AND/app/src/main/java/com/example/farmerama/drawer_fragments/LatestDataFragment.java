@@ -62,8 +62,8 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
-                viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE);
+//                sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
+//                viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE);
             }
 
             @Override
