@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Integer> {
+    Area getFirstByHardwareIdEquals(String hardwareId);
 }

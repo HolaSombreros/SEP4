@@ -1,4 +1,4 @@
-package com.dai.dao.socketMeasurement;
+package com.dai.dao.measurement;
 
 import com.dai.repository.MeasurementRepository;
 import com.dai.shared.Measurement;
@@ -10,11 +10,11 @@ import java.util.concurrent.Future;
 
 @Repository
 @EnableAsync
-public class SocketMeasurementDaoImpl implements SocketMeasurementDao{
+public class MeasurementDaoImpl implements MeasurementDao {
 
     private MeasurementRepository repository;
     @Autowired
-    public SocketMeasurementDaoImpl(MeasurementRepository repository) {
+    public MeasurementDaoImpl(MeasurementRepository repository) {
         this.repository = repository;
     }
 

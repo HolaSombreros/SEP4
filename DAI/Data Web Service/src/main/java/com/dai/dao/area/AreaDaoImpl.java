@@ -42,6 +42,12 @@ public class AreaDaoImpl implements AreaDao{
     public void delete(int id) {
 
     }
+
+    @Override
+    public Future<Area> getAreaByHardwareId(String id) {
+        return new AsyncResult<>(repository.getFirstByHardwareIdEquals(id));
+    }
+
     @Override
     public Future<List<Area>> getAll() {
         return new AsyncResult<>(repository.findAll());
