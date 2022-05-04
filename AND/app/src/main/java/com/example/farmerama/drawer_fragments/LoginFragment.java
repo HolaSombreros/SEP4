@@ -6,11 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.farmerama.R;
 import com.example.farmerama.datalayer.model.User;
@@ -22,6 +25,7 @@ public class LoginFragment extends Fragment
     private EditText email;
     private EditText password;
     private Button loginButton;
+    private NavController navController;
 
     @Nullable
     @Override
@@ -36,14 +40,19 @@ public class LoginFragment extends Fragment
         email= view.findViewById(R.id.LoginEmailAddress);
         password = view.findViewById(R.id.LoginPassword);
         loginButton = view.findViewById(R.id.loginButton);
+        navController = Navigation.findNavController(view);
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
+        });
 
         loginButton.setOnClickListener(this::login);
     }
 
     public void login(View v){
         try{
-
-            User user= viewModel.login(email.toString(), password.toString());
+            if(viewModel.login(email.getText().toString(), password.getText().toString())) {
+                navController.navigate(R.id.latestMeasurementFragment);
+            }
 
             //TODO
 //            if(user.getRole().equals(Role.OWNER)){
