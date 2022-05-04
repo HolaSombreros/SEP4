@@ -52,11 +52,13 @@ public class LatestDataFragment extends Fragment {
     private void setUpViews() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
         viewPager2.setAdapter(adapter);
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        areaSpinner.setAdapter(adapter2);
+        viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
+            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            areaSpinner.setAdapter(adapter2);
+        });
+        viewModel.getAllAreas();
 
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
