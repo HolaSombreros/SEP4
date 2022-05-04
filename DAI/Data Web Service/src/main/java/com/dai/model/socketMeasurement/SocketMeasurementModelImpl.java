@@ -37,7 +37,7 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
         }
 
         Area area = Helper.await(areaDao.getAreaByHardwareId(data.getEUI()));
-        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(data.getTs())), ZoneId.systemDefault());
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(data.getTs())), ZoneId.of("Europe/Copenhagen"));
         Measurement measurement = new Measurement(dateTime, area);
 
         String payload = data.getData();
