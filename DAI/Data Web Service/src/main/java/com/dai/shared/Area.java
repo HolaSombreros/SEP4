@@ -22,9 +22,9 @@ public class Area implements Serializable{
     private String description;
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
-//    @OneToOne
-//    @JoinColumn(name = "hardware_id")
-//    private Hardware hardware;
+    @OneToOne
+    @JoinColumn(name = "hardware_id")
+    private Hardware hardware;
 
     protected Area() {
     }
@@ -42,7 +42,7 @@ public class Area implements Serializable{
         this.name = name;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
-//        this.hardware = hardware;
+        this.hardware = hardware;
     }
     public int getId() {
         return id;
@@ -83,13 +83,13 @@ public class Area implements Serializable{
     public void setNumberOfPigs(int numberOfPigs) {
         this.numberOfPigs = numberOfPigs;
     }
-//
-//    public Hardware getHardware() {
-//        return hardware;
-//    }
-//
-//    public void setHardware(Hardware hardware) {
-//        this.hardware = hardware;
-//    }
+
+    public Hardware getHardware() {
+        return hardware;
+    }
+
+    public void setHardware(Hardware hardware) {
+        this.hardware = hardware;
+    }
 
 }

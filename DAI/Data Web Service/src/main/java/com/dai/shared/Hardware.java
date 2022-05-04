@@ -3,7 +3,7 @@ package com.dai.shared;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "entity")
+@Table(name = "hardware")
 public class Hardware {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
