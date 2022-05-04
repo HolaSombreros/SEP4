@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -36,13 +37,13 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
         }
 
         Area area = Helper.await(areaDao.getAreaByHardwareId(data.getEUI()));
-        LocalDateTime dateTime = getDateTimeFromEpochStringSeconds(data.getTs());
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(data.getTs())), ZoneId.systemDefault());
         Measurement measurement = new Measurement(dateTime, area);
 
         String payload = data.getData();
         int[] values = parseStringToValues(payload);
 
-        String stringFlag = payload.substring(payload.length() - 1, payload.length());
+        String stringFlag = payload.substring(payload.length() - 1);
         String flags = Integer.toBinaryString(Integer.parseInt(stringFlag, 16));
 
         if (flags.charAt(0) == '1') {
@@ -72,10 +73,5 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
             values[i - 1] = Integer.parseInt(substring, 16);
         }
         return values;
-    }
-
-    private LocalDateTime getDateTimeFromEpochStringSeconds(String seconds) {
-        long secondsFromEpoch = Long.parseLong(seconds);
-        return LocalDateTime.ofEpochSecond(secondsFromEpoch, 0, ZoneId.of("Europe/Copenhagen").getRules().getOffset(LocalDateTime.now()));
     }
 }
