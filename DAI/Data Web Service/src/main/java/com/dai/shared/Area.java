@@ -24,12 +24,12 @@ public class Area implements Serializable{
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
     @Column(name = "hardware_id")
-    private int hardwareId;
+    private String hardwareId;
 
     protected Area() {
     }
 
-    public Area(int id, Barn barn, String name, String description, int numberOfPigs, int hardwareId) {
+    public Area(int id, Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
         this.id = id;
         this.barn = barn;
         this.name = name;
@@ -78,11 +78,11 @@ public class Area implements Serializable{
         this.numberOfPigs = numberOfPigs;
     }
 
-    public int getHardwareId() {
+    public String getHardwareId() {
         return hardwareId;
     }
 
-    public void setHardwareId(int hardwareId) {
+    public void setHardwareId(String hardwareId) {
         this.hardwareId = hardwareId;
     }
 }

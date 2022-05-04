@@ -30,7 +30,7 @@ public class AreasModelImpl implements AreasModel {
 
         if(barn!=null)
         {
-            return areasDao.create(barn, area.getName(), area.getDescription(), area.getNumberOfPigs() );
+            return areasDao.create(area);
         }
         else{
             throw new IllegalStateException("Barn not found");

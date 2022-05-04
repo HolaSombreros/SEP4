@@ -20,7 +20,7 @@ public class AreasController {
         this.areasModel = areasModel;
     }
     catch (Exception e){
-        throw new BadRequestException();
+        throw new BadRequestException(e.getMessage());
     }
     }
 
@@ -31,7 +31,7 @@ public class AreasController {
     }
     catch (Exception e)
     {
-        throw new BadRequestException();
+        throw new BadRequestException(e.getMessage());
 
     }
     }
@@ -43,7 +43,7 @@ public class AreasController {
         return areasModel.read(id);
     }
     catch (Exception e){
-        throw new BadRequestException();
+        throw new BadRequestException(e.getMessage());
     }
     }
 
@@ -53,7 +53,7 @@ public class AreasController {
         return areasModel.getAll();
     }
         catch (Exception e){
-                    throw new BadRequestException();
+                    throw new BadRequestException(e.getMessage());
     }
     }
 
