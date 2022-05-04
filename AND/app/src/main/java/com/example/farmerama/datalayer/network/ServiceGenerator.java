@@ -1,5 +1,7 @@
 package com.example.farmerama.datalayer.network;
 
+import com.example.farmerama.util.EndpointsHelper;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,7 +14,7 @@ public class ServiceGenerator {
     public static UserApi getUserApi() {
         if (userApi == null) {
             userApi = new Retrofit.Builder()
-                    .baseUrl(url + "users/")
+                    .baseUrl(url + EndpointsHelper.USERS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(UserApi.class);
         }
@@ -22,7 +24,7 @@ public class ServiceGenerator {
     public static MeasurementApi getMeasurementApi() {
         if (measurementApi == null) {
             measurementApi = new Retrofit.Builder()
-                    .baseUrl(url + "areas/")
+                    .baseUrl(url + EndpointsHelper.AREAS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(MeasurementApi.class);
@@ -33,7 +35,7 @@ public class ServiceGenerator {
     public static AreaApi getAreaApi() {
         if (areaApi == null) {
             areaApi = new Retrofit.Builder()
-                    .baseUrl(url + "areas/")
+                    .baseUrl(url + EndpointsHelper.AREAS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(AreaApi.class);

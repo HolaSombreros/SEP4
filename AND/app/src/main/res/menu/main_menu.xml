@@ -25,4 +25,8 @@
         <item android:title="@string/areas"
             android:id="@+id/areasFragment"
             android:icon="@drawable/ic_baseline_location_on_24"/>
+
+        <item android:title="EmployeeAreasFragment"
+            android:id="@+id/employeeAreasFragment"
+            android:icon="@drawable/ic_baseline_location_on_24"/>
 </menu>
