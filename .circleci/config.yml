@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.4.0
   aws-ecs: circleci/aws-ecs@2.0
+  maven: circleci/maven@0.0.12
 jobs:
   build-save-image:
     working_directory: ~/project/DAI/Data Web Service
@@ -25,13 +26,16 @@ jobs:
           name: Install dependencies for project
           command: mvn install -Pprod
       - run:
+          name: Run tests
+          command: |
+            mvn verify
+      - run:
           name: Install dependencies for AWS
           command: |
             sudo apt-get update
             sudo apt-get -y -qq install awscli
             sudo apt-get install python3-pip
             sudo pip3 install --upgrade awscli
-
       - run:
           name: Install terraform
           command: |
@@ -53,14 +57,6 @@ jobs:
           name: Deploy new version
           command: |
             aws elasticbeanstalk update-environment --application-name "sep4-data-server-ebs" --environment-name "sep4-data-service-enviroment" --version-label=1
-#      - run:
-#          name: Update service
-#          command: |
-#            cd ./infrastructure
-#            terraform init
-#            terraform apply -var image_tag=<< pipeline.number >> -auto-approve
-
-#TODO remove Tomas trigger branch
 workflows:
   wf:
     jobs:

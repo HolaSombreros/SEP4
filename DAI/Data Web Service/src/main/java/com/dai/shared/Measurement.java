@@ -39,6 +39,20 @@ public class Measurement {
         this.area = area;
     }
 
+    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Area area) {
+        this.measuredDate = measuredDate;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.co2 = co2;
+        this.sound = sound;
+        this.area = area;
+    }
+
+    public Measurement(LocalDateTime measuredDate, Area area) {
+        this.measuredDate = measuredDate;
+        this.area = area;
+    }
+
     public int getId() {
         return id;
     }
