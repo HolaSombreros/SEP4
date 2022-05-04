@@ -4,15 +4,12 @@ import com.dai.exceptions.BadRequestException;
 import com.dai.model.measurement.MeasurementModel;
 import com.dai.shared.Area;
 import com.dai.shared.Barn;
-import com.dai.shared.Hardware;
 import com.dai.shared.Measurement;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.concurrent.Future;
 
 @RestController
 public class MeasurementsController {

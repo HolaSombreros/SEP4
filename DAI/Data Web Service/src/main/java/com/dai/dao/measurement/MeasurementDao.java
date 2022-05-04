@@ -1,7 +1,6 @@
 package com.dai.dao.measurement;
 
 import com.dai.shared.Area;
-import com.dai.shared.Hardware;
 import com.dai.shared.Measurement;
 
 import java.time.LocalDateTime;
