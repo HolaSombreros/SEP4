@@ -9,8 +9,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "area")
 public class Area implements Serializable{
+    
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "area_id")
     private int id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -22,28 +23,21 @@ public class Area implements Serializable{
     private String description;
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
-    @OneToOne
-    @JoinColumn(name = "hardware_id")
-    private Hardware hardware;
+    @Column(name = "hardware_id")
+    private String hardwareId;
 
     protected Area() {
     }
 
-    public Area(Barn barn, String name, String description, int numberOfPigs) {
-        this.barn = barn;
-        this.name = name;
-        this.description = description;
-        this.numberOfPigs = numberOfPigs;
-    }
-
-    public Area(int id, Barn barn, String name, String description, int numberOfPigs, Hardware hardware) {
+    public Area(int id, Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
         this.id = id;
         this.barn = barn;
         this.name = name;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
-        this.hardware = hardware;
+        this.hardwareId = hardwareId;
     }
+
     public int getId() {
         return id;
     }
@@ -84,12 +78,11 @@ public class Area implements Serializable{
         this.numberOfPigs = numberOfPigs;
     }
 
-    public Hardware getHardware() {
-        return hardware;
+    public String getHardwareId() {
+        return hardwareId;
     }
 
-    public void setHardware(Hardware hardware) {
-        this.hardware = hardware;
+    public void setHardwareId(String hardwareId) {
+        this.hardwareId = hardwareId;
     }
-
 }

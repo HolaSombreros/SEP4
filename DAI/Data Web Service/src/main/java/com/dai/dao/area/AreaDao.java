@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 public interface AreaDao {
-    Future<Area> create(Barn barn, String name, String description, int numberOfPigs);
+    Future<Area> create(Area area);
     Future<Area> read(int id);
     Area update(Area area);
     void delete(int id);

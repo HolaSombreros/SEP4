@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "measurement")
 public class Measurement {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "measurement_id")
     private int id;
     @Column(name = "measured_date")
@@ -21,9 +21,6 @@ public class Measurement {
     @Column(name = "sound")
     private double sound;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hardware_id")
-    private Hardware hardware;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Area area;
 
@@ -32,13 +29,13 @@ public class Measurement {
     protected Measurement() {
     }
 
-    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware, Area area) {
+    public Measurement(int id, LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Area area) {
+        this.id = id;
         this.measuredDate = measuredDate;
         this.temperature = temperature;
         this.humidity = humidity;
         this.co2 = co2;
         this.sound = sound;
-        this.hardware = hardware;
         this.area = area;
     }
 
@@ -46,24 +43,16 @@ public class Measurement {
         return id;
     }
 
-    public LocalDateTime getMeasuredDate() {
-        return measuredDate;
-    }
-
-    public Hardware getHardware() {
-        return hardware;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setMeasuredDate(LocalDateTime measuredDate) {
-        this.measuredDate = measuredDate;
+    public LocalDateTime getMeasuredDate() {
+        return measuredDate;
     }
 
-    public void setHardware(Hardware hardware) {
-        this.hardware = hardware;
+    public void setMeasuredDate(LocalDateTime measuredDate) {
+        this.measuredDate = measuredDate;
     }
 
     public double getTemperature() {
