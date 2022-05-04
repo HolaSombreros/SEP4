@@ -14,4 +14,12 @@ public enum MeasurementType {
     public String toString() {
         return type;
     }
+
+    public String toUnit() {
+        switch (type) {
+            case "Temperature": return "°C";
+            case "Humidity": return "%";
+        }
+        return "";
+    }
 }

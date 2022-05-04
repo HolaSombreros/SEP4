@@ -16,9 +16,10 @@ public class Measurement {
         this.dateTime = dateTime;
         this.measurementType = measurementType;
     }
-    public Measurement(double value, String measuredDate) {
+    public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
         this.dateTime = measuredDate;
+        this.measurementType = type;
     }
 
     public int getId() {
