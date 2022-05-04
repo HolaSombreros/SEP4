@@ -46,7 +46,7 @@ public class MeasurementRepository {
             @Override
             public void onResponse(Call<MeasurementResponse> call, Response<MeasurementResponse> response) {
                 if (response.isSuccessful()) {
-                    measurement.setValue(response.body().getMeasurement());
+                    measurement.setValue(response.body().getMeasurement(type));
                 }
             }
             @EverythingIsNonNull

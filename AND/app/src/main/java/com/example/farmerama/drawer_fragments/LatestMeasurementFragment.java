@@ -64,9 +64,8 @@ public class LatestMeasurementFragment extends Fragment {
 
         viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
             measurementTextView.setText(String.valueOf(measurement.getValue()));
-            //typeTextView.setText(measurement.getMeasurementType().toString());
+            if (measurement.getMeasurementType()!=null)
+                typeTextView.setText(measurement.getMeasurementType().toUnit());
         });
-
-
     }
 }
