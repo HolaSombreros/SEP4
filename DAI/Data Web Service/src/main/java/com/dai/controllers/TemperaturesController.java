@@ -6,6 +6,7 @@ import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,7 +20,7 @@ public class TemperaturesController {
     }
 
     @GetMapping(value = "/areas/{id}/temperatures")
-    public SentMeasurement readLastTemperature(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
+    public List<SentMeasurement> readLastTemperature(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
         try {
             if (isLatest.isPresent() && isLatest.get()) {
                 return temperatureModel.readLatestTemperature(id);

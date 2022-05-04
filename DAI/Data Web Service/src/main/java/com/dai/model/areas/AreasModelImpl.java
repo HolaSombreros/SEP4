@@ -25,12 +25,12 @@ public class AreasModelImpl implements AreasModel {
     }
 
     @Override
-    public Future<Area> create(Area area) {
+    public Area create(Area area) throws Exception {
         Barn barn = (Barn) barnDao.read(area.getBarn().getId());
 
         if(barn!=null)
         {
-            return areasDao.create(area);
+            return Helper.await(areasDao.create(area));
         }
         else{
             throw new IllegalStateException("Barn not found");
@@ -38,8 +38,14 @@ public class AreasModelImpl implements AreasModel {
 
     }
     @Override
-    public Future<Area> read(int id) {
-        return areasDao.read(id);
+    public Area read(int id) throws Exception {
+        Area await;
+        try{
+            await = Helper.await(areasDao.read(id));
+        }catch (Exception e){
+            throw new Exception("Area with the given id doesn't exist");
+        }
+        return await;
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.dai.exceptions.BadRequestException;
 import com.dai.model.areas.AreasModel;
 import com.dai.shared.Area;
 import com.dai.shared.Barn;
-import com.dai.shared.Hardware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class AreasController {
     }
 
     @PostMapping
-    public Future<Area> create(@RequestBody Area area){
+    public Area create(@RequestBody Area area){
     try{
         return areasModel.create(area);
     }
@@ -42,7 +41,7 @@ public class AreasController {
     public Area read(@PathVariable int id){
 
     try{
-        return new Area(id, new Barn("Barnito"), "Area 2", "Newly fresh created Area, Beware of the hardware, area object will contain only id of it, not the whole hardware object", 1000, new Hardware(1));
+        return new Area(id, new Barn("Barnito"), "Area 2", "Newly fresh created Area, Beware of the hardware, area object will contain only id of it, not the whole hardware object", 1000, "hardware_id");
 //        return areasModel.read(id);
     }
     catch (Exception e){

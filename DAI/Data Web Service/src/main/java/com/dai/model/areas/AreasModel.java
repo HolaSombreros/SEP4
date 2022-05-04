@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 public interface AreasModel {
-    Future<Area> create(Area area);
-    Future<Area> read(int id);
+    Area create(Area area) throws Exception;
+    Area read(int id) throws Exception;
     List<Area> getAll();
 
 }
