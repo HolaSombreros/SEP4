@@ -17,7 +17,7 @@ public class RegisterViewModel extends AndroidViewModel
 
     public RegisterViewModel(Application application) {
         super(application);
-        repository = UserRepository.getInstance();
+        repository = UserRepository.getInstance(application);
     }
 
     public LiveData<List<User>> getAllEmployees(){
