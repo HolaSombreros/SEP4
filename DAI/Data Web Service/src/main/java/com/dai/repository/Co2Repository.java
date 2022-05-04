@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface Co2Repository extends JpaRepository<Measurement, Integer> {
-    @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, co2 as value FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC LIMIT 1")
+    @Query(nativeQuery = true, value = "SELECT TOP 1 measured_date as measuredDate, co2 as value FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC")
     SentMeasurement findFirstCo2MeasurementByAreaId(@Param("area_id") int area_id);
 }

@@ -2,9 +2,10 @@ package com.dai.model.humidity;
 
 import com.dai.shared.SentMeasurement;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 public interface HumidityModel {
 
-    SentMeasurement readLatestHumidity(int areaId) throws Exception;
+    List<SentMeasurement> readLatestHumidity(int areaId) throws Exception;
 }

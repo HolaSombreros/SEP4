@@ -7,6 +7,7 @@ import com.dai.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,7 +20,7 @@ public class HumidityController {
     }
 
     @GetMapping("/areas/{id}/humidities")
-    public SentMeasurement readLastHumidity(@PathVariable("id") int areaId, @RequestParam("latest") Optional<Boolean> isLatest) {
+    public List<SentMeasurement> readLastHumidity(@PathVariable("id") int areaId, @RequestParam("latest") Optional<Boolean> isLatest) {
         try {
             if (isLatest.isPresent() && isLatest.get()) {
                 return humidityModel.readLatestHumidity(areaId);

@@ -6,6 +6,8 @@ import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Future;
 @Component
 public class HumidityModelImpl implements HumidityModel{
@@ -19,7 +21,7 @@ public class HumidityModelImpl implements HumidityModel{
 
 
     @Override
-    public SentMeasurement readLatestHumidity(int areaId) throws Exception {
-        return Helper.await(humidityDao.getLatestHumidityMeasurement(areaId));
+    public List<SentMeasurement> readLatestHumidity(int areaId) throws Exception {
+        return new ArrayList<>(List.of(Helper.await(humidityDao.getLatestHumidityMeasurement(areaId))));
     }
 }

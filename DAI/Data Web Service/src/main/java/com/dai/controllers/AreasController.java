@@ -41,8 +41,8 @@ public class AreasController {
     public Area read(@PathVariable int id){
 
     try{
-        return new Area(id, new Barn("Barnito"), "Area 2", "Newly fresh created Area, Beware of the hardware, area object will contain only id of it, not the whole hardware object", 1000, "HarwareId1234");
-//        return areasModel.read(id);
+//        return new Area(id, new Barn("Barnito"), "Area 2", "Newly fresh created Area, Beware of the hardware, area object will contain only id of it, not the whole hardware object", 1000, "HarwareId1234");
+        return areasModel.read(id);
     }
     catch (Exception e){
         throw new BadRequestException(e.getMessage());
@@ -54,8 +54,8 @@ public class AreasController {
     try {
         return areasModel.getAll();
     }
-        catch (Exception e){
-                    throw new BadRequestException(e.getMessage());
+    catch (Exception e){
+        throw new BadRequestException(e.getMessage());
     }
     }
 

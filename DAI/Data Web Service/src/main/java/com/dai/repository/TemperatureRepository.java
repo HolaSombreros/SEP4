@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TemperatureRepository extends JpaRepository<Measurement, Integer> {
 
-    @Query( value = "SELECT measured_date as measuredDate, temperature as value FROM measurement WHERE measurement.area_id = :area_id Order By measurement_id DESC LIMIT 1",nativeQuery = true)
+    @Query( value = "SELECT TOP 1 measured_date as measuredDate, temperature as value FROM measurement WHERE measurement.area_id = :area_id Order By measurement_id DESC",nativeQuery = true)
     SentMeasurement findFirstTemperatureAndMeasuredDateByAreaIdOrderByIdDesc(@Param("area_id") int area_id);
 }
