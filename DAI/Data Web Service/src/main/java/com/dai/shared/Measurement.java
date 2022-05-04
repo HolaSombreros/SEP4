@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "measurement")
 public class Measurement {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "measurement_id")
     private int id;
     @Column(name = "measured_date")

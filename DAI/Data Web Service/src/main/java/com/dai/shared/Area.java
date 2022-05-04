@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Area implements Serializable{
     
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "area_id")
     private int id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
