@@ -30,14 +30,20 @@ public class LatestMeasurementViewModel extends ViewModel {
         measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
     }
 
+    public void getAllAreas() {
+        areaRepository.getAllAreas();
+    }
+
     public LiveData<List<Area>> getAreas() {
        return areaRepository.getAreas();
     }
 
     public LiveData<List<String>> getAreasName() {
         List<String> list = new ArrayList<>();
-        for(Area area : areaRepository.getAreas().getValue()) {
-            list.add(area.getName());
+        if(areaRepository.getAreas().getValue() != null) {
+            for(Area area : areaRepository.getAreas().getValue()) {
+                list.add(area.getName());
+            }
         }
         return new MutableLiveData<>(list);
     }
