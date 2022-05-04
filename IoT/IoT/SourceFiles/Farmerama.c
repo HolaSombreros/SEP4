@@ -1,26 +1,32 @@
 #include <Farmerama.h>
 #include <UplinkMessageBuilder.h>
 #include <stdio.h>
+#include <lora_driver.h>
 
 #define TASK_NAME "FarmeramaTask"
-#define TASK_PRIORITY 1
-#define TASK_INTERVAL 300000UL
+#define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
+#define TASK_PRIORITY configMAX_PRIORITIES - 1
 #define PORT 1
+
+#define BIT_HUMIDITY_ACT 1 << 0
+#define BIT_HUMIDITY_DONE 1 << 0
+#define BIT_TEMPERATURE_ACT 1 << 1
+#define BIT_TEMPERATURE_DONE 1 << 1
 
 static void _run(void* params);
 
-static MessageBufferHandle_t _senderBuffer;
-static MessageBufferHandle_t _humidityBuffer;
-static MessageBufferHandle_t _temperatureBuffer;
-static EventGroupHandle_t _actHandle;
-static EventGroupHandle_t _doneHandle;
+static QueueHandle_t _senderQueue;
+static QueueHandle_t _humidityQueue;
+static QueueHandle_t _temperatureQueue;
+static EventGroupHandle_t _actEventGroup;
+static EventGroupHandle_t _doneEventGroup;
 
-void farmerama_create(MessageBufferHandle_t senderBuffer, MessageBufferHandle_t humidityBuffer, MessageBufferHandle_t temperatureBuffer, EventGroupHandle_t actHandle, EventGroupHandle_t doneHandle) {
-	_senderBuffer = senderBuffer;
-	_humidityBuffer = humidityBuffer;
-	_temperatureBuffer = temperatureBuffer;
-	_actHandle = actHandle;
-	_doneHandle = doneHandle;
+void farmerama_create(QueueHandle_t senderQueue, QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup) {
+	_senderQueue = senderQueue;
+	_humidityQueue = humidityQueue;
+	_temperatureQueue = temperatureQueue;
+	_actEventGroup = actEventGroup;
+	_doneEventGroup = doneEventGroup;
 	
 	xTaskCreate(_run, TASK_NAME, configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY, NULL);
 }
@@ -29,35 +35,30 @@ void farmerama_initTask(void* params) {
 	
 }
 
-void farmerama_runTask(void) {
-	xEventGroupSetBits(_actHandle, 1);
-	xEventGroupWaitBits(_doneHandle, 1, pdTRUE, pdTRUE, pdMS_TO_TICKS(300000UL));
+void farmerama_runTask(void) {	
+	xEventGroupSetBits(_actEventGroup, 
+		BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT
+	);
+	
+	xEventGroupWaitBits(_doneEventGroup, 
+		BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE, 
+		pdTRUE, pdTRUE, pdMS_TO_TICKS(TASK_INTERVAL)
+	);
 	
 	uint16_t humidity;
-	if (xMessageBufferIsEmpty(_humidityBuffer) == pdFALSE) {
-		xMessageBufferReceive(_humidityBuffer, &humidity, sizeof(humidity), pdMS_TO_TICKS(100));
-	}
-	
 	int16_t temperature;
-	if (xMessageBufferIsEmpty(_temperatureBuffer) == pdFALSE) {
-		xMessageBufferReceive(_temperatureBuffer, &temperature, sizeof(temperature), pdMS_TO_TICKS(100));
-	}
 	
-	xMessageBufferReset(_humidityBuffer);
-	xMessageBufferReset(_temperatureBuffer);
-	
-	printf("Humidity before builder: %d\n", humidity);
+	xQueueReceive(_humidityQueue, &humidity, pdMS_TO_TICKS(100));
+	xQueueReceive(_temperatureQueue, &temperature, pdMS_TO_TICKS(100));
 	
 	uplinkMessageBuilder_setHumidityData(humidity);
 	uplinkMessageBuilder_setTemperatureData(temperature);
 	
-	lora_driver_payload_t message;
-	message = uplinkMessageBuilder_buildUplinkMessage(PORT);
-	xMessageBufferSend(_senderBuffer, &message, sizeof(message), pdMS_TO_TICKS(100));
+	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
+	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(100));
 	
 	TickType_t lastWakeTime = xTaskGetTickCount();
-	const TickType_t frequency = pdMS_TO_TICKS(TASK_INTERVAL);
-	xTaskDelayUntil(&lastWakeTime, frequency);
+	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
 }
 
 static void _run(void* params) {

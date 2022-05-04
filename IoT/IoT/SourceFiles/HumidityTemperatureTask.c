@@ -1,43 +1,72 @@
 #include <HumidityTemperatureTask.h>
 #include <MeasurementReturnCode.h>
-#include <HumidityTemperature.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <hih8120.h>
 
 #define TASK_NAME "HumidityTemperatureTask"
-#define TASK_PRIORITY 1
+#define TASK_PRIORITY configMAX_PRIORITIES - 2
+
+#define BIT_HUMIDITY_ACT 1 << 0
+#define BIT_HUMIDITY_DONE 1 << 0
+#define BIT_TEMPERATURE_ACT 1 << 1
+#define BIT_TEMPERATURE_DONE 1 << 1
 
 static void _run(void* params);
 
-static MessageBufferHandle_t _humidityHandle;
-static MessageBufferHandle_t _temperatureHandle;
-static EventGroupHandle_t _actHandle;
-static EventGroupHandle_t _doneHandle;
+static QueueHandle_t _humidityQueue;
+static QueueHandle_t _temperatureQueue;
+static EventGroupHandle_t _actEventGroup;
+static EventGroupHandle_t _doneEventGroup;
 
-void humidityTemperatureTask_create(MessageBufferHandle_t humidityHandle, MessageBufferHandle_t temperatureHandle, EventGroupHandle_t actHandle, EventGroupHandle_t doneHandle) {
-	_humidityHandle = humidityHandle;
-	_temperatureHandle = temperatureHandle;
-	_actHandle = actHandle;
-	_doneHandle = doneHandle;
+static uint16_t _latestHumidity;
+static int16_t _latestTemperature;
+
+void humidityTemperatureTask_create(QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup) {
+	_humidityQueue = humidityQueue;
+	_temperatureQueue = temperatureQueue;
+	_actEventGroup = actEventGroup;
+	_doneEventGroup = doneEventGroup;
+	
+	_latestHumidity = 0;
+	_latestTemperature = 0;
 	
 	xTaskCreate(_run, TASK_NAME, configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY, NULL);
 }
 
 void humidityTemperatureTask_initTask(void* params) {
-	puts("Task started!");
+	
 }
 
 void humidityTemperatureTask_runTask() {
-	xEventGroupWaitBits(_actHandle, 1, pdTRUE, pdFALSE, pdMS_TO_TICKS(300000UL));
+	xEventGroupWaitBits(_actEventGroup, 
+		BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT,
+		pdTRUE, pdFALSE, portMAX_DELAY
+	);
 	
-	humidityTemperature_measure();
+	if (hih8120_wakeup() == HIH8120_OK) {
+		vTaskDelay(pdMS_TO_TICKS(50));
+		
+		if (hih8120_measure() == HIH8120_OK) {
+			vTaskDelay(pdMS_TO_TICKS(2));
+			
+			_latestHumidity = hih8120_getHumidityPercent_x10();
+			_latestTemperature = hih8120_getTemperature_x10();
+		} else {
+			_latestHumidity = 200;
+			_latestTemperature = -100;
+		}
+	} else {
+		_latestHumidity = 200;
+		_latestTemperature = -100;
+	}
 	
-	uint16_t humidity = humidityTemperature_getLatestHumidity();
-	int16_t temperature = humidityTemperature_getLatestTemperature();
+	xQueueSendToBack(_humidityQueue, &_latestHumidity, portMAX_DELAY);
+	xQueueSendToBack(_temperatureQueue, &_latestTemperature, portMAX_DELAY);
 	
-	xMessageBufferSend(_humidityHandle, &humidity, sizeof(humidity), pdMS_TO_TICKS(100));
-	xMessageBufferSend(_temperatureHandle, &temperature, sizeof(temperature), pdMS_TO_TICKS(100));
-	
-	xEventGroupSetBits(_doneHandle, 1);
+	xEventGroupSetBits(_doneEventGroup, 
+		BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE
+	);
 }
 
 static void _run(void* params) {

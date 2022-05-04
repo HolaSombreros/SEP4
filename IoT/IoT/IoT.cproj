@@ -41,7 +41,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J41800033302</avrtoolserialnumber>
+    <avrtoolserialnumber>J42700025568</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9801</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
@@ -51,7 +51,7 @@
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800033302</ToolNumber>
+      <ToolNumber>J42700025568</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
@@ -298,9 +298,6 @@
     <Compile Include="HeaderFiles\SenderTask.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\HumidityTemperature.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="HeaderFiles\TaskReturnCode.h">
       <SubType>compile</SubType>
     </Compile>
@@ -314,9 +311,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\SenderTask.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="SourceFiles\HumidityTemperature.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\HumidityTemperatureTask.c">

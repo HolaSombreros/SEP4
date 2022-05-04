@@ -1,22 +1,23 @@
 #include <SenderTask.h>
-#include <HumidityTemperature.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <status_leds.h>
+#include <lora_driver.h>
+#include <stdint.h>
 
 #define TASK_NAME "SenderTask"
-#define TASK_PRIORITY 0
+#define TASK_PRIORITY configMAX_PRIORITIES - 2
 
 #define LORA_appEUI "F2DDE2E826DE9BA5"
 #define LORA_appKEY "FA15F6404AD2D77F878514403C7422DD"
 
+static QueueHandle_t _senderQueue;
+
 static void _run(void* params);
 static void _connectToLoRaWAN();
-static MessageBufferHandle_t _senderHandle;
 
-
-void senderTask_create(MessageBufferHandle_t senderHandle) {
-	_senderHandle = senderHandle;
+void senderTask_create(QueueHandle_t senderQueue) {
+	_senderQueue = senderQueue;
 	
 	xTaskCreate(_run, TASK_NAME, configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY, NULL);
 }
@@ -28,15 +29,12 @@ void senderTask_initTask(void* params) {
 	vTaskDelay(150);
 	lora_driver_flushBuffers();
 	
-	_connectToLoRaWAN();
+	//_connectToLoRaWAN();
 }
 
-void senderTask_runTask() {
-	// TODO - EventGroup or not??
-	
+void senderTask_runTask() {	
 	lora_driver_payload_t uplinkPayload;
-	xMessageBufferReceive(_senderHandle, &uplinkPayload, sizeof(uplinkPayload), pdMS_TO_TICKS(300000UL));
-	xMessageBufferReset(_senderHandle);
+	xQueueReceive(_senderQueue, &uplinkPayload, portMAX_DELAY);
 	
 	//lora_driver_returnCode_t returnCode;
 	//if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
@@ -45,7 +43,7 @@ void senderTask_runTask() {
 		//
 	//}
 	
-	printf("Humidity high: %d Humidity low: %d | Temperature: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[3]);
+	printf("Humidity high: %d | Humidity low: %d | Temperature: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[3]);
 }
 
 static void _run(void* params) {

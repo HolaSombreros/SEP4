@@ -2,10 +2,9 @@
 
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
-#include <message_buffer.h>
+#include <queue.h>
 #include <event_groups.h>
-#include <TaskReturnCode.h>
 
-void humidityTemperatureTask_create(MessageBufferHandle_t humidityHandle, MessageBufferHandle_t temperatureHandle, EventGroupHandle_t actHandle, EventGroupHandle_t doneHandle);
+void humidityTemperatureTask_create(QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup);
 void humidityTemperatureTask_initTask(void* params);
 void humidityTemperatureTask_runTask(void);

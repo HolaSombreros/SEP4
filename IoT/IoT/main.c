@@ -5,52 +5,50 @@
 
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
-#include <message_buffer.h>
+#include <queue.h>
 #include <event_groups.h>
+#include <hih8120.h>
 #include <lora_driver.h>
 
 #include <Farmerama.h>
-#include <HumidityTemperature.h>
 #include <HumidityTemperatureTask.h>
 #include <SenderTask.h>
 
-static MessageBufferHandle_t humidityHandle;
-static MessageBufferHandle_t temperatureHandle;
-static MessageBufferHandle_t senderHandle;
+static QueueHandle_t _humidityQueue;
+static QueueHandle_t _temperatureQueue;
+static QueueHandle_t _senderQueue;
 
-static EventGroupHandle_t actHandle;
-static EventGroupHandle_t doneHandle;
+static EventGroupHandle_t _actEventGroup;
+static EventGroupHandle_t _doneEventGroup;
 
-static void _initializeDrivers(void) {
+static void _initDrivers(void) {
 	puts("Initializing drivers...");
-	humidityTemperature_initializeDriver();
+	hih8120_initialise();
 	lora_driver_initialise(ser_USART1, NULL);
 }
 
 static void _createTasks(void) {
-	farmerama_create(senderHandle, humidityHandle, temperatureHandle, actHandle, doneHandle);
-	humidityTemperatureTask_create(humidityHandle, temperatureHandle, actHandle, doneHandle);
-	senderTask_create(senderHandle);
+	farmerama_create(_senderQueue, _humidityQueue, _temperatureQueue, _actEventGroup, _doneEventGroup);
+	humidityTemperatureTask_create(_humidityQueue, _temperatureQueue, _actEventGroup, _doneEventGroup);
+	senderTask_create(_senderQueue);
 }
 
-static void _createMessageBuffers(void) {
-	size_t size = 100;
-	
-	humidityHandle = xMessageBufferCreate(size);
-	temperatureHandle = xMessageBufferCreate(size);
-	senderHandle = xMessageBufferCreate(size);
+static void _createQueues(void) {	
+	_humidityQueue = xQueueCreate(10, sizeof(uint16_t));
+	_temperatureQueue = xQueueCreate(10, sizeof(int16_t));
+	_senderQueue = xQueueCreate(10, sizeof(lora_driver_payload_t));
 }
 
 static void _createEventGroups(void) {
-	actHandle = xEventGroupCreate();
-	doneHandle = xEventGroupCreate();
+	_actEventGroup = xEventGroupCreate();
+	_doneEventGroup = xEventGroupCreate();
 }
 
 int main(void) {
 	stdio_initialise(ser_USART0);
 	
-	_initializeDrivers();
-	_createMessageBuffers();
+	_initDrivers();
+	_createQueues();
 	_createEventGroups();
 	_createTasks();
 	
