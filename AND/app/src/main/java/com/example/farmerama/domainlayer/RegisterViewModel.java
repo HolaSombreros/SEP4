@@ -39,7 +39,9 @@ public class RegisterViewModel extends AndroidViewModel
             repository.getUserByEmail(employee.getEmail(), employee.getPassword());
             User user = repository.getEmployee().getValue();
             int size = employee.getPassword().length();
-            if(user == null && size>=6 )
+
+            // todo check the space in email and password
+            if(user == null && size>=6 && user.getEmail().contains("@") && user.getEmail().contains("."))
             {
                 repository.register(employee);
             }

@@ -3,7 +3,7 @@ package com.example.farmerama.datalayer.model;
 
 public class Area {
 
-    private int barnId;
+    private Barn barn;
     private int id;
     private String name;
     private String description;
@@ -15,7 +15,15 @@ public class Area {
         this.numberOfPigs = noOfPigs;
     }
 
-    public Area(int barnId,int id, String name, String description, int noOfPigs) {
+    public Area(Barn barn, int id, String name, String description, int numberOfPigs) {
+        this.barn = barn;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.numberOfPigs = numberOfPigs;
+    }
+
+    public Area(int barnId, int id, String name, String description, int noOfPigs) {
         barnId = barnId;
         this.id = id;
         this.name = name;
@@ -23,12 +31,20 @@ public class Area {
         this.numberOfPigs = noOfPigs;
     }
 
-    public int getBarnId() {
-        return barnId;
+    public Barn getBarn() {
+        return barn;
     }
 
-    public void setBarnId(int barnId) {
-        this.barnId = barnId;
+    public void setBarn(Barn barn) {
+        this.barn = barn;
+    }
+
+    public int getNumberOfPigs() {
+        return numberOfPigs;
+    }
+
+    public void setNumberOfPigs(int numberOfPigs) {
+        this.numberOfPigs = numberOfPigs;
     }
 
     public int getId() {

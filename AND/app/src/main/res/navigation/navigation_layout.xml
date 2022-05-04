@@ -14,11 +14,11 @@
         android:name="com.example.farmerama.drawer_fragments.LatestMeasurementFragment"
         android:label="fragment_latest_temperature"
         tools:layout="@layout/fragment_latest_measurement" />
-    <fragment
-        android:id="@+id/latestHumidityFragment"
-        android:name="com.example.farmerama.uilayer.fragments.LatestHumidityFragment"
-        android:label="fragment_latest_humidity"
-        tools:layout="@layout/fragment_latest_humidity" />
+<!--    <fragment-->
+<!--        android:id="@+id/latestHumidityFragment"-->
+<!--        android:name="com.example.farmerama.uilayer.fragments.LatestHumidityFragment"-->
+<!--        android:label="fragment_latest_humidity"-->
+<!--        tools:layout="@layout/fragment_latest_humidity" />-->
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.farmerama.drawer_fragments.AccountFragment"
@@ -64,4 +64,10 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_register"
     />
+    <fragment
+        android:id="@+id/employeeAreasFragment"
+        android:name="com.example.farmerama.uilayer.environment.EmployeeAreasFragment"
+        android:label="EmployeeAreasFragment"
+        tools:layout="@layout/fragment_employee_areas"
+        />
 </navigation>
