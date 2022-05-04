@@ -3,6 +3,8 @@ package com.dai.controllers;
 import com.dai.exceptions.BadRequestException;
 import com.dai.model.areas.AreasModel;
 import com.dai.shared.Area;
+import com.dai.shared.Barn;
+import com.dai.shared.Hardware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,11 +38,12 @@ public class AreasController {
     }
     }
 
-    @GetMapping(value = "{id}")
-    public Future<Area> read(@PathVariable int id){
+    @GetMapping(value = "/{id}")
+    public Area read(@PathVariable int id){
 
     try{
-        return areasModel.read(id);
+        return new Area(id, new Barn("Barnito"), "Area 2", "Newly fresh created Area, Beware of the hardware, area object will contain only id of it, not the whole hardware object", 1000, new Hardware(1));
+//        return areasModel.read(id);
     }
     catch (Exception e){
         throw new BadRequestException();
