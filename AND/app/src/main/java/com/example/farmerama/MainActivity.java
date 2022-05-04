@@ -9,8 +9,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.example.farmerama.domainlayer.LoginViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
+    private NavigationView navigationView;
+    private LoginViewModel loginViewModel;
+    private SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -27,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.menu_drawer);
         initViews();
         setupNavigation();
+        Menu navMenu = navigationView.getMenu();
+        if(sharedPreferences.getBoolean("GuestVisit", false))
+            navMenu.findItem(R.id.accountFragment).setVisible(false);
 
     }
 
@@ -50,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
+        sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
     }
 
     @Override

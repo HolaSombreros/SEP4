@@ -3,11 +3,12 @@ package com.example.farmerama.datalayer.model;
 
 public class Area {
 
-    private Barn barn;
+    private int barnId;
     private int id;
     private String name;
     private String description;
     private int numberOfPigs;
+    private String hardwareId;
 
     public Area(String name, String description, int noOfPigs) {
         this.name = name;
@@ -16,27 +17,28 @@ public class Area {
     }
 
     public Area(Barn barn, int id, String name, String description, int numberOfPigs) {
-        this.barn = barn;
+        this.barnId = barn.getId();
         this.id = id;
         this.name = name;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
     }
 
-    public Area(int barnId, int id, String name, String description, int noOfPigs) {
-        barnId = barnId;
+    public Area(int id, int barnId, String name, String description, int noOfPigs, String hardwareId) {
+        this.barnId = barnId;
         this.id = id;
         this.name = name;
         this.description = description;
         this.numberOfPigs = noOfPigs;
+        this.hardwareId = hardwareId;
     }
 
-    public Barn getBarn() {
-        return barn;
+    public int getBarnId() {
+        return barnId;
     }
 
-    public void setBarn(Barn barn) {
-        this.barn = barn;
+    public void setBarnId(int barnId) {
+        barnId = barnId;
     }
 
     public int getNumberOfPigs() {
@@ -77,5 +79,13 @@ public class Area {
 
     public void setNoOfPigs(int noOfPigs) {
         this.numberOfPigs = noOfPigs;
+    }
+
+    public String getHardwareId() {
+        return hardwareId;
+    }
+
+    public void setHardwareId(String hardwareId) {
+        this.hardwareId = hardwareId;
     }
 }

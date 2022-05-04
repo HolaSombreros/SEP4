@@ -1,5 +1,7 @@
 package com.example.farmerama.datalayer.repository;
 
+import android.app.Application;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -23,17 +25,26 @@ public class UserRepository {
     private static UserRepository instance;
     private final MutableLiveData<List<User>> users;
     private final MutableLiveData<User> user;
+    private MutableLiveData<Boolean> loggedUser;
+    private SharedPreferences sharedPreferences;
 
-    private UserRepository() {
+
+    private UserRepository(Application application) {
+        sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
+        loggedUser = new MutableLiveData<>();
+
     }
 
-    public static synchronized UserRepository getInstance() {
+    public static synchronized UserRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new UserRepository();
+            instance = new UserRepository(application);
         }
         return instance;
+    }
+    public LiveData<Boolean> isLoggedIn(){
+        return loggedUser;
     }
 
     public LiveData<List<User>> getAllEmployees() {

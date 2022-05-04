@@ -11,6 +11,9 @@ import com.example.farmerama.datalayer.model.MeasurementType;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,10 +22,12 @@ import retrofit2.internal.EverythingIsNonNull;
 public class MeasurementRepository {
 
     private MutableLiveData<Measurement> measurement;
+    private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
 
     private MeasurementRepository() {
         measurement = new MutableLiveData<>();
+        measurements = new MutableLiveData<>();
     }
 
     public static MeasurementRepository getInstance() {
@@ -42,24 +47,29 @@ public class MeasurementRepository {
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
-        Call<MeasurementResponse> call = getMeasurementCall(measurementApi, type, areaId, latest);
-        call.enqueue(new Callback<MeasurementResponse>() {
+        Call<List<MeasurementResponse>> call = getMeasurementCall(measurementApi, type, areaId, latest);
+        call.enqueue(new Callback<List<MeasurementResponse>>() {
             @EverythingIsNonNull
             @Override
-            public void onResponse(Call<MeasurementResponse> call, Response<MeasurementResponse> response) {
+            public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
+                List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    measurement.setValue(response.body().getMeasurement());
+                    for(MeasurementResponse measurement : response.body()){
+                        list.add(measurement.getMeasurement());
+                    }
+                    measurements.setValue(list);
+                    measurement.setValue(list.get(0));
                 }
             }
             @EverythingIsNonNull
             @Override
-            public void onFailure(Call<MeasurementResponse> call, Throwable t) {
+            public void onFailure(Call<List<MeasurementResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
     }
 
-    private Call<MeasurementResponse> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId, boolean latest) {
+    private Call<List<MeasurementResponse>> getMeasurementCall(MeasurementApi measurementApi, MeasurementType type, int areaId, boolean latest) {
         switch (type) {
             case TEMPERATURE:
                 return measurementApi.getLatestTemperature(areaId, latest);
