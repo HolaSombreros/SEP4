@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.menu_drawer);
         initViews();
         setupNavigation();
-
     }
 
     private void setupNavigation() {
