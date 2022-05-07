@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.farmerama.R;
 import com.example.farmerama.domainlayer.LoginViewModel;
@@ -65,14 +67,6 @@ public class LoginFragment extends Fragment
             if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
                 navController.navigate(R.id.latestMeasurementFragment);
             }
-
-            //TODO
-//            if(user.getRole().equals(Role.OWNER)){
-//
-//            }
-//            else if(user.getRole().equals(Role.EMPLOYEE)){
-//
-//            }
         }
         catch (Exception e)
         {

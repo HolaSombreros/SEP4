@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private NavigationView navigationView;
-    private LoginViewModel loginViewModel;
     private SharedPreferences sharedPreferences;
 
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_drawer);
+        setContentView(R.layout.activity_main);
         initViews();
         setupNavigation();
         Menu navMenu = navigationView.getMenu();

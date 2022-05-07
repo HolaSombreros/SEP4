@@ -19,7 +19,7 @@ public class RegisterViewModel extends AndroidViewModel
 
     public RegisterViewModel(Application application) {
         super(application);
-        repository = UserRepository.getInstance();
+        repository = UserRepository.getInstance(application);
         validation=new ValidationLoginRegister();
     }
 
