@@ -27,7 +27,6 @@ public class Etl {
     //This script is being run each day at midnight
     //TODO uncomment when the script will be correct
 //    @Scheduled(cron = "0 0 0 ? * *")
-    @Scheduled(fixedDelay = 10000)
     @Async
     public void performEtl() {
         try {
