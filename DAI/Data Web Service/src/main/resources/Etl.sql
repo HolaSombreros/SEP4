@@ -1,0 +1,1 @@
+INSERT INTO [source].[dbo].[user] (email, name, password, role) values ('Emaildas@email.com', 'Test Testensen', 'Halabal1234', 'ADMINISTRATOR');
