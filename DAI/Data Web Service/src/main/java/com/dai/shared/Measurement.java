@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "measurement")
 public class Measurement {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "measurement_id")
     private int id;
     @Column(name = "measured_date")
@@ -17,47 +17,56 @@ public class Measurement {
     @Column(name = "humidity")
     private double humidity;
     @Column(name = "co2")
-    private int co2;
+    private int co2 = Integer.MIN_VALUE;
     @Column(name = "sound")
-    private double sound;
+    private double sound = Double.MIN_VALUE;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Hardware hardware;
+    @JoinColumn(name = "area_id")
+    private Area area;
+
 
 
     protected Measurement() {
     }
 
-    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Hardware hardware) {
+    public Measurement(int id, LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Area area) {
+        this.id = id;
         this.measuredDate = measuredDate;
         this.temperature = temperature;
         this.humidity = humidity;
         this.co2 = co2;
         this.sound = sound;
-        this.hardware = hardware;
+        this.area = area;
+    }
+
+    public Measurement(LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Area area) {
+        this.measuredDate = measuredDate;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.co2 = co2;
+        this.sound = sound;
+        this.area = area;
+    }
+
+    public Measurement(LocalDateTime measuredDate, Area area) {
+        this.measuredDate = measuredDate;
+        this.area = area;
     }
 
     public int getId() {
         return id;
     }
 
-    public LocalDateTime getMeasuredDate() {
-        return measuredDate;
-    }
-
-    public Hardware getHardware() {
-        return hardware;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setMeasuredDate(LocalDateTime measuredDate) {
-        this.measuredDate = measuredDate;
+    public LocalDateTime getMeasuredDate() {
+        return measuredDate;
     }
 
-    public void setHardware(Hardware hardware) {
-        this.hardware = hardware;
+    public void setMeasuredDate(LocalDateTime measuredDate) {
+        this.measuredDate = measuredDate;
     }
 
     public double getTemperature() {
@@ -90,6 +99,14 @@ public class Measurement {
 
     public void setSound(double sound) {
         this.sound = sound;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 }
 

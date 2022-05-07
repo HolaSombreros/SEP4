@@ -16,6 +16,7 @@ resource "aws_ecr_repository" "sep4-data-service" {
   image_tag_mutability = "MUTABLE"
 }
 
+//TODO tag prefix list?
 resource "aws_ecr_lifecycle_policy" "sep4-data-service-lifecycle-policy" {
   repository = aws_ecr_repository.sep4-data-service.name
 

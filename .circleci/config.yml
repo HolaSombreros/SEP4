@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.4.0
   aws-ecs: circleci/aws-ecs@2.0
+  maven: circleci/maven@0.0.12
 jobs:
   build-save-image:
     working_directory: ~/project/DAI/Data Web Service
@@ -15,7 +16,7 @@ jobs:
           name: Setup common environment variables
           command: |
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
-            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:<< pipeline.number >>"' >> $BASH_ENV
+            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}"' >> $BASH_ENV
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             echo 'export DB_PASSWORD="${DB_PASSWORD}"' >> $BASH_ENV
             echo 'export DB_SCHEMA="${DB_SCHEMA}"' >> $BASH_ENV
@@ -25,13 +26,16 @@ jobs:
           name: Install dependencies for project
           command: mvn install -Pprod
       - run:
+          name: Run tests
+          command: |
+            mvn verify
+      - run:
           name: Install dependencies for AWS
           command: |
             sudo apt-get update
             sudo apt-get -y -qq install awscli
             sudo apt-get install python3-pip
             sudo pip3 install --upgrade awscli
-
       - run:
           name: Install terraform
           command: |
@@ -41,23 +45,24 @@ jobs:
       - run:
           name: Build image
           command: |
-            docker build -t ${FULL_IMAGE_NAME} -t latest .
+            docker build -t ${FULL_IMAGE_NAME} .
       - run:
           name: Push image
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push ${FULL_IMAGE_NAME}
+            docker tag ${FULL_IMAGE_NAME} ${FULL_IMAGE_NAME}:<< pipeline.number >>
+            docker push ${FULL_IMAGE_NAME}:<< pipeline.number >>
       - run:
-          name: Update service
+          name: Deploy new version
           command: |
-            cd ./infrastructure
-            terraform init
-            terraform apply -var image_tag=<< pipeline.number >> -auto-approve
-
+            aws elasticbeanstalk update-environment --application-name "sep4-data-server-ebs" --environment-name "sep4-data-service-enviroment" --version-label=1
 workflows:
   wf:
     jobs:
       - build-save-image:
           filters:
             branches:
-              only: "master"
+              only:
+                - master
+                - data

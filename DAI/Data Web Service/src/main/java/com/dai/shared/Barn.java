@@ -1,12 +1,16 @@
 package com.dai.shared;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "barn")
 public class Barn {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "barn_id")
     private int id;
     @Column(name = "name")
@@ -15,8 +19,7 @@ public class Barn {
     public Barn() {
     }
 
-    public Barn(int id, String name) {
-        this.id = id;
+    public Barn(String name) {
         this.name = name;
     }
 

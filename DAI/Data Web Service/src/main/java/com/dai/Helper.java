@@ -7,15 +7,12 @@ public class Helper {
 
     public static synchronized <T> T await(Future<T> future) throws Exception
     {
-        T object;
         while (true)
         {
             if (future.isDone())
             {
-                object = future.get();
-                break;
+                return future.get();
             }
         }
-        return object;
     }
 }

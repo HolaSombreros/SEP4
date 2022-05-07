@@ -39,3 +39,5 @@ build/
 variables.tf
 .terraform.locl.hcl
 *.tfvars
+
+*-dev.properties
