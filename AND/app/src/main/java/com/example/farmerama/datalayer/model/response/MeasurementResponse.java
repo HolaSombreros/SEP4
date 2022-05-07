@@ -15,8 +15,9 @@ public class MeasurementResponse {
         measurements = new ArrayList<>();
     }
 
-    public Measurement getMeasurement() {
-        return new Measurement(value, measuredDate);
+    public Measurement getMeasurement(MeasurementType type) {
+        return new Measurement(value, measuredDate, type);
+    }
 
     public List<Measurement> getMeasurements(){
         return measurements;

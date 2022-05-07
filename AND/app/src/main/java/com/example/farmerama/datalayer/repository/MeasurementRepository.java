@@ -55,7 +55,7 @@ public class MeasurementRepository {
                 List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
                     for(MeasurementResponse measurement : response.body()){
-                        list.add(measurement.getMeasurement());
+                        list.add(measurement.getMeasurement(type));
                     }
                     measurements.setValue(list);
                     measurement.setValue(list.get(0));

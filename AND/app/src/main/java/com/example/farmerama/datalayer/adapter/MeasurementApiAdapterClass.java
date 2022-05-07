@@ -5,12 +5,14 @@ import com.example.farmerama.datalayer.model.response.MeasurementResponse;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 
+import java.util.List;
+
 import retrofit2.Call;
 
 public class MeasurementApiAdapterClass implements MeasurementApiAdapter{
 
     @Override
-    public Call<MeasurementResponse> retrieveLatestMeasurement(MeasurementType type, int areaId, boolean latest) {
+    public Call<List<MeasurementResponse>> retrieveLatestMeasurement(MeasurementType type, int areaId, boolean latest) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
         switch (type) {
             case TEMPERATURE:
