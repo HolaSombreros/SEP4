@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.datalayer.adapter.MeasurementApiAdapter;
+import com.example.farmerama.datalayer.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.datalayer.model.Measurement;
 import com.example.farmerama.datalayer.model.response.MeasurementResponse;
 import com.example.farmerama.datalayer.model.MeasurementType;
@@ -24,10 +26,12 @@ public class MeasurementRepository {
     private MutableLiveData<Measurement> measurement;
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
+    private MeasurementApiAdapter adapter;
 
     private MeasurementRepository() {
         measurement = new MutableLiveData<>();
         measurements = new MutableLiveData<>();
+        adapter = new MeasurementApiAdapterClass();
     }
 
     public static MeasurementRepository getInstance() {
@@ -37,11 +41,7 @@ public class MeasurementRepository {
         return instance;
     }
 
-    public LiveData<Measurement> getLatestTemperature() {
-        return measurement;
-    }
-
-    public LiveData<Measurement> getLatestHumidity() {
+    public LiveData<Measurement> getLatestMeasurement() {
         return measurement;
     }
 
@@ -55,7 +55,7 @@ public class MeasurementRepository {
                 List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
                     for(MeasurementResponse measurement : response.body()){
-                        list.add(measurement.getMeasurement());
+                        list.add(measurement.getMeasurement(type));
                     }
                     measurements.setValue(list);
                     measurement.setValue(list.get(0));

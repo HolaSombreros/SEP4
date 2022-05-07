@@ -22,20 +22,14 @@ public class LatestMeasurementViewModel extends ViewModel {
         this.areaRepository = AreaRepository.getInstance();
     }
 
-    public LiveData<Measurement> getLatestMeasurement(MeasurementType type) {
-        switch (type) {
-            case TEMPERATURE:
-                return measurementRepository.getLatestTemperature();
-            case HUMIDITY:
-                return measurementRepository.getLatestHumidity();
-            default:
-                throw new IllegalArgumentException("No type defined");
-        }
+    public LiveData<Measurement> getLatestMeasurement() {
+        return measurementRepository.getLatestMeasurement();
     }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
     }
+
     public void getAllAreas() {
         areaRepository.getAllAreas();
     }
