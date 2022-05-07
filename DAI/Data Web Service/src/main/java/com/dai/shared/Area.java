@@ -15,17 +15,20 @@ public class Area implements Serializable{
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "area_id")
     private int id;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonIdentityReference(alwaysAsId = true)
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="barn_id")
     private Barn barn;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "number_of_pigs")
     private int numberOfPigs;
+
     @Column(name = "hardware_id")
     private String hardwareId;
 
