@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AreaResponse {
-    private int barn;
     private int id;
+    private BarnResponse barn;
     private String name;
     private String description;
     private int numberOfPigs;
     private String hardwareId;
-
-
+    
     public Area getArea(){
-        return new Area(id, barn, name, description,numberOfPigs, hardwareId);
+        return new Area(id, barn.getBarn(), name, description,numberOfPigs, hardwareId);
     }
 }
