@@ -2,20 +2,16 @@ package com.dai.etl;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.stream.Stream;
 
 @Component
 public class Etl {
-
 
     @Value("${database.url}")
     private String dbUrl;
@@ -26,17 +22,16 @@ public class Etl {
     @Value("${spring.datasource.password}")
     private String dbPassword;
 
-
-    //    @Scheduled(cron ="0 0 0 ? * *")
-    @Scheduled(fixedRate = 1000)
-    public void etl() {
+    //This script is being run each day at midnight
+    //TODO uncomment when the script will be correct
+//    @Scheduled(cron = "0 0 0 ? * *")
+    public void performEtl() {
         try {
             Connection c = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
             if (c == null)
                 return;
 
             Reader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Etl.sql")));
-
             ScriptRunner sr = new ScriptRunner(c);
             sr.runScript(reader);
             c.close();
