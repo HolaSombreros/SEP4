@@ -56,7 +56,6 @@ class SocketMeasurementModelImplTest {
         //Arrange
         assertEquals(555, result.getCo2());
         assertEquals( 70.5, result.getHumidity());
-        assertEquals(0, result.getSound());
         assertEquals(25.3, result.getTemperature());
     }
 }
