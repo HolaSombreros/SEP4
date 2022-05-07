@@ -51,7 +51,7 @@ class SocketMeasurementModelImplTest {
         Measurement result;
 
         //Act
-        result = Helper.await(model.saveSocketData(data));
+        result = model.saveSocketData(data);
 
         //Arrange
         assertEquals(555, result.getCo2());
