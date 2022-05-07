@@ -3,19 +3,15 @@ package com.dai.model.socketMeasurement;
 import com.dai.Helper;
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.measurement.MeasurementDao;
-import com.dai.dao.measurement.MeasurementDaoImpl;
 import com.dai.shared.Area;
 import com.dai.shared.Measurement;
 import com.dai.shared.SocketData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.concurrent.Future;
 
 @Component
 public class SocketMeasurementModelImpl implements SocketMeasurementModel {
@@ -30,7 +26,7 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
     }
 
     @Override
-    public Future<Measurement> saveSocketData(SocketData data) throws Exception {
+    public Measurement saveSocketData(SocketData data) throws Exception {
 
         if (!data.getCmd().equals("rx")) {
             return null;
@@ -60,7 +56,7 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
         if (flags.charAt(3) == '1') {
             measurement.setSound(values[3]);
         }
-        return measurementDao.saveMeasurement(measurement);
+        return Helper.await(measurementDao.saveMeasurement(measurement));
     }
 
     private static int[] parseStringToValues(String str) {
