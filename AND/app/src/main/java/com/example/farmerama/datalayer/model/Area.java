@@ -10,18 +10,12 @@ public class Area {
     private int numberOfPigs;
     private String hardwareId;
 
-    public Area(String name, String description, int noOfPigs) {
-        this.name = name;
-        this.description = description;
-        this.numberOfPigs = noOfPigs;
-    }
-
-    public Area(Barn barn, int id, String name, String description, int numberOfPigs) {
+    public Area(Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
         this.barn = barn;
-        this.id = id;
         this.name = name;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
+        this.hardwareId = hardwareId;
     }
 
     public Area(int id, Barn barn, String name, String description, int noOfPigs, String hardwareId) {

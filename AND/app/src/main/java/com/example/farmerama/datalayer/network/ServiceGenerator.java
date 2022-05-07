@@ -10,6 +10,7 @@ public class ServiceGenerator {
     private static UserApi userApi;
     private static MeasurementApi measurementApi;
     private static AreaApi areaApi;
+    private static BarnApi barnApi;
 
     public static UserApi getUserApi() {
         if (userApi == null) {
@@ -41,5 +42,16 @@ public class ServiceGenerator {
                     .create(AreaApi.class);
         }
         return areaApi;
+    }
+
+    public static BarnApi getBarnApi() {
+        if (barnApi == null) {
+            barnApi = new Retrofit.Builder()
+                    .baseUrl(url + EndpointsHelper.BARNS)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(BarnApi.class);
+        }
+        return barnApi;
     }
 }
