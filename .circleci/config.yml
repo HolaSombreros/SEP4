@@ -1,7 +1,5 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@6.4.0
-  aws-ecs: circleci/aws-ecs@2.0
   maven: circleci/maven@0.0.12
 jobs:
   build-save-image:
@@ -66,3 +64,4 @@ workflows:
               only:
                 - master
                 - data
+                - Tomas
