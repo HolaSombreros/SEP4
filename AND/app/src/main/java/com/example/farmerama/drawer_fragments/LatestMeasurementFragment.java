@@ -58,9 +58,7 @@ public class LatestMeasurementFragment extends Fragment {
 
     private void setUpViews() {
         sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
-        //TODO: destroy viewmodel when the tabs are switched back
-        //viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 0), measurementType, true);
-        viewModel.retrieveLatestMeasurement(1, measurementType, true);
+        viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), measurementType, true);
 
         viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
             measurementTextView.setText(String.valueOf(measurement.getValue()));
