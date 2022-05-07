@@ -40,7 +40,7 @@ public class LatestMeasurementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(R.layout.fragment_latest_measurement, container, false);
+        return inflater.inflate(R.layout.fragment_latest_measurement, container, false);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class LatestMeasurementFragment extends Fragment {
 
         viewModel.getLatestMeasurement(measurementType).observe(getViewLifecycleOwner(), measurement -> {
             measurementTextView.setText(String.valueOf(measurement.getValue()));
-            //typeTextView.setText(measurement.getMeasurementType().toString());
+            timeText.setText(measurement.getDateTime());
         });
 
 

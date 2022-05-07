@@ -1,6 +1,13 @@
 package com.example.farmerama.datalayer.model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Measurement {
@@ -13,12 +20,12 @@ public class Measurement {
     public Measurement(int id, double value, String dateTime, MeasurementType measurementType) {
         this.id = id;
         this.value = value;
-        this.measuredDate = dateTime;
+        //this.measuredDate = dateTime;
         this.measurementType = measurementType;
     }
     public Measurement(double value, String measuredDate) {
         this.value = value;
-        this.measuredDate = measuredDate;
+        setMeasuredDate(measuredDate);
     }
 
     public int getId() {
@@ -41,9 +48,9 @@ public class Measurement {
         return measuredDate;
     }
 
-    public void setDateTime(String dateTime) {
+    /*public void setDateTime(String dateTime) {
         this.measuredDate = dateTime;
-    }
+    }*/
 
     public MeasurementType getMeasurementType() {
         return measurementType;
@@ -52,4 +59,13 @@ public class Measurement {
     public void setMeasurementType(MeasurementType measurementType) {
         this.measurementType = measurementType;
     }
+
+    public void setMeasuredDate(String measuredDate) {
+        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = datetime.format(myFormatObj);
+        this.measuredDate = formattedDate;
+    }
+
+
 }
