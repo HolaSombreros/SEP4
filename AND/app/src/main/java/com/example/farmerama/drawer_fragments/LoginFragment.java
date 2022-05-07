@@ -41,6 +41,7 @@ public class LoginFragment extends Fragment
         password = view.findViewById(R.id.LoginPassword);
         loginButton = view.findViewById(R.id.loginButton);
         navController = Navigation.findNavController(view);
+
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
         });
@@ -50,7 +51,7 @@ public class LoginFragment extends Fragment
 
     public void login(View v){
         try{
-            if(viewModel.login(email.getText().toString(), password.getText().toString())) {
+            if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
                 navController.navigate(R.id.latestMeasurementFragment);
             }
 

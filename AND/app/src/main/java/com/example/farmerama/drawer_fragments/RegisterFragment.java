@@ -1,11 +1,13 @@
 package com.example.farmerama.drawer_fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +26,7 @@ public class RegisterFragment extends Fragment {
     private EditText firstName;
     private EditText lastName;
     private EditText password;
+    private EditText role;
     private Button registerButton;
 
     @Nullable
@@ -43,14 +46,28 @@ public class RegisterFragment extends Fragment {
         lastName = view.findViewById(R.id.RegisterLastName);
         password = view.findViewById(R.id.RegisterPassword);
         registerButton = view.findViewById(R.id.registerButton);
+        role=view.findViewById(R.id.Role);
+
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
+        });
 
         registerButton.setOnClickListener(this::registerUser);
     }
 
 
     public void registerUser(View v){
+        String userFirstName=firstName.getText().toString();
+        String userLastName=lastName.getText().toString();
+        String userEmail=email.getText().toString();
+        String userPassword=password.getText().toString();
+        String userRole=role.getText().toString();
 
-        viewModel.registerUser(new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), "EMPLOYEE"));
 
+
+            if(viewModel.validate(userFirstName, userLastName, userEmail, userPassword, userRole)){
+                Log.i("Test", "I am in second if");
+                viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, userRole));
+            }
     }
 }
