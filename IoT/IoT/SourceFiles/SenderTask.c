@@ -29,7 +29,7 @@ void senderTask_initTask(void* params) {
 	vTaskDelay(150);
 	lora_driver_flushBuffers();
 	
-	//_connectToLoRaWAN();
+	_connectToLoRaWAN();
 }
 
 void senderTask_runTask() {	
