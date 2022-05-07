@@ -2,6 +2,7 @@ package com.dai.etl;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ public class Etl {
     //This script is being run each day at midnight
     //TODO uncomment when the script will be correct
 //    @Scheduled(cron = "0 0 0 ? * *")
+    @Async
     public void performEtl() {
         try {
             Connection c = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);

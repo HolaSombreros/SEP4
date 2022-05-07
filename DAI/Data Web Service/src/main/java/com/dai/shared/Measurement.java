@@ -17,9 +17,9 @@ public class Measurement {
     @Column(name = "humidity")
     private double humidity;
     @Column(name = "co2")
-    private int co2 = Integer.MIN_VALUE;
+    private int co2 = -1000;
     @Column(name = "sound")
-    private double sound = Double.MIN_VALUE;
+    private double sound = -1000;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Area area;
