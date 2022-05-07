@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
         sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
     }

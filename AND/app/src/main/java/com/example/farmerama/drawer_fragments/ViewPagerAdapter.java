@@ -1,5 +1,7 @@
 package com.example.farmerama.drawer_fragments;
 
+import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -17,7 +19,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return new LatestMeasurementFragment(position);
+        return new LatestMeasurementFragment();
     }
 
     @Override

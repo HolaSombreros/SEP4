@@ -21,6 +21,8 @@ import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Arrays;
+
 public class LatestDataFragment extends Fragment {
     private LatestMeasurementViewModel viewModel;
     private ViewPager2 viewPager2;
@@ -30,7 +32,7 @@ public class LatestDataFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(R.layout.fragment_latest_data, container, false);
+        return inflater.inflate(R.layout.fragment_latest_data, container, false);
     }
 
 
@@ -71,6 +73,14 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
             }
         });
 

@@ -19,22 +19,13 @@ import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
 
 
 public class LatestMeasurementFragment extends Fragment {
-    private MeasurementType measurementType;
     private EditText timeText;
     private TextView measurementTextView;
     private TextView typeTextView;
     private LatestMeasurementViewModel viewModel;
     private SharedPreferences sharedPreferences;
 
-    public LatestMeasurementFragment(int position) {
-        switch (position) {
-            case 0:
-                measurementType = MeasurementType.TEMPERATURE;
-                break;
-            case 1:
-                measurementType = MeasurementType.HUMIDITY;
-                break;
-        }
+    public LatestMeasurementFragment() {
     }
 
     @Override
@@ -58,8 +49,6 @@ public class LatestMeasurementFragment extends Fragment {
 
     private void setUpViews() {
         sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
-        viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), measurementType, true);
-
         viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
             measurementTextView.setText(String.valueOf(measurement.getValue()));
             if (measurement.getMeasurementType()!=null)
