@@ -13,12 +13,12 @@ public class Measurement {
     public Measurement(int id, double value, String dateTime, MeasurementType measurementType) {
         this.id = id;
         this.value = value;
-        this.measuredDate = dateTime;
+        //this.measuredDate = dateTime;
         this.measurementType = measurementType;
     }
     public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
-        this.measuredDate = measuredDate;
+        setMeasuredDate(measuredDate);
         this.measurementType = type;
     }
 
@@ -52,5 +52,12 @@ public class Measurement {
 
     public void setMeasurementType(MeasurementType measurementType) {
         this.measurementType = measurementType;
+    }
+
+    public void setMeasuredDate(String measuredDate) {
+        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = datetime.format(myFormatObj);
+        this.measuredDate = formattedDate;
     }
 }

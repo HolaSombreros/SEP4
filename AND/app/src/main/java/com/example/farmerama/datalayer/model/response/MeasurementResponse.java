@@ -11,12 +11,12 @@ public class MeasurementResponse {
     private double value;
     private String measuredDate;
 
-    public Measurement getMeasurement(MeasurementType type) {
-        return new Measurement(value, measuredDate, type);
-    }
-
     public MeasurementResponse() {
         measurements = new ArrayList<>();
+    }
+
+    public Measurement getMeasurement(MeasurementType type) {
+        return new Measurement(value, measuredDate, type);
     }
 
     public List<Measurement> getMeasurements(){

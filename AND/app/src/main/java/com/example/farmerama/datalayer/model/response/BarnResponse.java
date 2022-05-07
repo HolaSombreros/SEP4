@@ -7,6 +7,6 @@ public class BarnResponse {
     private String name;
 
     public Barn getBarn() {
-        return  new Barn(id, name);
+        return new Barn(id, name);
     }
 }
