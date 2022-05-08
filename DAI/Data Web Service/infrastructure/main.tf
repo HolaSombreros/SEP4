@@ -24,24 +24,8 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
           "awslogs-region": "${var.aws_region}",
           "awslogs-stream-prefix": "${var.task_name}"
         }
-      },  "environment": [
-        {
-          "value": "ServiceDatabase12345",
-          "name": "DB_PASSWORD"
-        },
-        {
-          "value": "SEP4",
-          "name": "DB_SCHEMA"
-        },
-        {
-          "value": "jdbc:mysql://sep4-service-database.chdijkbljcqv.eu-central-1.rds.amazonaws.com:3300/SEP4",
-          "name": "DB_URL"
-        },
-        {
-          "value": "ServiceDatabaseUserName",
-          "name": "DB_USERNAME"
-        }
-      ],
+      },
+      "environment": null,
       "portMappings": [
         {
           "containerPort": 8888,
@@ -63,7 +47,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
 
   tags = {
-    Name        = "${var.task_name}-ecs-td"
+    Name = "${var.task_name}-ecs-td"
   }
 }
 
@@ -116,6 +100,6 @@ resource "aws_security_group" "service_security_group" {
   }
 
   tags = {
-    Name        = "${var.task_name}-service-sg"
+    Name = "${var.task_name}-service-sg"
   }
 }
