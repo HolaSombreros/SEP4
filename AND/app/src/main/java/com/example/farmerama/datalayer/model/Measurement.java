@@ -1,21 +1,25 @@
 package com.example.farmerama.datalayer.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Measurement {
 
     private int id;
     private double value;
-    private LocalDateTime dateTime;
-    private UnitOfMeasurement unitOfMeasurement;
+    private String measuredDate;
     private MeasurementType measurementType;
 
-    public Measurement(int id, double value, LocalDateTime dateTime, UnitOfMeasurement unitOfMeasurement, MeasurementType measurementType) {
+    public Measurement(int id, double value, String dateTime, MeasurementType measurementType) {
         this.id = id;
         this.value = value;
-        this.dateTime = dateTime;
-        this.unitOfMeasurement = unitOfMeasurement;
+        //this.measuredDate = dateTime;
         this.measurementType = measurementType;
+    }
+    public Measurement(double value, String measuredDate, MeasurementType type) {
+        this.value = value;
+        setMeasuredDate(measuredDate);
+        this.measurementType = type;
     }
 
     public int getId() {
@@ -34,20 +38,12 @@ public class Measurement {
         this.value = value;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getDateTime() {
+        return measuredDate;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public UnitOfMeasurement getUnitOfMeasurement() {
-        return unitOfMeasurement;
-    }
-
-    public void setUnitOfMeasurement(UnitOfMeasurement unitOfMeasurement) {
-        this.unitOfMeasurement = unitOfMeasurement;
+    public void setDateTime(String dateTime) {
+        this.measuredDate = dateTime;
     }
 
     public MeasurementType getMeasurementType() {
@@ -56,5 +52,12 @@ public class Measurement {
 
     public void setMeasurementType(MeasurementType measurementType) {
         this.measurementType = measurementType;
+    }
+
+    public void setMeasuredDate(String measuredDate) {
+        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = datetime.format(myFormatObj);
+        this.measuredDate = formattedDate;
     }
 }

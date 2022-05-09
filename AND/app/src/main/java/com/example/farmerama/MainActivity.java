@@ -8,9 +8,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.example.farmerama.domainlayer.LoginViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,14 +25,21 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
+    private NavigationView navigationView;
+    private LoginViewModel loginViewModel;
+    private SharedPreferences sharedPreferences;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_activity_main);
+        setContentView(R.layout.menu_drawer);
         initViews();
         setupNavigation();
+        Menu navMenu = navigationView.getMenu();
+        if(sharedPreferences.getBoolean("GuestVisit", false))
+            navMenu.findItem(R.id.accountFragment).setVisible(false);
 
     }
 
@@ -38,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.accountFragment,
                 R.id.areasFragment,
                 R.id.employeesFragment,
-                R.id.sensorsFragment)
+                R.id.sensorsFragment,
+                R.id.employeeAreasFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -49,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
+        sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
     }
 
     @Override
