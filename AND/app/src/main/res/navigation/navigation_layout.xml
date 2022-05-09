@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_layout"
-    app:startDestination="@id/latestMeasurementFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/latestMeasurementFragment"
         android:name="com.example.farmerama.drawer_fragments.LatestDataFragment"
@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmerama.drawer_fragments.RegisterFragment"
-        android:label="LoginFragment"
+        android:label=" Register a new user!"
         tools:layout="@layout/fragment_register"
     />
     <fragment

@@ -54,6 +54,20 @@ public class LatestDataFragment extends Fragment {
     private void setUpViews() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
         viewPager2.setAdapter(adapter);
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
+            }
+        });
+
+        String[] tabTitles = {"Temperature", "Humidity"};
+        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+            tab.setText(tabTitles[position]);
+        }).attach();
+
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
             ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
@@ -75,18 +89,5 @@ public class LatestDataFragment extends Fragment {
 
             }
         });
-
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
-            }
-        });
-
-        String[] tabTitles = {"Temperature", "Humidity"};
-        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
-            tab.setText(tabTitles[position]);
-        }).attach();
     }
 }

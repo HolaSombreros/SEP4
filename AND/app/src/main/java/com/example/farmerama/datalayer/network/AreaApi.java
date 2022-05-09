@@ -10,8 +10,8 @@ import retrofit2.http.*;
 
 public interface AreaApi {
 
-    @POST
-    Call<AreaResponse> createArea(Area area);
+    @POST(".")
+    Call<AreaResponse> createArea(@Body Area area);
 
     @GET(".")
     Call<List<AreaResponse>> getAreas();

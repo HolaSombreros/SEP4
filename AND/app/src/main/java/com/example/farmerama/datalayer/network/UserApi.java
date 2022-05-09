@@ -25,4 +25,7 @@ public interface UserApi {
     @POST
     Call<UserResponse> register(User user);
 
+    @POST
+    Call<UserResponse> login(User user);
+
 }

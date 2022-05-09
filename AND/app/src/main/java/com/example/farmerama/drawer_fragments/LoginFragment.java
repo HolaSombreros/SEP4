@@ -1,30 +1,24 @@
 package com.example.farmerama.drawer_fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.farmerama.MainActivity;
 import com.example.farmerama.R;
-import com.example.farmerama.datalayer.model.User;
 import com.example.farmerama.domainlayer.LoginViewModel;
-import com.google.android.material.navigation.NavigationView;
 
 public class LoginFragment extends Fragment
 {
@@ -47,7 +41,6 @@ public class LoginFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
         setupViews(view);
-
     }
 
     private void setupViews(View view){
@@ -58,6 +51,9 @@ public class LoginFragment extends Fragment
         continueAsGuest = view.findViewById(R.id.continueAsGuest);
         sharedPreferences = getActivity().getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
 
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
+        });
 
         loginButton.setOnClickListener(this::login);
         continueAsGuest.setOnClickListener(v -> {
@@ -68,16 +64,9 @@ public class LoginFragment extends Fragment
 
     public void login(View v){
         try{
-
-            User user= viewModel.login(email.toString(), password.toString());
-
-            //TODO
-//            if(user.getRole().equals(Role.OWNER)){
-//
-//            }
-//            else if(user.getRole().equals(Role.EMPLOYEE)){
-//
-//            }
+            if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
+                navController.navigate(R.id.latestMeasurementFragment);
+            }
         }
         catch (Exception e)
         {

@@ -5,31 +5,41 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.farmerama.datalayer.model.Area;
+import com.example.farmerama.datalayer.model.Barn;
 import com.example.farmerama.datalayer.repository.AreaRepository;
+import com.example.farmerama.datalayer.repository.BarnRepository;
+
+import java.util.List;
 
 public class AddAreaViewModel extends ViewModel {
 
-    private AreaRepository repository;
+    private AreaRepository areaRepository;
+    private BarnRepository barnRepository;
     private MutableLiveData<String> errorMessage;
+    private Barn barn;
 
     public AddAreaViewModel() {
-        repository = AreaRepository.getInstance();
+        areaRepository = AreaRepository.getInstance();
+        barnRepository = BarnRepository.getInstance();
         errorMessage = new MutableLiveData<>();
     }
 
-    public boolean createNewArea(String name, String description, String noOfPigs) {
+    public LiveData<List<Barn>> getBarns() {
+        return barnRepository.getBarns();
+    }
+
+    public void retrieveAllBarns() {
+        barnRepository.retrieveBarns();
+    }
+
+    public void setBarn(Barn barn) {
+        this.barn = barn;
+    }
+
+    public boolean createNewArea(String name, String description, String noOfPigs, String hardwareId) {
         if (name == null || name.isEmpty()) {
             errorMessage.setValue("Please specify the name of the area");
             return false;
-        }
-
-        if (!repository.getAreas().getValue().isEmpty()) {
-            for (Area area : repository.getAreas().getValue()) {
-                if (area.equals(name)) {
-                    errorMessage.setValue("There is already an area with this name");
-                    return false;
-                }
-            }
         }
 
         if (description == null || description.isEmpty()) {
@@ -54,8 +64,8 @@ public class AddAreaViewModel extends ViewModel {
             return false;
         }
 
-        Area area = new Area(name, description, Integer.parseInt(noOfPigs));
-        repository.createArea(area);
+        Area area = new Area(barn, name, description, Integer.parseInt(noOfPigs), hardwareId);
+        areaRepository.createArea(area);
         return true;
     }
 

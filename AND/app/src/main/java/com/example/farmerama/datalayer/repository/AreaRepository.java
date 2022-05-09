@@ -26,6 +26,7 @@ public class AreaRepository {
         specificArea = new MutableLiveData<>();
 
     }
+
     public static AreaRepository getInstance() {
         if(instance == null) {
             return new AreaRepository();
@@ -101,5 +102,4 @@ public class AreaRepository {
             }
         });
     }
-
 }
