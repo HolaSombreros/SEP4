@@ -1,6 +1,6 @@
 package com.dai.model.temperature;
 
-import com.dai.Helper;
+import com.dai.helpers.Helper;
 import com.dai.dao.temperature.TemperatureDao;
 import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
