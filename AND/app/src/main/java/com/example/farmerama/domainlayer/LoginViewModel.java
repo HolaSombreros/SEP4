@@ -18,7 +18,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LoginViewModel(Application application) {
         super(application);
-        repository = UserRepository.getInstance(application);
+        repository = UserRepository.getInstance();
         repository.retrieveAllEmployees();
         validation = new ValidationLoginRegister();
     }
@@ -29,5 +29,13 @@ public class LoginViewModel extends AndroidViewModel {
 
     public boolean validate(String email, String password) {
         return validation.verifyLogin(email, password);
+    }
+    public void retrieveAllEmployees(){
+        repository.retrieveAllEmployees();
+    }
+
+
+    public void loginUser(String email, String password){
+        repository.loginUser(new User(email, password));
     }
 }

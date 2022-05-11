@@ -63,14 +63,11 @@ public class LoginFragment extends Fragment
     }
 
     public void login(View v){
-        try{
-            if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
-                navController.navigate(R.id.latestMeasurementFragment);
-            }
-        }
-        catch (Exception e)
-        {
-
+        viewModel.retrieveAllEmployees();
+        if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
+            viewModel.loginUser(email.getText().toString(), password.getText().toString());
+            Toast.makeText(getContext(), "Logged in user",Toast.LENGTH_SHORT).show();
+            navController.navigate(R.id.latestMeasurementFragment);
         }
 
     }

@@ -29,17 +29,17 @@ public class UserRepository {
     private SharedPreferences sharedPreferences;
 
 
-    private UserRepository(Application application) {
-        sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
+    private UserRepository() {
+        //sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         loggedUser = new MutableLiveData<>();
 
     }
 
-    public static synchronized UserRepository getInstance(Application application) {
+    public static synchronized UserRepository getInstance() {
         if (instance == null) {
-            instance = new UserRepository(application);
+            instance = new UserRepository();
         }
         return instance;
     }
@@ -88,7 +88,6 @@ public class UserRepository {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user.setValue( response.body().getUser());
-                    Log.w("test2", user.getValue().toString());
                 }
             }
             @EverythingIsNonNull
@@ -130,6 +129,24 @@ public class UserRepository {
                 }
             }
             @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
+    public void loginUser(User employee) {
+        UserApi userApi = ServiceGenerator.getUserApi();
+        Call<UserResponse> call = userApi.login(employee);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if(response.isSuccessful()) {
+                    user.setValue(response.body().getUser());
+                }
+            }
+
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");

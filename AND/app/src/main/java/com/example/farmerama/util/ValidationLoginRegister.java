@@ -3,6 +3,7 @@ package com.example.farmerama.util;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.User;
+import com.example.farmerama.datalayer.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,14 @@ import java.util.List;
 public class ValidationLoginRegister {
     private MutableLiveData<String> errorMessage;
     private List<User> users;
+    private UserRepository userRepository;
+
 
     public ValidationLoginRegister(){
         errorMessage = new MutableLiveData<>();
-        users =new ArrayList<>();
-        users.add(new User("Geana","geana@stefi.dk", "miawmiao", "Owner"));
+        userRepository = UserRepository.getInstance();
+        users = new ArrayList<>();
+        //users.add(new User("Geana","geana@stefi.dk", "miawmiao", "Owner"));
 
     }
 
@@ -23,7 +27,7 @@ public class ValidationLoginRegister {
     }
 
     public boolean verifyLogin(String email, String password){
-
+        users = userRepository.getAllEmployees().getValue();
         if(!verifyEmail(email)) return verifyEmail(email);
         if(!verifyPassword(password)) return verifyPassword(password);
 
