@@ -1,6 +1,6 @@
 package com.dai.model.users;
 
-import com.dai.Helper;
+import com.dai.helpers.Helper;
 import com.dai.dao.user.UserDao;
 import com.dai.shared.LoginUser;
 import com.dai.shared.User;

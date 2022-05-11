@@ -1,6 +1,6 @@
 package com.dai.model.co2;
 
-import com.dai.Helper;
+import com.dai.helpers.Helper;
 import com.dai.dao.co2.Co2Dao;
 import com.dai.shared.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;

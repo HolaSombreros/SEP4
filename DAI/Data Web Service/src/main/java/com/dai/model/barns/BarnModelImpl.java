@@ -1,6 +1,6 @@
 package com.dai.model.barns;
 
-import com.dai.Helper;
+import com.dai.helpers.Helper;
 import com.dai.dao.barn.BarnDao;
 import com.dai.shared.Barn;
 import org.springframework.stereotype.Component;

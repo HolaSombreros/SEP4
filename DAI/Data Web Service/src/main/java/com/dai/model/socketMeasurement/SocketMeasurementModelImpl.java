@@ -1,8 +1,9 @@
 package com.dai.model.socketMeasurement;
 
-import com.dai.Helper;
+import com.dai.helpers.Helper;
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.measurement.MeasurementDao;
+import com.dai.helpers.MeasurementValidator;
 import com.dai.shared.Area;
 import com.dai.shared.Measurement;
 import com.dai.shared.SocketData;
@@ -18,11 +19,13 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
 
     private MeasurementDao measurementDao;
     private AreaDao areaDao;
+    private MeasurementValidator measurementValidator;
 
     @Autowired
-    public SocketMeasurementModelImpl(MeasurementDao measurementDao, AreaDao areaDao) {
+    public SocketMeasurementModelImpl(MeasurementDao measurementDao, AreaDao areaDao, MeasurementValidator measurementValidator) {
         this.measurementDao = measurementDao;
         this.areaDao = areaDao;
+        this.measurementValidator = measurementValidator;
     }
 
     @Override
@@ -44,17 +47,34 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
 
         if (flags.charAt(0) == '1') {
             double humidity = (double) values[0] / 10;
-            measurement.setHumidity(humidity);
+
+            if (measurementValidator.isHumidityValueValid(humidity)) {
+                measurement.setHumidity(humidity);
+            }
         }
+
         if (flags.charAt(1) == '1') {
             double temperature = (double) values[1] / 10;
-            measurement.setTemperature(temperature);
+
+            if (measurementValidator.isTemperatureValueValid(temperature)) {
+                measurement.setTemperature(temperature);
+            }
         }
+
         if (flags.charAt(2) == '1') {
-            measurement.setCo2(values[2]);
+            int co2 = values[2];
+
+            if (measurementValidator.isCo2ValueValid(co2)) {
+                measurement.setCo2(co2);
+            }
         }
+
         if (flags.charAt(3) == '1') {
-            measurement.setSound(values[3]);
+            int sound = values[3];
+
+            if (measurementValidator.isSoundValueValid(sound)) {
+                measurement.setSound(sound);
+            }
         }
         return Helper.await(measurementDao.saveMeasurement(measurement));
     }

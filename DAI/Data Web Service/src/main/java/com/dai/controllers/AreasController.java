@@ -1,6 +1,5 @@
 package com.dai.controllers;
 
-import com.dai.Helper;
 import com.dai.exceptions.BadRequestException;
 import com.dai.model.areas.AreasModel;
 import com.dai.shared.Area;

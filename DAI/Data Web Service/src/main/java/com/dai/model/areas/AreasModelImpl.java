@@ -1,6 +1,6 @@
 package com.dai.model.areas;
 
-import com.dai.Helper;
+import com.dai.helpers.Helper;
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.barn.BarnDao;
 import com.dai.exceptions.BadRequestException;

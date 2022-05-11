@@ -1,22 +1,15 @@
 package com.dai.controllers;
 
-import com.dai.Helper;
 import com.dai.exceptions.BadRequestException;
 import com.dai.exceptions.UnauthorizedException;
 import com.dai.model.users.UserModel;
 import com.dai.shared.LoginUser;
 import com.dai.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.core.support.IncompleteRepositoryCompositionException;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 @RequestMapping("/users")
 @RestController
