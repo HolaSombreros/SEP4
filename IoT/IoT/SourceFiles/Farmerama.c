@@ -48,14 +48,14 @@ void farmerama_runTask(void) {
 	uint16_t humidity;
 	int16_t temperature;
 	
-	xQueueReceive(_humidityQueue, &humidity, pdMS_TO_TICKS(100));
-	xQueueReceive(_temperatureQueue, &temperature, pdMS_TO_TICKS(100));
+	xQueueReceive(_humidityQueue, &humidity, pdMS_TO_TICKS(1000));
+	xQueueReceive(_temperatureQueue, &temperature, pdMS_TO_TICKS(1000));
 	
 	uplinkMessageBuilder_setHumidityData(humidity);
 	uplinkMessageBuilder_setTemperatureData(temperature);
 	
 	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
-	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(100));
+	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
 	
 	TickType_t lastWakeTime = xTaskGetTickCount();
 	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));

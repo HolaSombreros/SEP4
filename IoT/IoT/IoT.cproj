@@ -292,13 +292,7 @@
     <Compile Include="HeaderFiles\Farmerama.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\MeasurementReturnCode.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="HeaderFiles\SenderTask.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="HeaderFiles\TaskReturnCode.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HeaderFiles\UplinkMessageBuilder.h">
@@ -383,9 +377,6 @@
       <SubType>compile</SubType>
     </None>
     <Compile Include="HeaderFiles\HumidityTemperatureTask.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="LoRaWANHandler.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

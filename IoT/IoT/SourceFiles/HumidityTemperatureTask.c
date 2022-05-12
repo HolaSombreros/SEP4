@@ -1,5 +1,4 @@
 #include <HumidityTemperatureTask.h>
-#include <MeasurementReturnCode.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <hih8120.h>
@@ -45,10 +44,10 @@ void humidityTemperatureTask_runTask() {
 	);
 	
 	if (hih8120_wakeup() == HIH8120_OK) {
-		vTaskDelay(pdMS_TO_TICKS(50));
+		vTaskDelay(pdMS_TO_TICKS(100));
 		
 		if (hih8120_measure() == HIH8120_OK) {
-			vTaskDelay(pdMS_TO_TICKS(2));
+			vTaskDelay(pdMS_TO_TICKS(50));
 			
 			_latestHumidity = hih8120_getHumidityPercent_x10();
 			_latestTemperature = hih8120_getTemperature_x10();
