@@ -6,6 +6,7 @@ import com.example.farmerama.datalayer.model.response.UserResponse;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -22,8 +23,8 @@ public interface UserApi {
     @GET("{id}")
     Call<UserResponse> getEmployeeById(@Path("id") int id);
 
-    @POST
-    Call<UserResponse> register(User user);
+    @POST(".")
+    Call<UserResponse> register(@Body User user);
 
     @POST
     Call<UserResponse> login(User user);

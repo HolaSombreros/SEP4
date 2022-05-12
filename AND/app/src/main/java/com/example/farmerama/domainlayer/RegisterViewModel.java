@@ -37,17 +37,7 @@ public class RegisterViewModel extends AndroidViewModel
     }
 
     public void registerUser(User employee) {
-
-        try{
-            repository.getUserByEmail(employee.getEmail(), employee.getPassword());
-            User user = repository.getEmployee().getValue();
-            int size = employee.getPassword().length();
-
-                repository.register(employee);
-        }
-        catch (Exception e){
-
-        }
+        repository.register(employee);
     }
 
     public boolean validate(String firstName, String lastName,String email, String password, String role){
