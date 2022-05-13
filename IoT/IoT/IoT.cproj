@@ -298,6 +298,9 @@
     <Compile Include="HeaderFiles\SenderTask.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HeaderFiles\SoundTask.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HeaderFiles\UplinkMessageBuilder.h">
       <SubType>compile</SubType>
     </Compile>
@@ -314,6 +317,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\HumidityTemperatureTask.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\SoundTaskImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\UplinkMessageBuilder.c">

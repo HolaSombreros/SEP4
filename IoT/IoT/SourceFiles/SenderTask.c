@@ -39,12 +39,12 @@ void senderTask_runTask() {
 	lora_driver_returnCode_t returnCode;
 	if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
 		
-		} else if (returnCode == LORA_MAC_RX) {
+	} else if (returnCode == LORA_MAC_RX) {
 		
 	}
 	
-	printf("Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d | CO2 high: %d | CO2 low: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], 
-																								  uplinkPayload.bytes[2], uplinkPayload.bytes[3], uplinkPayload.bytes[4], uplinkPayload.bytes[5]);
+	printf("Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d | CO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], 
+																								  uplinkPayload.bytes[2], uplinkPayload.bytes[3], uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
 }
 
 static void _run(void* params) {
