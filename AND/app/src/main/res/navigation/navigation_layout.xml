@@ -51,13 +51,19 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.farmerama.drawer_fragments.LoginFragment"
-        android:label="RegisterFragment"
+        android:label="Login Fragment"
         tools:layout="@layout/fragment_login"
     />
     <fragment
+        android:id="@+id/signOut"
+        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
+        android:label="Login Fragment"
+        tools:layout="@layout/fragment_login"
+        />
+    <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmerama.drawer_fragments.RegisterFragment"
-        android:label=" Register a new user!"
+        android:label="Register a new user!"
         tools:layout="@layout/fragment_register"
     />
     <fragment

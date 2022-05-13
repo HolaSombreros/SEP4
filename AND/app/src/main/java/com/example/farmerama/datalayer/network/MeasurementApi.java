@@ -16,4 +16,7 @@ public interface MeasurementApi {
 
     @GET("{areaId}/humidities")
     Call<List<MeasurementResponse>> getLatestHumidity(@Path("areaId") int areaId, @Query("latest") boolean latest);
+
+    @GET("{areaId}/spl")
+    Call<List<MeasurementResponse>> getLatestSpl(@Path("areaId") int areaId, @Query("latest") boolean latest);
 }
