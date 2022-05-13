@@ -7,6 +7,8 @@ import com.dai.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +27,7 @@ public class HumidityController {
             if (isLatest.isPresent() && isLatest.get()) {
                 return humidityModel.readLatestHumidity(areaId);
             } else {
-                //TODO return all temperatures for the given area
-                return null;
+                return humidityModel.getHumidityMeasurementsByDate(areaId, LocalDate.now());
             }
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());

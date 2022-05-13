@@ -22,7 +22,7 @@ public class AreasModelImpl implements AreasModel {
         this.areasDao = areasDao;
         this.barnDao = barnDao;
     }
-
+//TODO: check if the area is already there
     @Override
     public Area create(Area area) throws Exception {
         Barn barn = Helper.await(barnDao.read(area.getBarn().getId()));
