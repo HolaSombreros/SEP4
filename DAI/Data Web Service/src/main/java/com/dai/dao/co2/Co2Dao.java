@@ -5,5 +5,5 @@ import com.dai.shared.SentMeasurement;
 import java.util.concurrent.Future;
 
 public interface Co2Dao {
-    Future<SentMeasurement> readLatestTemperature(int areaId);
+    Future<SentMeasurement> readLatestCo2(int areaId);
 }

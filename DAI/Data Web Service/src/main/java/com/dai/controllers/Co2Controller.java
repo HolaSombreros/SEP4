@@ -20,10 +20,10 @@ public class Co2Controller {
     }
 
     @GetMapping(value = "/areas/{id}/co2s")
-    public List<SentMeasurement> readLastTemperature(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
+    public List<SentMeasurement> readLastCo2(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
         try {
             if (isLatest.isPresent() && isLatest.get()) {
-                return co2Model.readLatestTemperature(id);
+                return co2Model.readLatestCo2(id);
             } else {
                 //TODO return all temperatures for the given area
                 return null;

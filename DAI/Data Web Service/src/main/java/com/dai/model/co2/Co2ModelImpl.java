@@ -19,7 +19,7 @@ public class Co2ModelImpl implements Co2Model {
     }
 
     @Override
-    public List<SentMeasurement> readLatestTemperature(int areaId) throws Exception {
-        return new ArrayList<>(List.of(Helper.await(co2Dao.readLatestTemperature(areaId))));
+    public List<SentMeasurement> readLatestCo2(int areaId) throws Exception {
+        return new ArrayList<>(List.of(Helper.await(co2Dao.readLatestCo2(areaId))));
     }
 }
