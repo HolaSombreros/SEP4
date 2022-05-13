@@ -22,19 +22,6 @@ public class UserModelImpl implements UserModel {
 
     @Override
     public User create(User user) throws Exception {
-//        The email must:
-//        contain “@” and “.” characters
-//
-//        The password must:
-//        contain at least 6 characters
-
-
-        //TODO Validate email address
-//        Email already exists
-        //TODO Validate password
-
-        //TODO Required fields
-
         User userExistingCheck = Helper.await(userDao.getUserByMail(user.getEmail()));
         if (userExistingCheck != null) {
             throw new Exception("Email already exists");
