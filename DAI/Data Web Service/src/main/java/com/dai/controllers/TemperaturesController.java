@@ -22,27 +22,27 @@ public class TemperaturesController {
     }
 
     @GetMapping(value = "/areas/{id}/temperatures")
-    public List<SentMeasurement> readAllAreaTemperatures(@PathVariable int id) {
+    public List<SentMeasurement> readAllByArea(@PathVariable int id) {
         try {
-            return temperatureModel.readAllTemperatures(id);
+            return temperatureModel.getAllFromToday(id);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
 
     @GetMapping(value = "/areas/{id}/temperatures", params = "latest=true")
-    public List<SentMeasurement> readLastTemperature(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
+    public List<SentMeasurement> getLatest(@PathVariable int id, @RequestParam("latest") Optional<Boolean> isLatest) {
         try {
-            return temperatureModel.readLatestTemperature(id);
+            return temperatureModel.getLatest(id);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
 
     @GetMapping(value = "/areas/{id}/temperatures", params = "date")
-    public List<SentMeasurement> readDateTemperatures(@PathVariable int id, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> date) {
+    public List<SentMeasurement> readAllByDate(@PathVariable int id, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> date) {
         try {
-            return temperatureModel.getAreaTemperaturesByDate(id, date.get());
+            return temperatureModel.getAllByDate(id, date.get());
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

@@ -20,17 +20,17 @@ public class TemperatureModelImpl implements TemperatureModel {
     }
 
     @Override
-    public List<SentMeasurement> readLatestTemperature(int areaId) throws Exception {
-        return new ArrayList<>(List.of(Helper.await(temperatureDao.getLatestTemperatureMeasurement(areaId))));
+    public List<SentMeasurement> getLatest(int areaId) throws Exception {
+        return new ArrayList<>(List.of(Helper.await(temperatureDao.getLatest(areaId))));
     }
 
     @Override
-    public List<SentMeasurement> readAllTemperatures(int id) throws Exception {
-        return Helper.await(temperatureDao.readAllTemperatures(id));
+    public List<SentMeasurement> getAllFromToday(int id) throws Exception {
+        return Helper.await(temperatureDao.getAllByDate(id, LocalDate.now()));
     }
 
     @Override
-    public List<SentMeasurement> getAreaTemperaturesByDate(int areaId, LocalDate date) throws Exception {
-        return Helper.await(temperatureDao.getAreaTemperaturesInDate(areaId, date));
+    public List<SentMeasurement> getAllByDate(int areaId, LocalDate date) throws Exception {
+        return Helper.await(temperatureDao.getAllByDate(areaId, date));
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.Future;
 @Repository
@@ -26,12 +27,12 @@ public class HumidityDaoImpl implements HumidityDao{
 
     @Override
     @Async
-    public Future<SentMeasurement> getLatestHumidityMeasurement(int areaId) {
-        return new AsyncResult<>(humidityRepository.findFirstHumidityMeasuredDateOrderByIdDesc(areaId));
+    public Future<SentMeasurement> getLatest(int areaId) {
+        return new AsyncResult<>(humidityRepository.getLatestByArea(areaId));
     }
 
     @Override
-    public Future<List<SentMeasurement>> getHumidityMeasurementsByDate(int areaId, Date date) {
-        return new AsyncResult<>(humidityRepository.getAllMeasurementsByDate(areaId, date));
+    public Future<List<SentMeasurement>> getAllByDate(int areaId, LocalDate date) {
+        return new AsyncResult<>(humidityRepository.getAllByAreaAndDate(areaId, Date.valueOf(date)));
     }
 }

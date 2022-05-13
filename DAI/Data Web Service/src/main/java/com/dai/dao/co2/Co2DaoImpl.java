@@ -22,6 +22,6 @@ public class Co2DaoImpl implements Co2Dao{
 
     @Override
     public Future<SentMeasurement> readLatestTemperature(int areaId) {
-        return new AsyncResult<>(co2Repository.findFirstCo2MeasurementByAreaId(areaId));
+        return new AsyncResult<>(co2Repository.getLatestByArea(areaId));
     }
 }

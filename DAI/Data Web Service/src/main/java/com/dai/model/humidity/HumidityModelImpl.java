@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +23,17 @@ public class HumidityModelImpl implements HumidityModel{
 
 
     @Override
-    public List<SentMeasurement> readLatestHumidity(int areaId) throws Exception {
-        return new ArrayList<>(List.of(Helper.await(humidityDao.getLatestHumidityMeasurement(areaId))));
+    public List<SentMeasurement> readLatest(int areaId) throws Exception {
+        return new ArrayList<>(List.of(Helper.await(humidityDao.getLatest(areaId))));
     }
 
     @Override
-    public List<SentMeasurement> getHumidityMeasurementsByDate(int areaId, LocalDate localDate) throws Exception {
-        return Helper.await(humidityDao.getHumidityMeasurementsByDate(areaId, Date.valueOf(localDate)));
+    public List<SentMeasurement> getAllByDate(int areaId, LocalDate localDate) throws Exception {
+        return Helper.await(humidityDao.getAllByDate(areaId, localDate));
+    }
+
+    @Override
+    public List<SentMeasurement> getAllFromToday(int areaId) throws Exception {
+        return Helper.await(humidityDao.getAllByDate(areaId, LocalDate.now()));
     }
 }

@@ -2,7 +2,6 @@ package com.dai.dao.area;
 
 import com.dai.repository.AreaRepository;
 import com.dai.shared.Area;
-import com.dai.shared.Barn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
