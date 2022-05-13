@@ -23,8 +23,8 @@ public interface UserApi {
     @GET("{id}")
     Call<UserResponse> getEmployeeById(@Path("id") int id);
 
-    @POST
-    Call<UserResponse> register(User user);
+    @POST(".")
+    Call<UserResponse> register(@Body User user);
 
     @POST("login")
     Call<UserResponse> login(@Body User user);
