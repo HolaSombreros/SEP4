@@ -10,7 +10,7 @@ public class MeasurementValidator {
     }
 
     public boolean isHumidityValueValid(double value) {
-        return value >= 10 && value <= 80;
+        return value >= 0 && value <= 100;
     }
 
     public boolean isCo2ValueValid(int value) {
