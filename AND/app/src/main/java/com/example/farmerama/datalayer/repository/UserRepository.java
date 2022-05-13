@@ -34,7 +34,6 @@ public class UserRepository {
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         loggedUser = new MutableLiveData<>();
-
     }
 
     public static synchronized UserRepository getInstance() {

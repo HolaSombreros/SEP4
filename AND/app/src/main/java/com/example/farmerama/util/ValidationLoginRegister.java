@@ -7,6 +7,8 @@ import com.example.farmerama.datalayer.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ValidationLoginRegister {
     private MutableLiveData<String> errorMessage;
@@ -18,8 +20,6 @@ public class ValidationLoginRegister {
         errorMessage = new MutableLiveData<>();
         userRepository = UserRepository.getInstance();
         users = new ArrayList<>();
-        //users.add(new User("Geana","geana@stefi.dk", "miawmiao", "Owner"));
-
     }
 
     public MutableLiveData<String> getErrorMessage() {
@@ -43,29 +43,33 @@ public class ValidationLoginRegister {
         return false;
     }
 
-    //Verify if email is entered correctly, if not, the error message is announcing
-    private boolean verifyEmail(String email){
+    /**
+     * Verify if email is entered correctly, if not, the error message is announcing
+     * @param email
+     * @return
+     */
+    private boolean verifyEmail(String email) {
+        String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
         if(email.trim().isEmpty()) {
             errorMessage.setValue("Email field cannot be empty");
             return false;
-        } else if( !(email.contains("@") && email.contains(".")) ) {
+        }
+        if(!matcher.matches()) {
             errorMessage.setValue("Email not valid");
             return false;
         }
         return true;
     }
 
-    //Verify is password is entered
-    private boolean verifyPassword(String password){
-        if(password.trim().isEmpty()) {
-            errorMessage.setValue("Password cannot be empty");
-            return false;
-        }
-        return true;
-    }
 
-    //Verify is password is entered
-    private boolean verifyPasswordRegister(String password){
+    /**
+     * Verify is password is entered
+     * @param password
+     * @return
+     */
+    private boolean verifyPassword(String password){
         if(password.trim().isEmpty()) {
             errorMessage.setValue("Password cannot be empty");
             return false;
@@ -77,10 +81,17 @@ public class ValidationLoginRegister {
         return true;
     }
 
-
-    //Verify the data for register
+    /**
+     * Verify the data for register
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param role
+     * @return
+     */
     public boolean verifyRegister(String firstName, String lastName,String email, String password, String role){
-        if(verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPasswordRegister(password)){
+        if(verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPassword(password)){
             return true;
         }
         return false;

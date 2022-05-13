@@ -57,17 +57,14 @@ public class RegisterFragment extends Fragment {
 
 
     public void registerUser(View v){
-        String userFirstName=firstName.getText().toString();
-        String userLastName=lastName.getText().toString();
-        String userEmail=email.getText().toString();
-        String userPassword=password.getText().toString();
-        String userRole=role.getText().toString();
+        String userFirstName = firstName.getText().toString();
+        String userLastName = lastName.getText().toString();
+        String userEmail = email.getText().toString();
+        String userPassword = password.getText().toString();
+        String userRole = role.getText().toString();
 
-
-
-            if(viewModel.validate(userFirstName, userLastName, userEmail, userPassword, userRole)){
-                Log.i("Test", "I am in second if");
-                viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, userRole));
-            }
+        if(viewModel.validate(userFirstName, userLastName, userEmail, userPassword, userRole)){
+            viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, userRole));
+        }
     }
 }
