@@ -289,6 +289,9 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HeaderFiles\CO2Task.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HeaderFiles\Farmerama.h">
       <SubType>compile</SubType>
     </Compile>
@@ -299,6 +302,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\CO2TaskImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\Farmerama.c">

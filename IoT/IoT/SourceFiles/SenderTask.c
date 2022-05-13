@@ -29,22 +29,23 @@ void senderTask_initTask(void* params) {
 	vTaskDelay(150);
 	lora_driver_flushBuffers();
 	
-	_connectToLoRaWAN();
+	//_connectToLoRaWAN();
 }
 
 void senderTask_runTask() {	
 	lora_driver_payload_t uplinkPayload;
 	xQueueReceive(_senderQueue, &uplinkPayload, portMAX_DELAY);
 	
-	lora_driver_returnCode_t returnCode;
+	/*lora_driver_returnCode_t returnCode;
 	if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
 		
 		} else if (returnCode == LORA_MAC_RX) {
 		
 	}
+	*/
 	
-	printf("Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], 
-																								  uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
+	printf("Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d | CO2 high: %d | CO2 low: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], 
+																								  uplinkPayload.bytes[2], uplinkPayload.bytes[3], uplinkPayload.bytes[4], uplinkPayload.bytes[5]);
 }
 
 static void _run(void* params) {
