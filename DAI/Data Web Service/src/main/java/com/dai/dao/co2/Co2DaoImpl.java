@@ -7,7 +7,10 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.concurrent.Future;
+
 
 @Repository
 @EnableAsync
@@ -21,7 +24,15 @@ public class Co2DaoImpl implements Co2Dao{
     }
 
     @Override
-    public Future<SentMeasurement> readLatestCo2(int areaId) {
-        return new AsyncResult<>(co2Repository.findFirstCo2MeasurementByAreaId(areaId));
+    public Future<SentMeasurement> getLatestCo2(int areaId) {
+        return new AsyncResult<>(co2Repository.getLatestCo2(areaId));
     }
+
+    @Override
+    public AsyncResult<List<SentMeasurement>> getAllCo2sInDate(int areaId, Date date) {
+        return new AsyncResult<List<SentMeasurement>>(co2Repository.getAllCo2sInDate(areaId, date));
+
+    }
+
+
 }
