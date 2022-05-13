@@ -35,7 +35,7 @@ void co2Task_runTask() {
 	pdFALSE, pdTRUE, portMAX_DELAY
 	);
 	
-	if(mh_z19_takeMeassuring() != MHZ19_OK){
+	if((mh_z19_takeMeassuring()) != MHZ19_OK){
 		ppm = 0;
 		_co2CallBack(ppm);
 	}

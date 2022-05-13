@@ -27,7 +27,7 @@ static EventGroupHandle_t _doneEventGroup;
 static void _initDrivers(void) {
 	puts("Initializing drivers...");
 	hih8120_initialise();
-	mh_z19_initialise(ser_USART1);
+	mh_z19_initialise(ser_USART3);
 	lora_driver_initialise(ser_USART1, NULL);
 }
 
