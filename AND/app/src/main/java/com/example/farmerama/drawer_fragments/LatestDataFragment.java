@@ -63,7 +63,7 @@ public class LatestDataFragment extends Fragment {
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();

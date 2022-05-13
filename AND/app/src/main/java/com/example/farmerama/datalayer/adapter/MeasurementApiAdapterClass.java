@@ -19,6 +19,8 @@ public class MeasurementApiAdapterClass implements MeasurementApiAdapter{
                 return measurementApi.getLatestTemperature(areaId, latest);
             case HUMIDITY:
                 return measurementApi.getLatestHumidity(areaId, latest);
+            case CO2:
+                return measurementApi.getLatestCo2(areaId, latest);
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
         }
