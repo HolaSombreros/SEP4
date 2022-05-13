@@ -27,6 +27,6 @@ public class Co2ModelImpl implements Co2Model {
 
     @Override
     public List<SentMeasurement> getAllCo2sInDate(int areaId, LocalDate date) throws Exception {
-    return Helper.await(co2Dao.getAllCo2sInDate(areaId, Date.valueOf(date)));
+        return Helper.await(co2Dao.getAllCo2sInDate(areaId, Date.valueOf(date)));
     }
 }

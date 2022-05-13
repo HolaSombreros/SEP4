@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
 
 @Repository
 @EnableAsync
-public class Co2DaoImpl implements Co2Dao{
+public class Co2DaoImpl implements Co2Dao {
 
     private Co2Repository co2Repository;
 

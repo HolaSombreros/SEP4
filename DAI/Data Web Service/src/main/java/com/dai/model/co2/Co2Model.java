@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface Co2Model {
     List<SentMeasurement> getLatestCo2(int areaId) throws Exception;
-
-   List<SentMeasurement> getAllCo2sInDate(int areaId, LocalDate date) throws Exception;
+    List<SentMeasurement> getAllCo2sInDate(int areaId, LocalDate date) throws Exception;
 }
