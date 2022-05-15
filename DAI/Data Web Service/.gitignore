@@ -36,6 +36,7 @@ build/
 /.terraform/
 *.tfstate
 *.tfstate.*
+variables.tf
 .terraform.locl.hcl
 *.tfvars
 
