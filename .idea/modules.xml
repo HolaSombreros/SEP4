@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SEP4.iml" filepath="$PROJECT_DIR$/.idea/SEP4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DAI/Data Web Service/data.iml" filepath="$PROJECT_DIR$/DAI/Data Web Service/data.iml" />
     </modules>
   </component>
 </project>
