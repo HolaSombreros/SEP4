@@ -52,23 +52,30 @@ public class LoginFragment extends Fragment
         sharedPreferences = getActivity().getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
 
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
+            if(error != null)
+                Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
         });
 
-        loginButton.setOnClickListener(this::login);
+        viewModel.getErrorMessageRepo().observe(getViewLifecycleOwner(), error -> {
+            if(error != null)
+                Toast.makeText(getContext(),error, Toast.LENGTH_SHORT).show();
+        });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("measurementsType", "latest");
+
+        loginButton.setOnClickListener(l -> {
+                if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
+                    viewModel.loginUser(email.getText().toString(), password.getText().toString());
+                    if(viewModel.getSuccessResponse().isSuccess())
+                        navController.navigate(R.id.latestMeasurementFragment, bundle);
+                }
+        });
+
         continueAsGuest.setOnClickListener(v -> {
-            sharedPreferences.edit().putBoolean("GuestVisit", true);
-            navController.navigate(R.id.latestMeasurementFragment);
+            sharedPreferences.edit().putBoolean("GuestVisit", true).apply();
+            navController.navigate(R.id.latestMeasurementFragment, bundle);
         });
-    }
-
-    public void login(View v){
-        viewModel.retrieveAllEmployees();
-        if(viewModel.validate(email.getText().toString(), password.getText().toString())) {
-            viewModel.loginUser(email.getText().toString(), password.getText().toString());
-            Toast.makeText(getContext(), "Logged in user",Toast.LENGTH_SHORT).show();
-            navController.navigate(R.id.latestMeasurementFragment);
-        }
 
     }
 

@@ -1,6 +1,5 @@
 package com.example.farmerama.drawer_fragments;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.time.LocalDate;
 
-public class LatestDataFragment extends Fragment {
+public class HistoricalPagerFragment extends Fragment {
     private MeasurementsViewModel viewModel;
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
@@ -32,7 +31,7 @@ public class LatestDataFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_latest_data, container, false);
+        return inflater.inflate(R.layout.fragment_historical_pager, container, false);
     }
 
 
@@ -45,36 +44,23 @@ public class LatestDataFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
-        tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager2 = view.findViewById(R.id.viewPager);
-        areaSpinner = view.findViewById(R.id.area_spinner);
+        sharedPreferences = getActivity().getSharedPreferences("AreaLogHistorical", Context.MODE_PRIVATE);
+        tabLayout = view.findViewById(R.id.tabLayout_historical);
+        viewPager2 = view.findViewById(R.id.viewPager_historical);
+        areaSpinner = view.findViewById(R.id.area_spinner_historical);
     }
 
     private void setUpViews() {
-        //boolean isHistorical = getArguments().getString("measurementsType").equals("latest");
-        //if(!isHistorical) {
-            ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
-            viewPager2.setAdapter(adapter);
-            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                @Override
-                public void onPageSelected(int position) {
-                    super.onPageSelected(position);
-                    viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
-                }
-            });
-        //}
-//        else {
-//            HistoricalViewPagerAdapter adapter = new HistoricalViewPagerAdapter(getActivity());
-//            viewPager2.setAdapter(adapter);
-//            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//                @Override
-//                public void onPageSelected(int position) {
-//                    super.onPageSelected(position);
-//                    viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], false);
-//                }
-//            });
-//        }
+        HistoricalViewPagerAdapter adapter = new HistoricalViewPagerAdapter(getActivity());
+        viewPager2.setAdapter(adapter);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                viewModel.retrieveMeasurements(sharedPreferences.getInt("areaIdHistorical", 1), MeasurementType.values()[position], LocalDate.now().toString());
+                System.out.println(LocalDate.now().toString());
+            }
+        });
 
         String[] tabTitles = {"Temperature", "Humidity"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
@@ -93,8 +79,8 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
-                viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE, true);
+                sharedPreferences.edit().putInt("areaIdHistorical", viewModel.getAreas().getValue().get(i).getId()).apply();
+                viewModel.retrieveMeasurements(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE, LocalDate.now().toString());
             }
 
             @Override

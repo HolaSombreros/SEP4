@@ -13,11 +13,11 @@ import com.example.farmerama.datalayer.repository.MeasurementRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LatestMeasurementViewModel extends ViewModel {
+public class MeasurementsViewModel extends ViewModel {
     private MeasurementRepository measurementRepository;
     private AreaRepository areaRepository;
 
-    public LatestMeasurementViewModel() {
+    public MeasurementsViewModel() {
         this.measurementRepository = MeasurementRepository.getInstance();
         this.areaRepository = AreaRepository.getInstance();
     }
@@ -26,8 +26,16 @@ public class LatestMeasurementViewModel extends ViewModel {
         return measurementRepository.getLatestMeasurement();
     }
 
+    public LiveData<List<Measurement>> getMeasurements() {
+        return measurementRepository.getMeasurements();
+    }
+
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
+    }
+
+    public void retrieveMeasurements(int areaId, MeasurementType type, String date) {
+        measurementRepository.retrieveMeasurements(areaId, type, date);
     }
 
     public void getAllAreas() {

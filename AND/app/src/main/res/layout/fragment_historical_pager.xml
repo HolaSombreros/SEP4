@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.farmerama.drawer_fragments.LatestDataFragment">
+    tools:context="com.example.farmerama.drawer_fragments.HistoricalPagerFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/area_spinner"
+                android:id="@+id/area_spinner_historical"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -28,13 +28,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
+                android:id="@+id/tabLayout_historical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/area_spinner">
+                app:layout_constraintTop_toBottomOf="@+id/area_spinner_historical">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
+                android:id="@+id/viewPager_historical"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -67,7 +67,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout_historical">
 
             </androidx.viewpager2.widget.ViewPager2>
         </androidx.constraintlayout.widget.ConstraintLayout>

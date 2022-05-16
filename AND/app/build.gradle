@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.farmerama"
-        minSdk 23
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
 
     // new dependencies added for navigation component
     implementation "androidx.navigation:navigation-fragment:2.4.2"

@@ -14,7 +14,7 @@
         android:inputType="time"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:text="time"
+        android:text="@string/time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

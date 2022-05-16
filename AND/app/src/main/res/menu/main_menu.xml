@@ -16,6 +16,9 @@
             android:id="@+id/sensorsFragment"
             android:icon="@drawable/ic_baseline_edgesensor_high_24"
             />
+        <item android:title="Historical Measurements"
+            android:id="@+id/historicalPager"
+            android:icon="@drawable/ic_baseline_history_24"/>
 
         <item android:title="@string/employees"
             android:id="@+id/employeesFragment"
@@ -29,4 +32,5 @@
         <item android:title="EmployeeAreasFragment"
             android:id="@+id/employeeAreasFragment"
             android:icon="@drawable/ic_baseline_location_on_24"/>
+
 </menu>

@@ -6,8 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.datalayer.model.Area;
 import com.example.farmerama.datalayer.model.response.AreaResponse;
+import com.example.farmerama.datalayer.model.response.UserResponse;
 import com.example.farmerama.datalayer.network.AreaApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
+import com.example.farmerama.util.ErrorReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +21,13 @@ import retrofit2.internal.EverythingIsNonNull;
 public class AreaRepository {
     private final MutableLiveData<List<Area>> areas;
     private final MutableLiveData<Area> specificArea;
+    private final MutableLiveData<String> error;
     private static AreaRepository instance;
 
     private AreaRepository() {
         areas = new MutableLiveData<>();
         specificArea = new MutableLiveData<>();
-
+        error = new MutableLiveData<>();
     }
 
     public static AreaRepository getInstance() {
@@ -32,6 +35,10 @@ public class AreaRepository {
             return new AreaRepository();
         }
         return instance;
+    }
+
+    public LiveData<String> getErrorMessage() {
+        return error;
     }
 
     public LiveData<Area> getSpecificArea() {
@@ -56,6 +63,11 @@ public class AreaRepository {
                     }
                     areas.setValue(list);
                 }
+                else {
+                    ErrorReader<List<AreaResponse>> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                }
             }
             @EverythingIsNonNull
             @Override
@@ -75,6 +87,11 @@ public class AreaRepository {
                 if (response.isSuccessful()) {
                     specificArea.setValue(response.body().getArea());
                 }
+                else {
+                    ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                }
             }
             @EverythingIsNonNull
             @Override
@@ -93,6 +110,11 @@ public class AreaRepository {
             public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                 if (response.isSuccessful()) {
                     specificArea.setValue(response.body().getArea());
+                }
+                else {
+                    ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
                 }
             }
             @EverythingIsNonNull

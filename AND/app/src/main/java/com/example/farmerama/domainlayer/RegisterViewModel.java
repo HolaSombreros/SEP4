@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.farmerama.datalayer.model.User;
+import com.example.farmerama.datalayer.repository.SuccessResponse;
 import com.example.farmerama.datalayer.repository.UserRepository;
 import com.example.farmerama.util.ValidationLoginRegister;
 
@@ -20,7 +21,10 @@ public class RegisterViewModel extends AndroidViewModel
     public RegisterViewModel(Application application) {
         super(application);
         repository = UserRepository.getInstance();
-        validation=new ValidationLoginRegister();
+        validation = new ValidationLoginRegister();
+    }
+    public SuccessResponse getSuccessResponse() {
+        return repository.getSuccessResponse();
     }
 
     public LiveData<List<User>> getAllEmployees(){

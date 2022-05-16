@@ -10,8 +10,10 @@ import com.example.farmerama.datalayer.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.datalayer.model.Measurement;
 import com.example.farmerama.datalayer.model.response.MeasurementResponse;
 import com.example.farmerama.datalayer.model.MeasurementType;
+import com.example.farmerama.datalayer.model.response.UserResponse;
 import com.example.farmerama.datalayer.network.MeasurementApi;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
+import com.example.farmerama.util.ErrorReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,13 @@ public class MeasurementRepository {
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
     private MeasurementApiAdapter adapter;
+    private MutableLiveData<String> error;
 
     private MeasurementRepository() {
         measurement = new MutableLiveData<>();
         measurements = new MutableLiveData<>();
         adapter = new MeasurementApiAdapterClass();
+        error = new MutableLiveData<>();
     }
 
     public static MeasurementRepository getInstance() {
@@ -39,6 +43,13 @@ public class MeasurementRepository {
             instance = new MeasurementRepository();
         }
         return instance;
+    }
+    public LiveData<String> getErrorMessage() {
+        return error;
+    }
+
+    public LiveData<List<Measurement>> getMeasurements() {
+        return measurements;
     }
 
     public LiveData<Measurement> getLatestMeasurement() {
@@ -56,8 +67,45 @@ public class MeasurementRepository {
                     for(MeasurementResponse measurement : response.body()){
                         list.add(measurement.getMeasurement(type));
                     }
-                    measurements.setValue(list);
-                    measurement.setValue(list.get(0));
+                    if(list.size() != 0) {
+                        measurements.setValue(list);
+                        measurement.setValue(list.get(0));
+                    }
+                }
+                else {
+                    ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<List<MeasurementResponse>> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
+    public void retrieveMeasurements(int areaId, MeasurementType type, String date) {
+        Call<List<MeasurementResponse>> call = adapter.getMeasurements(type, areaId, date);
+        call.enqueue(new Callback<List<MeasurementResponse>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
+                List<Measurement> list = new ArrayList<>();
+                if (response.isSuccessful()) {
+                    for(MeasurementResponse measurement : response.body()){
+                        list.add(measurement.getMeasurement(type));
+                    }
+                    if(list.size() != 0) {
+                        measurements.setValue(list);
+                        measurement.setValue(list.get(0));
+                    }
+                }
+                else {
+                    ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
                 }
             }
             @EverythingIsNonNull

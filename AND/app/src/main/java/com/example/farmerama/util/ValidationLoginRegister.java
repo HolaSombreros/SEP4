@@ -12,35 +12,17 @@ import java.util.regex.Pattern;
 
 public class ValidationLoginRegister {
     private MutableLiveData<String> errorMessage;
-    private List<User> users;
-    private UserRepository userRepository;
-
 
     public ValidationLoginRegister(){
         errorMessage = new MutableLiveData<>();
-        userRepository = UserRepository.getInstance();
-        users = new ArrayList<>();
     }
 
     public MutableLiveData<String> getErrorMessage() {
         return errorMessage;
     }
 
-    public boolean verifyLogin(String email, String password){
-        users = userRepository.getAllEmployees().getValue();
-        if(!verifyEmail(email)) return verifyEmail(email);
-        if(!verifyPassword(password)) return verifyPassword(password);
-
-        for (User user:users) {
-            if(user.getPassword().equals(password) && user.getEmail().equals(email)) {
-                return true;
-            }
-            else {
-                errorMessage.setValue("Email and password combination is not correct");
-                return false;
-            }
-        }
-        return false;
+    public boolean verifyLogin(String email, String password) {
+        return verifyEmail(email) && verifyPassword(password);
     }
 
     /**
@@ -49,7 +31,7 @@ public class ValidationLoginRegister {
      * @return
      */
     private boolean verifyEmail(String email) {
-        String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
+        String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         if(email.trim().isEmpty()) {
@@ -90,11 +72,8 @@ public class ValidationLoginRegister {
      * @param role
      * @return
      */
-    public boolean verifyRegister(String firstName, String lastName,String email, String password, String role){
-        if(verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPassword(password)){
-            return true;
-        }
-        return false;
+    public boolean verifyRegister(String firstName, String lastName, String email, String password, String role){
+        return verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPassword(password);
     }
 
     private boolean verifyDetails(String firstName, String lastName, String role){

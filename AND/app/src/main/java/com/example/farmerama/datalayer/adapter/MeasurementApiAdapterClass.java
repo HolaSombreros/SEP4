@@ -23,4 +23,18 @@ public class MeasurementApiAdapterClass implements MeasurementApiAdapter{
                 throw new IllegalStateException("Unexpected value: " + type);
         }
     }
+
+    @Override
+    public Call<List<MeasurementResponse>> getMeasurements(MeasurementType type, int areaId, String date) {
+        MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
+        switch (type) {
+            case TEMPERATURE:
+                return measurementApi.getTemperatures(areaId,date);
+            case HUMIDITY:
+                return measurementApi.getHumidities(areaId, date);
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
+    }
+
 }

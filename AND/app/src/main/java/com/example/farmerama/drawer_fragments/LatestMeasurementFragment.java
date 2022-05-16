@@ -14,15 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.datalayer.model.MeasurementType;
-import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
+import com.example.farmerama.domainlayer.MeasurementsViewModel;
 
 
 public class LatestMeasurementFragment extends Fragment {
     private EditText timeText;
     private TextView measurementTextView;
     private TextView typeTextView;
-    private LatestMeasurementViewModel viewModel;
+    private MeasurementsViewModel viewModel;
     private SharedPreferences sharedPreferences;
 
     public LatestMeasurementFragment() {
@@ -36,7 +35,7 @@ public class LatestMeasurementFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(getActivity()).get(LatestMeasurementViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(MeasurementsViewModel.class);
         initializeViews(view);
         setUpViews();
     }
