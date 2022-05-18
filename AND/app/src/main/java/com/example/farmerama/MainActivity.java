@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.areasFragment,
                 R.id.employeesFragment,
                 R.id.sensorsFragment,
-                R.id.employeeAreasFragment)
+                R.id.employeeAreasFragment,
+                R.id.registerFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 

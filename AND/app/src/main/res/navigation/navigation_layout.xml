@@ -63,7 +63,13 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.farmerama.drawer_fragments.LoginFragment"
-        android:label="Login"
+        android:label="Login Fragment"
+        tools:layout="@layout/fragment_login"
+    />
+    <fragment
+        android:id="@+id/signOut"
+        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
+        android:label="Login Fragment"
         tools:layout="@layout/fragment_login"
     />
     <fragment
