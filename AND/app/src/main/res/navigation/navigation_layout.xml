@@ -7,47 +7,47 @@
 
     <fragment
         android:id="@+id/latestMeasurementFragment"
-        android:name="com.example.farmerama.drawer_fragments.LatestDataFragment"
+        android:name="com.example.farmerama.fragment.LatestDataFragment"
         android:label="Latest Measurements"
         tools:layout="@layout/fragment_latest_data" />
     <fragment
         android:id="@+id/latestTemperatureFragment"
-        android:name="com.example.farmerama.drawer_fragments.LatestMeasurementFragment"
+        android:name="com.example.farmerama.fragment.LatestMeasurementFragment"
         android:label="fragment_latest_temperature"
         tools:layout="@layout/fragment_latest_measurement" />
 
     <fragment
         android:id="@+id/historicalMeasurements"
-        android:name="com.example.farmerama.drawer_fragments.HistoricalMeasurementsFragment"
+        android:name="com.example.farmerama.fragment.HistoricalMeasurementsFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_measurements" />
     <fragment
         android:id="@+id/historicalPager"
-        android:name="com.example.farmerama.drawer_fragments.HistoricalDataFragment"
+        android:name="com.example.farmerama.fragment.HistoricalDataFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_data" />
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.example.farmerama.drawer_fragments.AccountFragment"
+        android:name="com.example.farmerama.fragment.AccountFragment"
         android:label="My Account"
         tools:layout="@layout/fragment_account" >
     </fragment>
     <fragment
         android:id="@+id/sensorsFragment"
-        android:name="com.example.farmerama.drawer_fragments.SensorsFragment"
+        android:name="com.example.farmerama.fragment.SensorsFragment"
         android:label="Sensors"
         tools:layout="@layout/fragment_sensors" >
     </fragment>
     <fragment
         android:id="@+id/employeesFragment"
-        android:name="com.example.farmerama.drawer_fragments.EmployeesFragment"
+        android:name="com.example.farmerama.fragment.EmployeesFragment"
         android:label="Employees"
         tools:layout="@layout/fragment_employees" >
     </fragment>
     <fragment
         android:id="@+id/areasFragment"
-        android:name="com.example.farmerama.drawer_fragments.AreasFragment"
+        android:name="com.example.farmerama.fragment.AreasFragment"
         android:label="Areas"
         tools:layout="@layout/fragment_areas" >
         <action
@@ -56,31 +56,25 @@
     </fragment>
     <fragment
         android:id="@+id/addAreaFragment"
-        android:name="com.example.farmerama.drawer_fragments.AddAreaFragment"
+        android:name="com.example.farmerama.fragment.AddAreaFragment"
         android:label="Add Area"
         tools:layout="@layout/fragment_add_area">
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
-        android:label="Login Fragment"
-        tools:layout="@layout/fragment_login"
-    />
-    <fragment
-        android:id="@+id/signOut"
-        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
+        android:name="com.example.farmerama.fragment.LoginFragment"
         android:label="Login Fragment"
         tools:layout="@layout/fragment_login"
     />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.farmerama.drawer_fragments.RegisterFragment"
+        android:name="com.example.farmerama.fragment.RegisterFragment"
         android:label="Register a new user!"
         tools:layout="@layout/fragment_register"
     />
     <fragment
         android:id="@+id/employeeAreasFragment"
-        android:name="com.example.farmerama.uilayer.environment.EmployeeAreasFragment"
+        android:name="com.example.farmerama.fragment.EmployeeAreasFragment"
         android:label="EmployeeAreasFragment"
         tools:layout="@layout/fragment_employee_areas"
         />
