@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface SoundModel
 {
-  List<SentMeasurement> readLatestSound(int areaId) throws Exception;
-  List<SentMeasurement> getSoundMeasurementsByDate(int areaId,
+  List<SentMeasurement> readLastAreaSound(int areaId) throws Exception;
+  List<SentMeasurement> readAllAreaSounds(int areaId) throws Exception;
+  List<SentMeasurement> readAreaSoundsByDate(int areaId,
       LocalDate localDate) throws Exception;
 }

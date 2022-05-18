@@ -25,12 +25,17 @@ public class SoundDaoImpl implements SoundDao
 
   @Override
   @Async
-  public  Future<SentMeasurement> getLatestSoundMeasurement(int areaId) {
+  public  Future<SentMeasurement> readLastAreaSound(int areaId) {
     return new AsyncResult<>(repository.findFirstSoundMeasuredDateOrderByIdDesc(areaId));
   }
 
+  @Override public Future<List<SentMeasurement>> readAllAreaSounds(int areaId)
+  {
+    return readAreaSoundsByDate(areaId, LocalDate.now());
+  }
+
   @Override
-  public Future<List<SentMeasurement>> getAreaSoundsInDate(int areaId, LocalDate date) {
+  public Future<List<SentMeasurement>> readAreaSoundsByDate(int areaId, LocalDate date) {
     return new AsyncResult<>(repository. getAllMeasurementsByDate(areaId, Date.valueOf(date)));
   }
 }

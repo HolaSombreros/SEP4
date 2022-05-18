@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 
 public interface SoundDao
 {
-  Future<SentMeasurement> getLatestSoundMeasurement(int areaId);
-  Future<List<SentMeasurement>> getAreaSoundsInDate(int areaId, LocalDate date);
+  Future<SentMeasurement> readLastAreaSound(int areaId);
+  Future<List<SentMeasurement>> readAllAreaSounds(int areaId);
+  Future<List<SentMeasurement>> readAreaSoundsByDate(int areaId, LocalDate date);
 }

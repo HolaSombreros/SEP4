@@ -22,12 +22,18 @@ public class SoundModelImpl implements SoundModel
 
 
   @Override
-  public List<SentMeasurement> readLatestSound(int areaId) throws Exception {
-    return new ArrayList<>(List.of(Helper.await(soundDao.getLatestSoundMeasurement(areaId))));
+  public List<SentMeasurement> readLastAreaSound(int areaId) throws Exception {
+    return new ArrayList<>(List.of(Helper.await(soundDao.readLastAreaSound(areaId))));
+  }
+
+  @Override public List<SentMeasurement> readAllAreaSounds(int areaId)
+      throws Exception
+  {
+    return Helper.await(soundDao.readAllAreaSounds(areaId));
   }
 
   @Override
-  public List<SentMeasurement> getSoundMeasurementsByDate(int areaId, LocalDate localDate) throws Exception {
-    return Helper.await(soundDao.getAreaSoundsInDate(areaId, localDate));
+  public List<SentMeasurement> readAreaSoundsByDate(int areaId, LocalDate localDate) throws Exception {
+    return Helper.await(soundDao.readAreaSoundsByDate(areaId, localDate));
   }
 }

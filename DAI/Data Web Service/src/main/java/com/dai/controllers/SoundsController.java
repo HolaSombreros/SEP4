@@ -25,26 +25,30 @@ public class SoundsController
     this.soundModel = soundModel;
   }
 
-  @GetMapping(value = "/areas/{id}/sounds", params = "latest")
-  public List<SentMeasurement> readLastSound(@PathVariable("id") int areaId, @RequestParam("latest") Optional<Boolean> isLatest) {
+  @GetMapping(value = "/areas/{id}/sounds")
+  public List<SentMeasurement> readAllAreaSounds(@PathVariable int id) {
     try {
-      if (isLatest.isPresent() && isLatest.get()) {
-        return soundModel.readLatestSound(areaId);
-      } else {
-        return soundModel.getSoundMeasurementsByDate(areaId, LocalDate.now());
-      }
+      return soundModel.readAllAreaSounds(id);
+    } catch (Exception e) {
+      throw new BadRequestException(e.getMessage());
+    }
+  }
+
+  @GetMapping(value = "/areas/{id}/sounds", params = "latest=true")
+  public List<SentMeasurement> readLastAreaSound(@PathVariable("id") int areaId, @RequestParam("latest") Optional<Boolean> isLatest) {
+    try {
+        return soundModel.readLastAreaSound(areaId);
     } catch (Exception e) {
       throw new BadRequestException(e.getMessage());
     }
   }
 
   @GetMapping(value = "/areas/{id}/sounds", params = "date")
-  public List<SentMeasurement> getAllSoundsByDate(@PathVariable("id") int areaId, @Valid @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> localDate){
+  public List<SentMeasurement> readAreaSoundsByDate(@PathVariable("id") int areaId, @Valid @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> localDate){
     try{
-      return soundModel.getSoundMeasurementsByDate(areaId, localDate.get());
+      return soundModel.readAreaSoundsByDate(areaId, localDate.get());
     }catch (Exception e) {
       throw new BadRequestException(e.getMessage());
     }
-
   }
 }
