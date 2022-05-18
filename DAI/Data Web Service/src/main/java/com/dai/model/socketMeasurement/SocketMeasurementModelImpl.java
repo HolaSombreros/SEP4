@@ -30,7 +30,6 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
 
     @Override
     public Measurement saveSocketData(SocketData data) throws Exception {
-
         if (!data.getCmd().equals("rx")) {
             return null;
         }
@@ -76,6 +75,10 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
                 measurement.setSound(sound);
             }
         }
+
+        System.out.println("Received data: " + data.toString());
+        System.out.println("Parsed data: " + measurement.toString());
+
         return Helper.await(measurementDao.saveMeasurement(measurement));
     }
 

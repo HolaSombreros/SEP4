@@ -126,36 +126,85 @@ class MeasurementValidatorTest {
     @Test
     void isHumidityValueValid() {
         //Arrange
-        double humidity = 56;
+        double humidity = 50;
 
         //Act
-        boolean humidityValueValid = validator.isHumidityValueValid(humidity);
+        boolean value = validator.isHumidityValueValid(humidity);
 
         //Assert
-        assertTrue(humidityValueValid);
+        assertTrue(value);
     }
 
     @Test
-    void isHumidityValueValidValueTooBig() {
+    void isHumidityValueValidUpperBoundaryPlusOne() {
+        //Arrange
+        double humidity = 101;
+
+        //Act
+        boolean value = validator.isHumidityValueValid(humidity);
+
+        //Assert
+        assertFalse(value);
+    }
+
+    @Test
+    void isHumidityValueValidUpperBoundary() {
         //Arrange
         double humidity = 100;
 
         //Act
-        boolean humidityValueValid = validator.isHumidityValueValid(humidity);
+        boolean value = validator.isHumidityValueValid(humidity);
 
         //Assert
-        assertFalse(humidityValueValid);
+        assertTrue(value);
     }
 
     @Test
-    void isHumidityValueValidValueTooSmall() {
+    void isHumidityValueValidUpperBoundaryMinusOne() {
+        //Arrange
+        double humidity = 99;
+
+        //Act
+        boolean value = validator.isHumidityValueValid(humidity);
+
+        //Assert
+        assertTrue(value);
+    }
+
+    @Test
+    void isHumidityValueValidLowerBoundaryPlusOne() {
+        //Arrange
+        double humidity = 1;
+
+        //Act
+        boolean value = validator.isHumidityValueValid(humidity);
+
+        //Assert
+        assertTrue(value);
+    }
+
+    @Test
+    void isHumidityValueValidLowerBoundary() {
+        //Arrange
+        double humidity = 0;
+
+        //Act
+        boolean value = validator.isHumidityValueValid(humidity);
+
+        //Assert
+        assertTrue(value);
+    }
+
+    @Test
+    void isHumidityValueValidLowerBoundaryMinusOne() {
         //Arrange
         double humidity = -1;
 
         //Act
-        boolean humidityValueValid = validator.isHumidityValueValid(humidity);
+        boolean value = validator.isHumidityValueValid(humidity);
 
         //Assert
-        assertFalse(humidityValueValid);
+        assertFalse(value);
     }
+
 }

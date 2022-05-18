@@ -44,4 +44,9 @@ public class SocketData {
     public void setData(String data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "Cmd: " + cmd + ", EUI: " + EUI + ", ts: " + ts + ", data: " + data;
+    }
 }
