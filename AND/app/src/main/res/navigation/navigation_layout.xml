@@ -25,7 +25,7 @@
         android:id="@+id/historicalPager"
         android:name="com.example.farmerama.drawer_fragments.HistoricalPagerFragment"
         android:label="Historical Measurements"
-        tools:layout="@layout/fragment_historical_pager" />
+        tools:layout="@layout/fragment_historical_data" />
 
     <fragment
         android:id="@+id/accountFragment"
