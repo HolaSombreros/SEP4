@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.farmerama.drawer_fragments.HistoricalPagerFragment">
+    tools:context="com.example.farmerama.drawer_fragments.HistoricalDataFragment">
 
     <ScrollView
         android:layout_width="match_parent"

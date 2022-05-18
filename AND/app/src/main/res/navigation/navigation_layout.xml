@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_historical_measurements" />
     <fragment
         android:id="@+id/historicalPager"
-        android:name="com.example.farmerama.drawer_fragments.HistoricalPagerFragment"
+        android:name="com.example.farmerama.drawer_fragments.HistoricalDataFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_data" />
 

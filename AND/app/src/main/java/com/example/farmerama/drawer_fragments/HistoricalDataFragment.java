@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.time.LocalDate;
 
-public class HistoricalPagerFragment extends Fragment {
+public class HistoricalDataFragment extends Fragment {
     private MeasurementsViewModel viewModel;
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
