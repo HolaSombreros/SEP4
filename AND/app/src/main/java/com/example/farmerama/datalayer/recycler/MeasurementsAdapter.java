@@ -38,6 +38,7 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.measurement.setText(String.valueOf(list.get(position).getValue()));
+        holder.measurementType.setText(list.get(position).getMeasurementType().toUnit());
         holder.date.setText(String.valueOf(list.get(position).getDateTime()));
     }
 
@@ -48,11 +49,13 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView measurement;
+        private final TextView measurementType;
         private final EditText date;
 
         public ViewHolder( View itemView) {
             super(itemView);
-            measurement = itemView.findViewById(R.id.measurement_item);
+            measurement = itemView.findViewById(R.id.measurement_value);
+            measurementType = itemView.findViewById(R.id.measurement_type);
             date = itemView.findViewById(R.id.measurement_date);
         }
     }

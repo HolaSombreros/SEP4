@@ -50,10 +50,10 @@ public class HistoricalMeasurementsFragment extends Fragment {
 
         measurementsRecycler.hasFixedSize();
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            measurementsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            measurementsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         }
         else {
-            measurementsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            measurementsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
 
         measurementsAdapter = new MeasurementsAdapter();
