@@ -2,12 +2,13 @@ package com.dai.shared;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "measurement")
 public class Measurement {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "measurement_id")
     private int id;
     @Column(name = "measured_date")
@@ -23,7 +24,6 @@ public class Measurement {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Area area;
-
 
 
     protected Measurement() {
@@ -107,6 +107,11 @@ public class Measurement {
 
     public void setArea(Area area) {
         this.area = area;
+    }
+
+    @Override
+    public String toString() {
+        return "Date: " + measuredDate.format(DateTimeFormatter.ISO_DATE_TIME) + ", temp: " + temperature + ", humidity: " + humidity + ", CO2: " + co2 + ", sound: " + sound;
     }
 }
 
