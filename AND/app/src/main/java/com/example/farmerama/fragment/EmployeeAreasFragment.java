@@ -25,7 +25,7 @@ public class EmployeeAreasFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(R.layout.fragment_employee_areas, container, false);
+        return inflater.inflate(R.layout.fragment_employee_areas, container, false);
     }
 
     @Override
@@ -51,7 +51,6 @@ public class EmployeeAreasFragment extends Fragment {
             textView.setText(viewModel.getAreas().getValue().get(0).getName());
         });
         viewModel.getAllAreas();
-
     }
 }
 

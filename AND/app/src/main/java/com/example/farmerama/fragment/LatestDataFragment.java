@@ -1,8 +1,5 @@
 package com.example.farmerama.fragment;
 
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.MeasurementType;
+import com.example.farmerama.fragment.pageadapter.ViewPagerAdapter;
 import com.example.farmerama.viewmodel.MeasurementsViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -26,7 +24,6 @@ public class LatestDataFragment extends Fragment {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private Spinner areaSpinner;
-    private SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,7 +40,6 @@ public class LatestDataFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager2 = view.findViewById(R.id.viewPager);
         areaSpinner = view.findViewById(R.id.area_spinner);
@@ -56,7 +52,7 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
+                viewModel.retrieveLatestMeasurement(MeasurementType.values()[position], true);
             }
         });
 
@@ -77,8 +73,8 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                sharedPreferences.edit().putInt("areaId", viewModel.getAreas().getValue().get(i).getId()).apply();
-                viewModel.retrieveLatestMeasurement(viewModel.getAreas().getValue().get(i).getId(), MeasurementType.TEMPERATURE, true);
+                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
+                viewModel.retrieveLatestMeasurement(MeasurementType.TEMPERATURE, true);
             }
 
             @Override

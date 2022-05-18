@@ -22,19 +22,19 @@ public class RegisterViewModel extends AndroidViewModel
         repository = UserRepository.getInstance();
         validation = new ValidationLoginRegister();
     }
-    public SuccessResponse getSuccessResponse() {
-        return repository.getSuccessResponse();
-    }
 
     public LiveData<List<User>> getAllEmployees(){
         return repository.getAllEmployees();
     }
+
     public void retrieveAllEmployees(){
         repository.retrieveAllEmployees();
     }
+
     public void getUserById(int id) {
         repository.getUserById(id);
     }
+
     public LiveData<User> getEmployee(){
         return repository.getEmployee();
     }

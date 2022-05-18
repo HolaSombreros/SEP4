@@ -27,7 +27,6 @@ public class LoginFragment extends Fragment {
     private Button loginButton;
     private Button continueAsGuest;
     private NavController navController;
-    private SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
@@ -40,9 +39,6 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
         setupViews(view);
-        if (!sharedPreferences.getString("userEmail", "null").equals("null")) {
-            viewModel.loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));
-        }
     }
 
     private void setupViews(View view) {
@@ -51,7 +47,6 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.LoginPassword);
         loginButton = view.findViewById(R.id.loginButton);
         continueAsGuest = view.findViewById(R.id.continueAsGuest);
-        sharedPreferences = getActivity().getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
 
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null)
@@ -70,7 +65,6 @@ public class LoginFragment extends Fragment {
         });
 
         continueAsGuest.setOnClickListener(v -> {
-            sharedPreferences.edit().putBoolean("GuestVisit", true).apply();
             navController.navigate(R.id.latestMeasurementFragment);
         });
     }

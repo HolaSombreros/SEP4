@@ -1,6 +1,8 @@
 package com.example.farmerama.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -15,11 +17,15 @@ public class LoginViewModel extends AndroidViewModel {
 
     private final UserRepository repository;
     private ValidationLoginRegister validation;
+    private SharedPreferences sharedPreferences;
 
     public LoginViewModel(Application application) {
         super(application);
+        sharedPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
         repository = UserRepository.getInstance();
         validation = new ValidationLoginRegister();
+
+        loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));
     }
 
     public LiveData<String> getErrorMessage(){
@@ -32,14 +38,6 @@ public class LoginViewModel extends AndroidViewModel {
 
     public boolean validate(String email, String password) {
         return validation.verifyLogin(email, password);
-    }
-
-    public LiveData<User> getEmployee() {
-        return repository.getEmployee();
-    }
-
-    public SuccessResponse getSuccessResponse() {
-        return repository.getSuccessResponse();
     }
 
     public void loginUser(String email, String password) {

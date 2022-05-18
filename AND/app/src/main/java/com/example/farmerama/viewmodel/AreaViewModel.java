@@ -1,5 +1,8 @@
 package com.example.farmerama.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,11 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AreaViewModel extends ViewModel {
+public class AreaViewModel extends AndroidViewModel {
 
     private final AreaRepository repository;
 
-    public AreaViewModel() {
+    public AreaViewModel(Application application) {
+        super(application);
         repository = AreaRepository.getInstance() ;
     }
 

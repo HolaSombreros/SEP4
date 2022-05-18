@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
-    private SharedPreferences sharedPreferences;
-    private MainActivityViewModel activityViewModel;
+    private MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
         navController = Navigation.findNavController(this, R.id.fragment);
         setSupportActionBar(toolbar);
         appBarConfiguration = new AppBarConfiguration.Builder(
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationDrawer, navController);
         navigationDrawer.getMenu().findItem(R.id.signOut).setOnMenuItemClickListener(item -> {
-            activityViewModel.logOut();
+            viewModel.logOut();
             return true;
         });
     }
@@ -66,16 +64,14 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-        activityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
     }
 
     private void setUpLoggedInUser() {
-        activityViewModel.getLoggedInUser().observe(this, loggedInUser -> {
+        viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
-                sharedPreferences.edit().putString("userEmail", loggedInUser.getEmail()).apply();
-                sharedPreferences.edit().putString("userPassword", loggedInUser.getPassword()).apply();
+                viewModel.saveLoggedInUser(loggedInUser);
 
                 toolbar.setVisibility(View.VISIBLE);
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
@@ -88,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                 navController.navigate(R.id.latestMeasurementFragment);
             } else {
-                sharedPreferences.edit().putString("userEmail", "null").apply();
-                sharedPreferences.edit().putString("userPassword", "null").apply();
+                viewModel.removeLoggedInUser();
                 toolbar.setVisibility(View.GONE);
                 navController.navigate(R.id.loginFragment);
             }

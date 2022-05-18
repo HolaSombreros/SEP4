@@ -1,5 +1,8 @@
 package com.example.farmerama.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,11 +16,13 @@ import com.example.farmerama.data.repository.MeasurementRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeasurementsViewModel extends ViewModel {
+public class MeasurementsViewModel extends AndroidViewModel {
     private MeasurementRepository measurementRepository;
     private AreaRepository areaRepository;
+    private int areaId;
 
-    public MeasurementsViewModel() {
+    public MeasurementsViewModel(Application application) {
+        super(application);
         this.measurementRepository = MeasurementRepository.getInstance();
         this.areaRepository = AreaRepository.getInstance();
     }
@@ -30,12 +35,12 @@ public class MeasurementsViewModel extends ViewModel {
         return measurementRepository.getMeasurements();
     }
 
-    public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
+    public void retrieveLatestMeasurement(MeasurementType type, boolean latest) {
         measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
     }
 
 
-    public void retrieveMeasurements(int areaId, MeasurementType type, String date) {
+    public void retrieveMeasurements(MeasurementType type, String date) {
         measurementRepository.retrieveMeasurements(areaId, type, date);
     }
 
@@ -57,4 +62,7 @@ public class MeasurementsViewModel extends ViewModel {
         return new MutableLiveData<>(list);
     }
 
+    public void setAreaId(int id) {
+        areaId = id;
+    }
 }
