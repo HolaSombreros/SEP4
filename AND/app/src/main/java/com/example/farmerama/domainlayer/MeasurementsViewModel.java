@@ -33,6 +33,9 @@ public class MeasurementsViewModel extends ViewModel {
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
     }
+    public void getAllAreas() {
+        areaRepository.getAllAreas();
+    }
 
     public void retrieveMeasurements(int areaId, MeasurementType type, String date) {
         measurementRepository.retrieveMeasurements(areaId, type, date);

@@ -26,4 +26,7 @@ public interface MeasurementApi {
 
     @GET("{areaId}/spl")
     Call<List<MeasurementResponse>> getLatestSpl(@Path("areaId") int areaId, @Query("latest") boolean latest);
+
+    @GET("{areaId}/co2s")
+    Call<List<MeasurementResponse>> getLatestCo2(@Path("areaId") int areaId, @Query("latest") boolean latest);
 }
