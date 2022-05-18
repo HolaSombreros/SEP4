@@ -42,9 +42,7 @@ public class HistoricalMeasurementsFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        //navController = Navigation.findNavController(view);
         measurementsRecycler = view.findViewById(R.id.measurements_recycler);
-
     }
 
     private void setupViews() {

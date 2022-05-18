@@ -52,29 +52,15 @@ public class LatestDataFragment extends Fragment {
     }
 
     private void setUpViews() {
-        //boolean isHistorical = getArguments().getString("measurementsType").equals("latest");
-        //if(!isHistorical) {
-            ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
-            viewPager2.setAdapter(adapter);
-            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                @Override
-                public void onPageSelected(int position) {
-                    super.onPageSelected(position);
-                    viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
-                }
-            });
-        //}
-//        else {
-//            HistoricalViewPagerAdapter adapter = new HistoricalViewPagerAdapter(getActivity());
-//            viewPager2.setAdapter(adapter);
-//            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//                @Override
-//                public void onPageSelected(int position) {
-//                    super.onPageSelected(position);
-//                    viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], false);
-//                }
-//            });
-//        }
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
+        viewPager2.setAdapter(adapter);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                viewModel.retrieveLatestMeasurement(sharedPreferences.getInt("areaId", 1), MeasurementType.values()[position], true);
+            }
+        });
 
         String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {

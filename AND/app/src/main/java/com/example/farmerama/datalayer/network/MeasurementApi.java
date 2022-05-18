@@ -18,13 +18,14 @@ public interface MeasurementApi {
     @GET("{areaId}/temperatures")
     Call<List<MeasurementResponse>> getTemperatures(@Path("areaId") int areaId,
                                                          @Query("date") String date);
+    @GET("{areaId}/humidities")
     Call<List<MeasurementResponse>> getLatestHumidity(@Path("areaId") int areaId,
                                                       @Query("latest") boolean latest);
     @GET("{areaId}/humidities")
     Call<List<MeasurementResponse>> getHumidities(@Path("areaId") int areaId,
                                                   @Query("date") String date);
 
-    @GET("{areaId}/spl")
+    @GET("{areaId}/sounds")
     Call<List<MeasurementResponse>> getLatestSpl(@Path("areaId") int areaId, @Query("latest") boolean latest);
 
     @GET("{areaId}/co2s")
