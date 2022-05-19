@@ -60,6 +60,9 @@ public class AreasModelImpl implements AreasModel {
     @Override
     public Area update(Area area) {
         try{
+            if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
+                throw new BadRequestException("Area already exists");
+            }
             return Helper.await(areasDao.update(area));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
