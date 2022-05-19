@@ -10,17 +10,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.farmerama.domainlayer.LoginViewModel;
-import com.example.farmerama.domainlayer.MainActivityViewModel;
+import com.example.farmerama.data.util.ToastMessage;
+import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,31 +25,25 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
-    private SharedPreferences sharedPreferences;
-    private MainActivityViewModel activityViewModel;
-
-
+    private MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        setUpViews();
         setupNavigation();
-        /*Menu navMenu = navigationView.getMenu();
-        if(sharedPreferences.getBoolean("GuestVisit", false))
-            navMenu.findItem(R.id.accountFragment).setVisible(false);*/
-
+        setUpLoggedInUser();
     }
 
     private void setupNavigation() {
-        sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
         navController = Navigation.findNavController(this, R.id.fragment);
         setSupportActionBar(toolbar);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.latestMeasurementFragment,
                 R.id.accountFragment,
-                R.id.historicalMeasurements,
+                R.id.historicalPager,
                 R.id.areasFragment,
                 R.id.employeesFragment,
                 R.id.sensorsFragment,
@@ -64,20 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationDrawer, navController);
-//        navigationDrawer.setNavigationItemSelectedListener(item -> {
-//            Bundle bundle = new Bundle();
-//            if (item.getItemId() == R.id.historicalMeasurements) {
-//                bundle.putString("measurementsType", "historical");
-//            }
-//            if (item.getItemId() == R.id.latestMeasurementFragment) {
-//                bundle.putString("measurementsType", "latest");
-//            }
-//
-//            navController.navigate(item.getItemId(), bundle);
-//            drawerLayout.closeDrawers();
-//            return true;
-//        });
-
+        navigationDrawer.getMenu().findItem(R.id.signOut).setOnMenuItemClickListener(item -> {
+            viewModel.logOut();
+            return true;
+        });
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
 
@@ -89,24 +69,53 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setVisibility(View.VISIBLE);
             }
         });
+
     }
 
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-        activityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        sharedPreferences = getSharedPreferences("GuestVisit", Context.MODE_PRIVATE);
-        activityViewModel.getLoggedUser().observe(this, loggedUser -> {
-            if(loggedUser) {
-                Toast.makeText(this, "Logged in user",Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("measurementsType", "latest");
-                //sharedPreferences.edit().putBoolean("GuestVisit", true);
-                navController.navigate(R.id.latestMeasurementFragment, bundle);
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+    }
+
+    private void setUpViews() {
+        ToastMessage.getToastMessage().observe(this, error -> {
+            Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void setUpLoggedInUser() {
+        viewModel.getLoggedInUser().observe(this, loggedInUser -> {
+            if (loggedInUser != null) {
+                Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
+                viewModel.saveLoggedInUser(loggedInUser);
+
+                toolbar.setVisibility(View.VISIBLE);
+                for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+                    navigationDrawer.getMenu().getItem(i).setVisible(true);
+                }
+
+                if (loggedInUser.getRole().equals("EMPLOYEE")) {
+                    navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
+                }
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
+                navController.navigate(R.id.latestMeasurementFragment);
             }
             else {
-                //TODO: LOG OUT
+                viewModel.removeLoggedInUser();
+                toolbar.setVisibility(View.GONE);
+                navController.navigate(R.id.loginFragment);
+            }
+        });
+        viewModel.getGuest().observe(this, guestUser -> {
+            if(guestUser)
+            {
+                for(int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+                    navigationDrawer.getMenu().getItem(i).setVisible(false);
+                }
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
+                navigationDrawer.getMenu().findItem(R.id.latestMeasurementFragment).setVisible(true);
             }
         });
     }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.farmerama.drawer_fragments.LatestDataFragment">
+    tools:context="com.example.farmerama.fragment.LatestDataFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                app:tabMode="scrollable"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/area_spinner">
@@ -75,3 +76,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
