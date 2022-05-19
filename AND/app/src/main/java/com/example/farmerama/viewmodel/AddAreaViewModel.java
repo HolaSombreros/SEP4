@@ -76,4 +76,38 @@ public class AddAreaViewModel extends AndroidViewModel {
     public LiveData<String> getErrorMessage() {
         return errorMessage;
     }
+
+    public boolean editArea(String name, String description, String noOfPigs, String hardwareId) {
+        if (name == null || name.isEmpty()) {
+            errorMessage.setValue("Please specify the name of the area");
+            return false;
+        }
+
+        if (description == null || description.isEmpty()) {
+            errorMessage.setValue("Please specify the description of the area");
+            return false;
+        }
+
+        if (noOfPigs == null || noOfPigs.isEmpty()) {
+            errorMessage.setValue("Please specify the number of the pigs");
+            return false;
+        }
+
+        try {
+            int numberOfPigs = Integer.parseInt(noOfPigs);
+
+            if (numberOfPigs < 1) {
+                errorMessage.setValue("The number of pigs has to be higher than 1");
+                return false;
+            }
+        } catch (Exception e) {
+            errorMessage.setValue("The number of pigs must be numeric");
+            return false;
+        }
+
+        Area area = new Area(barn, name, description, Integer.parseInt(noOfPigs), hardwareId);
+        areaRepository.editArea(area);
+        return true;
+    }
+
 }
