@@ -8,41 +8,59 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.User;
+import com.example.farmerama.datalayer.model.response.ErrorResponse;
 import com.example.farmerama.datalayer.model.response.UserResponse;
 import com.example.farmerama.datalayer.network.ServiceGenerator;
 import com.example.farmerama.datalayer.network.UserApi;
+import com.example.farmerama.util.ErrorReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 import retrofit2.internal.EverythingIsNonNull;
 
-public class UserRepository {
+public class UserRepository extends ErrorRepository {
 
     private static UserRepository instance;
     private final MutableLiveData<List<User>> users;
     private final MutableLiveData<User> user;
+    private final MutableLiveData<String> error;
     private MutableLiveData<Boolean> loggedUser;
+    private SuccessResponse successResponse;
     private SharedPreferences sharedPreferences;
 
 
-    private UserRepository(Application application) {
-        sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
+    private UserRepository() {
+        super();
+        //sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
+        error = new MutableLiveData<>();
         loggedUser = new MutableLiveData<>();
-
+        successResponse = new SuccessResponse(false);
     }
 
-    public static synchronized UserRepository getInstance(Application application) {
+    public static synchronized UserRepository getInstance() {
         if (instance == null) {
-            instance = new UserRepository(application);
+            instance = new UserRepository();
         }
         return instance;
     }
+
     public LiveData<Boolean> isLoggedIn(){
         return loggedUser;
     }
@@ -55,6 +73,13 @@ public class UserRepository {
         return user;
     }
 
+    public LiveData<String> getError() {
+        return error;
+    }
+
+    public SuccessResponse getSuccessResponse() {
+        return successResponse;
+    }
 
     public void retrieveAllEmployees() {
         UserApi userApi = ServiceGenerator.getUserApi();
@@ -69,6 +94,13 @@ public class UserRepository {
                         list.add(user.getUser());
                     }
                     users.setValue(list);
+                    successResponse.setSuccess(true);
+                }
+                else {
+                    ErrorReader<List<UserResponse>> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                    successResponse.setSuccess(false);
                 }
             }
             @EverythingIsNonNull
@@ -88,7 +120,13 @@ public class UserRepository {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user.setValue( response.body().getUser());
-                    Log.w("test2", user.getValue().toString());
+                    successResponse.setSuccess(true);
+                }
+                else {
+                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                    successResponse.setSuccess(false);
                 }
             }
             @EverythingIsNonNull
@@ -108,12 +146,19 @@ public class UserRepository {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user.setValue(response.body().getUser());
+                    successResponse.setSuccess(true);
+                }
+                else {
+                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                    successResponse.setSuccess(false);
                 }
             }
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
+                    Log.i("Retrofit", "Could not retrieve data");
             }
         });
     }
@@ -130,6 +175,32 @@ public class UserRepository {
                 }
             }
             @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
+    public void loginUser(User employee) {
+        UserApi userApi = ServiceGenerator.getUserApi();
+        Call<UserResponse> call = userApi.login(employee);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if(response.isSuccessful()) {
+                    user.setValue(response.body().getUser());
+                    loggedUser.setValue(true);
+                    successResponse.setSuccess(true);
+                }
+                else {
+                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                    successResponse.setSuccess(false);
+                }
+            }
+
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");

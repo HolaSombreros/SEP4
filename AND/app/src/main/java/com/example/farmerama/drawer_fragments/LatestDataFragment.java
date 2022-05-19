@@ -17,14 +17,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.farmerama.R;
 import com.example.farmerama.datalayer.model.MeasurementType;
-import com.example.farmerama.domainlayer.LatestMeasurementViewModel;
+import com.example.farmerama.domainlayer.MeasurementsViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.Arrays;
+import java.time.LocalDate;
 
 public class LatestDataFragment extends Fragment {
-    private LatestMeasurementViewModel viewModel;
+    private MeasurementsViewModel viewModel;
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private Spinner areaSpinner;
@@ -39,7 +39,7 @@ public class LatestDataFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(getActivity()).get(LatestMeasurementViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(MeasurementsViewModel.class);
         initializeViews(view);
         setUpViews();
     }
@@ -54,7 +54,6 @@ public class LatestDataFragment extends Fragment {
     private void setUpViews() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
         viewPager2.setAdapter(adapter);
-
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -63,7 +62,7 @@ public class LatestDataFragment extends Fragment {
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();

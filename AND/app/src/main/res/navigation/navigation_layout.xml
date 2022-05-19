@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_layout"
     app:startDestination="@id/loginFragment">
+
     <fragment
         android:id="@+id/latestMeasurementFragment"
         android:name="com.example.farmerama.drawer_fragments.LatestDataFragment"
@@ -14,6 +15,18 @@
         android:name="com.example.farmerama.drawer_fragments.LatestMeasurementFragment"
         android:label="fragment_latest_temperature"
         tools:layout="@layout/fragment_latest_measurement" />
+
+    <fragment
+        android:id="@+id/historicalMeasurements"
+        android:name="com.example.farmerama.drawer_fragments.HistoricalMeasurementsFragment"
+        android:label="Historical Measurements"
+        tools:layout="@layout/fragment_historical_measurements" />
+    <fragment
+        android:id="@+id/historicalPager"
+        android:name="com.example.farmerama.drawer_fragments.HistoricalDataFragment"
+        android:label="Historical Measurements"
+        tools:layout="@layout/fragment_historical_data" />
+
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.farmerama.drawer_fragments.AccountFragment"
@@ -44,19 +57,25 @@
     <fragment
         android:id="@+id/addAreaFragment"
         android:name="com.example.farmerama.drawer_fragments.AddAreaFragment"
-        android:label="AddArea"
+        android:label="Add Area"
         tools:layout="@layout/fragment_add_area">
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.farmerama.drawer_fragments.LoginFragment"
-        android:label="RegisterFragment"
+        android:label="Login Fragment"
+        tools:layout="@layout/fragment_login"
+    />
+    <fragment
+        android:id="@+id/signOut"
+        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
+        android:label="Login Fragment"
         tools:layout="@layout/fragment_login"
     />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmerama.drawer_fragments.RegisterFragment"
-        android:label=" Register a new user!"
+        android:label="Register a new user!"
         tools:layout="@layout/fragment_register"
     />
     <fragment

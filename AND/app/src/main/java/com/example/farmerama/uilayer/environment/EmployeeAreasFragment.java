@@ -52,8 +52,6 @@ public class EmployeeAreasFragment extends Fragment {
         });
         viewModel.getAllAreas();
 
-
-
     }
 }
 

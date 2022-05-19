@@ -13,17 +13,23 @@
     <string name="employees">Employees</string>
     <string name="areas">Areas</string>
     <string name="latest_temperature">Latest temperature</string>
-    <string name="measurement">Measurement</string>
     <string name="latest_measurements">Latest Measurements</string>
     <string name="add_area">Add New Area</string>
     <string name="area_name">Area Name</string>
     <string name="description">Description</string>
     <string name="noPigs">Number Of Pigs</string>
     <string name="create">Create</string>
-    <string name="measurementType">type</string>
+    <string name="measurementType" translatable="false">type</string>
     <string name="continue_as_a_guest">Continue as a guest</string>
     <string name="hardwareId">Hardware Id</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="role">Role</string>
+    <string name="measurement">Measurement</string>
+    <string name="time">Time</string>
+
+    <string-array name="roles">
+        <item>EMPLOYEE</item>
+        <item>ADMINISTRATOR</item>
+    </string-array>
+
 </resources>

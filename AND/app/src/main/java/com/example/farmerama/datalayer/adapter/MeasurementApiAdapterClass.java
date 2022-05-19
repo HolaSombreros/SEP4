@@ -19,6 +19,23 @@ public class MeasurementApiAdapterClass implements MeasurementApiAdapter{
                 return measurementApi.getLatestTemperature(areaId, latest);
             case HUMIDITY:
                 return measurementApi.getLatestHumidity(areaId, latest);
+            case SPL:
+                return measurementApi.getLatestSpl(areaId, latest);
+            case CO2:
+                return measurementApi.getLatestCo2(areaId, latest);
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
+    }
+
+    @Override
+    public Call<List<MeasurementResponse>> getMeasurements(MeasurementType type, int areaId, String date) {
+        MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
+        switch (type) {
+            case TEMPERATURE:
+                return measurementApi.getTemperatures(areaId,date);
+            case HUMIDITY:
+                return measurementApi.getHumidities(areaId, date);
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
         }

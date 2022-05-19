@@ -3,7 +3,7 @@ package com.example.farmerama.datalayer.model;
 import androidx.annotation.NonNull;
 
 public enum MeasurementType {
-    TEMPERATURE("Temperature"), HUMIDITY("Humidity");
+    TEMPERATURE("Temperature"), HUMIDITY("Humidity"),  CO2("CO₂"), SPL("Sound Pressure Level");
     private String type;
 
     MeasurementType(String type) {
@@ -19,6 +19,8 @@ public enum MeasurementType {
         switch (type) {
             case "Temperature": return "°C";
             case "Humidity": return "%";
+            case "Sound Pressure Level": return "dB";
+            case "CO₂": return "ppm";
         }
         return "";
     }

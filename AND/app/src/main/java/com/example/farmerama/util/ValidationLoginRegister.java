@@ -3,65 +3,55 @@ package com.example.farmerama.util;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.datalayer.model.User;
+import com.example.farmerama.datalayer.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ValidationLoginRegister {
     private MutableLiveData<String> errorMessage;
-    private List<User> users;
 
     public ValidationLoginRegister(){
         errorMessage = new MutableLiveData<>();
-        users =new ArrayList<>();
-        users.add(new User("Geana","geana@stefi.dk", "miawmiao", "Owner"));
-
     }
 
     public MutableLiveData<String> getErrorMessage() {
         return errorMessage;
     }
 
-    public boolean verifyLogin(String email, String password){
-
-        if(!verifyEmail(email)) return verifyEmail(email);
-        if(!verifyPassword(password)) return verifyPassword(password);
-
-        for (User user:users) {
-            if(user.getPassword().equals(password) && user.getEmail().equals(email)) {
-                return true;
-            }
-            else {
-                errorMessage.setValue("Email and password combination is not correct");
-                return false;
-            }
-        }
-        return false;
+    public boolean verifyLogin(String email, String password) {
+        return verifyEmail(email) && verifyPassword(password);
     }
 
-    //Verify if email is entered correctly, if not, the error message is announcing
-    private boolean verifyEmail(String email){
+    /**
+     * Verify if email is entered correctly, if not, the error message is announcing
+     * @param email
+     * @return
+     */
+    private boolean verifyEmail(String email) {
+        String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
         if(email.trim().isEmpty()) {
             errorMessage.setValue("Email field cannot be empty");
             return false;
-        } else if( !(email.contains("@") && email.contains(".")) ) {
+        }
+        if(!matcher.matches()) {
             errorMessage.setValue("Email not valid");
             return false;
         }
         return true;
     }
 
-    //Verify is password is entered
-    private boolean verifyPassword(String password){
-        if(password.trim().isEmpty()) {
-            errorMessage.setValue("Password cannot be empty");
-            return false;
-        }
-        return true;
-    }
 
-    //Verify is password is entered
-    private boolean verifyPasswordRegister(String password){
+    /**
+     * Verify is password is entered
+     * @param password
+     * @return
+     */
+    private boolean verifyPassword(String password){
         if(password.trim().isEmpty()) {
             errorMessage.setValue("Password cannot be empty");
             return false;
@@ -73,13 +63,17 @@ public class ValidationLoginRegister {
         return true;
     }
 
-
-    //Verify the data for register
-    public boolean verifyRegister(String firstName, String lastName,String email, String password, String role){
-        if(verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPasswordRegister(password)){
-            return true;
-        }
-        return false;
+    /**
+     * Verify the data for register
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param role
+     * @return
+     */
+    public boolean verifyRegister(String firstName, String lastName, String email, String password, String role){
+        return verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPassword(password);
     }
 
     private boolean verifyDetails(String firstName, String lastName, String role){
