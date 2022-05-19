@@ -31,7 +31,7 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.measurement_item, parent, false);
+        View view = inflater.inflate(R.layout.item_measurement, parent, false);
         return new ViewHolder(view);
     }
 

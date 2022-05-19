@@ -18,12 +18,12 @@
         tools:layout="@layout/fragment_latest_measurement" />
 
     <fragment
-        android:id="@+id/historicalMeasurements"
+        android:id="@+id/historicalMeasurementsFragment"
         android:name="com.example.farmerama.fragment.HistoricalMeasurementsFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_measurements" />
     <fragment
-        android:id="@+id/historicalPager"
+        android:id="@+id/historicalDataFragment"
         android:name="com.example.farmerama.fragment.HistoricalDataFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_data" />

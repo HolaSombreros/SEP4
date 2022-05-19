@@ -72,7 +72,7 @@ public class MeasurementRepository {
     }
 
     public void retrieveMeasurements(int areaId, MeasurementType type, String date) {
-        Call<List<MeasurementResponse>> call = adapter.getMeasurements(type, areaId, date);
+        Call<List<MeasurementResponse>> call = adapter.retrieveMeasurements(type, areaId, date);
         call.enqueue(new Callback<List<MeasurementResponse>>() {
             @EverythingIsNonNull
             @Override

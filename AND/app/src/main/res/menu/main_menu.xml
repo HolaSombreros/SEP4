@@ -22,7 +22,7 @@
         android:title="@string/sensors" />
 
     <item
-        android:id="@+id/historicalPager"
+        android:id="@+id/historicalDataFragment"
         android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/historical_measurements" />
 

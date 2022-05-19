@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/area_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_add_area.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_employee_areas.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_employees.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_historical_data.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_historical_measurements.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_historical_pager.xml" value="0.33" />
@@ -13,6 +16,8 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_register.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_sensors.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_area.xml" value="0.25" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_measurement.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/measurement_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_drawer.xml" value="0.1" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_header.xml" value="0.36666666666666664" />

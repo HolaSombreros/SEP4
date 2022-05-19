@@ -25,7 +25,7 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
     @Override
     public AreaListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.area_item, parent, false);
+        View view = inflater.inflate(R.layout.item_area, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,9 +52,9 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            areaName = itemView.findViewById(R.id.areaNameItem);
-            barnName = itemView.findViewById(R.id.barnNameItem);
-            nrOfPigs = itemView.findViewById(R.id.nrOfPigsItem);
+            areaName = itemView.findViewById(R.id.areaItem_name);
+            barnName = itemView.findViewById(R.id.areaItem_barnName);
+            nrOfPigs = itemView.findViewById(R.id.areaItem_noOfPigs);
 
             itemView.setOnClickListener(v-> {
                 listener.onClick(areas.get(getBindingAdapterPosition()));
