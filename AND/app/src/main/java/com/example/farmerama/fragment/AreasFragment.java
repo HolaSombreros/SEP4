@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.farmerama.R;
-import com.example.farmerama.datalayer.adapter.AreaListAdapter;
-import com.example.farmerama.domainlayer.AreaViewModel;
+import com.example.farmerama.data.recycler.AreaListAdapter;
+import com.example.farmerama.viewmodel.AreaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AreasFragment extends Fragment {

@@ -128,8 +128,7 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
