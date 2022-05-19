@@ -20,6 +20,6 @@ public interface AreaApi {
     Call<AreaResponse> getSpecificArea(@Path("id") int areaId);
 
     @PUT("{id}")
-    Call<AreaResponse>editArea(@Path("id") int areaId, @Body Area area);
+    Call<AreaResponse> editArea(@Path("id") int areaId, @Body Area area);
 
 }

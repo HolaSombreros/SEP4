@@ -24,9 +24,7 @@ public class AreaViewModel extends AndroidViewModel {
 
     public LiveData<Area> getSpecificArea(int areaId){
         repository.getSpecificAreaById(areaId);
-
         return repository.getSpecificArea();
-
     }
     public LiveData<List<Area>> getAreas(){
         return repository.getAreas();

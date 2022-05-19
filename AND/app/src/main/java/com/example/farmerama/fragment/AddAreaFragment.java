@@ -17,14 +17,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.Barn;
-import com.example.farmerama.viewmodel.AddAreaViewModel;
+import com.example.farmerama.viewmodel.AddEditAreaViewModel;
 import com.example.farmerama.viewmodel.AreaViewModel;
 
 import java.util.ArrayList;
 
 public class AddAreaFragment extends Fragment {
 
-    private AddAreaViewModel viewModel;
+    private AddEditAreaViewModel viewModel;
     private AreaViewModel areaViewModel;
     private NavController navController;
     private Spinner barnSpinner;
@@ -43,7 +43,7 @@ public class AddAreaFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(getActivity()).get(AddAreaViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(AddEditAreaViewModel.class);
         areaViewModel =  new ViewModelProvider(getActivity()).get(AreaViewModel.class);
 
         initializeViews(view);
@@ -64,6 +64,10 @@ public class AddAreaFragment extends Fragment {
     private void setupViews() {
 
         viewModel.retrieveAllBarns();
+
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(getActivity(), viewModel.getErrorMessage().getValue(), Toast.LENGTH_SHORT).show();
+        });
 
         ArrayAdapter<Barn> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,new ArrayList<>());
@@ -87,12 +91,11 @@ public class AddAreaFragment extends Fragment {
             }
         });
 
-
         if (getArguments() != null) {
-
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Edit area");
             title.setText("EDIT AREA");
             areaViewModel.getSpecificArea(getArguments().getInt("areaId")).observe(getViewLifecycleOwner(), area -> {
+                area.setId(getArguments().getInt("areaId",1));
                 areaName.setText(area.getName());
                 for (int i = 0; i < adapter.getCount(); i++) {
                     if(adapter.getItem(i).equals(area.getBarn())){
@@ -109,21 +112,21 @@ public class AddAreaFragment extends Fragment {
 
         save.setOnClickListener(v -> {
             if (getArguments() != null) {
-                viewModel.editArea(
+                if(viewModel.editArea(
+                        getArguments().getInt("areaId",1),
                         areaName.getText().toString(),
                         areaDescription.getText().toString(),
                         noOfPigs.getText().toString(),
-                        hardwareId.getText().toString());
-                Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been edited!", Toast.LENGTH_SHORT).show();
-//                navController.popBackStack();
-
-            } else if (viewModel.createNewArea(areaName.getText().toString(), areaDescription.getText().toString(),
+                        hardwareId.getText().toString())) {
+                    Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been edited!", Toast.LENGTH_SHORT).show();
+                    navController.popBackStack();
+                }
+            }
+            else if (viewModel.createNewArea(areaName.getText().toString(), areaDescription.getText().toString(),
                     noOfPigs.getText().toString(), hardwareId.getText().toString())) {
                 Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been created!", Toast.LENGTH_SHORT).show();
                 navController.popBackStack();
             }
-            else
-                Toast.makeText(getActivity(), viewModel.getErrorMessage().getValue(), Toast.LENGTH_SHORT).show();
         });
     }
 }
