@@ -26,11 +26,10 @@
     <string name="role" translatable="false">Role</string>
     <string name="measurement">Measurement</string>
     <string name="time" translatable="false">Time</string>
-    <string name="historical_measurements" translatable="false">Historical Measurements</string>
     <string name="sign_out" translatable="false">Sign Out</string>
     <string name="Login" translatable="false">Login</string>
-    <string name="guest">Guest</string>
-    <string name="no_email">No email</string>
+    <string name="guest" translatable="false">Guest</string>
+    <string name="no_email" translatable="false">No email</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>
