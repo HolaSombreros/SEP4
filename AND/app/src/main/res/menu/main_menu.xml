@@ -17,7 +17,7 @@
             android:icon="@drawable/ic_baseline_edgesensor_high_24"
             />
 
-        <item android:title="Historical Measurements"
+        <item android:title="@string/historical_measurements"
             android:id="@+id/historicalPager"
             android:icon="@drawable/ic_baseline_history_24"/>
 
@@ -34,11 +34,15 @@
             android:id="@+id/employeeAreasFragment"
             android:icon="@drawable/ic_baseline_location_on_24"/>
 
-        <item android:title="Register"
+        <item android:title="@string/register"
             android:id="@+id/registerFragment"
             android:icon="@drawable/ic_baseline_person_add_24"/>
 
-        <item android:title="Sign Out"
+        <item android:title="@string/sign_out"
             android:id="@+id/signOut"
+            android:icon="@drawable/ic_baseline_logout_24"/>
+
+        <item android:title="@string/Login"
+            android:id="@+id/loginFragment"
             android:icon="@drawable/ic_baseline_logout_24"/>
 </menu>

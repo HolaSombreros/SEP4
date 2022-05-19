@@ -58,6 +58,18 @@ public class MainActivity extends AppCompatActivity {
             viewModel.logOut();
             return true;
         });
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int id = destination.getId();
+
+            if (id == R.id.loginFragment) {
+                toolbar.setVisibility(View.GONE);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+            else {
+                toolbar.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     private void initViews() {
@@ -81,12 +93,23 @@ public class MainActivity extends AppCompatActivity {
                 if (loggedInUser.getRole().equals("EMPLOYEE")) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                 }
-
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestMeasurementFragment);
-            } else {
+            }
+            else {
                 viewModel.removeLoggedInUser();
                 toolbar.setVisibility(View.GONE);
                 navController.navigate(R.id.loginFragment);
+            }
+        });
+        viewModel.getGuest().observe(this, guestUser -> {
+            if(guestUser)
+            {
+                for(int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+                    navigationDrawer.getMenu().getItem(i).setVisible(false);
+                }
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
+                navigationDrawer.getMenu().findItem(R.id.latestMeasurementFragment).setVisible(true);
             }
         });
     }

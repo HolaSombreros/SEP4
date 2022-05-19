@@ -27,17 +27,17 @@ public class UserRepository extends ErrorRepository {
     private final MutableLiveData<User> user;
     private final MutableLiveData<User> loggedInUser;
     private final MutableLiveData<String> error;
+    private final MutableLiveData<Boolean> isGuest;
     private SuccessResponse successResponse;
-    private SharedPreferences sharedPreferences;
 
 
     private UserRepository() {
         super();
-        //sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         error = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
+        isGuest = new MutableLiveData<>();
         successResponse = new SuccessResponse(false);
     }
 
@@ -50,6 +50,12 @@ public class UserRepository extends ErrorRepository {
 
     public void logOut() {
         loggedInUser.setValue(null);
+    }
+
+    public LiveData<Boolean> isGuest() { return isGuest; }
+
+    public void setIsGuest() {
+        isGuest.setValue(true);
     }
 
     public LiveData<User> getLoggedInUser() {

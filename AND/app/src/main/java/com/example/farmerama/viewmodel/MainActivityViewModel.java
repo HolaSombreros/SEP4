@@ -30,6 +30,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         userRepository.logOut();
     }
 
+    public LiveData<Boolean> getGuest() {
+        return userRepository.isGuest();
+    }
+
     public void saveLoggedInUser(User user) {
         sharedPreferences.edit().putString("userEmail", user.getEmail()).apply();
         sharedPreferences.edit().putString("userPassword", user.getPassword()).apply();
