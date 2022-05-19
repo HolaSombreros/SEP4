@@ -26,4 +26,5 @@
     <string name="description">Apellido</string>
     <string name="noPigs">Número de cerdos</string>
     <string name="password">Clave</string>
+    <string name="register">Registro</string>
 </resources>
