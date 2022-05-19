@@ -27,10 +27,6 @@ public class MeasurementsViewModel extends AndroidViewModel {
         this.areaRepository = AreaRepository.getInstance();
     }
 
-    public LiveData<Measurement> getLatestMeasurement() {
-        return measurementRepository.getLatestMeasurement();
-    }
-
     public LiveData<List<Measurement>> getMeasurements() {
         return measurementRepository.getMeasurements();
     }

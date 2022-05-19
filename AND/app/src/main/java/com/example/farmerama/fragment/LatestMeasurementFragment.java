@@ -48,11 +48,11 @@ public class LatestMeasurementFragment extends Fragment {
 
     private void setUpViews() {
         sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
-        viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
-            measurementTextView.setText(String.valueOf(measurement.getValue()));
-            timeText.setText(measurement.getDateTime());
-            if (measurement.getMeasurementType()!=null)
-                typeTextView.setText(measurement.getMeasurementType().toUnit());
+        viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
+            measurementTextView.setText(String.valueOf(measurements.get(0).getValue()));
+            timeText.setText(measurements.get(0).getDateTime());
+            if (measurements.get(0).getMeasurementType()!=null)
+                typeTextView.setText(measurements.get(0).getMeasurementType().toUnit());
         });
     }
 }
