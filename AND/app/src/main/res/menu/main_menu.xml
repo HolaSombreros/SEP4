@@ -1,48 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--The menu for the drawer-->
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?><!--The menu for the drawer-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <item android:title="@string/latest_measurements"
-            android:id="@+id/latestMeasurementFragment"
-            android:icon="@drawable/ic_baseline_home_24"/>
+    <item
+        android:id="@+id/latestDataFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/latest_measurements" />
 
-        <item android:title="@string/my_account"
-            android:id="@+id/accountFragment"
-            android:icon="@drawable/ic_baseline_account_circle_24"
-            />
+    <item
+        android:id="@+id/loginFragment"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="@string/Login" />
 
-        <item android:title="@string/sensors"
-            android:id="@+id/sensorsFragment"
-            android:icon="@drawable/ic_baseline_edgesensor_high_24"
-            />
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/my_account" />
 
-        <item android:title="@string/historical_measurements"
-            android:id="@+id/historicalPager"
-            android:icon="@drawable/ic_baseline_history_24"/>
+    <item
+        android:id="@+id/sensorsFragment"
+        android:icon="@drawable/ic_baseline_edgesensor_high_24"
+        android:title="@string/sensors" />
 
-        <item android:title="@string/employees"
-            android:id="@+id/employeesFragment"
-            android:icon="@drawable/ic_baseline_supervisor_account_24"
-            />
+    <item
+        android:id="@+id/historicalPager"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="@string/historical_measurements" />
 
-        <item android:title="@string/areas"
-            android:id="@+id/areasFragment"
-            android:icon="@drawable/ic_baseline_location_on_24"/>
+    <item
+        android:id="@+id/employeesFragment"
+        android:icon="@drawable/ic_baseline_supervisor_account_24"
+        android:title="@string/employees" />
 
-        <item android:title="EmployeeAreasFragment"
-            android:id="@+id/employeeAreasFragment"
-            android:icon="@drawable/ic_baseline_location_on_24"/>
+    <item
+        android:id="@+id/areasFragment"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        android:title="@string/areas" />
 
-        <item android:title="@string/register"
-            android:id="@+id/registerFragment"
-            android:icon="@drawable/ic_baseline_person_add_24"/>
+    <item
+        android:id="@+id/employeeAreasFragment"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        android:title="EmployeeAreasFragment" />
 
-        <item android:title="@string/sign_out"
-            android:id="@+id/signOut"
-            android:icon="@drawable/ic_baseline_logout_24"/>
+    <item
+        android:id="@+id/registerFragment"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:title="@string/register" />
 
-        <item android:title="@string/Login"
-            android:id="@+id/loginFragment"
-            android:icon="@drawable/ic_baseline_logout_24"/>
+    <item
+        android:id="@+id/signOut"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="@string/sign_out" />
+
+
 </menu>

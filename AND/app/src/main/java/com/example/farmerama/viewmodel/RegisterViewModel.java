@@ -45,8 +45,4 @@ public class RegisterViewModel extends AndroidViewModel
     public boolean validate(String firstName, String lastName,String email, String password, String role){
         return validation.verifyRegister(firstName, lastName, email, password, role);
     }
-
-    public LiveData<String> getErrorMessage(){
-        return validation.getErrorMessage();
-    }
 }
