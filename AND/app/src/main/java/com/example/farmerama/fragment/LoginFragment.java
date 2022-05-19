@@ -60,6 +60,7 @@ public class LoginFragment extends Fragment {
         });
 
         continueAsGuest.setOnClickListener(v -> {
+            viewModel.setGuest();
             navController.navigate(R.id.latestMeasurementFragment);
         });
     }

@@ -26,12 +26,14 @@ public class UserRepository {
     private final MutableLiveData<List<User>> users;
     private final MutableLiveData<User> user;
     private final MutableLiveData<User> loggedInUser;
+    private final MutableLiveData<Boolean> isGuest;
 
     private UserRepository() {
         super();
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
+        isGuest = new MutableLiveData<>();
     }
 
     public static synchronized UserRepository getInstance() {
@@ -43,6 +45,12 @@ public class UserRepository {
 
     public void logOut() {
         loggedInUser.setValue(null);
+    }
+
+    public LiveData<Boolean> isGuest() { return isGuest; }
+
+    public void setIsGuest() {
+        isGuest.setValue(true);
     }
 
     public LiveData<User> getLoggedInUser() {

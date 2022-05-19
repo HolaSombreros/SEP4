@@ -34,6 +34,9 @@ public class LoginViewModel extends AndroidViewModel {
     public boolean validate(String email, String password) {
         return validation.verifyLogin(email, password);
     }
+    public void setGuest() {
+        repository.setIsGuest();
+    }
 
     public void loginUser(String email, String password) {
         repository.loginUser(new User(email, password));
