@@ -21,12 +21,16 @@ public class Co2ModelImpl implements Co2Model {
     }
 
     @Override
-    public List<SentMeasurement> getLatestCo2(int areaId) throws Exception {
-        return new ArrayList<>(List.of(Helper.await(co2Dao.getLatestCo2(areaId))));
+    public List<SentMeasurement> getLatest(int areaId) throws Exception {
+        return new ArrayList<>(List.of(Helper.await(co2Dao.getLatest(areaId))));
+    }
+    @Override
+    public List<SentMeasurement> getAllByDate(int areaId, LocalDate date) throws Exception {
+        return Helper.await(co2Dao.getAllByDate(areaId, date));
     }
 
     @Override
-    public List<SentMeasurement> getAllCo2sInDate(int areaId, LocalDate date) throws Exception {
-        return Helper.await(co2Dao.getAllCo2sInDate(areaId, Date.valueOf(date)));
+    public List<SentMeasurement> getAllFromToday(int areaId) throws Exception {
+        return Helper.await(co2Dao.getAllByDate(areaId, LocalDate.now()));
     }
 }
