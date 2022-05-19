@@ -1,6 +1,5 @@
 package com.example.farmerama.data.repository;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -10,6 +9,7 @@ import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
@@ -20,25 +20,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
-public class UserRepository extends ErrorRepository {
+public class UserRepository {
 
     private static UserRepository instance;
     private final MutableLiveData<List<User>> users;
     private final MutableLiveData<User> user;
     private final MutableLiveData<User> loggedInUser;
-    private final MutableLiveData<String> error;
-    private SuccessResponse successResponse;
-    private SharedPreferences sharedPreferences;
-
 
     private UserRepository() {
         super();
-        //sharedPreferences = application.getSharedPreferences("isLoggedUser",0);
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
-        error = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
-        successResponse = new SuccessResponse(false);
     }
 
     public static synchronized UserRepository getInstance() {
@@ -64,14 +57,6 @@ public class UserRepository extends ErrorRepository {
         return user;
     }
 
-    public LiveData<String> getError() {
-        return error;
-    }
-
-    public SuccessResponse getSuccessResponse() {
-        return successResponse;
-    }
-
     public void retrieveAllEmployees() {
         UserApi userApi = ServiceGenerator.getUserApi();
         Call<List<UserResponse>> call = userApi.getAllEmployees();
@@ -85,13 +70,10 @@ public class UserRepository extends ErrorRepository {
                         list.add(user.getUser());
                     }
                     users.setValue(list);
-                    successResponse.setSuccess(true);
                 }
                 else {
                     ErrorReader<List<UserResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
-                    successResponse.setSuccess(false);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -111,13 +93,10 @@ public class UserRepository extends ErrorRepository {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user.setValue( response.body().getUser());
-                    successResponse.setSuccess(true);
                 }
                 else {
                     ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
-                    successResponse.setSuccess(false);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -137,13 +116,11 @@ public class UserRepository extends ErrorRepository {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user.setValue(response.body().getUser());
-                    successResponse.setSuccess(true);
+                    ToastMessage.setToastMessage("Account successfully added");
                 }
                 else {
                     ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
-                    successResponse.setSuccess(false);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -158,20 +135,18 @@ public class UserRepository extends ErrorRepository {
         UserApi userApi = ServiceGenerator.getUserApi();
         Call<UserResponse> call = userApi.login(employee);
         call.enqueue(new Callback<UserResponse>() {
+            @EverythingIsNonNull
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if(response.isSuccessful()) {
                     loggedInUser.setValue(response.body().getUser());
-                    successResponse.setSuccess(true);
                 }
                 else {
                     ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
-                    successResponse.setSuccess(false);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
-
+            @EverythingIsNonNull
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");

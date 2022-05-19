@@ -10,13 +10,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        setUpViews();
         setupNavigation();
         setUpLoggedInUser();
     }
@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+    }
+
+    private void setUpViews() {
+        ToastMessage.getToastMessage().observe(this, error -> {
+            Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void setUpLoggedInUser() {

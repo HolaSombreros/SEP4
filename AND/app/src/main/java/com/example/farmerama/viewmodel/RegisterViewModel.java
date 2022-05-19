@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.SuccessResponse;
 import com.example.farmerama.data.repository.UserRepository;
 import com.example.farmerama.data.util.ValidationLoginRegister;
 

@@ -10,6 +10,7 @@ import com.example.farmerama.data.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
@@ -26,13 +27,11 @@ public class MeasurementRepository {
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
     private MeasurementApiAdapter adapter;
-    private MutableLiveData<String> error;
 
     private MeasurementRepository() {
         measurement = new MutableLiveData<>();
         measurements = new MutableLiveData<>();
         adapter = new MeasurementApiAdapterClass();
-        error = new MutableLiveData<>();
     }
 
     public static MeasurementRepository getInstance() {
@@ -40,9 +39,6 @@ public class MeasurementRepository {
             instance = new MeasurementRepository();
         }
         return instance;
-    }
-    public LiveData<String> getErrorMessage() {
-        return error;
     }
 
     public LiveData<List<Measurement>> getMeasurements() {
@@ -71,8 +67,7 @@ public class MeasurementRepository {
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -101,8 +96,7 @@ public class MeasurementRepository {
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull

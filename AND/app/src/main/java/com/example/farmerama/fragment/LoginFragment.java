@@ -53,11 +53,6 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
         });
 
-        viewModel.getErrorMessageRepo().observe(getViewLifecycleOwner(), error -> {
-            if (error != null)
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-        });
-
         loginButton.setOnClickListener(l -> {
             if (viewModel.validate(email.getText().toString(), password.getText().toString())) {
                 viewModel.loginUser(email.getText().toString(), password.getText().toString());

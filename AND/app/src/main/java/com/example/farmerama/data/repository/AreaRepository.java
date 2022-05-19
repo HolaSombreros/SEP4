@@ -8,6 +8,7 @@ import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.response.AreaResponse;
 import com.example.farmerama.data.network.AreaApi;
 import com.example.farmerama.data.network.ServiceGenerator;
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
@@ -20,13 +21,11 @@ import retrofit2.internal.EverythingIsNonNull;
 public class AreaRepository {
     private final MutableLiveData<List<Area>> areas;
     private final MutableLiveData<Area> specificArea;
-    private final MutableLiveData<String> error;
     private static AreaRepository instance;
 
     private AreaRepository() {
         areas = new MutableLiveData<>();
         specificArea = new MutableLiveData<>();
-        error = new MutableLiveData<>();
     }
 
     public static AreaRepository getInstance() {
@@ -34,10 +33,6 @@ public class AreaRepository {
             return new AreaRepository();
         }
         return instance;
-    }
-
-    public LiveData<String> getErrorMessage() {
-        return error;
     }
 
     public LiveData<Area> getSpecificArea() {
@@ -64,8 +59,7 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<List<AreaResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -88,8 +82,7 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -112,8 +105,7 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull

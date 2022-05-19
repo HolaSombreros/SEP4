@@ -17,6 +17,7 @@ public interface MeasurementApi {
     @GET("{areaId}/temperatures")
     Call<List<MeasurementResponse>> getTemperatures(@Path("areaId") int areaId,
                                                     @Query("date") String date);
+
     @GET("{areaId}/humidities")
     Call<List<MeasurementResponse>> getLatestHumidity(@Path("areaId") int areaId,
                                                       @Query("latest") boolean latest);
@@ -29,7 +30,15 @@ public interface MeasurementApi {
     Call<List<MeasurementResponse>> getLatestSpl(@Path("areaId") int areaId,
                                                  @Query("latest") boolean latest);
 
+    @GET("{areaId}/sounds")
+    Call<List<MeasurementResponse>> getSpls(@Path("areaId") int areaId,
+                                            @Query("date") String date);
+
     @GET("{areaId}/co2s")
     Call<List<MeasurementResponse>> getLatestCo2(@Path("areaId") int areaId,
                                                  @Query("latest") boolean latest);
+
+    @GET("{areaId}/co2s")
+    Call<List<MeasurementResponse>> getCo2s(@Path("areaId") int areaId,
+                                            @Query("date") String date);
 }
