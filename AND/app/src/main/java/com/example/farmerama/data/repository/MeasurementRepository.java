@@ -23,13 +23,11 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MeasurementRepository {
 
-    private MutableLiveData<Measurement> measurement;
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
     private MeasurementApiAdapterInterface adapter;
 
     private MeasurementRepository() {
-        measurement = new MutableLiveData<>();
         measurements = new MutableLiveData<>();
         adapter = new MeasurementApiAdapter();
     }
@@ -45,10 +43,6 @@ public class MeasurementRepository {
         return measurements;
     }
 
-    public LiveData<Measurement> getLatestMeasurement() {
-        return measurement;
-    }
-
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         Call<List<MeasurementResponse>> call = adapter.retrieveLatestMeasurement(type, areaId, latest);
         call.enqueue(new Callback<List<MeasurementResponse>>() {
@@ -62,7 +56,6 @@ public class MeasurementRepository {
                     }
                     if(list.size() != 0) {
                         measurements.setValue(list);
-                        measurement.setValue(list.get(0));
                     }
                 }
                 else {
@@ -91,7 +84,6 @@ public class MeasurementRepository {
                     }
                     if(list.size() != 0) {
                         measurements.setValue(list);
-                        measurement.setValue(list.get(0));
                     }
                 }
                 else {
