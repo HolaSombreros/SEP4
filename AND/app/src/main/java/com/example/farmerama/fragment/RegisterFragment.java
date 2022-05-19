@@ -51,11 +51,6 @@ public class RegisterFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.roles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         role.setAdapter(adapter);
-
-        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            Toast.makeText(getContext(), error,Toast.LENGTH_SHORT).show();
-        });
-
         registerButton.setOnClickListener(this::registerUser);
     }
 

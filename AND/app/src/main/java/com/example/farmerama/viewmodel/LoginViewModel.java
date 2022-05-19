@@ -24,18 +24,12 @@ public class LoginViewModel extends AndroidViewModel {
         repository = UserRepository.getInstance();
         validation = new ValidationLoginRegister();
 
-        loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));
-    }
-
-    public LiveData<String> getErrorMessage(){
-        return validation.getErrorMessage();
+        if (!sharedPreferences.getString("userEmail", "null").equals("null"))
+            loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));
     }
 
     public boolean validate(String email, String password) {
         return validation.verifyLogin(email, password);
-    }
-    public void setGuest() {
-        repository.setIsGuest();
     }
 
     public void loginUser(String email, String password) {

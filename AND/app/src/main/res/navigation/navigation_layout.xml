@@ -6,12 +6,13 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/latestMeasurementFragment"
+        android:id="@+id/latestDataFragment"
         android:name="com.example.farmerama.fragment.LatestDataFragment"
         android:label="Latest Measurements"
         tools:layout="@layout/fragment_latest_data" />
+
     <fragment
-        android:id="@+id/latestTemperatureFragment"
+        android:id="@+id/latestMeasurementFragment"
         android:name="com.example.farmerama.fragment.LatestMeasurementFragment"
         android:label="fragment_latest_temperature"
         tools:layout="@layout/fragment_latest_measurement" />
@@ -31,51 +32,40 @@
         android:id="@+id/accountFragment"
         android:name="com.example.farmerama.fragment.AccountFragment"
         android:label="My Account"
-        tools:layout="@layout/fragment_account" >
-    </fragment>
+        tools:layout="@layout/fragment_account"/>
     <fragment
         android:id="@+id/sensorsFragment"
         android:name="com.example.farmerama.fragment.SensorsFragment"
         android:label="Sensors"
-        tools:layout="@layout/fragment_sensors" >
-    </fragment>
+        tools:layout="@layout/fragment_sensors"/>
     <fragment
         android:id="@+id/employeesFragment"
         android:name="com.example.farmerama.fragment.EmployeesFragment"
         android:label="Employees"
-        tools:layout="@layout/fragment_employees" >
-    </fragment>
+        tools:layout="@layout/fragment_employees"/>
     <fragment
         android:id="@+id/areasFragment"
         android:name="com.example.farmerama.fragment.AreasFragment"
         android:label="Areas"
-        tools:layout="@layout/fragment_areas" >
-        <action
-            android:id="@+id/action_areasFragment_to_addAreaFragment"
-            app:destination="@id/addAreaFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_areas"/>
     <fragment
         android:id="@+id/addAreaFragment"
         android:name="com.example.farmerama.fragment.AddAreaFragment"
         android:label="Add Area"
-        tools:layout="@layout/fragment_add_area">
-    </fragment>
+        tools:layout="@layout/fragment_add_area"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.farmerama.fragment.LoginFragment"
         android:label="Login Fragment"
-        tools:layout="@layout/fragment_login"
-    />
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmerama.fragment.RegisterFragment"
         android:label="Register a new user!"
-        tools:layout="@layout/fragment_register"
-    />
+        tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/employeeAreasFragment"
         android:name="com.example.farmerama.fragment.EmployeeAreasFragment"
         android:label="EmployeeAreasFragment"
-        tools:layout="@layout/fragment_employee_areas"
-        />
+        tools:layout="@layout/fragment_employee_areas" />
 </navigation>

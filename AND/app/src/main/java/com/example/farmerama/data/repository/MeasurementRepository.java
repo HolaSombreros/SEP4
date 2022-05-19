@@ -5,8 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.data.adapter.MeasurementApiAdapterInterface;
 import com.example.farmerama.data.adapter.MeasurementApiAdapter;
-import com.example.farmerama.data.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
@@ -25,11 +25,11 @@ public class MeasurementRepository {
 
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
-    private MeasurementApiAdapter adapter;
+    private MeasurementApiAdapterInterface adapter;
 
     private MeasurementRepository() {
         measurements = new MutableLiveData<>();
-        adapter = new MeasurementApiAdapterClass();
+        adapter = new MeasurementApiAdapter();
     }
 
     public static MeasurementRepository getInstance() {

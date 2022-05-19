@@ -12,69 +12,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/FarmeramatextView"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:textColor="#20284e"
-            android:textStyle="bold"
-            android:text="@string/app_name"
-            android:textSize="30sp"
-            />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/LoginEmailAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="45dp"
-            android:ems="10"
-            android:hint="@string/e_mail"
-            android:inputType="textEmailAddress" />
+            <TextView
+                android:id="@+id/FarmeramatextView"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="#20284e"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/LoginPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/LoginEmailAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:hint="@string/e_mail"
+                android:inputType="textEmailAddress" />
 
-
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:text="@string/login" />
-
-        <Button
-            android:id="@+id/continueAsGuest"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="@string/continue_as_a_guest" />
+            <EditText
+                android:id="@+id/LoginPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
 
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:text="@string/login" />
+
+            <Button
+                android:id="@+id/continueAsGuest"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="@string/continue_as_a_guest" />
+        </LinearLayout>
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

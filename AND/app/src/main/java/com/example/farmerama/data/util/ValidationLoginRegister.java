@@ -1,20 +1,9 @@
 package com.example.farmerama.data.util;
 
-import androidx.lifecycle.MutableLiveData;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidationLoginRegister {
-    private MutableLiveData<String> errorMessage;
-
-    public ValidationLoginRegister(){
-        errorMessage = new MutableLiveData<>();
-    }
-
-    public MutableLiveData<String> getErrorMessage() {
-        return errorMessage;
-    }
 
     public boolean verifyLogin(String email, String password) {
         return verifyEmail(email) && verifyPassword(password);
@@ -30,11 +19,11 @@ public class ValidationLoginRegister {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         if(email.trim().isEmpty()) {
-            errorMessage.setValue("Email field cannot be empty");
+            ToastMessage.setToastMessage("Email field cannot be empty");
             return false;
         }
         if(!matcher.matches()) {
-            errorMessage.setValue("Email not valid");
+            ToastMessage.setToastMessage("Email not valid");
             return false;
         }
         return true;
@@ -48,11 +37,11 @@ public class ValidationLoginRegister {
      */
     private boolean verifyPassword(String password){
         if(password.trim().isEmpty()) {
-            errorMessage.setValue("Password cannot be empty");
+            ToastMessage.setToastMessage("Password cannot be empty");
             return false;
         }
         if(password.length() < 6){
-            errorMessage.setValue("Enter a password with at least 6 characters");
+            ToastMessage.setToastMessage("Enter a password with at least 6 characters");
             return false;
         }
         return true;
@@ -73,15 +62,15 @@ public class ValidationLoginRegister {
 
     private boolean verifyDetails(String firstName, String lastName, String role){
         if(firstName.trim().isEmpty()) {
-            errorMessage.setValue("First name missing");
+            ToastMessage.setToastMessage("First name missing");
             return false;
         }
         else if(lastName.trim().isEmpty()){
-            errorMessage.setValue("Last name missing");
+            ToastMessage.setToastMessage("Last name missing");
             return false;
         }
         else if(role.trim().isEmpty()){
-            errorMessage.setValue("Role missing");
+            ToastMessage.setToastMessage("Role missing");
             return false;
         }
         return true;
