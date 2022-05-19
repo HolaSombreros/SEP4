@@ -18,7 +18,8 @@ public class AreaViewModel extends ViewModel {
         repository = AreaRepository.getInstance() ;
     }
 
-    public LiveData<Area> getSpecificArea(){
+    public LiveData<Area> getSpecificArea(int areaId){
+        repository.getSpecificAreaById(areaId);
 
         return repository.getSpecificArea();
 

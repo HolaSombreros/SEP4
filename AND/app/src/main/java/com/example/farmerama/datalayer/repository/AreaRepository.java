@@ -77,9 +77,9 @@ public class AreaRepository {
         });
     }
 
-    public void getSpecificArea(String name) {
+    public void getSpecificAreaById(int areaId) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<AreaResponse> call = areaApi.getSpecificArea(name);
+        Call<AreaResponse> call = areaApi.getSpecificArea(areaId);
         call.enqueue(new Callback<AreaResponse>() {
             @EverythingIsNonNull
             @Override
@@ -104,6 +104,30 @@ public class AreaRepository {
     public void createArea(Area area) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<AreaResponse> call = areaApi.createArea(area);
+        call.enqueue(new Callback<AreaResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
+                if (response.isSuccessful()) {
+                    specificArea.setValue(response.body().getArea());
+                }
+                else {
+                    ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
+                    error.setValue(responseErrorReader.errorReader(response));
+                    error.setValue(null);
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<AreaResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
+    public void editArea(Area area) {
+        AreaApi areaApi = ServiceGenerator.getAreaApi();
+        Call<AreaResponse> call = areaApi.editArea(area.getId(), area);
         call.enqueue(new Callback<AreaResponse>() {
             @EverythingIsNonNull
             @Override
