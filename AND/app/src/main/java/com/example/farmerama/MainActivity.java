@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.latestMeasurementFragment,
                 R.id.accountFragment,
-                R.id.historicalMeasurements,
+                R.id.historicalPager,
                 R.id.areasFragment,
                 R.id.employeesFragment,
                 R.id.sensorsFragment,

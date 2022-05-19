@@ -17,7 +17,7 @@
             android:icon="@drawable/ic_baseline_edgesensor_high_24"
             />
 
-        <item android:title="Historical Measurements"
+        <item android:title="@string/historical_measurements"
             android:id="@+id/historicalPager"
             android:icon="@drawable/ic_baseline_history_24"/>
 

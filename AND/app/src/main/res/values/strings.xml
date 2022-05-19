@@ -26,6 +26,7 @@
     <string name="role" translatable="false">Role</string>
     <string name="measurement">Measurement</string>
     <string name="time" translatable="false">Time</string>
+    <string name="historical_measurements">Historical Measurements</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>
