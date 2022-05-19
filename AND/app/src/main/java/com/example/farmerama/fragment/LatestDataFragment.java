@@ -1,6 +1,7 @@
 package com.example.farmerama.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -74,11 +76,28 @@ public class LatestDataFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
-                viewModel.retrieveLatestMeasurement(MeasurementType.TEMPERATURE, true);
+                viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], true);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], true);
+                    Thread.sleep(300000);
+                } catch (InterruptedException e) {
+                }
+            }
+        }).start();
+
+        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
 
             }
         });

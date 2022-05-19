@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        for(int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+        for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
             navigationDrawer.getMenu().getItem(i).setVisible(false);
         }
         navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
@@ -94,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
             if (id == R.id.loginFragment) {
                 toolbar.setVisibility(View.GONE);
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            }
-            else {
+            } else {
                 toolbar.setVisibility(View.VISIBLE);
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
@@ -141,6 +141,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
-
     }
 }
