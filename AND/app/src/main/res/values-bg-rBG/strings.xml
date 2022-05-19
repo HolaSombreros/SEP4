@@ -9,4 +9,22 @@
     <string name="latest_temperature">Последна температураПоследна температура</string>
     <string name="measurement">Измерване</string>
     <string name="latest_measurements">Последни измервания</string>
+    <string name="register">Регистрирам</string>
+    <string name="add_area">Добавяне на нова област</string>
+    <string name="time">Време</string>
+    <string name="measurementType">Тип</string>
+    <string name="create">Създайте</string>
+    <string name="role">Роля</string>
+    <string name="area_name">Име на района</string>
+    <string name="login">Влизане</string>
+    <string name="hello_blank_fragment">Здравейте празен фрагмент</string>
+    <string name="hardwareId">Идентификатор на хардуера</string>
+    <string name="continue_as_a_guest">Продължете като гост</string>
+    <string name="first_name">Първо име</string>
+    <string name="e_mail_address">Имейл адрес</string>
+    <string name="e_mail">Електронна поща</string>
+    <string name="last_name">Фамилия</string>
+    <string name="description">Описание</string>
+    <string name="noPigs">Брой прасета</string>
+    <string name="password">парола</string>
 </resources>

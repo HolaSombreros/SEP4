@@ -9,4 +9,22 @@
     <string name="latest_temperature">Ultima temperatură</string>
     <string name="measurement">Măsurare</string>
     <string name="latest_measurements">Ultimele măsurători</string>
+    <string name="register">Inregistreaza-te</string>
+    <string name="add_area">Adăugați o zonă nouă</string>
+    <string name="time">Timp</string>
+    <string name="measurementType">tip</string>
+    <string name="create">Creează</string>
+    <string name="role">Rol</string>
+    <string name="area_name">Numele Zonei</string>
+    <string name="login">Autentificare</string>
+    <string name="hello_blank_fragment">Salut fragment gol</string>
+    <string name="hardwareId">ID hardware</string>
+    <string name="continue_as_a_guest">Continuați ca oaspete</string>
+    <string name="first_name">Nume</string>
+    <string name="last_name">Nume de familie</string>
+    <string name="e_mail_address">Adresa de e-mail</string>
+    <string name="e_mail">E-mail</string>
+    <string name="description">Descriere</string>
+    <string name="noPigs">Numar de porci</string>
+    <string name="password">Parola</string>
 </resources>
