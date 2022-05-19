@@ -33,8 +33,13 @@ public class AreaDaoImpl implements AreaDao{
     }
 
     @Override
-    public Area update(Area area) {
-        return null;
+    public Future<Area> update(Area area) {
+        Area byId = repository.findById(area.getId()).get();
+        byId.setName(area.getName());
+        byId.setDescription(area.getDescription());
+        byId.setHardwareId(area.getHardwareId());
+        byId.setNumberOfPigs(area.getNumberOfPigs());
+        return new AsyncResult<>(repository.save(byId));
     }
 
     @Override
@@ -50,5 +55,10 @@ public class AreaDaoImpl implements AreaDao{
     @Override
     public Future<List<Area>> getAll() {
         return new AsyncResult<>(repository.findAll());
+    }
+
+    @Override
+    public Future<Area> readByNameAndBarn(String name, int barnId) {
+        return new AsyncResult<>(repository.getFirstByNameAndBarnId(name, barnId));
     }
 }

@@ -48,4 +48,14 @@ public class AreasController {
             throw new BadRequestException(e.getMessage());
         }
     }
+
+    @PutMapping(value = "/{id}")
+    public Area putArea(@PathVariable(name = "id") int id, @RequestBody Area area){
+        try{
+            area.setId(id);
+            return areasModel.update(area);
+        }catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
 }

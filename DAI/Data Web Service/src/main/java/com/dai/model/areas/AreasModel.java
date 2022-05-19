@@ -10,4 +10,5 @@ public interface AreasModel {
     Area read(int id) throws Exception;
     List<Area> getAll();
 
+    Area update(Area area);
 }

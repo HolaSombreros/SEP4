@@ -22,10 +22,14 @@ public class AreasModelImpl implements AreasModel {
         this.areasDao = areasDao;
         this.barnDao = barnDao;
     }
-//TODO: check if the area is already there
+//TODO: check if the area is already there; check for name and barn id
     @Override
     public Area create(Area area) throws Exception {
         Barn barn = Helper.await(barnDao.read(area.getBarn().getId()));
+
+        if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
+            throw new BadRequestException("Area already exists");
+        }
 
         if(barn!=null)
         {
@@ -49,6 +53,15 @@ public class AreasModelImpl implements AreasModel {
     public List<Area> getAll() {
         try{
             return Helper.await(areasDao.getAll());
+        }catch (Exception e){
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Area update(Area area) {
+        try{
+            return Helper.await(areasDao.update(area));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
         }
