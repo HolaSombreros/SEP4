@@ -30,6 +30,7 @@
     <string name="Login" translatable="false">Login</string>
     <string name="guest" translatable="false">Guest</string>
     <string name="no_email" translatable="false">No email</string>
+    <string name="historical_measurements" translatable="false">Historical Measurements</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>
