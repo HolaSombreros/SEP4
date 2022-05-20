@@ -22,4 +22,6 @@ public interface AreaApi {
     @PUT("{id}")
     Call<AreaResponse> editArea(@Path("id") int areaId, @Body Area area);
 
+    @DELETE("{id}")
+    Call<AreaResponse> removeArea(@Path("id") int areaId);
 }

@@ -7,19 +7,19 @@ import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.UserRepository;
-import com.example.farmerama.data.util.ValidationLoginRegister;
+import com.example.farmerama.data.util.ValidationUser;
 
 import java.util.List;
 
 public class RegisterViewModel extends AndroidViewModel
 {
     private final UserRepository repository;
-    private ValidationLoginRegister validation;
+    private ValidationUser validation;
 
     public RegisterViewModel(Application application) {
         super(application);
         repository = UserRepository.getInstance();
-        validation = new ValidationLoginRegister();
+        validation = new ValidationUser();
     }
 
     public LiveData<List<User>> getAllEmployees(){
@@ -43,6 +43,6 @@ public class RegisterViewModel extends AndroidViewModel
     }
 
     public boolean validate(String firstName, String lastName,String email, String password, String role){
-        return validation.verifyRegister(firstName, lastName, email, password, role);
+        return validation.verifyUserInput(firstName, lastName, email, password, role);
     }
 }

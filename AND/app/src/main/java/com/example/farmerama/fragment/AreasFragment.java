@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.farmerama.R;
+import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.recycler.AreaListAdapter;
 import com.example.farmerama.viewmodel.AreaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -62,7 +63,7 @@ public class AreasFragment extends Fragment {
 
         adapter.setOnClickListener(area -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("areaId", area.getId());
+            bundle.putInt("areaId", ((Area) area).getId());
             navController.navigate(R.id.addAreaFragment, bundle);
         });
 

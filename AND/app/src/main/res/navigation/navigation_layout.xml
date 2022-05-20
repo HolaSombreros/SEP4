@@ -50,7 +50,7 @@
         tools:layout="@layout/fragment_areas"/>
     <fragment
         android:id="@+id/addAreaFragment"
-        android:name="com.example.farmerama.fragment.AddAreaFragment"
+        android:name="com.example.farmerama.fragment.AddEditAreaFragment"
         android:label="Add Area"
         tools:layout="@layout/fragment_add_area"/>
     <fragment

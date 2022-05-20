@@ -9,8 +9,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Barn;
+import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.AreaRepository;
 import com.example.farmerama.data.repository.BarnRepository;
+import com.example.farmerama.data.repository.UserRepository;
+import com.example.farmerama.data.util.ToastMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +22,14 @@ public class AddEditAreaViewModel extends AndroidViewModel {
 
     private AreaRepository areaRepository;
     private BarnRepository barnRepository;
-    private MutableLiveData<String> errorMessage;
+    private UserRepository userRepository;
     private Barn barn;
 
     public AddEditAreaViewModel(Application application) {
         super(application);
         areaRepository = AreaRepository.getInstance();
         barnRepository = BarnRepository.getInstance();
-        errorMessage = new MutableLiveData<>();
+        userRepository = UserRepository.getInstance();
     }
 
     public LiveData<List<Barn>> getBarns() {
@@ -58,18 +61,22 @@ public class AddEditAreaViewModel extends AndroidViewModel {
         return false;
     }
 
+    public LiveData<User> getLoggedInUser() {
+        return userRepository.getLoggedInUser();
+    }
+
     public boolean areaValidation(String name, String noOfPigs, String hardwareId) {
         if (name == null || name.isEmpty()) {
-            errorMessage.setValue("Please specify the name of the area");
+            ToastMessage.setToastMessage("Please specify the name of the area");
             return false;
         }
 
         if (noOfPigs == null || noOfPigs.isEmpty()) {
-            errorMessage.setValue("Please specify the number of the pigs");
+            ToastMessage.setToastMessage("Please specify the number of the pigs");
             return false;
         }
         if(hardwareId == null || hardwareId.isEmpty()) {
-            errorMessage.setValue("Please specify the hardware id");
+            ToastMessage.setToastMessage("Please specify the hardware id");
             return false;
         }
 
@@ -77,17 +84,22 @@ public class AddEditAreaViewModel extends AndroidViewModel {
             int numberOfPigs = Integer.parseInt(noOfPigs);
 
             if (numberOfPigs < 1) {
-                errorMessage.setValue("The number of pigs has to be higher than 1");
+                ToastMessage.setToastMessage("The number of pigs has to be higher than 1");
                 return false;
             }
         } catch (Exception e) {
-            errorMessage.setValue("The number of pigs must be numeric");
+            ToastMessage.setToastMessage("The number of pigs must be numeric");
             return false;
         }
         return true;
     }
 
-    public LiveData<String> getErrorMessage() {
-        return errorMessage;
+    public void removeArea(int areaId) {
+        areaRepository.removeArea(areaId);
+    }
+
+    public LiveData<Area> getSpecificArea(int areaId){
+        areaRepository.getSpecificAreaById(areaId);
+        return areaRepository.getSpecificArea();
     }
 }

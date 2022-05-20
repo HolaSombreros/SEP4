@@ -3,7 +3,6 @@ package com.example.farmerama.data.recycler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,14 +49,12 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
         private TextView areaName;
         private TextView barnName;
         private TextView nrOfPigs;
-        private ImageView remove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             areaName = itemView.findViewById(R.id.areaItem_name);
             barnName = itemView.findViewById(R.id.areaItem_barnName);
             nrOfPigs = itemView.findViewById(R.id.areaItem_noOfPigs);
-            remove = itemView.findViewById(R.id.areaItem_trash);
 
             itemView.setOnClickListener(v-> {
                 listener.onClick(areas.get(getBindingAdapterPosition()));

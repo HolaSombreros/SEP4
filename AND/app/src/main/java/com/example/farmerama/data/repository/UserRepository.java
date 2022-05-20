@@ -153,4 +153,27 @@ public class UserRepository {
             }
         });
     }
+
+    public void updateUser(User user) {
+        UserApi userApi = ServiceGenerator.getUserApi();
+        Call<UserResponse> call = userApi.updateUser(user.getId(), user);
+        call.enqueue(new Callback<UserResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if(response.isSuccessful()) {
+                    ToastMessage.setToastMessage("The account has been successfully updated");
+                }
+                else {
+                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
 }
