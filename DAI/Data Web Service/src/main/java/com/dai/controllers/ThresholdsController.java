@@ -41,7 +41,7 @@ public class ThresholdsController {
         }
     }
 
-    @PutMapping(value = "/thresholds/{areaId}", params = {"type", "userId"})
+    @PutMapping(value = "/{areaId}", params = {"type", "userId"})
     public Threshold update(@PathVariable int areaId, @RequestParam("type") ThresholdType type, @RequestParam("userId") int userId, @RequestBody ThresholdValues threshold) {
         try {
             Threshold toThreshold = requestToThreshold(areaId, threshold, type);
@@ -51,12 +51,6 @@ public class ThresholdsController {
         }
     }
 
-    public Threshold requestToThreshold(int areaId, ThresholdValues thresholdValues, ThresholdType type) {
-        Area area = new Area();
-        area.setId(areaId);
-        return new Threshold(-1, thresholdValues.getMinimum(), thresholdValues.getMaximum(), type, area);
-    }
-
     @GetMapping(value = "/{areaId}/logs", params = {"type", "date"})
     public List<SentThresholdLog> getLogs(@PathVariable("areaId") int areaId, @RequestParam("type") ThresholdType type, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
         try{
@@ -64,5 +58,11 @@ public class ThresholdsController {
         }catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
+    }
+
+    public Threshold requestToThreshold(int areaId, ThresholdValues thresholdValues, ThresholdType type) {
+        Area area = new Area();
+        area.setId(areaId);
+        return new Threshold(-1, thresholdValues.getMinimum(), thresholdValues.getMaximum(), type, area);
     }
 }
