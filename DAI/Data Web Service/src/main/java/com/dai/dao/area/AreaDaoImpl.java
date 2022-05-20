@@ -41,8 +41,6 @@ public class AreaDaoImpl implements AreaDao{
         byId.setNumberOfPigs(area.getNumberOfPigs());
         return new AsyncResult<>(repository.save(byId));
     }
-
-
     @Override
     public Future<Area> getAreaByHardwareId(String id) {
         return new AsyncResult<>(repository.getFirstByHardwareIdEquals(id));
