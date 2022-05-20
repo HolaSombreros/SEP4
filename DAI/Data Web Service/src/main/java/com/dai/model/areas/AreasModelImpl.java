@@ -26,9 +26,9 @@ public class AreasModelImpl implements AreasModel {
     public Area create(Area area) throws Exception {
         Barn barn = Helper.await(barnDao.read(area.getBarn().getId()));
 
-        if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
+     /*   if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
             throw new BadRequestException("Area already exists");
-        }
+        }*/
 
         if(barn!=null)
         {
@@ -64,6 +64,15 @@ public class AreasModelImpl implements AreasModel {
                 throw new BadRequestException("Area already exists");
             }
             return Helper.await(areasDao.update(area));
+        }catch (Exception e){
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Area delete(int id) {
+        try {
+            return Helper.await(areasDao.delete(id));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
         }
