@@ -4,13 +4,13 @@
 #include <HumidityTemperatureTask.h>
 #include <UplinkMessageBuilder.h>
 #include <stdio.h>
+#include <task.h>
 #include <lora_driver.h>
 
 #define TASK_NAME "FarmeramaTask"
 #define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
 #define TASK_PRIORITY configMAX_PRIORITIES - 1
 #define PORT 1
-
 
 static void _run(void* params);
 

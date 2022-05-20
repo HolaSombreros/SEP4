@@ -4,7 +4,8 @@
 DEFINE_FFF_GLOBALS
 
 extern "C" {
-	#include <Farmerama.h>
+#include <Farmerama.h>
+#include <Farmerama.c>
 }
 
 class FarmeramaTest : public ::testing::Test {
