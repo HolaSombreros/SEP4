@@ -28,10 +28,21 @@ public class ThresholdLogs {
     @Column(name = "new_value")
 
     private double new_value;
+
     @Column(name = "type")
-    private ThresholdType type;
+    private ThresholdLogType type;
 
     public ThresholdLogs() {
+    }
+
+    public ThresholdLogs(int log_id, Threshold threshold_id, User user_id, LocalDateTime changed_on, double old_value, double new_value, ThresholdLogType type) {
+        this.log_id = log_id;
+        this.threshold_id = threshold_id;
+        this.user_id = user_id;
+        this.changed_on = changed_on;
+        this.old_value = old_value;
+        this.new_value = new_value;
+        this.type = type;
     }
 
     public int getLog_id() {
@@ -82,11 +93,11 @@ public class ThresholdLogs {
         this.new_value = new_value;
     }
 
-    public ThresholdType getType() {
+    public ThresholdLogType getType() {
         return type;
     }
 
-    public void setType(ThresholdType type) {
+    public void setType(ThresholdLogType type) {
         this.type = type;
     }
 }

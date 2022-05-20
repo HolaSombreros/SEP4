@@ -49,11 +49,6 @@ public class ThresholdDaoImpl implements ThresholdDao{
 
     @Override
     public Future<Threshold> update(Threshold threshold) throws Exception {
-        Threshold find = repository.findFirstByAreaIdEqualsAndTypeEquals(threshold.getArea().getId(), threshold.getType());
-
-        find.setMaximum(threshold.getMaximum());
-        find.setMinimum(threshold.getMinimum());
-
-        return new AsyncResult<>(repository.save(find));
+        return new AsyncResult<>(repository.save(threshold));
     }
 }
