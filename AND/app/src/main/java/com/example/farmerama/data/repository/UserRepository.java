@@ -123,7 +123,7 @@ public class UserRepository extends ErrorRepository {
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit", "could not retrieve shit");
+                Log.i("Retrofit", "could not retrieve");
             }
         });
     }
