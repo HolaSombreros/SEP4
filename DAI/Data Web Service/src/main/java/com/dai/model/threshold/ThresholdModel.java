@@ -14,5 +14,6 @@ import java.util.List;
 public interface ThresholdModel {
     Threshold find(int areaId, ThresholdType type) throws Exception;
     Threshold create(Threshold threshold) throws Exception;
+    Threshold update(Threshold toThreshold, int userId) throws Exception;
     List<SentThresholdLog> getAllExceeding(int areaId, ThresholdType type, LocalDate date) throws Exception;
 }

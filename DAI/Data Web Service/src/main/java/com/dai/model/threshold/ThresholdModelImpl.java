@@ -43,6 +43,13 @@ public class ThresholdModelImpl implements ThresholdModel{
     }
 
     @Override
+    public Threshold update(Threshold toThreshold, int userId) throws Exception {
+        //TODO create entry for ThresholdLogs change
+
+        return Helper.await(thresholdDao.update(toThreshold));
+    }
+
+    @Override
     public List<SentThresholdLog> getAllExceeding(int areaId, ThresholdType type, LocalDate date) throws Exception {
         List<SentThresholdLog> min = Helper.await(thresholdDao.getAllExceedingMin(areaId, type, date));
         List<SentThresholdLog> max = Helper.await(thresholdDao.getAllExceedingMax(areaId, type, date));

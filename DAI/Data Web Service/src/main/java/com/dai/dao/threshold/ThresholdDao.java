@@ -20,4 +20,5 @@ public interface ThresholdDao {
     Future<List<SentThresholdLog>> getAllExceedingMin(int areaId, ThresholdType type, LocalDate date);
     Future<Threshold> find(int areaId, ThresholdType type);
     Future<Threshold> create(Threshold threshold);
+    Future<Threshold> update(Threshold toThreshold) throws Exception;
 }

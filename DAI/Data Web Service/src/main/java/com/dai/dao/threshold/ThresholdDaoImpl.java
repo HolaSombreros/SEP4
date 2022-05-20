@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Future;
 
 @Repository
@@ -44,5 +45,15 @@ public class ThresholdDaoImpl implements ThresholdDao{
     @Override
     public Future<List<SentThresholdLog>> getAllExceedingMin(int areaId, ThresholdType type, LocalDate date) {
         return new AsyncResult<>(repository.getAllExceedingMin(areaId, type.getType(), Date.valueOf(date)));
+    }
+
+    @Override
+    public Future<Threshold> update(Threshold threshold) throws Exception {
+        Threshold find = repository.findFirstByAreaIdEqualsAndTypeEquals(threshold.getArea().getId(), threshold.getType());
+
+        find.setMaximum(threshold.getMaximum());
+        find.setMinimum(threshold.getMinimum());
+
+        return new AsyncResult<>(repository.save(find));
     }
 }
