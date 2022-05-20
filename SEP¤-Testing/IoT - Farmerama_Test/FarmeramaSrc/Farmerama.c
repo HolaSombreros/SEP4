@@ -4,8 +4,8 @@
 #include <HumidityTemperatureTask.h>
 #include <UplinkMessageBuilder.h>
 #include <stdio.h>
-#include <task.h>
 #include <lora_driver.h>
+#include <task.h>
 
 #define TASK_NAME "FarmeramaTask"
 #define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
@@ -65,9 +65,8 @@ void farmerama_runTask(void) {
 	
 	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
 	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
-	
 	TickType_t lastWakeTime = xTaskGetTickCount();
-	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
+	vTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
 }
 
 static void _run(void* params) {

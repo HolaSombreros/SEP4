@@ -36,7 +36,10 @@
     <IncludePath>D:\SEM4\SEP4\SEP4\SEP¤-Testing;D:\SEM4\SEP4\SEP4\IoT;D:\SEM4\SEP4\SEP4\SEP¤-Testing\FFF;D:\SEM4\SEP4\SEP4\SEP¤-Testing\FreeRTOS;D:\SEM4\SEP4\SEP4\SEP¤-Testing\IoT - Farmerama_Test\FarmeramaSrc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="..\FarmeramaSrc\Farmerama.c" />
+    <ClCompile Include="..\..\FreeRTOS\FreeRTOS_FFF_MocksDefinitions.cpp" />
+    <ClCompile Include="..\FarmeramaSrc\Farmerama.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="FarmeramaTests.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\SEM4\SEP4\SEP4\SEP¤-Testing\IoT - Farmerama_Test\FarmeramaSrc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
