@@ -1,7 +1,5 @@
 package com.example.farmerama.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,9 +19,7 @@ import com.example.farmerama.viewmodel.MeasurementsViewModel;
 
 public class HistoricalMeasurementsFragment extends Fragment {
     private RecyclerView measurementsRecycler;
-    private MeasurementsAdapter measurementsAdapter;
     private MeasurementsViewModel viewModel;
-    private SharedPreferences sharedPreferences;
 
     public HistoricalMeasurementsFragment(){}
 
@@ -46,8 +42,6 @@ public class HistoricalMeasurementsFragment extends Fragment {
     }
 
     private void setupViews() {
-        sharedPreferences = getActivity().getSharedPreferences("AreaLogHistorical", Context.MODE_PRIVATE);
-
         measurementsRecycler.hasFixedSize();
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             measurementsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 1));
@@ -56,7 +50,7 @@ public class HistoricalMeasurementsFragment extends Fragment {
             measurementsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
 
-        measurementsAdapter = new MeasurementsAdapter();
+        MeasurementsAdapter measurementsAdapter = new MeasurementsAdapter();
         viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
             measurementsAdapter.setMeasurements(measurements);
         });

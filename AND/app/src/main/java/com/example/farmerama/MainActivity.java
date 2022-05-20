@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.employeesFragment,
                 R.id.sensorsFragment,
                 R.id.employeeAreasFragment,
+                R.id.thresholdModificationFragment,
                 R.id.registerFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (loggedInUser.getRole().equals("EMPLOYEE")) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
+                    navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);

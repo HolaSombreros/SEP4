@@ -14,7 +14,6 @@
             android:id="@+id/account_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
             android:ems="10"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"

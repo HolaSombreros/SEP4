@@ -22,7 +22,6 @@ import androidx.navigation.Navigation;
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.viewmodel.AddEditAreaViewModel;
-import com.example.farmerama.viewmodel.AreaViewModel;
 
 import java.util.ArrayList;
 
@@ -41,7 +40,7 @@ public class AddEditAreaFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_add_area, container, false);
+        return inflater.inflate(R.layout.fragment_add_edit_area, container, false);
     }
 
     @Override

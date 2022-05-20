@@ -26,7 +26,6 @@ public class AreasFragment extends Fragment {
     private FloatingActionButton fab;
     private AreaViewModel viewModel;
     private RecyclerView areasRecycler;
-    private AreaListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class AreasFragment extends Fragment {
         });
 
         viewModel.getAllAreas();
-        adapter = new AreaListAdapter();
+        AreaListAdapter adapter = new AreaListAdapter();
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
             adapter.setAreas(areas);
         });

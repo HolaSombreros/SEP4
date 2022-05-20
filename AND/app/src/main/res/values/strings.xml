@@ -33,6 +33,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="remove">Remove</string>
     <string name="save">Save</string>
+    <string name="threshold_modifications">Threshold Modifications</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>
