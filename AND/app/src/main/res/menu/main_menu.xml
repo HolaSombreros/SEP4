@@ -37,6 +37,10 @@
         android:title="@string/areas" />
 
     <item
+        android:id="@+id/thresholdDataFragment"
+        android:icon="@drawable/ic_baseline_rule_24"
+        android:title="@string/Thresholds" />
+    <item
         android:id="@+id/employeeAreasFragment"
         android:icon="@drawable/ic_baseline_location_on_24"
         android:title="EmployeeAreasFragment" />
