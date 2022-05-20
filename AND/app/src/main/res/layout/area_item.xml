@@ -5,45 +5,48 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="15dp"
-    android:background="#d6e1e9"
-    android:orientation="horizontal">
+    android:background="@drawable/layout_bg"
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
 
    <TextView
        android:id="@+id/areaNameItem"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_marginStart="16dp"
+       android:layout_marginStart="4dp"
        android:text="Name"
-       android:textSize="16sp"
        android:textColor="#20284e"
+       android:textSize="16sp"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent" />
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.517" />
 
    <TextView
        android:id="@+id/barnNameItem"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_marginStart="96dp"
+       android:layout_marginStart="84dp"
        android:text="Barn"
        android:textColor="#20284e"
        android:textSize="16sp"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.466" />
+       app:layout_constraintVertical_bias="0.551" />
 
    <TextView
        android:id="@+id/nrOfPigsText"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_marginStart="196dp"
+       android:layout_marginStart="188dp"
        android:text="Number of pigs:"
        android:textColor="#20284e"
        android:textSize="16sp"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent" />
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.482" />
 
    <TextView
        android:id="@+id/nrOfPigsItem"
@@ -58,13 +61,13 @@
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintVertical_bias="0.466"/>
 
-   <View
-       android:layout_width="match_parent"
-       android:layout_height="2dp"
-       android:layout_marginTop="6dp"
-       android:background="#2c4a78"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/areaNameItem" />
+<!--   <View-->
+<!--       android:layout_width="match_parent"-->
+<!--       android:layout_height="2dp"-->
+<!--       android:layout_marginTop="6dp"-->
+<!--       android:background="#2c4a78"-->
+<!--       app:layout_constraintEnd_toEndOf="parent"-->
+<!--       app:layout_constraintStart_toStartOf="parent"-->
+<!--       app:layout_constraintTop_toBottomOf="@+id/areaNameItem" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
