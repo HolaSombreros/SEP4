@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="8dp"
+    android:background="@drawable/dummy"
     android:padding="15dp"
-    android:background="@drawable/layout_bg"
     android:orientation="horizontal"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    >
 
    <TextView
        android:id="@+id/areaNameItem"

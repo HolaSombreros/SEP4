@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,13 @@ import android.widget.TextView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.recycler.EmployeeAdapter;
 import com.example.farmerama.viewmodel.RegisterViewModel;
 
 public class EmployeesFragment extends Fragment {
 
     private RegisterViewModel registerViewModel;
-    private TextView textView;
-
+    private RecyclerView recyclerView;
     public EmployeesFragment() {
         // Required empty public constructor
     }
@@ -31,25 +33,24 @@ public class EmployeesFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
-        textView = view.findViewById(R.id.employees);
-        registerViewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
-            textView.setText(employee.getName());
-        });
+        recyclerView = view.findViewById(R.id.rev);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.hasFixedSize();
+
+        EmployeeAdapter adapter = new EmployeeAdapter();
+
         registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-            String users = "";
-            for (User user : employees) {
-                users +=user.getName() + " \n";
-                textView.setText(users);
-            }
+            adapter.setUserList(employees);
+            recyclerView.setAdapter(adapter);
+
         });
-        registerViewModel.getUserById(2);
         registerViewModel.retrieveAllEmployees();
-        /*
-        registerViewModel.retrieveAllEmployees();
-        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(),employee ->{
-            textView.setText(employee.get(0).toString());
-            Log.w("test", employee.get(0).toString());
-        });*/
+
+//        registerViewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
+
+//        });
+
     }
 
 }

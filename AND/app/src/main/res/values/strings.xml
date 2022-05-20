@@ -31,6 +31,7 @@
     <string name="Login" translatable="false">Login</string>
     <string name="historical_measurements">Historical Measurements</string>
     <string name="sign_out">Sign Out</string>
+    <string name="employees_fragment">Employees fragment</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>
