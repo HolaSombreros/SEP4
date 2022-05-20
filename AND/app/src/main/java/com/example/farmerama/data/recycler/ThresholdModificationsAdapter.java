@@ -33,11 +33,11 @@ public class ThresholdModificationsAdapter extends RecyclerView.Adapter<Threshol
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TODO check methods
-        holder.employee.setText(list.get(position).getEmployee().getName());
+       /* holder.employee.setText(list.get(position).getEmployee().getName());
         holder.area.setText(list.get(position).getArea().getName());
         holder.measurementType.setText(list.get(position).getMeasurementType().toString());
         holder.minMax.setText(list.get(position).getMinMax());
-        holder.oldNewValue.setText(list.get(position).getOldValue() + " -> " + list.get(position).getNewValue());
+        holder.oldNewValue.setText(list.get(position).getOldValue() + " -> " + list.get(position).getNewValue());*/
     }
 
     @Override

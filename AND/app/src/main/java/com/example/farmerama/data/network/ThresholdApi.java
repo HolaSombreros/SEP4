@@ -1,6 +1,7 @@
 package com.example.farmerama.data.network;
 
 import com.example.farmerama.data.model.Threshold;
+import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 
 import java.util.List;
@@ -24,4 +25,7 @@ public interface ThresholdApi {
     @PUT("{areaId}")
     Call<ThresholdResponse> editThreshold(@Path("areaId") int areaId, @Query("type") String type, @Query("userId") int userId, @Body Threshold threshold);
 
+    //TODO call api
+    @GET()
+    Call<List<ThresholdModificationsResponse>> getThresholdModifications(String date);
 }

@@ -42,7 +42,7 @@ public class ThresholdModificationsFragment extends Fragment {
     private void setupViews() {
 
 
-        viewModel.retrieveThresholdsModifications();
+        viewModel.retrieveThresholdsModifications("date");
         ThresholdModificationsAdapter adapter = new ThresholdModificationsAdapter();
         viewModel.getThresholdsModifications().observe(getViewLifecycleOwner(), modifications -> {
             adapter.setModifications(modifications);
