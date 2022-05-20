@@ -26,7 +26,7 @@ public class Etl {
     @Value("${spring.datasource.password}")
     private String dbPassword;
 
-    @Scheduled(cron = "0 38 14 ? * *")
+    @Scheduled(cron = "0 0 0 ? * *")
     @Async
     public void performEtl() {
         System.out.println("ETL Triggered");
