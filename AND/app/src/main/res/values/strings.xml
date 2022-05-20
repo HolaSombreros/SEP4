@@ -31,6 +31,10 @@
     <string name="Login" translatable="false">Login</string>
     <string name="historical_measurements">Historical Measurements</string>
     <string name="sign_out">Sign Out</string>
+    <string name="upper_threshold">Upper threshold</string>
+    <string name="lower_threshold">Lower threshold</string>
+    <string name="Thresholds">Thresholds</string>
+    <string name="save">Save</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>

@@ -11,6 +11,7 @@ public class ServiceGenerator {
     private static MeasurementApi measurementApi;
     private static AreaApi areaApi;
     private static BarnApi barnApi;
+    private static ThresholdApi thresholdApi;
 
     public static UserApi getUserApi() {
         if (userApi == null) {
@@ -31,6 +32,16 @@ public class ServiceGenerator {
                     .create(MeasurementApi.class);
         }
         return measurementApi;
+    }
+
+    public static ThresholdApi getThresholdsApi() {
+        if(thresholdApi == null) {
+            thresholdApi = new Retrofit.Builder()
+                    .baseUrl(url + EndpointsHelper.THRESHOLDS)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build().create(ThresholdApi.class);
+        }
+        return thresholdApi;
     }
 
     public static AreaApi getAreaApi() {
