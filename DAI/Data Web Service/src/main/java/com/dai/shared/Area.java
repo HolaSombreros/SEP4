@@ -28,7 +28,7 @@ public class Area implements Serializable{
     @Column(name = "hardware_id")
     private String hardwareId;
 
-    protected Area() {
+    public Area() {
     }
 
     public Area(int id, Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
