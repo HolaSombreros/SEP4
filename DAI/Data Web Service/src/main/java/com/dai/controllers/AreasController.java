@@ -3,6 +3,7 @@ package com.dai.controllers;
 import com.dai.exceptions.BadRequestException;
 import com.dai.model.areas.AreasModel;
 import com.dai.shared.Area;
+import com.dai.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,6 @@ public class AreasController {
             throw new BadRequestException(e.getMessage());
         }
     }
-
     @GetMapping
     public List<Area> getAll() {
         try {
@@ -55,6 +55,15 @@ public class AreasController {
             area.setId(id);
             return areasModel.update(area);
         }catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public Area delete(@PathVariable int id) {
+        try {
+            return areasModel.delete(id);
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }

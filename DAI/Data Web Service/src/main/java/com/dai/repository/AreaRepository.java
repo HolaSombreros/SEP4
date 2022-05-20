@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface AreaRepository extends JpaRepository<Area, Integer> {
     Area getFirstByHardwareIdEquals(String hardwareId);
     Area getFirstByNameAndBarnId(String name, int barnId);
+    Area deleteById(int id);
 }

@@ -42,10 +42,6 @@ public class AreaDaoImpl implements AreaDao{
         return new AsyncResult<>(repository.save(byId));
     }
 
-    @Override
-    public void delete(int id) {
-
-    }
 
     @Override
     public Future<Area> getAreaByHardwareId(String id) {
@@ -60,5 +56,10 @@ public class AreaDaoImpl implements AreaDao{
     @Override
     public Future<Area> readByNameAndBarn(String name, int barnId) {
         return new AsyncResult<>(repository.getFirstByNameAndBarnId(name, barnId));
+    }
+
+    @Override
+    public Future<Area> delete(int id) {
+        return new AsyncResult<>(repository.deleteById(id));
     }
 }
