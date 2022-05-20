@@ -9,4 +9,22 @@
     <string name="latest_temperature">Najnovšia teplota</string>
     <string name="measurement">Meranie</string>
     <string name="latest_measurements">Najnovšie merania</string>
+    <string name="register">Registrovať</string>
+    <string name="add_area">Pridať novú oblasť</string>
+    <string name="time">čas</string>
+    <string name="measurementType">Typu</string>
+    <string name="create">Vytvorte</string>
+    <string name="role">Role</string>
+    <string name="area_name">Názov oblasti</string>
+    <string name="login">Prihlásiť sa</string>
+    <string name="hello_blank_fragment">Dobrý deň, prázdny fragment</string>
+    <string name="hardwareId">ID hardvéru</string>
+    <string name="continue_as_a_guest">Pokračujte ako hosť</string>
+    <string name="first_name">Krstné meno</string>
+    <string name="e_mail_address">Emailová adresa</string>
+    <string name="e_mail">E-mail</string>
+    <string name="last_name">Priezvisko</string>
+    <string name="description">Popis</string>
+    <string name="noPigs">Počet ošípaných</string>
+    <string name="password">Heslo</string>
 </resources>

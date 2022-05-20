@@ -4,19 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,16 +33,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        setUpViews();
         setupNavigation();
         setUpLoggedInUser();
+    }
+
+    private void initViews() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationDrawer = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+    }
+
+    private void setUpViews() {
+        ToastMessage.getToastMessage().observe(this, toast -> {
+            if (!toast.isEmpty())
+                Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void setupNavigation() {
         navController = Navigation.findNavController(this, R.id.fragment);
         setSupportActionBar(toolbar);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.latestMeasurementFragment,
+                R.id.latestDataFragment,
+                R.id.loginFragment,
                 R.id.accountFragment,
+                R.id.signOut,
                 R.id.historicalPager,
                 R.id.areasFragment,
                 R.id.employeesFragment,
@@ -54,17 +71,35 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationDrawer, navController);
+
+        navigationDrawer.setNavigationItemSelectedListener(item -> {
+            navController.navigate(item.getItemId());
+            drawerLayout.closeDrawers();
+            return true;
+        });
+
         navigationDrawer.getMenu().findItem(R.id.signOut).setOnMenuItemClickListener(item -> {
             viewModel.logOut();
             return true;
         });
-    }
 
-    private void initViews() {
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationDrawer = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
-        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+            navigationDrawer.getMenu().getItem(i).setVisible(false);
+        }
+        navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
+        navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int id = destination.getId();
+
+            if (id == R.id.loginFragment) {
+                toolbar.setVisibility(View.GONE);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            } else {
+                toolbar.setVisibility(View.VISIBLE);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+        });
     }
 
     private void setUpLoggedInUser() {
@@ -81,11 +116,18 @@ public class MainActivity extends AppCompatActivity {
                 if (loggedInUser.getRole().equals("EMPLOYEE")) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                 }
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
+                navController.navigate(R.id.latestDataFragment);
+            }
 
-                navController.navigate(R.id.latestMeasurementFragment);
-            } else {
+            else {
+                for(int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+                    navigationDrawer.getMenu().getItem(i).setVisible(false);
+                }
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
+                navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
+
                 viewModel.removeLoggedInUser();
-                toolbar.setVisibility(View.GONE);
                 navController.navigate(R.id.loginFragment);
             }
         });
@@ -99,6 +141,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
-
     }
 }

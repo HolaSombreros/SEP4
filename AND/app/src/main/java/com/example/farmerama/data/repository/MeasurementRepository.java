@@ -5,11 +5,12 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.data.adapter.MeasurementApiAdapterInterface;
 import com.example.farmerama.data.adapter.MeasurementApiAdapter;
-import com.example.farmerama.data.adapter.MeasurementApiAdapterClass;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
@@ -22,17 +23,13 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MeasurementRepository {
 
-    private MutableLiveData<Measurement> measurement;
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
-    private MeasurementApiAdapter adapter;
-    private MutableLiveData<String> error;
+    private MeasurementApiAdapterInterface adapter;
 
     private MeasurementRepository() {
-        measurement = new MutableLiveData<>();
         measurements = new MutableLiveData<>();
-        adapter = new MeasurementApiAdapterClass();
-        error = new MutableLiveData<>();
+        adapter = new MeasurementApiAdapter();
     }
 
     public static MeasurementRepository getInstance() {
@@ -41,16 +38,9 @@ public class MeasurementRepository {
         }
         return instance;
     }
-    public LiveData<String> getErrorMessage() {
-        return error;
-    }
 
     public LiveData<List<Measurement>> getMeasurements() {
         return measurements;
-    }
-
-    public LiveData<Measurement> getLatestMeasurement() {
-        return measurement;
     }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
@@ -66,13 +56,11 @@ public class MeasurementRepository {
                     }
                     if(list.size() != 0) {
                         measurements.setValue(list);
-                        measurement.setValue(list.get(0));
                     }
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -96,13 +84,11 @@ public class MeasurementRepository {
                     }
                     if(list.size() != 0) {
                         measurements.setValue(list);
-                        measurement.setValue(list.get(0));
                     }
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull

@@ -9,6 +9,7 @@ import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.response.BarnResponse;
 import com.example.farmerama.data.network.BarnApi;
 import com.example.farmerama.data.network.ServiceGenerator;
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
@@ -22,12 +23,10 @@ import retrofit2.internal.EverythingIsNonNull;
 public class BarnRepository {
 
     private MutableLiveData<List<Barn>> barns;
-    private MutableLiveData<String> error;
     private static BarnRepository instance;
 
     private BarnRepository() {
         barns = new MutableLiveData<>();
-        error = new MutableLiveData<>();
     }
 
     public static BarnRepository getInstance() {
@@ -36,10 +35,6 @@ public class BarnRepository {
         }
 
         return instance;
-    }
-
-    public LiveData<String> getErrorMessage() {
-        return error;
     }
 
     public LiveData<List<Barn>> getBarns() {
@@ -62,8 +57,7 @@ public class BarnRepository {
                 }
                 else {
                     ErrorReader<List<BarnResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull

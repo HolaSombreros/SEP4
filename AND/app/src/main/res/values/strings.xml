@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Farmerama</string>
-    <string name="e_mail_address" translatable="false">E-mail address</string>
-    <string name="password" translatable="false">Password</string>
-    <string name="e_mail" translatable="false">E-mail</string>
-    <string name="register" translatable="false">Register</string>
-    <string name="first_name" translatable="false">First Name</string>
-    <string name="last_name" translatable="false">Last Name</string>
-    <string name="login" translatable="false">Login</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="password">Password</string>
+    <string name="e_mail">E-mail</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="login">Login</string>
     <string name="home">Home</string>
     <string name="my_account">My Account</string>
     <string name="sensors">Sensors</string>
@@ -14,19 +14,23 @@
     <string name="areas">Areas</string>
     <string name="latest_temperature">Latest temperature</string>
     <string name="latest_measurements">Latest Measurements</string>
-    <string name="add_area" translatable="false">Add New Area</string>
-    <string name="area_name" translatable="false">Area Name</string>
-    <string name="description" translatable="false">Description</string>
-    <string name="noPigs" translatable="false">Number Of Pigs</string>
-    <string name="create" translatable="false">Create</string>
-    <string name="measurementType" translatable="false">type</string>
-    <string name="continue_as_a_guest" translatable="false">Continue as a guest</string>
-    <string name="hardwareId" translatable="false">Hardware Id</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="role" translatable="false">Role</string>
+    <string name="add_area">Add New Area</string>
+    <string name="area_name">Area Name</string>
+    <string name="description">Description</string>
+    <string name="noPigs">Number Of Pigs</string>
+    <string name="create">Create</string>
+    <string name="measurementType">type</string>
+    <string name="continue_as_a_guest">Continue as a guest</string>
+    <string name="hardwareId">Hardware Id</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="role">Role</string>
     <string name="measurement">Measurement</string>
-    <string name="time" translatable="false">Time</string>
+    <string name="time">Time</string>
+    <string name="guest" translatable="false">Guest</string>
+    <string name="no_email" translatable="false">No email</string>
+    <string name="Login" translatable="false">Login</string>
     <string name="historical_measurements">Historical Measurements</string>
+    <string name="sign_out">Sign Out</string>
 
     <string-array name="roles">
         <item>EMPLOYEE</item>

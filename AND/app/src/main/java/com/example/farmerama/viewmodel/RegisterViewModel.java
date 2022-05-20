@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.SuccessResponse;
 import com.example.farmerama.data.repository.UserRepository;
 import com.example.farmerama.data.util.ValidationLoginRegister;
 
@@ -45,9 +44,5 @@ public class RegisterViewModel extends AndroidViewModel
 
     public boolean validate(String firstName, String lastName,String email, String password, String role){
         return validation.verifyRegister(firstName, lastName, email, password, role);
-    }
-
-    public LiveData<String> getErrorMessage(){
-        return validation.getErrorMessage();
     }
 }

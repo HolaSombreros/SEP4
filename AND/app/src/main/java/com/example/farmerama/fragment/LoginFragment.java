@@ -48,16 +48,6 @@ public class LoginFragment extends Fragment {
         loginButton = view.findViewById(R.id.loginButton);
         continueAsGuest = view.findViewById(R.id.continueAsGuest);
 
-        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null)
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-        });
-
-        viewModel.getErrorMessageRepo().observe(getViewLifecycleOwner(), error -> {
-            if (error != null)
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-        });
-
         loginButton.setOnClickListener(l -> {
             if (viewModel.validate(email.getText().toString(), password.getText().toString())) {
                 viewModel.loginUser(email.getText().toString(), password.getText().toString());
@@ -65,9 +55,7 @@ public class LoginFragment extends Fragment {
         });
 
         continueAsGuest.setOnClickListener(v -> {
-            navController.navigate(R.id.latestMeasurementFragment);
+            navController.navigate(R.id.latestDataFragment);
         });
     }
-
-
 }

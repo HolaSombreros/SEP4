@@ -8,6 +8,7 @@ import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.response.AreaResponse;
 import com.example.farmerama.data.network.AreaApi;
 import com.example.farmerama.data.network.ServiceGenerator;
+import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
@@ -20,13 +21,11 @@ import retrofit2.internal.EverythingIsNonNull;
 public class AreaRepository {
     private final MutableLiveData<List<Area>> areas;
     private final MutableLiveData<Area> specificArea;
-    private final MutableLiveData<String> error;
     private static AreaRepository instance;
 
     private AreaRepository() {
         areas = new MutableLiveData<>();
         specificArea = new MutableLiveData<>();
-        error = new MutableLiveData<>();
     }
 
     public static AreaRepository getInstance() {
@@ -34,10 +33,6 @@ public class AreaRepository {
             return new AreaRepository();
         }
         return instance;
-    }
-
-    public LiveData<String> getErrorMessage() {
-        return error;
     }
 
     public LiveData<Area> getSpecificArea() {
@@ -64,8 +59,7 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<List<AreaResponse>> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -76,9 +70,9 @@ public class AreaRepository {
         });
     }
 
-    public void getSpecificArea(String name) {
+    public void getSpecificAreaById(int areaId) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<AreaResponse> call = areaApi.getSpecificArea(name);
+        Call<AreaResponse> call = areaApi.getSpecificArea(areaId);
         call.enqueue(new Callback<AreaResponse>() {
             @EverythingIsNonNull
             @Override
@@ -88,8 +82,7 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull
@@ -112,8 +105,30 @@ public class AreaRepository {
                 }
                 else {
                     ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
-                    error.setValue(responseErrorReader.errorReader(response));
-                    error.setValue(null);
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<AreaResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
+    public void editArea(Area area) {
+        AreaApi areaApi = ServiceGenerator.getAreaApi();
+        Call<AreaResponse> call = areaApi.editArea(area.getId(), area);
+        call.enqueue(new Callback<AreaResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
+                if (response.isSuccessful()) {
+                    specificArea.setValue(response.body().getArea());
+                }
+                else {
+                    ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
             @EverythingIsNonNull

@@ -22,10 +22,9 @@ public class AreaViewModel extends AndroidViewModel {
         repository = AreaRepository.getInstance() ;
     }
 
-    public LiveData<Area> getSpecificArea(){
-
+    public LiveData<Area> getSpecificArea(int areaId){
+        repository.getSpecificAreaById(areaId);
         return repository.getSpecificArea();
-
     }
     public LiveData<List<Area>> getAreas(){
         return repository.getAreas();

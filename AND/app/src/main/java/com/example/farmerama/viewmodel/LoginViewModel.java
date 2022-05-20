@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.SuccessResponse;
 import com.example.farmerama.data.repository.UserRepository;
 import com.example.farmerama.data.util.ValidationLoginRegister;
 
@@ -25,15 +24,8 @@ public class LoginViewModel extends AndroidViewModel {
         repository = UserRepository.getInstance();
         validation = new ValidationLoginRegister();
 
-        loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));
-    }
-
-    public LiveData<String> getErrorMessage(){
-        return validation.getErrorMessage();
-    }
-
-    public LiveData<String> getErrorMessageRepo() {
-        return repository.getError();
+        if (!sharedPreferences.getString("userEmail", "null").equals("null"))
+            loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));
     }
 
     public boolean validate(String email, String password) {
