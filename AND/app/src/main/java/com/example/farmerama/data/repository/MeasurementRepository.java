@@ -33,7 +33,7 @@ public class MeasurementRepository {
     }
 
     public static MeasurementRepository getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MeasurementRepository();
         }
         return instance;
@@ -51,18 +51,18 @@ public class MeasurementRepository {
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
                 List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    for(MeasurementResponse measurement : response.body()){
+                    for (MeasurementResponse measurement : response.body()) {
                         list.add(measurement.getMeasurement(type));
                     }
-                    if(list.size() != 0) {
+                    if (list.size() != 0) {
                         measurements.setValue(list);
                     }
-                }
-                else {
+                } else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
+
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<MeasurementResponse>> call, Throwable t) {
@@ -79,18 +79,17 @@ public class MeasurementRepository {
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
                 List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    for(MeasurementResponse measurement : response.body()){
+                    for (MeasurementResponse measurement : response.body()) {
                         list.add(measurement.getMeasurement(type));
                     }
-                    if(list.size() != 0) {
-                        measurements.setValue(list);
-                    }
+                    measurements.setValue(list);
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
             }
+
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<List<MeasurementResponse>> call, Throwable t) {
