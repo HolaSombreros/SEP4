@@ -11,4 +11,6 @@ public interface AreasModel {
     List<Area> getAll();
 
     Area update(Area area);
+
+    Area delete(int id);
 }
