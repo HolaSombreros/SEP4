@@ -9,8 +9,6 @@ import com.dai.shared.ThresholdType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class ThresholdModelImpl implements ThresholdModel{
 
@@ -33,5 +31,12 @@ public class ThresholdModelImpl implements ThresholdModel{
         Area area = Helper.await(areaDao.read(threshold.getArea().getId()));
         threshold.setArea(area);
         return Helper.await(thresholdDao.create(threshold));
+    }
+
+    @Override
+    public Threshold update(Threshold toThreshold, int userId) throws Exception {
+        //TODO create entry for ThresholdLogs change
+
+        return Helper.await(thresholdDao.update(toThreshold));
     }
 }

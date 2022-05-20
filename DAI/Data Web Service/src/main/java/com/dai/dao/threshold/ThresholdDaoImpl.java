@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Future;
 
 @Repository
@@ -30,5 +31,15 @@ public class ThresholdDaoImpl implements ThresholdDao{
     @Override
     public Future<Threshold> create(Threshold threshold) {
         return new AsyncResult<>(repository.save(threshold));
+    }
+
+    @Override
+    public Future<Threshold> update(Threshold threshold) throws Exception {
+        Threshold find = repository.findFirstByAreaIdEqualsAndTypeEquals(threshold.getArea().getId(), threshold.getType());
+
+        find.setMaximum(threshold.getMaximum());
+        find.setMinimum(threshold.getMinimum());
+
+        return new AsyncResult<>(repository.save(find));
     }
 }
