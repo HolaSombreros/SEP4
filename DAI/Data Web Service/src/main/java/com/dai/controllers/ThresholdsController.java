@@ -60,6 +60,14 @@ public class ThresholdsController {
         }
     }
 
+    @GetMapping(value = "/logs", params = "date")
+    public List<ThresholdLogs> getLogs(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+        try{
+            return model.getAllByDate(date);
+        }catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
     public Threshold requestToThreshold(int areaId, ThresholdValues thresholdValues, ThresholdType type) {
         Area area = new Area();
         area.setId(areaId);

@@ -80,4 +80,9 @@ public class ThresholdModelImpl implements ThresholdModel{
         max.addAll(min);
         return max;
     }
+
+    @Override
+    public List<ThresholdLogs> getAllByDate(LocalDate date) throws Exception {
+        return Helper.await(thresholdLogDao.getAllByDate(date));
+    }
 }

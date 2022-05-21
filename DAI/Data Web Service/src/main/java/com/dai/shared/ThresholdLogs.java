@@ -20,13 +20,11 @@ public class ThresholdLogs {
     private User user_id;
 
     @Column(name = "changed_on")
-    private LocalDateTime changed_on;
+    private LocalDateTime changedOn;
 
     @Column(name = "old_value")
-
     private double old_value;
     @Column(name = "new_value")
-
     private double new_value;
 
     @Column(name = "type")
@@ -35,11 +33,11 @@ public class ThresholdLogs {
     public ThresholdLogs() {
     }
 
-    public ThresholdLogs(int log_id, Threshold threshold_id, User user_id, LocalDateTime changed_on, double old_value, double new_value, ThresholdLogType type) {
+    public ThresholdLogs(int log_id, Threshold threshold_id, User user_id, LocalDateTime changedOn, double old_value, double new_value, ThresholdLogType type) {
         this.log_id = log_id;
         this.threshold_id = threshold_id;
         this.user_id = user_id;
-        this.changed_on = changed_on;
+        this.changedOn = changedOn;
         this.old_value = old_value;
         this.new_value = new_value;
         this.type = type;
@@ -69,12 +67,12 @@ public class ThresholdLogs {
         this.user_id = user_id;
     }
 
-    public LocalDateTime getChanged_on() {
-        return changed_on;
+    public LocalDateTime getChangedOn() {
+        return changedOn;
     }
 
-    public void setChanged_on(LocalDateTime changed_on) {
-        this.changed_on = changed_on;
+    public void setChangedOn(LocalDateTime changedOn) {
+        this.changedOn = changedOn;
     }
 
     public double getOld_value() {
