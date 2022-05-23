@@ -18,6 +18,18 @@
         tools:layout="@layout/fragment_latest_measurement" />
 
     <fragment
+        android:id="@+id/thresholdDataFragment"
+        android:name="com.example.farmerama.fragment.ThresholdDataFragment"
+        android:label="Thresholds"
+        tools:layout="@layout/fragment_threshold_data" />
+
+    <fragment
+        android:id="@+id/thresholdMeasurementFragment"
+        android:name="com.example.farmerama.fragment.ThresholdMeasurementsFragment"
+        android:label="Thresholds"
+        tools:layout="@layout/fragment_threshold_measurements" />
+
+    <fragment
         android:id="@+id/historicalMeasurements"
         android:name="com.example.farmerama.fragment.HistoricalMeasurementsFragment"
         android:label="Historical Measurements"
