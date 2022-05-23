@@ -41,9 +41,9 @@
         android:icon="@drawable/ic_baseline_rule_24"
         android:title="@string/Thresholds" />
     <item
-        android:id="@+id/employeeAreasFragment"
+        android:id="@+id/logsFragment"
         android:icon="@drawable/ic_baseline_location_on_24"
-        android:title="EmployeeAreasFragment" />
+        android:title="Exceeded measurements" />
 
     <item
         android:id="@+id/thresholdModificationFragment"
