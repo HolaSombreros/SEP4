@@ -1,4 +1,5 @@
 USE dwh;
+
 -- Checks for new records in the stage
 -- New and future load dates.
 DECLARE @NewLoadDate INT;
@@ -62,6 +63,14 @@ WHERE measured_date > (@LastLoadDate);
 
 ALTER TABLE [stage].[FactEnvironment]
     ADD CONSTRAINT FK_FactEnvironment_0 FOREIGN KEY (area_id) REFERENCES [stage].[DimArea] (area_id);
+
+-- Transformation: because the devices can send data within the same minute, there will be duplicate key issues
+-- in the dwh schema if the records with same time are not removed (at least one, but here we are deleting both)
+DELETE FROM dwh.stage.FactEnvironment
+WHERE CONCAT(measuredDate, '.' ,minute, '.', hour) in
+(SELECT DISTINCT CONCAT(measuredDate, '.' ,minute, '.', hour) FROM dwh.stage.FactEnvironment
+GROUP BY CONCAT(measuredDate, '.' ,minute, '.', hour)
+HAVING COUNT(*) > 1)
 
 -- Incremental Load
 -- start get added
@@ -147,13 +156,15 @@ INSERT INTO [dwh].[FactEnvironment]
 , [T_ID]
 , [temperature]
 , [humidity]
-, [co2])
+, [co2]
+, [sound])
 SELECT a.[A_ID]
      , d.[D_ID]
      , t.[T_ID]
      , f.[temperature]
      , f.[humidity]
      , f.[co2]
+     , f.[sound]
 FROM [stage].[FactEnvironment] f
          inner join [dwh].[DimArea] as a
                     on a.AreaId = f.area_id
