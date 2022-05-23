@@ -31,6 +31,8 @@ public class EmployeesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_employees, container, false);
     }
 
+
+
     public void onViewCreated(View view, Bundle savedInstanceState) {
         registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
         recyclerView = view.findViewById(R.id.rev);
@@ -52,5 +54,6 @@ public class EmployeesFragment extends Fragment {
 //        });
 
     }
+
 
 }

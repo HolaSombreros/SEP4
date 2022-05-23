@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farmerama.data.util.ToastMessage;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -100,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
+//        usernameHeader = findViewById(R.id.UsernameHeader);
+//        emailHeader = findViewById(R.id.EmailHeader);
     }
 
     private void setUpLoggedInUser() {
@@ -107,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
+
+                TextView usernameHeader = findViewById(R.id.UsernameHeader);
+                TextView emailHeader = findViewById(R.id.EmailHeader);
+                if(usernameHeader != null && emailHeader != null)
+                {
+                    usernameHeader.setText(loggedInUser.getName());
+                    emailHeader.setText(loggedInUser.getEmail());
+                }
+
 
                 toolbar.setVisibility(View.VISIBLE);
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
