@@ -41,6 +41,7 @@ public class LogsMeasurementsFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(LogsViewModel.class);
         initializeViews(view);
         setupViews();
+
     }
 
 
