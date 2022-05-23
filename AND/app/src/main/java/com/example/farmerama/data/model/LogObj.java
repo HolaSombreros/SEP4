@@ -1,5 +1,8 @@
 package com.example.farmerama.data.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class LogObj {
     private int id;
     private MeasurementType measurementType;
@@ -17,7 +20,7 @@ public class LogObj {
 
     public LogObj(MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
         this.measurementType = measurementType;
-        this.measuredDate = measuredDate;
+        setMeasuredDate(measuredDate);
         this.thresholdValue = thresholdValue;
         this.exceededValue = exceededValue;
     }
@@ -43,7 +46,10 @@ public class LogObj {
     }
 
     public void setMeasuredDate(String measuredDate) {
-        this.measuredDate = measuredDate;
+        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = datetime.format(myFormatObj);
+        this.measuredDate = formattedDate;
     }
 
     public double getThresholdValue() {

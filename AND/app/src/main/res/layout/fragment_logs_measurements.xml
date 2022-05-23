@@ -51,9 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Date"
-                    android:textSize="16sp"
-                     />
-
+                    android:textSize="16sp" />
             </LinearLayout>
 
 

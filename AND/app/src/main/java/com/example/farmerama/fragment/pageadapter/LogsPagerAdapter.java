@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.farmerama.fragment.LatestMeasurementFragment;
+import com.example.farmerama.fragment.LogsMeasurementsFragment;
 
 public class LogsPagerAdapter extends FragmentStateAdapter {
 
@@ -16,7 +16,7 @@ public class LogsPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return new LatestMeasurementFragment();
+        return new LogsMeasurementsFragment();
     }
 
     @Override
