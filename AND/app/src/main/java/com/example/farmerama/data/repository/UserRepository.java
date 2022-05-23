@@ -102,7 +102,7 @@ public class UserRepository {
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit", "could not retrieve shit");
+                Log.i("Retrofit", "could not retrieve");
             }
         });
     }

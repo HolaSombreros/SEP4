@@ -1,13 +1,22 @@
 package com.example.farmerama.viewmodel;
 
-import android.app.Application;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
-public class AccountViewModel extends AndroidViewModel {
+import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.repository.UserRepository;
 
-    public AccountViewModel(@NonNull Application application) {
-        super(application);
+public class AccountViewModel extends ViewModel {
+    private UserRepository userRepository;
+
+    public AccountViewModel(){
+        this.userRepository = UserRepository.getInstance();
     }
+
+    public LiveData<User> getUser(){
+        return userRepository.getLoggedInUser();
+    }
+
 }

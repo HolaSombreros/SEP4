@@ -37,7 +37,7 @@
     <string name="upper_threshold">Upper threshold</string>
     <string name="lower_threshold">Lower threshold</string>
     <string name="Thresholds">Thresholds</string>
-
+    <string name="employees_fragment">Employees fragment</string>
     <string-array name="roles">
         <item>EMPLOYEE</item>
         <item>ADMINISTRATOR</item>
