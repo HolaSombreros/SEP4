@@ -5,12 +5,12 @@
 #include <UplinkMessageBuilder.h>
 #include <stdio.h>
 #include <lora_driver.h>
+#include <task.h>
 
 #define TASK_NAME "FarmeramaTask"
 #define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
 #define TASK_PRIORITY configMAX_PRIORITIES - 1
 #define PORT 1
-
 
 static void _run(void* params);
 
@@ -67,7 +67,7 @@ void farmerama_runTask(void) {
 	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
 	
 	TickType_t lastWakeTime = xTaskGetTickCount();
-	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
+	vTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
 }
 
 static void _run(void* params) {
