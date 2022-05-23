@@ -21,7 +21,7 @@ public class TemperatureModelImpl implements TemperatureModel {
 
     @Override
     public List<SentMeasurement> getLatest(int areaId) throws Exception {
-        return new ArrayList<>(List.of(Helper.await(temperatureDao.getLatest(areaId))));
+        return new ArrayList<>(Helper.await(temperatureDao.getLatest(areaId)));
     }
 
     @Override

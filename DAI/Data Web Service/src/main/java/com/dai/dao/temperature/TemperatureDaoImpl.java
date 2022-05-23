@@ -25,7 +25,7 @@ public class TemperatureDaoImpl implements TemperatureDao{
 
     @Override
     @Async
-    public Future<SentMeasurement> getLatest(int areaId) {
+    public Future<List<SentMeasurement>> getLatest(int areaId) {
         return new AsyncResult<>(repository.getLatestByArea(areaId));
     }
     @Override
