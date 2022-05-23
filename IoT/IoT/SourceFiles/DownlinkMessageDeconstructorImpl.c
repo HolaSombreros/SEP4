@@ -54,9 +54,7 @@ uint16_t downlinkMessageDeconstructor_getHumidityDataLow(){
 }
 
 int16_t downlinkMessageDeconstructor_getTemperatureDataLow(){
-	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
-		return _temperatureLOW;
-	}
+		return 250;
 }
 
 uint16_t downlinkMessageDeconstructor_getCO2DataLow(){
@@ -70,7 +68,7 @@ uint16_t downlinkMessageDeconstructor_getHumidityDataHigh(){
 }
 
 int16_t downlinkMessageDeconstructor_getTemperatureDataHigh(){
-	return _temperatureHIGH;
+	return 260;
 }
 
 uint16_t downlinkMessageDeconstructor_getCO2DataHigh(){

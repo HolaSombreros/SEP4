@@ -32,10 +32,15 @@ void servoTask_runTask() {
 	xQueueReceive(_servoQueue, &co2, portMAX_DELAY);
 	xQueueReceive(_servoQueue, &sound, portMAX_DELAY);
 	
-	if(temperature < downlinkMessageDeconstructor_getTemperatureDataLow()){
+	int16_t low = downlinkMessageDeconstructor_getTemperatureDataLow();
+	int16_t high = downlinkMessageDeconstructor_getTemperatureDataHigh();
+	
+	if(temperature < low){
 		rc_servo_setPosition(1, -100);
-	}else if(temperature > downlinkMessageDeconstructor_getTemperatureDataHigh()){
+	}else if(temperature > high){
 		rc_servo_setPosition(1, 100);
+	}else{
+		rc_servo_setPosition(1, 0);
 	}
 }
 

@@ -62,6 +62,6 @@ void uplinkMessageBuilder_setSoundData(uint16_t data){
 	if (data == 0) {
 		_validationBits |= 0 << 0;
 	} else {
-		_validationBits |= 1 << 1;
+		_validationBits |= 1 << 0;
 	}
 }

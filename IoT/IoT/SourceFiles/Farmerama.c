@@ -8,7 +8,7 @@
 #include <task.h>
 
 #define TASK_NAME "FarmeramaTask"
-#define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
+#define TASK_INTERVAL 3000UL // Default value = 300000UL (5 minutes)
 #define TASK_PRIORITY configMAX_PRIORITIES - 1
 #define PORT 1
 
