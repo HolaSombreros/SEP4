@@ -6,6 +6,7 @@ import com.dai.shared.SocketData;
 import com.dai.shared.SocketProperties;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+@Profile("prod")
 @Component
 public class WebsocketClientController implements WebSocket.Listener {
 
@@ -26,12 +28,10 @@ public class WebsocketClientController implements WebSocket.Listener {
     @Autowired
     public WebsocketClientController(SocketMeasurementModel measurementModel, SocketProperties properties, Environment environment) {
         this.measurementModel = measurementModel;
-        if (Arrays.stream(environment.getActiveProfiles()).allMatch("prod"::equals)) {
-            HttpClient client = HttpClient.newHttpClient();
-            CompletableFuture<WebSocket> ws = client.newWebSocketBuilder()
-                    .buildAsync(URI.create(properties.getUrl()), this);
-            server = ws.join();
-        }
+        HttpClient client = HttpClient.newHttpClient();
+        CompletableFuture<WebSocket> ws = client.newWebSocketBuilder()
+                .buildAsync(URI.create(properties.getUrl()), this);
+        server = ws.join();
     }
 
     public void sendDownLink(String jsonTelegram) {
