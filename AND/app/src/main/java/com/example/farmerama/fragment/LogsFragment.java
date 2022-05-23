@@ -58,7 +58,6 @@ public class LogsFragment extends Fragment {
     }
 
     private void setUpViews() {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Exceeded measurements");
         LogsPagerAdapter adapter = new LogsPagerAdapter(getActivity());
         viewPager2.setAdapter(adapter);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
