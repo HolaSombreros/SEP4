@@ -54,8 +54,7 @@ public class AccountFragment extends Fragment {
         });
 
         edit.setOnClickListener(v -> {
-            //todo navigate to edit
-//            Navigation.findNavController(view).navigate(R.id.EditProfileOrIDK);
+              Navigation.findNavController(view).navigate(R.id.editAccountFragment);
         });
     }
 

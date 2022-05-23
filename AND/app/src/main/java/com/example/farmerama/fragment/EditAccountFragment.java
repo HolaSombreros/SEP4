@@ -42,12 +42,12 @@ public class EditAccountFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        email = view.findViewById(R.id.account_email);
-        firstName = view.findViewById(R.id.account_firstName);
-        lastName = view.findViewById(R.id.account_LastName);
-        password = view.findViewById(R.id.account_password);
-        role = view.findViewById(R.id.account_role);
-        save = view.findViewById(R.id.account_saveButton);
+        email = view.findViewById(R.id.editAccount_email);
+        firstName = view.findViewById(R.id.editAccount_firstName);
+        lastName = view.findViewById(R.id.editAccount_LastName);
+        password = view.findViewById(R.id.editAccount_password);
+        role = view.findViewById(R.id.editAccount_role);
+        save = view.findViewById(R.id.editAccount_saveButton);
     }
 
     private void setupViews() {

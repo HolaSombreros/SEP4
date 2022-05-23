@@ -11,7 +11,7 @@
         android:layout_gravity="center">
 
         <EditText
-            android:id="@+id/account_email"
+            android:id="@+id/editAccount_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -22,60 +22,60 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText
-            android:id="@+id/account_firstName"
+            android:id="@+id/editAccount_firstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="@string/first_name"
             android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@id/account_email"
+            app:layout_constraintTop_toBottomOf="@id/editAccount_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText
-            android:id="@+id/account_LastName"
+            android:id="@+id/editAccount_LastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="@string/last_name"
             android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@id/account_firstName"
+            app:layout_constraintTop_toBottomOf="@id/editAccount_firstName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
 
         <EditText
-            android:id="@+id/account_password"
+            android:id="@+id/editAccount_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_marginTop="24dp"
             android:hint="@string/password"
             android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/account_LastName"
+            app:layout_constraintTop_toBottomOf="@id/editAccount_LastName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Spinner
-            android:id="@+id/account_role"
+            android:id="@+id/editAccount_role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_password" />
+            app:layout_constraintTop_toBottomOf="@+id/editAccount_password" />
 
         <Button
-            android:id="@+id/account_saveButton"
+            android:id="@+id/editAccount_saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/save"
             android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="@+id/account_password"
-            app:layout_constraintStart_toStartOf="@+id/account_password"
-            app:layout_constraintTop_toBottomOf="@+id/account_role" />
+            app:layout_constraintEnd_toEndOf="@+id/editAccount_password"
+            app:layout_constraintStart_toStartOf="@+id/editAccount_password"
+            app:layout_constraintTop_toBottomOf="@+id/editAccount_role" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
