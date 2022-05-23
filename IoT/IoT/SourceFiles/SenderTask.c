@@ -43,8 +43,8 @@ void senderTask_runTask() {
 		
 	}
 	
-	printf("Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d | CO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d\n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], 
-																								  uplinkPayload.bytes[2], uplinkPayload.bytes[3], uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
+	printf("Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d \n", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
+	printf("CO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d\n", uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
 }
 
 static void _run(void* params) {

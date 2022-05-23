@@ -19,15 +19,17 @@ static QueueHandle_t _humidityQueue;
 static QueueHandle_t _temperatureQueue;
 static QueueHandle_t _co2Queue;
 static QueueHandle_t _soundQueue;
+static QueueHandle_t _servoQueue;
 static EventGroupHandle_t _actEventGroup;
 static EventGroupHandle_t _doneEventGroup;
 
-void farmerama_create(QueueHandle_t senderQueue, QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, QueueHandle_t co2Queue, QueueHandle_t soundQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup) {
+void farmerama_create(QueueHandle_t senderQueue, QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, QueueHandle_t co2Queue, QueueHandle_t soundQueue, QueueHandle_t servoQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup) {
 	_senderQueue = senderQueue;
 	_humidityQueue = humidityQueue;
 	_temperatureQueue = temperatureQueue;
 	_co2Queue = co2Queue;
 	_soundQueue = soundQueue;
+	_servoQueue = servoQueue;
 	_actEventGroup = actEventGroup;
 	_doneEventGroup = doneEventGroup;
 	
@@ -58,6 +60,11 @@ void farmerama_runTask(void) {
 	xQueueReceive(_co2Queue, &ppm, pdMS_TO_TICKS(10000));
 	xQueueReceive(_soundQueue, &sound, pdMS_TO_TICKS(10000));
 	
+	xQueueSendToBack(_servoQueue, &humidity, pdMS_TO_TICKS(10000));
+	xQueueSendToBack(_servoQueue, &temperature, pdMS_TO_TICKS(10000));
+	xQueueSendToBack(_servoQueue, &ppm, pdMS_TO_TICKS(10000));
+	xQueueSendToBack(_servoQueue, &sound, pdMS_TO_TICKS(10000));
+	
 	uplinkMessageBuilder_setHumidityData(humidity);
 	uplinkMessageBuilder_setTemperatureData(temperature);
 	uplinkMessageBuilder_setCO2Data(ppm);
@@ -67,7 +74,7 @@ void farmerama_runTask(void) {
 	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
 	
 	TickType_t lastWakeTime = xTaskGetTickCount();
-	vTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
+	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
 }
 
 static void _run(void* params) {
