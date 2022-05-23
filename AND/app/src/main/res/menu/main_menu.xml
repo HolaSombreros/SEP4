@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--The menu for the drawer-->
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
@@ -22,7 +22,7 @@
         android:title="@string/sensors" />
 
     <item
-        android:id="@+id/historicalPager"
+        android:id="@+id/historicalDataFragment"
         android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/historical_measurements" />
 
@@ -37,9 +37,18 @@
         android:title="@string/areas" />
 
     <item
-        android:id="@+id/employeeAreasFragment"
+        android:id="@+id/thresholdDataFragment"
+        android:icon="@drawable/ic_baseline_rule_24"
+        android:title="@string/Thresholds" />
+    <item
+        android:id="@+id/logsFragment"
         android:icon="@drawable/ic_baseline_location_on_24"
-        android:title="EmployeeAreasFragment" />
+        android:title="Exceeded measurements" />
+
+    <item
+        android:id="@+id/thresholdModificationFragment"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="@string/threshold_modifications" />
 
     <item
         android:id="@+id/registerFragment"
@@ -50,6 +59,4 @@
         android:id="@+id/signOut"
         android:icon="@drawable/ic_baseline_logout_24"
         android:title="@string/sign_out" />
-
-
 </menu>

@@ -9,5 +9,5 @@ import retrofit2.Call;
 
 public interface MeasurementApiAdapterInterface {
     Call<List<MeasurementResponse>> retrieveLatestMeasurement(MeasurementType type, int areaId, boolean latest);
-    Call<List<MeasurementResponse>> getMeasurements(MeasurementType type, int areaId, String date);
+    Call<List<MeasurementResponse>> retrieveMeasurements(MeasurementType type, int areaId, String date);
 }

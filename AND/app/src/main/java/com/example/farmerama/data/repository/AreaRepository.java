@@ -138,4 +138,27 @@ public class AreaRepository {
             }
         });
     }
+
+    public void removeArea(int areaId) {
+        AreaApi areaApi = ServiceGenerator.getAreaApi();
+        Call<AreaResponse> call = areaApi.removeArea(areaId);
+        call.enqueue(new Callback<AreaResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
+                if (response.isSuccessful()) {
+                    ToastMessage.setToastMessage("The area has been successfully deleted");
+                }
+                else {
+                    ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                }
+            }
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<AreaResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
 }

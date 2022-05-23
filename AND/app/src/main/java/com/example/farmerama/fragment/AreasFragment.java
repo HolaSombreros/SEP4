@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.farmerama.R;
+import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.recycler.AreaListAdapter;
 import com.example.farmerama.viewmodel.AreaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +26,6 @@ public class AreasFragment extends Fragment {
     private FloatingActionButton fab;
     private AreaViewModel viewModel;
     private RecyclerView areasRecycler;
-    private AreaListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AreasFragment extends Fragment {
         });
 
         viewModel.getAllAreas();
-        adapter = new AreaListAdapter();
+        AreaListAdapter adapter = new AreaListAdapter();
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
             adapter.setAreas(areas);
         });
@@ -62,7 +62,7 @@ public class AreasFragment extends Fragment {
 
         adapter.setOnClickListener(area -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("areaId", area.getId());
+            bundle.putInt("areaId", ((Area) area).getId());
             navController.navigate(R.id.addAreaFragment, bundle);
         });
 

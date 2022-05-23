@@ -3,7 +3,7 @@ package com.example.farmerama.data.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ValidationLoginRegister {
+public class ValidationUser {
 
     public boolean verifyLogin(String email, String password) {
         return verifyEmail(email) && verifyPassword(password);
@@ -56,7 +56,7 @@ public class ValidationLoginRegister {
      * @param role
      * @return
      */
-    public boolean verifyRegister(String firstName, String lastName, String email, String password, String role){
+    public boolean verifyUserInput(String firstName, String lastName, String email, String password, String role){
         return verifyEmail(email) && verifyDetails(firstName, lastName, role) && verifyPassword(password);
     }
 

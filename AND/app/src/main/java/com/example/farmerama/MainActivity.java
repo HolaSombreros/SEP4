@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -60,11 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 R.id.loginFragment,
                 R.id.accountFragment,
                 R.id.signOut,
-                R.id.historicalPager,
+                R.id.historicalDataFragment,
                 R.id.areasFragment,
                 R.id.employeesFragment,
                 R.id.sensorsFragment,
-                R.id.employeeAreasFragment,
+                R.id.logsFragment,
+                R.id.thresholdModificationFragment,
                 R.id.registerFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (loggedInUser.getRole().equals("EMPLOYEE")) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
+                    navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);

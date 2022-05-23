@@ -5,24 +5,23 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.UserRepository;
-import com.example.farmerama.data.util.ValidationLoginRegister;
+import com.example.farmerama.data.util.ValidationUser;
 
 
 public class LoginViewModel extends AndroidViewModel {
 
     private final UserRepository repository;
-    private ValidationLoginRegister validation;
+    private ValidationUser validation;
     private SharedPreferences sharedPreferences;
 
     public LoginViewModel(Application application) {
         super(application);
         sharedPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
         repository = UserRepository.getInstance();
-        validation = new ValidationLoginRegister();
+        validation = new ValidationUser();
 
         if (!sharedPreferences.getString("userEmail", "null").equals("null"))
             loginUser(sharedPreferences.getString("userEmail", "null"), sharedPreferences.getString("userPassword", "null"));

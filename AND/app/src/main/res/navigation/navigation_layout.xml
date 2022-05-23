@@ -18,12 +18,23 @@
         tools:layout="@layout/fragment_latest_measurement" />
 
     <fragment
-        android:id="@+id/historicalMeasurements"
+        android:id="@+id/thresholdDataFragment"
+        android:name="com.example.farmerama.fragment.ThresholdDataFragment"
+        android:label="Thresholds"
+        tools:layout="@layout/fragment_threshold_data" />
+
+    <fragment
+        android:id="@+id/thresholdMeasurementFragment"
+        android:name="com.example.farmerama.fragment.ThresholdMeasurementsFragment"
+        android:label="Thresholds"
+        tools:layout="@layout/fragment_threshold_measurements" />
+    <fragment
+        android:id="@+id/historicalMeasurementsFragment"
         android:name="com.example.farmerama.fragment.HistoricalMeasurementsFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_measurements" />
     <fragment
-        android:id="@+id/historicalPager"
+        android:id="@+id/historicalDataFragment"
         android:name="com.example.farmerama.fragment.HistoricalDataFragment"
         android:label="Historical Measurements"
         tools:layout="@layout/fragment_historical_data" />
@@ -33,6 +44,11 @@
         android:name="com.example.farmerama.fragment.AccountFragment"
         android:label="My Account"
         tools:layout="@layout/fragment_account"/>
+    <fragment
+        android:id="@+id/editAccountFragment"
+        android:name="com.example.farmerama.fragment.EditAccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/fragment_edit_account"/>
     <fragment
         android:id="@+id/sensorsFragment"
         android:name="com.example.farmerama.fragment.SensorsFragment"
@@ -50,9 +66,9 @@
         tools:layout="@layout/fragment_areas"/>
     <fragment
         android:id="@+id/addAreaFragment"
-        android:name="com.example.farmerama.fragment.AddAreaFragment"
+        android:name="com.example.farmerama.fragment.AddEditAreaFragment"
         android:label="Add Area"
-        tools:layout="@layout/fragment_add_area"/>
+        tools:layout="@layout/fragment_add_edit_area"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.farmerama.fragment.LoginFragment"
@@ -64,8 +80,13 @@
         android:label="Register a new user!"
         tools:layout="@layout/fragment_register" />
     <fragment
-        android:id="@+id/employeeAreasFragment"
-        android:name="com.example.farmerama.fragment.EmployeeAreasFragment"
-        android:label="EmployeeAreasFragment"
-        tools:layout="@layout/fragment_employee_areas" />
+        android:id="@+id/thresholdModificationFragment"
+        android:name="com.example.farmerama.fragment.ThresholdModificationsFragment"
+        android:label="Thresholds Modification"
+        tools:layout="@layout/fragment_threshold_modifications" />
+    <fragment
+        android:id="@+id/logsFragment"
+        android:name="com.example.farmerama.fragment.LogsFragment"
+        android:label="LogsFragment"
+        tools:layout="@layout/fragment_logs" />
 </navigation>

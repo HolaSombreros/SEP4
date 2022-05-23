@@ -22,7 +22,6 @@ public class LatestMeasurementFragment extends Fragment {
     private TextView measurementTextView;
     private TextView typeTextView;
     private MeasurementsViewModel viewModel;
-    private SharedPreferences sharedPreferences;
 
     public LatestMeasurementFragment() {
     }
@@ -47,12 +46,13 @@ public class LatestMeasurementFragment extends Fragment {
     }
 
     private void setUpViews() {
-        sharedPreferences = getActivity().getSharedPreferences("AreaLog", Context.MODE_PRIVATE);
         viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
-            measurementTextView.setText(String.valueOf(measurements.get(0).getValue()));
-            timeText.setText(measurements.get(0).getDateTime());
-            if (measurements.get(0).getMeasurementType()!=null)
-                typeTextView.setText(measurements.get(0).getMeasurementType().toUnit());
+            if (measurements.size() != 0) {
+                measurementTextView.setText(String.valueOf(measurements.get(0).getValue()));
+                timeText.setText(measurements.get(0).getDateTime());
+                if (measurements.get(0).getMeasurementType() != null)
+                    typeTextView.setText(measurements.get(0).getMeasurementType().toUnit());
+            }
         });
     }
 }

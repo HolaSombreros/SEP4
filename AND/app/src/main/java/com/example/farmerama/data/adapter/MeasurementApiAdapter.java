@@ -29,7 +29,7 @@ public class MeasurementApiAdapter implements MeasurementApiAdapterInterface {
     }
 
     @Override
-    public Call<List<MeasurementResponse>> getMeasurements(MeasurementType type, int areaId, String date) {
+    public Call<List<MeasurementResponse>> retrieveMeasurements(MeasurementType type, int areaId, String date) {
         MeasurementApi measurementApi = ServiceGenerator.getMeasurementApi();
         switch (type) {
             case TEMPERATURE:
