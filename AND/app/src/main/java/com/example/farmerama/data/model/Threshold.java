@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Threshold {
     private int id;
-    private int areaId;
+    private Area area;
     private double maximum;
     private double minimum;
     private String type;
 
-    public Threshold(int id, int areaId, double maximum, double minimum, String type) {
+    public Threshold(int id, Area area, double maximum, double minimum, String type) {
         this.minimum = minimum;
         this.maximum = maximum;
-        this.areaId = areaId;
+        this.area = area;
         this.id = id;
         this.type = type;
     }
@@ -22,8 +22,6 @@ public class Threshold {
         this.minimum = minimum;
     }
 
-
-
     public int getId() {
         return id;
     }
@@ -32,12 +30,12 @@ public class Threshold {
         this.id = id;
     }
 
-    public int getAreaId() {
-        return areaId;
+    public Area getArea() {
+        return area;
     }
 
-    public void setAreaId(int areaId) {
-        this.areaId = areaId;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public double getMaximum() {
@@ -68,7 +66,7 @@ public class Threshold {
     public String toString() {
         return "Threshold{" +
                 "id=" + id +
-                ", areaId=" + areaId +
+                ", areaId=" + area.getId() +
                 ", maximum=" + maximum +
                 ", minimum=" + minimum +
                 ", type='" + type + '\'' +
@@ -80,7 +78,7 @@ public class Threshold {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Threshold threshold = (Threshold) o;
-        return id == threshold.id && areaId == threshold.areaId && Double.compare(threshold.maximum, maximum) == 0 && Double.compare(threshold.minimum, minimum) == 0 && Objects.equals(type, threshold.type);
+        return id == threshold.id && area.equals(threshold.area) && Double.compare(threshold.maximum, maximum) == 0 && Double.compare(threshold.minimum, minimum) == 0 && Objects.equals(type, threshold.type);
     }
 
 }

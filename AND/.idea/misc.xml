@@ -8,6 +8,7 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_account.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_add_area.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_areas.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_edit_account.xml" value="0.365625" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_employee_areas.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_employees.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_historical_data.xml" value="0.36666666666666664" />
@@ -18,7 +19,7 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_register.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_sensors.xml" value="0.36666666666666664" />
-        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_threshold_modifications.xml" value="0.365625" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_threshold_modifications.xml" value="0.1" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_area.xml" value="0.33" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_measurement.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_threshold_modification.xml" value="0.365625" />

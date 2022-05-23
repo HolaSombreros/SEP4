@@ -45,6 +45,11 @@
         android:label="My Account"
         tools:layout="@layout/fragment_account"/>
     <fragment
+        android:id="@+id/editAccountFragment"
+        android:name="com.example.farmerama.fragment.EditAccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/fragment_edit_account"/>
+    <fragment
         android:id="@+id/sensorsFragment"
         android:name="com.example.farmerama.fragment.SensorsFragment"
         android:label="Sensors"

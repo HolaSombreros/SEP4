@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <DatePicker
         android:id="@+id/thresholdModification_date"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="date"
+        android:layout_height="80dp"
         android:layout_margin="8dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,11 +19,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/thresholdModification_recycler"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thresholdModification_date">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/thresholdModification_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

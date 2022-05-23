@@ -11,11 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.ThresholdModifications;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ThresholdModificationsAdapter extends RecyclerView.Adapter<ThresholdModificationsAdapter.ViewHolder>{
 
     private List<ThresholdModifications> list;
+
+    public ThresholdModificationsAdapter() {
+        list = new ArrayList<>();
+    }
 
     public void setModifications(List<ThresholdModifications> measurements) {
         this.list = measurements;
@@ -32,12 +37,11 @@ public class ThresholdModificationsAdapter extends RecyclerView.Adapter<Threshol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // TODO check methods
-       /* holder.employee.setText(list.get(position).getEmployee().getName());
-        holder.area.setText(list.get(position).getArea().getName());
-        holder.measurementType.setText(list.get(position).getMeasurementType().toString());
-        holder.minMax.setText(list.get(position).getMinMax());
-        holder.oldNewValue.setText(list.get(position).getOldValue() + " -> " + list.get(position).getNewValue());*/
+        holder.employee.setText(list.get(position).getUser().getName());
+        holder.area.setText(list.get(position).getThreshold().getArea().getName());
+        holder.measurementType.setText(list.get(position).getThreshold().getType());
+        holder.minMax.setText(list.get(position).getType().toString());
+        holder.oldNewValue.setText(String.format("%.2f -> %.2f", list.get(position).getOldValue(), list.get(position).getNewValue()));
     }
 
     @Override

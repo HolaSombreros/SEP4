@@ -97,10 +97,11 @@ public class ThresholdRepository {
         call.enqueue(new Callback<List<ThresholdModificationsResponse>>() {
             @Override
             public void onResponse(Call<List<ThresholdModificationsResponse>> call, Response<List<ThresholdModificationsResponse>> response) {
-                List<ThresholdModifications> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    for (ThresholdModificationsResponse modifications : response.body()) {
-                        list.add(modifications.getModification());
+                List<ThresholdModifications> list = new ArrayList<>();
+
+                    for (ThresholdModificationsResponse modification : response.body()) {
+                        list.add(modification.getModification());
                     }
                     thresholdModifications.setValue(list);
                 }
