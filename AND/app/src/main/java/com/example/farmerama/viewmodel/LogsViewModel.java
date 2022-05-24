@@ -11,28 +11,33 @@ import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.LogObj;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.repository.AreaRepository;
-import com.example.farmerama.data.repository.LogsRepository;
+import com.example.farmerama.data.repository.ThresholdRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogsViewModel extends AndroidViewModel {
-    private LogsRepository logRepository;
+    private ThresholdRepository repository;
     private AreaRepository areaRepository;
     private int areaId;
+    private MeasurementType type;
+    private String date;
 
     public LogsViewModel(@NonNull Application application) {
         super(application);
-        this.logRepository = LogsRepository.getInstance();
+        this.repository = ThresholdRepository.getInstance();
         this.areaRepository = AreaRepository.getInstance();
+        date = LocalDate.now().toString();
+        type = MeasurementType.TEMPERATURE;
     }
 
     public LiveData<List<LogObj>> getLogs() {
-        return logRepository.getLogs();
+        return repository.getLogs();
     }
 
-    public void retrieveLogs(MeasurementType type, String date) {
-//        logRepository.retrieveLogs(areaId, type, date);
+    public void retrieveLogs() {
+        repository.getAllLogs(areaId, type, date);
     }
 
     public void getAllAreas() {
@@ -55,5 +60,13 @@ public class LogsViewModel extends AndroidViewModel {
 
     public void setAreaId(int id) {
         areaId = id;
+    }
+
+    public void setType(MeasurementType type) {
+        this.type = type;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
