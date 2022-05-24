@@ -5,6 +5,7 @@ import com.dai.dao.threshold.ThresholdDao;
 import com.dai.dao.thresholdLog.ThresholdLogDao;
 import com.dai.dao.user.UserDao;
 import com.dai.helpers.Helper;
+import com.dai.helpers.ThresholdValidator;
 import com.dai.shared.*;
 import com.dai.shared.ThresholdType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,15 @@ public class ThresholdModelImpl implements ThresholdModel{
     private AreaDao areaDao;
     private ThresholdLogDao thresholdLogDao;
     private UserDao userDao;
+    private ThresholdValidator thresholdValidator;
 
     @Autowired
-    public ThresholdModelImpl(ThresholdDao thresholdDao, AreaDao areaDao, ThresholdLogDao thresholdLogDao, UserDao userDao) {
+    public ThresholdModelImpl(ThresholdDao thresholdDao, AreaDao areaDao, ThresholdLogDao thresholdLogDao, UserDao userDao, ThresholdValidator thresholdValidator) {
         this.thresholdDao = thresholdDao;
         this.areaDao = areaDao;
         this.thresholdLogDao = thresholdLogDao;
         this.userDao = userDao;
+        this.thresholdValidator = thresholdValidator;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class ThresholdModelImpl implements ThresholdModel{
     }
 
     @Override
-    public Threshold update(Threshold toThreshold, int userId) throws Exception {
+    public Threshold update(Threshold newThreshold, int userId) throws Exception {
 
         User user;
         try {
@@ -52,18 +55,21 @@ public class ThresholdModelImpl implements ThresholdModel{
             throw new Exception("User with the given ID does not exist.");
         }
 
-        Threshold currentThreshold = Helper.await(thresholdDao.find(toThreshold.getArea().getId(), toThreshold.getType()));
+        thresholdValidator.validateThreshold(newThreshold);
 
-        double maxNew = toThreshold.getMaximum();
+        Threshold currentThreshold = Helper.await(thresholdDao.find(newThreshold.getArea().getId(), newThreshold.getType()));
+
+        double maxNew = newThreshold.getMaximum();
         double maxOld = currentThreshold.getMaximum();
+        double minOld = currentThreshold.getMinimum();
+        double minNew = newThreshold.getMinimum();
+
         if (maxOld != maxNew) {
             currentThreshold.setMaximum(maxNew);
             ThresholdLogs thresholdLog = new ThresholdLogs(0, currentThreshold, user, LocalDateTime.now(), maxOld, maxNew, ThresholdLogType.MAXIMUM);
             thresholdLogDao.createLog(thresholdLog);
         }
 
-        double minOld = currentThreshold.getMinimum();
-        double minNew = toThreshold.getMinimum();
         if (minOld != minNew) {
             currentThreshold.setMinimum(minNew);
             ThresholdLogs thresholdLog = new ThresholdLogs(0, currentThreshold, user, LocalDateTime.now(), minOld, minNew, ThresholdLogType.MINIMUM);
