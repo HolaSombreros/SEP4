@@ -18,66 +18,91 @@ void downlinkMessageDeconstructor_create(SemaphoreHandle_t mutex){
 }
 
 void downlinkMessageDeconstructor_deconstructDownlinkMessage(lora_driver_payload_t payload){
-	if(CHECK_BIT(payload.bytes[14], 0)){
-		_soundHIGH = (payload.bytes[12] << 8) + payload.bytes[13];
-	}
+	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
+		if(CHECK_BIT(payload.bytes[14], 0)){
+			_soundHIGH = (payload.bytes[12] << 8) + payload.bytes[13];
+		}
 	
-	if(CHECK_BIT(payload.bytes[14], 1)){
-		_ppmLOW = (payload.bytes[10] << 8) + payload.bytes[11];
-	}
+		if(CHECK_BIT(payload.bytes[14], 1)){
+			_ppmLOW = (payload.bytes[10] << 8) + payload.bytes[11];
+		}
 	
-	if(CHECK_BIT(payload.bytes[14], 2)){
-		_ppmHIGH = (payload.bytes[8] << 8) + payload.bytes[9];
-	}
+		if(CHECK_BIT(payload.bytes[14], 2)){
+			_ppmHIGH = (payload.bytes[8] << 8) + payload.bytes[9];
+		}
 	
-	if(CHECK_BIT(payload.bytes[14], 3)){
-		_temperatureLOW = (payload.bytes[6] << 8) + payload.bytes[7];
-	}
+		if(CHECK_BIT(payload.bytes[14], 3)){
+			_temperatureLOW = (payload.bytes[6] << 8) + payload.bytes[7];
+		}
 	
-	if(CHECK_BIT(payload.bytes[14], 4)){
-		_temperatureHIGH = (payload.bytes[4] << 8) + payload.bytes[5];
-	}
+		if(CHECK_BIT(payload.bytes[14], 4)){
+			_temperatureHIGH = (payload.bytes[4] << 8) + payload.bytes[5];
+		}
 	
-	if(CHECK_BIT(payload.bytes[14], 5)){
-		_humidityLOW = (payload.bytes[2] << 8) + payload.bytes[3];
-	}
+		if(CHECK_BIT(payload.bytes[14], 5)){
+			_humidityLOW = (payload.bytes[2] << 8) + payload.bytes[3];
+		}
 	
-	if(CHECK_BIT(payload.bytes[14], 6)){
-		_humidityHIGH = (payload.bytes[0] << 8) + payload.bytes[1];
+		if(CHECK_BIT(payload.bytes[14], 6)){
+			_humidityHIGH = (payload.bytes[0] << 8) + payload.bytes[1];
+		}
+		
+		xSemaphoreGive(_mutex);
 	}
 }
 
 uint16_t downlinkMessageDeconstructor_getHumidityDataLow(){
 	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
-		return _humidityLOW;
+		int16_t temp = _humidityLOW;
+		xSemaphoreGive(_mutex);
+		return temp;
 	}
 }
 
 int16_t downlinkMessageDeconstructor_getTemperatureDataLow(){
-		return 250;
+	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
+		int16_t temp = _temperatureLOW;
+		xSemaphoreGive(_mutex);
+		return temp;
+	}
 }
 
 uint16_t downlinkMessageDeconstructor_getCO2DataLow(){
 	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
-		return _ppmLOW;
+		int16_t temp = _ppmLOW;
+		xSemaphoreGive(_mutex);
+		return temp;
 	}
 }
 
 uint16_t downlinkMessageDeconstructor_getHumidityDataHigh(){
-	return _humidityHIGH;
+	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
+		int16_t temp = _humidityHIGH;
+		xSemaphoreGive(_mutex);
+		return temp;
+	}
 }
 
 int16_t downlinkMessageDeconstructor_getTemperatureDataHigh(){
-	return 260;
+	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
+		int16_t temp = _temperatureHIGH;
+		xSemaphoreGive(_mutex);
+		return temp;
+	}
 }
 
 uint16_t downlinkMessageDeconstructor_getCO2DataHigh(){
-	return _ppmHIGH;
+	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
+		int16_t temp = _ppmHIGH;
+		xSemaphoreGive(_mutex);
+		return temp;
+	}
 }
 
 uint16_t downlinkMessageDeconstructor_getSoundDataHigh(){
 	if(xSemaphoreTake(_mutex, pdMS_TO_TICKS(3000)) == pdTRUE){
-		return _soundHIGH;
+		int16_t temp = _soundHIGH;
+		xSemaphoreGive(_mutex);
+		return temp;
 	}
 }
-

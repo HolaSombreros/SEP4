@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
-
 #define TASK_NAME "ServoTask"
 #define TASK_PRIORITY configMAX_PRIORITIES - 2
+#define SERVO_PORT 1
 
 static void _run(void* params);
 
@@ -36,11 +36,11 @@ void servoTask_runTask() {
 	int16_t high = downlinkMessageDeconstructor_getTemperatureDataHigh();
 	
 	if(temperature < low){
-		rc_servo_setPosition(1, -100);
+		rc_servo_setPosition(SERVO_PORT, -100);
 	}else if(temperature > high){
-		rc_servo_setPosition(1, 100);
+		rc_servo_setPosition(SERVO_PORT, 100);
 	}else{
-		rc_servo_setPosition(1, 0);
+		rc_servo_setPosition(SERVO_PORT, 0);
 	}
 }
 

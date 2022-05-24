@@ -47,14 +47,12 @@ void humidityTemperatureTask_runTask() {
 			_latestHumidity = hih8120_getHumidityPercent_x10();
 			_latestTemperature = hih8120_getTemperature_x10();
 		} else {
-			
-			// TODO - This seems a bit ugly - suggestions on how to handle this?
-			_latestHumidity = 200;
-			_latestTemperature = -100;
+			_latestHumidity = 2000;
+			_latestTemperature = -1000;
 		}
 	} else {
-		_latestHumidity = 200;
-		_latestTemperature = -100;
+		_latestHumidity = 2000;
+		_latestTemperature = -1000;
 	}
 	
 	xQueueSendToBack(_humidityQueue, &_latestHumidity, portMAX_DELAY);

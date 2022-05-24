@@ -29,7 +29,7 @@ lora_driver_payload_t uplinkMessageBuilder_buildUplinkMessage(uint8_t port) {
 void uplinkMessageBuilder_setHumidityData(uint16_t data) {
 	_humidity = data;
 	
-	if (data == 200) {
+	if (data == 2000) {
 		_validationBits |= 0 << 3;
 	} else {
 		_validationBits |= 1 << 3;
@@ -39,7 +39,7 @@ void uplinkMessageBuilder_setHumidityData(uint16_t data) {
 void uplinkMessageBuilder_setTemperatureData(int16_t data) {
 	_temperature = data;
 	
-	if (data == -100) {
+	if (data == -1000) {
 		_validationBits |= 0 << 2;
 	} else {
 		_validationBits |= 1 << 2;
@@ -49,6 +49,7 @@ void uplinkMessageBuilder_setTemperatureData(int16_t data) {
 void uplinkMessageBuilder_setCO2Data(uint16_t data){
 	_ppm = data;
 	
+	// TODO - Update data check with defines.
 	if (data == 0) {
 		_validationBits |= 0 << 1;
 	} else {

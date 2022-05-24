@@ -52,9 +52,9 @@ static void _createTasks(void) {
 	humidityTemperatureTask_create(_humidityQueue, _temperatureQueue, _actEventGroup, _doneEventGroup);
 	co2Task_create(_co2Queue, _actEventGroup, _doneEventGroup);
 	soundTask_create(_soundQueue, _actEventGroup, _doneEventGroup);
-	servoTask_create(_servoQueue);
+	//servoTask_create(_servoQueue);
 	senderTask_create(_senderQueue);
-	receiverTask_create(_messageBuffer);
+	//receiverTask_create(_messageBuffer);
 }
 
 static void _createQueues(void) {	
