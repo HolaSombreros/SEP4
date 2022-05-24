@@ -41,7 +41,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J42700025568</avrtoolserialnumber>
+    <avrtoolserialnumber>J41800033302</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9801</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
@@ -51,7 +51,7 @@
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J42700025568</ToolNumber>
+      <ToolNumber>J41800033302</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
@@ -292,10 +292,19 @@
     <Compile Include="HeaderFiles\CO2Task.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HeaderFiles\DownlinkMessageDeconstructor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HeaderFiles\Farmerama.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HeaderFiles\ReceiverTask.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HeaderFiles\SenderTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HeaderFiles\ServoTask.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HeaderFiles\SoundTask.h">
@@ -310,13 +319,22 @@
     <Compile Include="SourceFiles\CO2TaskImpl.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="SourceFiles\DownlinkMessageDeconstructorImpl.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SourceFiles\Farmerama.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\ReceiverTaskImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\SenderTask.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\HumidityTemperatureTask.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\ServoTaskImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\SoundTaskImpl.c">
