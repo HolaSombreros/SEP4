@@ -162,6 +162,7 @@ public class UserRepository {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if(response.isSuccessful()) {
+                    loggedInUser.setValue(response.body().getUser());
                     ToastMessage.setToastMessage("The account has been successfully updated");
                 }
                 else {
