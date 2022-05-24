@@ -42,6 +42,9 @@
                 android:layout_marginTop="45dp"
                 android:ems="10"
                 android:hint="@string/e_mail"
+                android:drawableStart="@drawable/custom_email_icon"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -52,6 +55,9 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="@string/password"
+                android:drawableStart="@drawable/custom_password_icon"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:inputType="textPassword" />
 
 
