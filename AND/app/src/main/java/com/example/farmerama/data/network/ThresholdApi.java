@@ -31,4 +31,7 @@ public interface ThresholdApi {
 
     @GET("{areaId}/logs")
     Call<List<LogResponse>> getLogs(@Path("areaId") int areaId, @Query("type") String type, @Query("date") String date);
+
+    @GET("logs/latest")
+    Call<List<LogResponse>> getLatestLogs();
 }

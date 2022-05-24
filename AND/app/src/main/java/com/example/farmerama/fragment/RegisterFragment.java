@@ -33,21 +33,26 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_register, container,false);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         viewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
+        initializeViews(view);
+        setupViews();
+    }
+
+    private void initializeViews(View view) {
         email = view.findViewById(R.id.RegisterEmailAddress);
         firstName = view.findViewById(R.id.RegisterFirstName);
         lastName = view.findViewById(R.id.RegisterLastName);
         password = view.findViewById(R.id.RegisterPassword);
         registerButton = view.findViewById(R.id.registerButton);
         role=view.findViewById(R.id.Role);
+    }
 
+    private void setupViews() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.roles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         role.setAdapter(adapter);
@@ -55,15 +60,15 @@ public class RegisterFragment extends Fragment {
     }
 
 
-    public void registerUser(View v){
+    private void registerUser(View v){
         String userFirstName=firstName.getText().toString();
         String userLastName=lastName.getText().toString();
         String userEmail=email.getText().toString();
         String userPassword=password.getText().toString();
         String userRole=role.getSelectedItem().toString();
 
-            if(viewModel.validate(userFirstName, userLastName, userEmail, userPassword, userRole)){
-                viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, userRole));
-            }
+        if(viewModel.validate(userFirstName, userLastName, userEmail, userPassword, userRole)){
+            viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, userRole));
+        }
     }
 }

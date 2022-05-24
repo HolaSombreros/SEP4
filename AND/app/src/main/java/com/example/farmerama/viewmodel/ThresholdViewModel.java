@@ -41,11 +41,11 @@ public class ThresholdViewModel extends AndroidViewModel {
     }
 
     public void getAllAreas() {
-        areaRepository.getAllAreas();
+        areaRepository.retrieveAreas();
     }
 
     public void getLatestThresholds(MeasurementType type) {
-        thresholdRepository.getLatestThresholds(type, areaId);
+        thresholdRepository.retrieveThresholds(type, areaId);
     }
     public void editThreshold(Threshold threshold) {
         if(userRepository.getLoggedInUser().getValue().getId() != 0)

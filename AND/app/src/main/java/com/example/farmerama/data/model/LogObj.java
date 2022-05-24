@@ -6,23 +6,21 @@ import java.time.format.DateTimeFormatter;
 public class LogObj {
     private int id;
     private MeasurementType measurementType;
+    private String areaName;
     private String measuredDate;
     private double thresholdValue;
     private double exceededValue;
-
-    public LogObj(int id, MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
-        this.id = id;
-        this.measurementType = measurementType;
-        this.measuredDate = measuredDate;
-        this.thresholdValue = thresholdValue;
-        this.exceededValue = exceededValue;
-    }
 
     public LogObj(MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
         this.measurementType = measurementType;
         setMeasuredDate(measuredDate);
         this.thresholdValue = thresholdValue;
         this.exceededValue = exceededValue;
+    }
+
+    public LogObj(String areaName, MeasurementType type) {
+        this.measurementType = type;
+        this.areaName = areaName;
     }
 
     public int getId() {
@@ -39,6 +37,14 @@ public class LogObj {
 
     public void setMeasurementType(MeasurementType measurementType) {
         this.measurementType = measurementType;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getMeasuredDate() {

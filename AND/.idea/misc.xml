@@ -3,7 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/dummy.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_alternate_email_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_content_paste_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_edgesensor_high_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_format_list_bulleted_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_rule_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.317" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/area_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/employee_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_account.xml" value="0.36666666666666664" />
@@ -19,11 +30,16 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_latest_data.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_latest_measurement.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_logs.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_logs_measurements.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_register.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_sensors.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_threshold_data.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_threshold_measurements.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_threshold_modifications.xml" value="0.1" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_area.xml" value="0.33" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_employee.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_log.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_measurement.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_threshold_modification.xml" value="0.365625" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/log_item.xml" value="0.36666666666666664" />
@@ -31,6 +47,7 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_drawer.xml" value="0.1" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/menu/main_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/menu/toolbar_menu.xml" value="0.365625" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2555" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2555" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/drawable/temparature_launcher_background.xml" value="0.2555" />

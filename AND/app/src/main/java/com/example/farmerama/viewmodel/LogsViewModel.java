@@ -37,11 +37,11 @@ public class LogsViewModel extends AndroidViewModel {
     }
 
     public void retrieveLogs() {
-        repository.getAllLogs(areaId, type, date);
+        repository.retrieveLogs(areaId, type, date);
     }
 
     public void getAllAreas() {
-        areaRepository.getAllAreas();
+        areaRepository.retrieveAreas();
     }
 
     public LiveData<List<Area>> getAreas() {

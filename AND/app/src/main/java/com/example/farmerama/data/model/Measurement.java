@@ -10,12 +10,6 @@ public class Measurement {
     private String measuredDate;
     private MeasurementType measurementType;
 
-    public Measurement(int id, double value, String dateTime, MeasurementType measurementType) {
-        this.id = id;
-        this.value = value;
-        //this.measuredDate = dateTime;
-        this.measurementType = measurementType;
-    }
     public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
         setMeasuredDate(measuredDate);

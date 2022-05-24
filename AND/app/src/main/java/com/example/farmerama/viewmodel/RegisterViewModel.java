@@ -31,7 +31,7 @@ public class RegisterViewModel extends AndroidViewModel
     }
 
     public void getUserById(int id) {
-        repository.getUserById(id);
+        repository.retrieveUserById(id);
     }
 
     public LiveData<User> getEmployee(){

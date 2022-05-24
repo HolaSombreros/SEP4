@@ -2,7 +2,7 @@ package com.example.farmerama.data.model;
 
 import java.time.LocalDateTime;
 
-public class ThresholdModifications {
+public class ThresholdModification {
 
     private int id;
     private Threshold threshold;
@@ -12,7 +12,7 @@ public class ThresholdModifications {
     private double newValue;
     private ThresholdLogType type;
 
-    public ThresholdModifications(int id, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
+    public ThresholdModification(int id, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
         this.id = id;
         this.threshold = threshold;
         this.user = user;

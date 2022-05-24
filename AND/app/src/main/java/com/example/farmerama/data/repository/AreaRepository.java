@@ -43,7 +43,7 @@ public class AreaRepository {
         return areas;
     }
 
-    public void getAllAreas() {
+    public void retrieveAreas() {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<List<AreaResponse>> call = areaApi.getAreas();
         call.enqueue(new Callback<List<AreaResponse>>() {
@@ -70,7 +70,7 @@ public class AreaRepository {
         });
     }
 
-    public void getSpecificAreaById(int areaId) {
+    public void retrieveAreaById(int areaId) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
         Call<AreaResponse> call = areaApi.getSpecificArea(areaId);
         call.enqueue(new Callback<AreaResponse>() {

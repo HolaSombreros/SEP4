@@ -23,10 +23,6 @@ public class ThresholdMeasurementsFragment extends Fragment {
     private ThresholdViewModel viewModel;
     private Button button;
 
-    public ThresholdMeasurementsFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +31,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ThresholdViewModel.class);
         initializeViews(view);
         setUpViews();

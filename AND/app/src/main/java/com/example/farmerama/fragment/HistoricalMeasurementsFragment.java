@@ -21,9 +21,6 @@ public class HistoricalMeasurementsFragment extends Fragment {
     private RecyclerView measurementsRecycler;
     private MeasurementsViewModel viewModel;
 
-    public HistoricalMeasurementsFragment(){}
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_historical_measurements, container, false);

@@ -1,7 +1,5 @@
 package com.example.farmerama.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,8 +21,6 @@ public class LatestMeasurementFragment extends Fragment {
     private TextView typeTextView;
     private MeasurementsViewModel viewModel;
 
-    public LatestMeasurementFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +30,7 @@ public class LatestMeasurementFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(MeasurementsViewModel.class);
         initializeViews(view);
         setUpViews();

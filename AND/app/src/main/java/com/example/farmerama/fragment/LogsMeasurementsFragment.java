@@ -17,18 +17,11 @@ import com.example.farmerama.R;
 import com.example.farmerama.data.recycler.LogsAdapter;
 import com.example.farmerama.viewmodel.LogsViewModel;
 
-
 public class LogsMeasurementsFragment extends Fragment {
 
     private RecyclerView logsRecycler;
     private LogsAdapter logsAdapter;
     private LogsViewModel viewModel;
-
-
-    public LogsMeasurementsFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,9 +34,7 @@ public class LogsMeasurementsFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(LogsViewModel.class);
         initializeViews(view);
         setupViews();
-
     }
-
 
     private void initializeViews(View view) {
         logsRecycler = view.findViewById(R.id.logs_recycler);
