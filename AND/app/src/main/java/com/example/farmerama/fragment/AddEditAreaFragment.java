@@ -65,6 +65,7 @@ public class AddEditAreaFragment extends Fragment {
     }
 
     private void setupViews() {
+        areaName.requestFocus();
 
         viewModel.retrieveAllBarns();
 
