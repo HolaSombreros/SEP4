@@ -9,23 +9,23 @@ public class ThresholdLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id")
-    private int log_id;
+    private int logId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "threshold_id")
-    private Threshold threshold_id;
+    private Threshold threshold;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user_id;
+    private User user;
 
     @Column(name = "changed_on")
     private LocalDateTime changedOn;
 
     @Column(name = "old_value")
-    private double old_value;
+    private double oldValue;
     @Column(name = "new_value")
-    private double new_value;
+    private double newValue;
 
     @Column(name = "type")
     private ThresholdLogType type;
@@ -33,38 +33,38 @@ public class ThresholdLogs {
     public ThresholdLogs() {
     }
 
-    public ThresholdLogs(int log_id, Threshold threshold_id, User user_id, LocalDateTime changedOn, double old_value, double new_value, ThresholdLogType type) {
-        this.log_id = log_id;
-        this.threshold_id = threshold_id;
-        this.user_id = user_id;
+    public ThresholdLogs(int logId, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
+        this.logId = logId;
+        this.threshold = threshold;
+        this.user = user;
         this.changedOn = changedOn;
-        this.old_value = old_value;
-        this.new_value = new_value;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
         this.type = type;
     }
 
-    public int getLog_id() {
-        return log_id;
+    public int getLogId() {
+        return logId;
     }
 
-    public void setLog_id(int log_id) {
-        this.log_id = log_id;
+    public void setLogId(int logId) {
+        this.logId = logId;
     }
 
-    public Threshold getThreshold_id() {
-        return threshold_id;
+    public Threshold getThreshold() {
+        return threshold;
     }
 
-    public void setThreshold_id(Threshold threshold_id) {
-        this.threshold_id = threshold_id;
+    public void setThreshold(Threshold threshold) {
+        this.threshold = threshold;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDateTime getChangedOn() {
@@ -75,20 +75,20 @@ public class ThresholdLogs {
         this.changedOn = changedOn;
     }
 
-    public double getOld_value() {
-        return old_value;
+    public double getOldValue() {
+        return oldValue;
     }
 
-    public void setOld_value(double old_value) {
-        this.old_value = old_value;
+    public void setOldValue(double oldValue) {
+        this.oldValue = oldValue;
     }
 
-    public double getNew_value() {
-        return new_value;
+    public double getNewValue() {
+        return newValue;
     }
 
-    public void setNew_value(double new_value) {
-        this.new_value = new_value;
+    public void setNewValue(double newValue) {
+        this.newValue = newValue;
     }
 
     public ThresholdLogType getType() {

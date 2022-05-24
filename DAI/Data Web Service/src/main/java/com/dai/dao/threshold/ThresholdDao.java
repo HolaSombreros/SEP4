@@ -21,4 +21,7 @@ public interface ThresholdDao {
     Future<Threshold> find(int areaId, ThresholdType type);
     Future<Threshold> create(Threshold threshold);
     Future<Threshold> update(Threshold toThreshold) throws Exception;
+    Future<Threshold> getById(int id);
+
+    Future<List<Threshold>> getValuesByArea(int id);
 }
