@@ -57,7 +57,7 @@ public class EditAccountFragment extends Fragment {
 
         viewModel.getLoggedInUser().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
-                viewModel.setUserId(user.getId());
+                viewModel.setUserId(user.getUserId());
 
                 email.setText(user.getEmail());
                 String[] tokens = user.getName().split(" ");
@@ -84,7 +84,7 @@ public class EditAccountFragment extends Fragment {
                 User user = new User(firstName.getText().toString(), lastName.getText().toString(),
                         email.getText().toString(), password.getText().toString(),
                         role.getSelectedItem().toString());
-                user.setId(viewModel.getUserId());
+                user.setUserId(viewModel.getUserId());
                 viewModel.saveAccount(user);
             }
         });

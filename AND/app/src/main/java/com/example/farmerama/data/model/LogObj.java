@@ -1,17 +1,24 @@
 package com.example.farmerama.data.model;
 
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+@Entity(tableName = "measurement_log_table")
 public class LogObj {
-    private int id;
+    @PrimaryKey
+    private int logId;
     private MeasurementType measurementType;
     private String measuredDate;
     private double thresholdValue;
     private double exceededValue;
 
-    public LogObj(int id, MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
-        this.id = id;
+    public LogObj(){}
+
+    public LogObj(int logId, MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
+        this.logId = logId;
         this.measurementType = measurementType;
         this.measuredDate = measuredDate;
         this.thresholdValue = thresholdValue;
@@ -25,12 +32,12 @@ public class LogObj {
         this.exceededValue = exceededValue;
     }
 
-    public int getId() {
-        return id;
+    public int getLogId() {
+        return logId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLogId(int logId) {
+        this.logId = logId;
     }
 
     public MeasurementType getMeasurementType() {
