@@ -15,4 +15,6 @@ public interface ThresholdModel {
     Threshold update(Threshold toThreshold, int userId) throws Exception;
     List<SentThresholdLog> getAllExceeding(int areaId, ThresholdType type, LocalDate date) throws Exception;
     List<ThresholdLogs> getAllByDate(LocalDate date) throws Exception;
+
+    Threshold findById(int id) throws Exception;
 }

@@ -2,6 +2,7 @@ package com.dai.model.socketMeasurement;
 
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.measurement.MeasurementDao;
+import com.dai.dao.threshold.ThresholdDao;
 import com.dai.helpers.MeasurementValidator;
 import com.dai.shared.Area;
 import com.dai.shared.Barn;
@@ -33,6 +34,8 @@ class SocketMeasurementModelImplTest {
 
     @Mock
     private MeasurementValidator measurementValidator;
+    @Mock
+    private ThresholdDao thresholdDao;
 
     @Test
     public void data() {
@@ -49,7 +52,7 @@ class SocketMeasurementModelImplTest {
         when(measurementValidator.isHumidityValueValid(anyDouble())).thenReturn(true);
         when(measurementValidator.isTemperatureValueValid(anyDouble())).thenReturn(true);
 
-        model = new SocketMeasurementModelImpl(measurementDao, areaDao, measurementValidator);
+        model = new SocketMeasurementModelImpl(measurementDao, areaDao, measurementValidator, thresholdDao);
         when(measurementValidator.isCo2ValueValid(anyInt())).then(i -> true);
 
         LocalDateTime now = LocalDateTime.now();

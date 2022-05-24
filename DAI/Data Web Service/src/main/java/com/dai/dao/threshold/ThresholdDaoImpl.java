@@ -51,4 +51,14 @@ public class ThresholdDaoImpl implements ThresholdDao{
     public Future<Threshold> update(Threshold threshold) throws Exception {
         return new AsyncResult<>(repository.save(threshold));
     }
+
+    @Override
+    public Future<Threshold> getById(int id) {
+        return new AsyncResult<>(repository.findById(id).get());
+    }
+
+    @Override
+    public Future<List<Threshold>> getValuesByArea(int id) {
+        return new AsyncResult<>(repository.getAllByAreaId(id));
+    }
 }

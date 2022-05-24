@@ -1,18 +1,21 @@
 package com.dai.model.socketMeasurement;
 
+import com.dai.controllers.WebsocketClientController;
+import com.dai.dao.threshold.ThresholdDao;
 import com.dai.helpers.Helper;
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.measurement.MeasurementDao;
 import com.dai.helpers.MeasurementValidator;
-import com.dai.shared.Area;
-import com.dai.shared.Measurement;
-import com.dai.shared.SocketData;
+import com.dai.shared.*;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class SocketMeasurementModelImpl implements SocketMeasurementModel {
@@ -20,12 +23,14 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
     private MeasurementDao measurementDao;
     private AreaDao areaDao;
     private MeasurementValidator measurementValidator;
+    private ThresholdDao thresholdDao;
 
     @Autowired
-    public SocketMeasurementModelImpl(MeasurementDao measurementDao, AreaDao areaDao, MeasurementValidator measurementValidator) {
+    public SocketMeasurementModelImpl(MeasurementDao measurementDao, AreaDao areaDao, MeasurementValidator measurementValidator, ThresholdDao thresholdDao) {
         this.measurementDao = measurementDao;
         this.areaDao = areaDao;
         this.measurementValidator = measurementValidator;
+        this.thresholdDao = thresholdDao;
     }
 
     @Override
@@ -81,7 +86,6 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
 
         return Helper.await(measurementDao.saveMeasurement(measurement));
     }
-
     private static int[] parseStringToValues(String str) {
         int[] values = new int[4];
         int loopStep = 4;
@@ -93,4 +97,5 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
         }
         return values;
     }
+
 }

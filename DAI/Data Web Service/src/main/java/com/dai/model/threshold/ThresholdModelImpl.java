@@ -1,13 +1,16 @@
 package com.dai.model.threshold;
 
+import com.dai.controllers.WebsocketClientController;
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.threshold.ThresholdDao;
 import com.dai.dao.thresholdLog.ThresholdLogDao;
 import com.dai.dao.user.UserDao;
 import com.dai.helpers.Helper;
+import com.dai.model.socketMeasurement.SocketMeasurementModel;
 import com.dai.shared.*;
 import com.dai.shared.ThresholdType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -21,7 +24,6 @@ public class ThresholdModelImpl implements ThresholdModel{
     private AreaDao areaDao;
     private ThresholdLogDao thresholdLogDao;
     private UserDao userDao;
-
     @Autowired
     public ThresholdModelImpl(ThresholdDao thresholdDao, AreaDao areaDao, ThresholdLogDao thresholdLogDao, UserDao userDao) {
         this.thresholdDao = thresholdDao;
@@ -37,9 +39,14 @@ public class ThresholdModelImpl implements ThresholdModel{
 
     @Override
     public Threshold create(Threshold threshold) throws Exception {
-        Area area = Helper.await(areaDao.read(threshold.getArea().getId()));
-        threshold.setArea(area);
-        return Helper.await(thresholdDao.create(threshold));
+        Threshold th = Helper.await(thresholdDao.find(threshold.getArea().getId(), threshold.getType()));
+        if(th != null)
+            throw new Exception("Threshold already exists");
+        else {
+            Area area = Helper.await(areaDao.read(threshold.getArea().getId()));
+            threshold.setArea(area);
+            return Helper.await(thresholdDao.create(threshold));
+        }
     }
 
     @Override
@@ -84,5 +91,10 @@ public class ThresholdModelImpl implements ThresholdModel{
     @Override
     public List<ThresholdLogs> getAllByDate(LocalDate date) throws Exception {
         return Helper.await(thresholdLogDao.getAllByDate(date));
+    }
+
+    @Override
+    public Threshold findById(int id) throws Exception {
+        return Helper.await(thresholdDao.getById(id));
     }
 }
