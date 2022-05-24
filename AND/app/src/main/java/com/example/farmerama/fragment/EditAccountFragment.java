@@ -51,6 +51,7 @@ public class EditAccountFragment extends Fragment {
     }
 
     private void setupViews() {
+        email.requestFocus();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.roles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         role.setAdapter(adapter);
