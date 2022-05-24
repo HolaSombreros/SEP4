@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class MeasurementValidator {
 
     public boolean isTemperatureValueValid(double value) {
-        return value >= -10 && value <= 60;
+        return value >= 0 && value <= 60;
     }
 
     public boolean isHumidityValueValid(double value) {
