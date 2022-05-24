@@ -1,14 +1,21 @@
 package com.example.farmerama.data.model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "area_table")
 public class Area {
-
+    @Embedded
     private Barn barn;
+    @PrimaryKey
     private int id;
     private String name;
     private String description;
     private int numberOfPigs;
     private String hardwareId;
+
+    public Area(){}
 
     public Area(Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
         this.barn = barn;
@@ -81,5 +88,9 @@ public class Area {
 
     public void setHardwareId(String hardwareId) {
         this.hardwareId = hardwareId;
+    }
+
+    public void setBarn(Barn barn) {
+        this.barn = barn;
     }
 }

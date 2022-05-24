@@ -1,14 +1,20 @@
 package com.example.farmerama.data.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "user_table")
 public class User implements Serializable {
-
-    private int id;
+    @PrimaryKey
+    private int userId;
     private String name;
     private String email;
     private String password;
     private String role;
+
+    public User(){}
 
     public User(String firstname,String lastname, String email, String password,String role) {
         this.name = firstname + " " + lastname;
@@ -17,8 +23,8 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public User(int id, String name, String email, String password, String role) {
-        this.id = id;
+    public User(int userId, String name, String email, String password, String role) {
+        this.userId = userId;
         this.email = email;
         this.name = name;
         this.password = password;
@@ -38,12 +44,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {

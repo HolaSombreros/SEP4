@@ -156,7 +156,7 @@ public class UserRepository {
 
     public void updateUser(User user) {
         UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.updateUser(user.getId(), user);
+        Call<UserResponse> call = userApi.updateUser(user.getUserId(), user);
         call.enqueue(new Callback<UserResponse>() {
             @EverythingIsNonNull
             @Override

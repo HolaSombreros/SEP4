@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.viewmodel.ThresholdViewModel;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThresholdMeasurementsFragment extends Fragment {
     private TextView upperThreshold;
@@ -46,14 +49,30 @@ public class ThresholdMeasurementsFragment extends Fragment {
     }
 
     private void setUpViews() {
+       AtomicBoolean createThreshold = new AtomicBoolean(false);
         viewModel.getThresholds().observe(getViewLifecycleOwner(), thresholds -> {
-            upperThresholdValue.setText(String.valueOf(thresholds.getMaximum()));
-            lowerThresholdValue.setText(String.valueOf(thresholds.getMinimum()));
+            if(thresholds != null) {
+                upperThresholdValue.setText(String.valueOf(thresholds.getMaximum()));
+                lowerThresholdValue.setText(String.valueOf(thresholds.getMinimum()));
+                createThreshold.set(false);
+            }
+            else {
+                createThreshold.set(true);
+            }
         });
 
         button.setOnClickListener(l -> {
             viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
                     Double.parseDouble(upperThresholdValue.getText().toString())));
+            Toast.makeText(getActivity(), "Threshold edited!", Toast.LENGTH_SHORT).show();
+//            if(createThreshold.get()) {
+//                viewModel.createThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
+//                        Double.parseDouble(upperThresholdValue.getText().toString())));
+//            }
+//            else {
+//
+//            }
+
         });
     }
 
