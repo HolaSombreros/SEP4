@@ -40,6 +40,7 @@ public class ThresholdModelImpl implements ThresholdModel{
 
     @Override
     public Threshold create(Threshold threshold) throws Exception {
+        thresholdValidator.validateThreshold(threshold);
         Area area = Helper.await(areaDao.read(threshold.getArea().getId()));
         threshold.setArea(area);
         return Helper.await(thresholdDao.create(threshold));
