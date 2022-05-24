@@ -25,6 +25,8 @@ DECLARE_FAKE_VOID_FUNC(vTaskDelete, TaskHandle_t);
 DECLARE_FAKE_VOID_FUNC(vTaskDelay, TickType_t);
 //void vTaskDelayUntil(TickType_t* pxPreviousWakeTime, const TickType_t xTimeIncrement);
 DECLARE_FAKE_VOID_FUNC(vTaskDelayUntil, TickType_t *, TickType_t);
+//void xTaskDelayUntil(TickType_t* pxPreviousWakeTime, const TickType_t xTimeIncrement);
+DECLARE_FAKE_VOID_FUNC(xTaskDelayUntil, TickType_t *, TickType_t);
 // TickType_t xTaskGetTickCount(void);
 DECLARE_FAKE_VALUE_FUNC(TickType_t, xTaskGetTickCount);
 // UBaseType_t uxTaskPriorityGet(TaskHandle_t xTask);

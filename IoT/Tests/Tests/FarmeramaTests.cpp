@@ -7,8 +7,10 @@ extern "C" {
 #include <HumidityTemperatureTask.h>
 #include <CO2Task.h>
 #include <SoundTask.h>
+#include <UplinkMessageBuilder.h>
 }
 
+FAKE_VALUE_FUNC(lora_driver_payload_t, uplinkMessageBuilder_buildUplinkMessage, uint8_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setHumidityData, uint16_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setTemperatureData, int16_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setCO2Data, uint16_t);
@@ -23,7 +25,8 @@ protected:
 		RESET_FAKE(xQueueReceive);
 		RESET_FAKE(xQueueSendToBack);
 		RESET_FAKE(xTaskGetTickCount);
-		RESET_FAKE(vTaskDelayUntil);
+		RESET_FAKE(xTaskDelayUntil);
+		RESET_FAKE(uplinkMessageBuilder_buildUplinkMessage);
 		RESET_FAKE(uplinkMessageBuilder_setHumidityData);
 		RESET_FAKE(uplinkMessageBuilder_setTemperatureData);
 		RESET_FAKE(uplinkMessageBuilder_setCO2Data);
@@ -37,57 +40,54 @@ TEST_F(FarmeramaTest, Create_CallsTaskCreate) {
 	farmerama_create(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 
 	EXPECT_EQ(1, xTaskCreate_fake.call_count);
-
-	EXPECT_EQ(pdTRUE, xTaskCreate_fake.return_val);
 }
 
-//TEST_F(FarmeramaTest, testVerifyxEventGroupSetBitSetsTheCorrectBits) {
-//	//Arrange
-//	//Act
-//	farmerama_runTask();
-//
-//	//Assert
-//	EXPECT_EQ(1, xEventGroupSetBits_fake.call_count);
-//
-//	EXPECT_EQ(BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT, xEventGroupSetBits_fake.arg1_val);
-//
-//	EXPECT_EQ(BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT, xEventGroupSetBits_fake.return_val);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyxEventGroupWaitBitsWaitsForAllBitsToBeSet) {
-//	//Arrange
-//	//Act
-//	farmerama_runTask();
-//
-//	//Assert
-//	EXPECT_EQ(1, xEventGroupWaitBits_fake.call_count);
-//
-//	EXPECT_EQ(BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE | BIT_CO2_DONE | BIT_SOUND_DONE, xEventGroupWaitBits_fake.arg1_val);
-//	EXPECT_EQ(pdTRUE, xEventGroupWaitBits_fake.arg2_val);
-//	EXPECT_EQ(pdTRUE, xEventGroupWaitBits_fake.arg3_val);
-//	EXPECT_EQ(pdMS_TO_TICKS(300000UL), xEventGroupWaitBits_fake.arg4_val);
-//
-//	EXPECT_EQ(BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE | BIT_CO2_DONE | BIT_SOUND_DONE, xEventGroupWaitBits_fake.return_val);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyxQueueReceiveIsCalled) {
-//	// Arrange
-//	// Act
-//	farmerama_runTask();
-//
-//	// Assert
-//	EXPECT_EQ(4, xQueueReceive_fake.call_count);
-//
-//	//EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueReceive_fake.arg0_history[2]);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyxQueueSendToBackIsCalled) {
-//	farmerama_runTask();
-//
-//	EXPECT_EQ(1, xQueueSendToBack_fake.call_count);
-//
-//	EXPECT_EQ(pdMS_TO_TICKS(1000), xQueueSendToBack_fake.arg2_val);
-//}
+TEST_F(FarmeramaTest, testVerifyxEventGroupSetBitSetsTheCorrectBits) {
+	//Arrange
+	//Act
+	farmerama_runTask();
+
+	//Assert
+	EXPECT_EQ(1, xEventGroupSetBits_fake.call_count);
+
+	EXPECT_EQ(BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT, xEventGroupSetBits_fake.arg1_val);
+}
+
+TEST_F(FarmeramaTest, testVerifyxEventGroupWaitBitsWaitsForAllBitsToBeSet) {
+	//Arrange
+	//Act
+	farmerama_runTask();
+
+	//Assert
+	EXPECT_EQ(1, xEventGroupWaitBits_fake.call_count);
+
+	EXPECT_EQ(BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE | BIT_CO2_DONE | BIT_SOUND_DONE, xEventGroupWaitBits_fake.arg1_val);
+	EXPECT_EQ(pdTRUE, xEventGroupWaitBits_fake.arg2_val);
+	EXPECT_EQ(pdTRUE, xEventGroupWaitBits_fake.arg3_val);
+	EXPECT_EQ(pdMS_TO_TICKS(300000UL), xEventGroupWaitBits_fake.arg4_val);
+}
+
+TEST_F(FarmeramaTest, testVerifyxQueueReceiveIsCalled) {
+	// Arrange
+	// Act
+	farmerama_runTask();
+
+	// Assert
+	EXPECT_EQ(4, xQueueReceive_fake.call_count);
+
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueReceive_fake.arg2_history[0]);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueReceive_fake.arg2_history[1]);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueReceive_fake.arg2_history[2]);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueReceive_fake.arg2_history[3]);
+}
+
+TEST_F(FarmeramaTest, testVerifyxQueueSendToBackIsCalled) {
+	farmerama_runTask();
+
+	EXPECT_EQ(1, xQueueSendToBack_fake.call_count);
+
+	EXPECT_EQ(pdMS_TO_TICKS(1000), xQueueSendToBack_fake.arg2_val);
+}
 
 TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderHumidityIsCalled) {
 	farmerama_runTask();
@@ -96,35 +96,50 @@ TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderHumidityIsCalled) {
 
 	EXPECT_EQ(15, uplinkMessageBuilder_setHumidityData_fake.arg0_val);
 }
-//
-//TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderTemperatureIsCalled) {
-//	farmerama_runTask();
-//
-//	EXPECT_EQ(1, uplinkMessageBuilder_setTemperatureData_fake.call_count);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderCO2IsCalled) {
-//	farmerama_runTask();
-//
-//	EXPECT_EQ(1, uplinkMessageBuilder_setCO2Data_fake.call_count);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderSoundIsCalled) {
-//	farmerama_runTask();
-//
-//	EXPECT_EQ(1, uplinkMessageBuilder_setSoundData_fake.call_count);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyxTaskGetTickCountIsCalled) {
-//	farmerama_runTask();
-//
-//	EXPECT_EQ(1, xTaskGetTickCount_fake.call_count);
-//}
-//
-//TEST_F(FarmeramaTest, testVerifyvTaskDelayUntilIsCalled) {
-//	farmerama_runTask();
-//
-//	EXPECT_EQ(1, vTaskDelayUntil_fake.call_count);
-//
-//	EXPECT_EQ(pdMS_TO_TICKS(300000UL), vTaskDelayUntil_fake.arg1_val);
-//}
+
+TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderTemperatureIsCalled) {
+	farmerama_runTask();
+
+	uint16_t temp = 15;
+
+	xQueueReceive_fake.arg1_val = &temp;
+	EXPECT_EQ(uplinkMessageBuilder_setTemperatureData_fake.arg0_val, temp);
+
+	EXPECT_EQ(1, uplinkMessageBuilder_setTemperatureData_fake.call_count);
+}
+
+TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderCO2IsCalled) {
+	farmerama_runTask();
+
+	EXPECT_EQ(1, uplinkMessageBuilder_setCO2Data_fake.call_count);
+}
+
+TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderSoundIsCalled) {
+	farmerama_runTask();
+
+	EXPECT_EQ(1, uplinkMessageBuilder_setSoundData_fake.call_count);
+}
+
+TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderReturns) {
+	farmerama_runTask();
+
+	uplinkMessageBuilder_buildUplinkMessage_fake.return_val.portNo = 1;
+	EXPECT_EQ(1, uplinkMessageBuilder_buildUplinkMessage_fake.call_count);
+	EXPECT_EQ(1, uplinkMessageBuilder_buildUplinkMessage_fake.arg0_val);
+	
+	EXPECT_EQ(1, xQueueSendToBack_fake.call_count);
+}
+
+TEST_F(FarmeramaTest, testVerifyxTaskGetTickCountIsCalled) {
+	farmerama_runTask();
+
+	EXPECT_EQ(1, xTaskGetTickCount_fake.call_count);
+}
+
+TEST_F(FarmeramaTest, testVerifyxTaskDelayUntilIsCalled) {
+	farmerama_runTask();
+
+	EXPECT_EQ(1, xTaskDelayUntil_fake.call_count);
+
+	EXPECT_EQ(pdMS_TO_TICKS(300000UL), xTaskDelayUntil_fake.arg1_val);
+}

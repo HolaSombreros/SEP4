@@ -38,7 +38,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\..\IoT\SourceFiles\Farmerama.c" />
-    <ClCompile Include="..\..\IoT\SourceFiles\UplinkMessageBuilder.c" />
     <ClCompile Include="..\FakeFreeRTOS\FreeRTOS_FFF_MocksDefinitions.cpp" />
     <ClCompile Include="FarmeramaTests.cpp" />
   </ItemGroup>

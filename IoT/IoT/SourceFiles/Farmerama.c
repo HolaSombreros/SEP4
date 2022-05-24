@@ -64,10 +64,12 @@ void farmerama_runTask(void) {
 	uplinkMessageBuilder_setSoundData(sound);
 	
 	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
-	xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
+	if (message.portNo != PORT) {
+		xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
+	}
 	
 	TickType_t lastWakeTime = xTaskGetTickCount();
-	vTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
+	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
 }
 
 static void _run(void* params) {
