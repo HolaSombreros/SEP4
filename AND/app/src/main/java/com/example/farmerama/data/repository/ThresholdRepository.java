@@ -5,24 +5,17 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.data.model.Measurement;
-import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.LogObj;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.ThresholdModifications;
-import com.example.farmerama.data.model.response.MeasurementResponse;
+import com.example.farmerama.data.model.response.LogResponse;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
-import com.example.farmerama.data.model.response.AreaResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

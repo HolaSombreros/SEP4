@@ -38,6 +38,7 @@
     <string name="lower_threshold">Lower threshold</string>
     <string name="Thresholds">Thresholds</string>
     <string name="employees_fragment">Employees fragment</string>
+    <string name="exceeded_measurements">Exceeded Measurements</string>
     <string-array name="roles">
         <item>EMPLOYEE</item>
         <item>ADMINISTRATOR</item>

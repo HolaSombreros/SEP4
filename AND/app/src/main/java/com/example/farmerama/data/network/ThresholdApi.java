@@ -1,6 +1,7 @@
 package com.example.farmerama.data.network;
 
 import com.example.farmerama.data.model.Threshold;
+import com.example.farmerama.data.model.response.LogResponse;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 
