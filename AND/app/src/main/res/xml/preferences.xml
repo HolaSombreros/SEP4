@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Notifcation">
+        <SwitchPreference
+            android:title="Do you want to receive notifications?"
+            android:defaultValue="false"
+            android:key="notification">
+        </SwitchPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

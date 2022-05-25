@@ -84,4 +84,9 @@
         android:name="com.example.farmerama.fragment.LogsFragment"
         android:label="Exceeded measurements"
         tools:layout="@layout/fragment_logs" />
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.farmerama.fragment.SettingsFragment"
+        android:label="Settings" />
 </navigation>

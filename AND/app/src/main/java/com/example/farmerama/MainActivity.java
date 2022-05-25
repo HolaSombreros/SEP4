@@ -13,12 +13,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,12 +53,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
+        return viewModel.isLogged();
     }
 
 
     private void initViews() {
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -83,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.getTodayLogs().observe(this, logs -> {
             for (LogObj log : logs) {
+                // TODO check if user is logged in and if notifications on
                 publishNotification(log);
             }
         });
@@ -116,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
             navigationDrawer.getMenu().getItem(i).setVisible(false);
         }
+        invalidateOptionsMenu();
         navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
         navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
 
@@ -137,29 +136,28 @@ public class MainActivity extends AppCompatActivity {
     private void setUpLoggedInUser() {
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
+                // TODO when they log in the first time, set notifications on
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
-                if(usernameHeader != null && emailHeader != null)
-                {
+                if (usernameHeader != null && emailHeader != null) {
                     usernameHeader.setText(loggedInUser.getName());
                     emailHeader.setText(loggedInUser.getEmail());
                 }
-
-
                 toolbar.setVisibility(View.VISIBLE);
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(true);
                 }
-
                 if (loggedInUser.getRole().equals("EMPLOYEE")) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                     navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);
+                viewModel.setLogged(true);
+                invalidateOptionsMenu();
             } else {
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(false);
@@ -169,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
 
                 viewModel.removeLoggedInUser();
                 navController.navigate(R.id.loginFragment);
+                viewModel.setLogged(false);
+                invalidateOptionsMenu();
             }
         });
     }
@@ -196,6 +196,12 @@ public class MainActivity extends AppCompatActivity {
             viewModel.logOut();
             return true;
         }
+
+        if (item.getItemId() == R.id.settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 }
