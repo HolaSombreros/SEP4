@@ -18,7 +18,7 @@ public class EditAccountViewModel extends AndroidViewModel {
 
     public EditAccountViewModel(@NonNull Application application) {
         super(application);
-        userRepository = UserRepository.getInstance();
+        userRepository = UserRepository.getInstance(application);
         validation = new ValidationUser();
     }
 

@@ -26,7 +26,7 @@ public class AddEditAreaViewModel extends AndroidViewModel {
         super(application);
         areaRepository = AreaRepository.getInstance();
         barnRepository = BarnRepository.getInstance();
-        userRepository = UserRepository.getInstance();
+        userRepository = UserRepository.getInstance(application);
     }
 
     public LiveData<List<Barn>> getBarns() {

@@ -1,7 +1,11 @@
 package com.example.farmerama.data.repository;
 
+import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,13 +13,16 @@ import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
+import com.example.farmerama.data.persistence.FarmeramaDatabase;
+import com.example.farmerama.data.persistence.UserDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,17 +34,27 @@ public class UserRepository {
     private final MutableLiveData<List<User>> users;
     private final MutableLiveData<User> user;
     private final MutableLiveData<User> loggedInUser;
+    private final ExecutorService executorService;
+    private final FarmeramaDatabase database;
+    private final UserDAO userDAO;
+    private List<User> usersRoom;
 
-    private UserRepository() {
+
+    private UserRepository(Application application) {
         super();
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
+        database = FarmeramaDatabase.getInstance(application);
+        userDAO = database.userDAO();
+        usersRoom = userDAO.getAllEmployees();
+        executorService = Executors.newFixedThreadPool(5);
+        Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }
 
-    public static synchronized UserRepository getInstance() {
+    public static synchronized UserRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new UserRepository();
+            instance = new UserRepository(application);
         }
         return instance;
     }
@@ -69,6 +86,10 @@ public class UserRepository {
                 if (response.isSuccessful()) {
                     for(UserResponse user : response.body()) {
                         list.add(user.getUser());
+                        User userInRoom = userDAO.getEmployeeById(user.getUser().getUserId());
+                        if(userInRoom != null) {
+                            executorService.execute(() ->userDAO.registerUser(user.getUser()));
+                        }
                     }
                     users.setValue(list);
                 }
@@ -81,6 +102,7 @@ public class UserRepository {
             @Override
             public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
+                users.setValue(usersRoom);
             }
         });
     }

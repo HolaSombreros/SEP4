@@ -20,7 +20,7 @@ public class LoginViewModel extends AndroidViewModel {
     public LoginViewModel(Application application) {
         super(application);
         sharedPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
-        repository = UserRepository.getInstance();
+        repository = UserRepository.getInstance(application);
         validation = new ValidationUser();
 
         if (!sharedPreferences.getString("userEmail", "null").equals("null"))
