@@ -94,11 +94,11 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.latestDataFragment,
                 R.id.loginFragment,
-                R.id.signOut,
                 R.id.historicalDataFragment,
                 R.id.areasFragment,
                 R.id.employeesFragment,
                 R.id.logsFragment,
+                R.id.thresholdDataFragment,
                 R.id.thresholdModificationFragment,
                 R.id.registerFragment)
                 .setOpenableLayout(drawerLayout)
