@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Employee"
-        android:textColor="#20284e"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Area"
-        android:textColor="#20284e"
+        android:textColor="@color/black"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/thresholdModification_employee"
         app:layout_constraintStart_toEndOf="@+id/thresholdModification_employee"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Measurement Type"
-        android:textColor="#20284e"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thresholdModification_employee"
         app:layout_constraintEnd_toStartOf="@id/thresholdModification_minMax"/>
@@ -45,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Min/Max"
-        android:textColor="#20284e"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/thresholdModification_measurementType"
         app:layout_constraintStart_toEndOf="@+id/thresholdModification_measurementType"
         app:layout_constraintTop_toTopOf="@+id/thresholdModification_measurementType"
@@ -56,10 +56,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="old -> new"
-        android:textColor="#20284e"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/thresholdModification_minMax"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/thresholdModification_minMax"
         app:layout_constraintTop_toTopOf="@+id/thresholdModification_minMax" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
