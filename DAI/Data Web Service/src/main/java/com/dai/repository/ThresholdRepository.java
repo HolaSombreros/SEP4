@@ -1,8 +1,8 @@
 package com.dai.repository;
 
-import com.dai.shared.SentThresholdLog;
-import com.dai.shared.Threshold;
-import com.dai.shared.ThresholdType;
+import com.dai.model.SentThresholdLog;
+import com.dai.model.Threshold;
+import com.dai.model.ThresholdType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.util.List;
 
-import java.util.List;
 @Repository
 public interface ThresholdRepository extends JpaRepository<Threshold, Integer> {
     Threshold findFirstByAreaIdEqualsAndTypeEquals(int area_id, ThresholdType type);

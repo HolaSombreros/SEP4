@@ -1,7 +1,7 @@
 package com.dai.dao.measurement;
 
 import com.dai.repository.MeasurementRepository;
-import com.dai.shared.Measurement;
+import com.dai.model.Measurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -19,7 +19,7 @@ public class MeasurementDaoImpl implements MeasurementDao {
     }
 
     @Override
-    public Future<Measurement> saveMeasurement(Measurement measurement) {
+    public Future<Measurement> create(Measurement measurement) {
         return new AsyncResult<>(repository.save(measurement));
     }
 }

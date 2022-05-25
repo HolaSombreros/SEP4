@@ -1,7 +1,7 @@
 package com.dai.dao.sound;
 
 import com.dai.repository.SoundRepository;
-import com.dai.shared.SentMeasurement;
+import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -25,17 +25,17 @@ public class SoundDaoImpl implements SoundDao
 
   @Override
   @Async
-  public  Future<SentMeasurement> readLastAreaSound(int areaId) {
+  public  Future<SentMeasurement> readLatestByAreaId(int areaId) {
     return new AsyncResult<>(repository.findFirstSoundMeasuredDateOrderByIdDesc(areaId));
   }
 
-  @Override public Future<List<SentMeasurement>> readAllAreaSounds(int areaId)
+  @Override public Future<List<SentMeasurement>> readAllByAreaId(int areaId)
   {
-    return readAreaSoundsByDate(areaId, LocalDate.now());
+    return readAllByAreaIdAndDate(areaId, LocalDate.now());
   }
 
   @Override
-  public Future<List<SentMeasurement>> readAreaSoundsByDate(int areaId, LocalDate date) {
+  public Future<List<SentMeasurement>> readAllByAreaIdAndDate(int areaId, LocalDate date) {
     return new AsyncResult<>(repository. getAllMeasurementsByDate(areaId, Date.valueOf(date)));
   }
 }

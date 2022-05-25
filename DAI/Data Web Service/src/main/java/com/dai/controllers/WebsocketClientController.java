@@ -1,7 +1,7 @@
 package com.dai.controllers;
-import com.dai.model.socketMeasurement.SocketMeasurementModel;
-import com.dai.shared.SocketData;
-import com.dai.shared.SocketProperties;
+import com.dai.service.socketMeasurement.SocketMeasurementService;
+import com.dai.model.SocketData;
+import com.dai.model.SocketProperties;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -17,11 +17,11 @@ import java.util.concurrent.CompletionStage;
 @Component
 public class WebsocketClientController implements WebSocket.Listener {
 
-    private SocketMeasurementModel measurementModel;
+    private SocketMeasurementService measurementModel;
     private WebSocket server = null;
 
     @Autowired
-    public WebsocketClientController(SocketMeasurementModel measurementModel, SocketProperties properties) {
+    public WebsocketClientController(SocketMeasurementService measurementModel, SocketProperties properties) {
         this.measurementModel = measurementModel;
         HttpClient client = HttpClient.newHttpClient();
         CompletableFuture<WebSocket> ws = client.newWebSocketBuilder()

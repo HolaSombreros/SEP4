@@ -1,7 +1,6 @@
 package com.dai.controllers;
 
-import com.dai.model.socketMeasurement.SocketMeasurementModel;
-import com.dai.shared.SocketProperties;
+import com.dai.model.SocketProperties;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;

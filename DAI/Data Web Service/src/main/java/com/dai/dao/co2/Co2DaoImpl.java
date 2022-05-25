@@ -1,7 +1,7 @@
 package com.dai.dao.co2;
 
 import com.dai.repository.Co2Repository;
-import com.dai.shared.SentMeasurement;
+import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -25,12 +25,12 @@ public class Co2DaoImpl implements Co2Dao {
     }
 
     @Override
-    public Future<SentMeasurement> getLatest(int areaId) {
+    public Future<SentMeasurement> readLatestByAreaId(int areaId) {
         return new AsyncResult<>(co2Repository.getLatestCo2(areaId));
     }
 
     @Override
-    public AsyncResult<List<SentMeasurement>> getAllByDate(int areaId, LocalDate date) {
+    public AsyncResult<List<SentMeasurement>> readAllByDateAndAreaId(int areaId, LocalDate date) {
         return new AsyncResult<List<SentMeasurement>>(co2Repository.getAllCo2sInDate(areaId, Date.valueOf(date)));
 
     }

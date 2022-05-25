@@ -2,9 +2,9 @@ package com.dai.controllers;
 
 import com.dai.exceptions.BadRequestException;
 import com.dai.exceptions.UnauthorizedException;
-import com.dai.model.users.UserModel;
-import com.dai.shared.LoginUser;
-import com.dai.shared.User;
+import com.dai.service.users.UserService;
+import com.dai.model.LoginUser;
+import com.dai.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 public class UsersController {
 
-    private UserModel userModel;
+    private UserService userModel;
 
     @Autowired
-    public UsersController(UserModel userModel) {
+    public UsersController(UserService userModel) {
         this.userModel = userModel;
     }
 
@@ -41,7 +41,7 @@ public class UsersController {
     }
 
     @PutMapping(value = "/{id}")
-    public User update(@PathVariable(name = "id") int id,@RequestBody User user) {
+    public User update(@PathVariable(name = "id") int id, @RequestBody User user) {
         try {
             user.setId(id);
             return userModel.update(user);
@@ -60,9 +60,9 @@ public class UsersController {
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<User> readAll() {
         try {
-            return userModel.getAll();
+            return userModel.readAll();
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

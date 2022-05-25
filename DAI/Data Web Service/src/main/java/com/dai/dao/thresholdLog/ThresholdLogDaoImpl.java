@@ -1,7 +1,7 @@
 package com.dai.dao.thresholdLog;
 
 import com.dai.repository.ThresholdLogsRepository;
-import com.dai.shared.ThresholdLogs;
+import com.dai.model.ThresholdLogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -22,12 +22,12 @@ public class ThresholdLogDaoImpl implements ThresholdLogDao{
         this.repository = repository;
     }
 
-    public Future<ThresholdLogs> createLog(ThresholdLogs log) {
+    public Future<ThresholdLogs> create(ThresholdLogs log) {
         return new AsyncResult<>(repository.save(log));
     }
 
     @Override
-    public Future<List<ThresholdLogs>> getAllByDate(LocalDate date) {
+    public Future<List<ThresholdLogs>> readAllByDate(LocalDate date) {
         return new AsyncResult<>(repository.findAllByChangedOnLike(date));
     }
 }

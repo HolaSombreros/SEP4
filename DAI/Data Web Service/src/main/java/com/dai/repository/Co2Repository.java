@@ -1,12 +1,11 @@
 package com.dai.repository;
 
-import com.dai.shared.Measurement;
-import com.dai.shared.SentMeasurement;
+import com.dai.model.Measurement;
+import com.dai.model.SentMeasurement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.sql.Date;
 import java.util.List;
 

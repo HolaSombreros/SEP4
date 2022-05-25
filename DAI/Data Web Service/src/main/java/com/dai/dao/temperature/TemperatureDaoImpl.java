@@ -1,7 +1,7 @@
 package com.dai.dao.temperature;
 
 import com.dai.repository.TemperatureRepository;
-import com.dai.shared.SentMeasurement;
+import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -25,11 +25,11 @@ public class TemperatureDaoImpl implements TemperatureDao{
 
     @Override
     @Async
-    public Future<List<SentMeasurement>> getLatest(int areaId) {
+    public Future<List<SentMeasurement>> readLatestByAreaId(int areaId) {
         return new AsyncResult<>(repository.getLatestByArea(areaId));
     }
     @Override
-    public Future<List<SentMeasurement>> getAllByDate(int areaId, LocalDate date) {
+    public Future<List<SentMeasurement>> readAllByAreaIdAndDate(int areaId, LocalDate date) {
         return new AsyncResult<>(repository.getAllByAreaAndDate(areaId, Date.valueOf(date)));
     }
 }

@@ -1,12 +1,10 @@
 package com.dai.dao.user;
 
-import com.dai.shared.User;
-import com.dai.shared.UserRole;
+import com.dai.model.User;
 import com.dai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -53,13 +51,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Async
-    public Future<List<User>> getAll() {
+    public Future<List<User>> readAll() {
         return new AsyncResult<>(repository.findAll());
     }
 
     @Override
     @Async
-    public Future<User> getUserByMail(String email) {
+    public Future<User> readByMail(String email) {
         return new AsyncResult<>(repository.findFirstByEmail(email));
     }
 

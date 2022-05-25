@@ -1,7 +1,7 @@
 package com.dai.helpers;
 
-import com.dai.shared.Threshold;
-import com.dai.shared.ThresholdType;
+import com.dai.model.Threshold;
+import com.dai.model.ThresholdType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

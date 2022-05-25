@@ -1,27 +1,21 @@
 package com.dai.dao.threshold;
 
-import com.dai.shared.SentThresholdLog;
-import com.dai.shared.ThresholdType;
+import com.dai.model.SentThresholdLog;
+import com.dai.model.ThresholdType;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import com.dai.shared.Threshold;
-import com.dai.shared.ThresholdType;
-import org.apache.tomcat.jni.Local;
-
-import java.util.List;
-import java.util.concurrent.Future;
+import com.dai.model.Threshold;
 
 public interface ThresholdDao {
 
-    Future<List<SentThresholdLog>> getAllExceedingMax(int areaId, ThresholdType type, LocalDate date);
-    Future<List<SentThresholdLog>> getAllExceedingMin(int areaId, ThresholdType type, LocalDate date);
-    Future<Threshold> find(int areaId, ThresholdType type);
+    Future<List<SentThresholdLog>> readAllExceedingMaxByAreaIdAndTypeAndDate(int areaId, ThresholdType type, LocalDate date);
+    Future<List<SentThresholdLog>> readAllExceedingMinByAreaIdAndTypeAndDate(int areaId, ThresholdType type, LocalDate date);
+    Future<Threshold> readByAreaIdAndType(int areaId, ThresholdType type);
     Future<Threshold> create(Threshold threshold);
     Future<Threshold> update(Threshold toThreshold) throws Exception;
-    Future<Threshold> getById(int id);
-
-    Future<List<Threshold>> getValuesByArea(int id);
+    Future<Threshold> read(int id);
+    Future<List<Threshold>> readAllByAreaId(int id);
 }

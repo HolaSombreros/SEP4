@@ -1,6 +1,6 @@
 package com.dai.helpers;
 
-import com.dai.shared.Threshold;
+import com.dai.model.Threshold;
 import org.springframework.stereotype.Component;
 
 @Component

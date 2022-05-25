@@ -1,7 +1,7 @@
 package com.dai.dao.area;
 
 import com.dai.repository.AreaRepository;
-import com.dai.shared.Area;
+import com.dai.model.Area;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -42,12 +42,12 @@ public class AreaDaoImpl implements AreaDao{
         return new AsyncResult<>(repository.save(byId));
     }
     @Override
-    public Future<Area> getAreaByHardwareId(String id) {
+    public Future<Area> readByHardwareId(String id) {
         return new AsyncResult<>(repository.getFirstByHardwareIdEquals(id));
     }
 
     @Override
-    public Future<List<Area>> getAll() {
+    public Future<List<Area>> readAll() {
         return new AsyncResult<>(repository.findAll());
     }
 

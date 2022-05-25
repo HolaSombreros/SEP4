@@ -1,10 +1,9 @@
 package com.dai.controllers;
 
 import com.dai.exceptions.BadRequestException;
-import com.dai.model.socket.ISocketService;
-import com.dai.model.socket.SocketService;
-import com.dai.model.threshold.ThresholdModel;
-import com.dai.shared.*;
+import com.dai.service.socket.SocketService;
+import com.dai.service.threshold.ThresholdService;
+import com.dai.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +16,18 @@ import java.util.List;
 @RequestMapping("/thresholds")
 public class ThresholdsController {
 
-    private ThresholdModel model;
-    private ISocketService socketService;
+    private ThresholdService model;
+    private SocketService socketService;
     @Autowired
-    public ThresholdsController(ThresholdModel model, SocketService socketService) {
+    public ThresholdsController(ThresholdService model, SocketService socketService) {
         this.model = model;
         this.socketService = socketService;
     }
 
     @GetMapping(value = "/{areaId}", params = "type")
-    public Threshold find(@PathVariable int areaId, @RequestParam("type") ThresholdType type) {
+    public Threshold readByAreaIdAndType(@PathVariable int areaId, @RequestParam("type") ThresholdType type) {
         try {
-            return model.find(areaId, type);
+            return model.readByAreaIdAndType(areaId, type);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
@@ -58,18 +57,18 @@ public class ThresholdsController {
         }
     }
     @GetMapping(value = "/{areaId}/logs", params = {"type", "date"})
-    public List<SentThresholdLog> getLogs(@PathVariable("areaId") int areaId, @RequestParam("type") ThresholdType type, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+    public List<SentThresholdLog> readAllExceedingLogsByTypeAndAreaIdAndDate(@PathVariable("areaId") int areaId, @RequestParam("type") ThresholdType type, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
         try{
-            return model.getAllExceeding(areaId, type,date);
+            return model.readAllExceedingLogsByTypeAndAreaIdAndDate(areaId, type,date);
         }catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
 
     @GetMapping(value = "/logs", params = "date")
-    public List<ThresholdLogs> getLogs(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
+    public List<ThresholdLogs> readAllLogsByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
         try{
-            return model.getAllByDate(date);
+            return model.readAllLogsByDate(date);
         }catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

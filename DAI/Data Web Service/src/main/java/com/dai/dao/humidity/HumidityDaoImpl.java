@@ -1,7 +1,7 @@
 package com.dai.dao.humidity;
 
 import com.dai.repository.HumidityRepository;
-import com.dai.shared.SentMeasurement;
+import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -27,12 +27,12 @@ public class HumidityDaoImpl implements HumidityDao{
 
     @Override
     @Async
-    public Future<SentMeasurement> getLatest(int areaId) {
+    public Future<SentMeasurement> readLatestByAreaId(int areaId) {
         return new AsyncResult<>(humidityRepository.getLatestByArea(areaId));
     }
 
     @Override
-    public Future<List<SentMeasurement>> getAllByDate(int areaId, LocalDate date) {
+    public Future<List<SentMeasurement>> readAllByDateAndAreaId(int areaId, LocalDate date) {
         return new AsyncResult<>(humidityRepository.getAllByAreaAndDate(areaId, Date.valueOf(date)));
     }
 }

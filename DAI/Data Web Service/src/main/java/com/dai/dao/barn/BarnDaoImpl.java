@@ -1,7 +1,7 @@
 package com.dai.dao.barn;
 
 import com.dai.repository.BarnRepository;
-import com.dai.shared.Barn;
+import com.dai.model.Barn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -45,7 +45,7 @@ public class BarnDaoImpl implements BarnDao {
     }
 
     @Override
-    public Future<List<Barn>> getAll() {
+    public Future<List<Barn>> readAll() {
         return new AsyncResult<>(barnRepository.findAll());
     }
 }
