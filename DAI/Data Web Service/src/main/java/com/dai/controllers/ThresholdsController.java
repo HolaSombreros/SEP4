@@ -39,9 +39,7 @@ public class ThresholdsController {
         try {
             Threshold toThreshold = requestToThreshold(areaId, threshold, type);
             Threshold newThreshold = model.create(toThreshold);
-            if(type.equals(ThresholdType.TEMPERATURE)) {
-                socketService.sendDownLinkData(areaId);
-            }
+            socketService.sendDownLinkData(areaId);
             return newThreshold;
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
@@ -53,9 +51,7 @@ public class ThresholdsController {
         try {
             Threshold toThreshold = requestToThreshold(areaId, threshold, type);
             Threshold updated = model.update(toThreshold, userId);
-            if(type.equals(ThresholdType.TEMPERATURE)) {
-                socketService.sendDownLinkData(areaId);
-            }
+            socketService.sendDownLinkData(areaId);
             return updated;
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
