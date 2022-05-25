@@ -42,6 +42,7 @@ public class RegisterFragment extends Fragment {
 
         viewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
         email = view.findViewById(R.id.RegisterEmailAddress);
+        email.requestFocus();
         firstName = view.findViewById(R.id.RegisterFirstName);
         lastName = view.findViewById(R.id.RegisterLastName);
         password = view.findViewById(R.id.RegisterPassword);

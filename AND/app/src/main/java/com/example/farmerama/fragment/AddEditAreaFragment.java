@@ -97,6 +97,7 @@ public class AddEditAreaFragment extends Fragment {
             viewModel.getSpecificArea(getArguments().getInt("areaId")).observe(getViewLifecycleOwner(), area -> {
                 area.setId(getArguments().getInt("areaId", 1));
                 areaName.setText(area.getName());
+                areaName.setSelection(areaName.getText().length());
                 for (int i = 0; i < adapter.getCount(); i++) {
                     if (adapter.getItem(i).equals(area.getBarn())) {
                         barnSpinner.setSelection(i);
