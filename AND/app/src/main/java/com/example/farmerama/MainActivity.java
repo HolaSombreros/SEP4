@@ -3,21 +3,35 @@ package com.example.farmerama;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.farmerama.data.model.LogObj;
+import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private NavController navController;
@@ -37,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
         setUpLoggedInUser();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
@@ -45,9 +66,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription("Channel for the notification regarding exceeding thresholds");
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+
+        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.MINUTES).build();
+        WorkManager.getInstance(this).enqueue(request);
+
         ToastMessage.getToastMessage().observe(this, toast -> {
             if (!toast.isEmpty())
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
+        });
+
+        viewModel.getTodayLogs().observe(this, logs -> {
+            for (LogObj log : logs) {
+                publishNotification(log);
+            }
         });
     }
 
@@ -57,12 +92,10 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.latestDataFragment,
                 R.id.loginFragment,
-                R.id.accountFragment,
                 R.id.signOut,
                 R.id.historicalDataFragment,
                 R.id.areasFragment,
                 R.id.employeesFragment,
-                R.id.sensorsFragment,
                 R.id.logsFragment,
                 R.id.thresholdModificationFragment,
                 R.id.registerFragment)
@@ -75,11 +108,6 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer.setNavigationItemSelectedListener(item -> {
             navController.navigate(item.getItemId());
             drawerLayout.closeDrawers();
-            return true;
-        });
-
-        navigationDrawer.getMenu().findItem(R.id.signOut).setOnMenuItemClickListener(item -> {
-            viewModel.logOut();
             return true;
         });
 
@@ -119,10 +147,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);
-            }
-
-            else {
-                for(int i = 0; i < navigationDrawer.getMenu().size(); i++) {
+            } else {
+                for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(false);
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
@@ -134,6 +160,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void publishNotification(LogObj log) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "22")
+                .setSmallIcon(R.mipmap.application_launcher)
+                .setContentTitle("Measurement out of the thresholds")
+                .setContentText(String.format("Exceeded %s in area %s", log.getMeasurementType(), log.getAreaName()))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setChannelId("22");
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(22, builder.build());
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
@@ -141,6 +179,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.signOut) {
+            viewModel.logOut();
+            return true;
+        }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 }

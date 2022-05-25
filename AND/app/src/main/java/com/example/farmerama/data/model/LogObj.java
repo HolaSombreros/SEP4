@@ -11,6 +11,7 @@ public class LogObj {
     @PrimaryKey
     private int logId;
     private MeasurementType measurementType;
+    private String areaName;
     private String measuredDate;
     private double thresholdValue;
     private double exceededValue;
@@ -32,6 +33,11 @@ public class LogObj {
         this.exceededValue = exceededValue;
     }
 
+    public LogObj(String areaName, MeasurementType type) {
+        this.measurementType = type;
+        this.areaName = areaName;
+    }
+
     public int getLogId() {
         return logId;
     }
@@ -46,6 +52,14 @@ public class LogObj {
 
     public void setMeasurementType(MeasurementType measurementType) {
         this.measurementType = measurementType;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getMeasuredDate() {

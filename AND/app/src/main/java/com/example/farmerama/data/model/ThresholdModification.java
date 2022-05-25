@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDateTime;
 
 @Entity(tableName = "threshold_modifications_table")
-public class ThresholdModifications {
+public class ThresholdModification {
     @PrimaryKey
     private int modificationId;
     @Embedded
@@ -19,9 +19,9 @@ public class ThresholdModifications {
     private double newValue;
     private ThresholdLogType type;
 
-    public ThresholdModifications(){}
+    public ThresholdModification(){}
 
-    public ThresholdModifications(int modificationId, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
+    public ThresholdModification(int modificationId, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
         this.modificationId = modificationId;
         this.threshold = threshold;
         this.user = user;

@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.repository.AreaRepository;
 
@@ -23,7 +23,7 @@ public class AreaViewModel extends AndroidViewModel {
     }
 
     public LiveData<Area> getSpecificArea(int areaId){
-        repository.getSpecificAreaById(areaId);
+        repository.retrieveAreaById(areaId);
         return repository.getSpecificArea();
     }
     public LiveData<List<Area>> getAreas(){
@@ -31,7 +31,7 @@ public class AreaViewModel extends AndroidViewModel {
     }
 
     public void getAllAreas() {
-        repository.getAllAreas();
+        repository.retrieveAreas();
     }
 
     public LiveData<List<String>> getAreasName() {

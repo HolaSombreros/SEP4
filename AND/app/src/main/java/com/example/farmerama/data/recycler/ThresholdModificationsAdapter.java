@@ -9,20 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.ThresholdModifications;
+import com.example.farmerama.data.model.ThresholdModification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThresholdModificationsAdapter extends RecyclerView.Adapter<ThresholdModificationsAdapter.ViewHolder>{
 
-    private List<ThresholdModifications> list;
+    private List<ThresholdModification> list;
 
     public ThresholdModificationsAdapter() {
         list = new ArrayList<>();
     }
 
-    public void setModifications(List<ThresholdModifications> measurements) {
+    public void setModifications(List<ThresholdModification> measurements) {
         this.list = measurements;
         notifyDataSetChanged();
     }

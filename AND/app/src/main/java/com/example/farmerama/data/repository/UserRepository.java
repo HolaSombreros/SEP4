@@ -84,7 +84,7 @@ public class UserRepository {
         });
     }
 
-    public void getUserById(int id) {
+    public void retrieveUserById(int id) {
         UserApi userApi = ServiceGenerator.getUserApi();
         Call<UserResponse> call = userApi.getEmployeeById(id);
         call.enqueue(new Callback<UserResponse>() {

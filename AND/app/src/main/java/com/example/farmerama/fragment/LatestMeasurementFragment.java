@@ -29,9 +29,6 @@ public class LatestMeasurementFragment extends Fragment {
     private MeasurementsViewModel viewModel;
     private DonutProgressView donut;
 
-    public LatestMeasurementFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +37,7 @@ public class LatestMeasurementFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(MeasurementsViewModel.class);
         initializeViews(view);
         setUpViews();
@@ -61,7 +59,6 @@ public class LatestMeasurementFragment extends Fragment {
                 donutSection.add(new DonutSection(measurements.get(0).getMeasurementType().toString(),
                         Color.parseColor("#2C4A78"), (float) measurements.get(0).getValue()));
                 donut.submitData(donutSection);
-
 
                 measurementTextView.setText(String.valueOf(measurements.get(0).getValue()));
                 timeText.setText(measurements.get(0).getDateTime());

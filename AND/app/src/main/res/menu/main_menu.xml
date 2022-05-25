@@ -7,29 +7,9 @@
         android:title="@string/latest_measurements" />
 
     <item
-        android:id="@+id/loginFragment"
-        android:icon="@drawable/ic_baseline_logout_24"
-        android:title="@string/Login" />
-
-    <item
-        android:id="@+id/accountFragment"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="@string/my_account" />
-
-    <item
-        android:id="@+id/sensorsFragment"
-        android:icon="@drawable/ic_baseline_edgesensor_high_24"
-        android:title="@string/sensors" />
-
-    <item
         android:id="@+id/historicalDataFragment"
         android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/historical_measurements" />
-
-    <item
-        android:id="@+id/employeesFragment"
-        android:icon="@drawable/ic_baseline_supervisor_account_24"
-        android:title="@string/employees" />
 
     <item
         android:id="@+id/areasFragment"
@@ -42,13 +22,18 @@
         android:title="@string/Thresholds" />
     <item
         android:id="@+id/logsFragment"
-        android:icon="@drawable/ic_baseline_location_on_24"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:title="@string/exceeded_measurements" />
 
     <item
         android:id="@+id/thresholdModificationFragment"
-        android:icon="@drawable/ic_baseline_history_24"
+        android:icon="@drawable/ic_baseline_content_paste_24"
         android:title="@string/threshold_modifications" />
+
+    <item
+        android:id="@+id/employeesFragment"
+        android:icon="@drawable/ic_baseline_supervisor_account_24"
+        android:title="@string/employees" />
 
     <item
         android:id="@+id/registerFragment"
@@ -56,7 +41,7 @@
         android:title="@string/register" />
 
     <item
-        android:id="@+id/signOut"
-        android:icon="@drawable/ic_baseline_logout_24"
-        android:title="@string/sign_out" />
+        android:id="@+id/loginFragment"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="@string/Login" />
 </menu>

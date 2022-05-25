@@ -32,8 +32,6 @@ public class LogsFragment extends Fragment {
     private LogsViewModel viewModel;
     private DatePicker date;
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +46,6 @@ public class LogsFragment extends Fragment {
         setUpViews();
 
     }
-
 
     private void initializeViews(View view) {
         tabLayout = view.findViewById(R.id.logTabLayout);
