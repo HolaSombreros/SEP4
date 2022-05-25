@@ -2,25 +2,23 @@ package com.example.farmerama.data.model.response;
 
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.ThresholdLogType;
-import com.example.farmerama.data.model.ThresholdModifications;
+import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.User;
 
 import java.time.LocalDateTime;
 
 public class ThresholdModificationsResponse {
 
-    // TODO remove database names
-    private int log_id;
-    private Threshold threshold_id;
-    private User user_id;
+    private int logId;
+    private Threshold threshold;
+    private User user;
     private String changedOn;
-    private double old_value;
-    private double new_value;
+    private double oldValue;
+    private double newValue;
     private ThresholdLogType type;
 
-    public ThresholdModifications getModification() {
+    public ThresholdModification getModification() {
         LocalDateTime dateTime = LocalDateTime.parse(changedOn);
-
-        return new ThresholdModifications(log_id, threshold_id, user_id, dateTime, old_value, new_value, type);
+        return new ThresholdModification(logId, threshold, user, dateTime, oldValue, newValue, type);
     }
 }

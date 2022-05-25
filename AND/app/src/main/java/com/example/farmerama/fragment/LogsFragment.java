@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -28,7 +30,7 @@ public class LogsFragment extends Fragment {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private LogsViewModel viewModel;
-
+    private DatePicker date;
 
     @Nullable
     @Override
@@ -42,13 +44,14 @@ public class LogsFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(LogsViewModel.class);
         initializeViews(view);
         setUpViews();
-    }
 
+    }
 
     private void initializeViews(View view) {
         tabLayout = view.findViewById(R.id.logTabLayout);
         viewPager2 = view.findViewById(R.id.viewPager2);
         areaSpinner = view.findViewById(R.id.area_spinner);
+        date =  view.findViewById(R.id.log_date);
     }
 
     private void setUpViews() {
@@ -58,7 +61,8 @@ public class LogsFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-               viewModel.retrieveLogs(MeasurementType.values()[position],LocalDate.now().toString());
+                viewModel.setType(MeasurementType.values()[position]);
+               viewModel.retrieveLogs();
             }
         });
 
@@ -80,7 +84,7 @@ public class LogsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
-               viewModel.retrieveLogs(MeasurementType.TEMPERATURE, LocalDate.now().toString());
+               viewModel.retrieveLogs();
             }
 
             @Override
@@ -88,6 +92,18 @@ public class LogsFragment extends Fragment {
 
             }
         });
+
+        date.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
+
+        viewModel.retrieveLogs();
+
+        date.setOnDateChangedListener((datePicker, i, i1, i2) ->{
+        viewModel.setDate(String.format("%d-%02d-%02d", i, i1+1, i2));
+            viewModel.retrieveLogs();
+
+                });
+
     }
+
 }
 

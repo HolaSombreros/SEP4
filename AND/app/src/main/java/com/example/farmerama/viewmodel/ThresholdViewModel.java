@@ -41,15 +41,22 @@ public class ThresholdViewModel extends AndroidViewModel {
     }
 
     public void getAllAreas() {
-        areaRepository.getAllAreas();
+        areaRepository.retrieveAreas();
     }
 
     public void getLatestThresholds(MeasurementType type) {
-        thresholdRepository.getLatestThresholds(type, areaId);
+        thresholdRepository.retrieveThresholds(type, areaId);
     }
+
     public void editThreshold(Threshold threshold) {
-        if(userRepository.getLoggedInUser().getValue().getId() != 0)
-            thresholdRepository.editThreshold(areaId, measurementType, threshold, userRepository.getLoggedInUser().getValue().getId());
+        if(userRepository.getLoggedInUser().getValue().getUserId() != 0)
+            thresholdRepository.editThreshold(areaId, measurementType, threshold, userRepository.getLoggedInUser().getValue().getUserId());
+    }
+
+    public void createThreshold(Threshold threshold) {
+        if(userRepository.getLoggedInUser().getValue().getUserId() != 0) {
+            thresholdRepository.createThreshold(areaId, measurementType, threshold);
+        }
     }
 
     public LiveData<List<String>> getAreasName() {

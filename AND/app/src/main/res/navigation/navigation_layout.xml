@@ -50,11 +50,6 @@
         android:label="My Account"
         tools:layout="@layout/fragment_edit_account"/>
     <fragment
-        android:id="@+id/sensorsFragment"
-        android:name="com.example.farmerama.fragment.SensorsFragment"
-        android:label="Sensors"
-        tools:layout="@layout/fragment_sensors"/>
-    <fragment
         android:id="@+id/employeesFragment"
         android:name="com.example.farmerama.fragment.EmployeesFragment"
         android:label="Employees"
@@ -87,6 +82,6 @@
     <fragment
         android:id="@+id/logsFragment"
         android:name="com.example.farmerama.fragment.LogsFragment"
-        android:label="LogsFragment"
+        android:label="Exceeded measurements"
         tools:layout="@layout/fragment_logs" />
 </navigation>

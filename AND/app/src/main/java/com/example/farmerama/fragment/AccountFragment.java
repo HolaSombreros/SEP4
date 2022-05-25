@@ -22,21 +22,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AccountFragment extends Fragment {
 
+    private NavController navController;
     private TextView email;
     private TextView name;
     private TextView role;
     private AccountViewModel viewModel;
     private FloatingActionButton edit;
 
-    public AccountFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+                             Bundle savedInstanceState) {return inflater.inflate(R.layout.fragment_account, container, false);
     }
 
     @Override
@@ -44,7 +39,18 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(AccountViewModel.class);
         initializeViews(view);
+        setUpViews();
+    }
 
+    private void initializeViews(View view) {
+        navController = Navigation.findNavController(view);
+        email = view.findViewById(R.id.email);
+        name = view.findViewById(R.id.name);
+        role = view.findViewById(R.id.role);
+        edit = view.findViewById(R.id.edit);
+    }
+
+    private void setUpViews() {
         viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if(user != null){
                 email.setText("  " + user.getEmail());
@@ -58,14 +64,7 @@ public class AccountFragment extends Fragment {
         });
 
         edit.setOnClickListener(v -> {
-              Navigation.findNavController(view).navigate(R.id.editAccountFragment);
+            navController.navigate(R.id.editAccountFragment);
         });
-    }
-
-    private void initializeViews(View view) {
-        email = view.findViewById(R.id.email);
-        name = view.findViewById(R.id.name);
-        role = view.findViewById(R.id.role);
-        edit = view.findViewById(R.id.edit);
     }
 }

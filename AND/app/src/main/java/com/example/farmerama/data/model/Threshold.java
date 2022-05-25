@@ -1,19 +1,28 @@
 package com.example.farmerama.data.model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Objects;
 
+@Entity(tableName = "threshold_table")
 public class Threshold {
-    private int id;
+    @PrimaryKey
+    private int thresholdId;
+    @Embedded(prefix = "area")
     private Area area;
     private double maximum;
     private double minimum;
     private String type;
 
-    public Threshold(int id, Area area, double maximum, double minimum, String type) {
+    public Threshold(){}
+
+    public Threshold(int thresholdId, Area area, double maximum, double minimum, String type) {
         this.minimum = minimum;
         this.maximum = maximum;
         this.area = area;
-        this.id = id;
+        this.thresholdId = thresholdId;
         this.type = type;
     }
 
@@ -22,12 +31,12 @@ public class Threshold {
         this.minimum = minimum;
     }
 
-    public int getId() {
-        return id;
+    public int getThresholdId() {
+        return thresholdId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setThresholdId(int thresholdId) {
+        this.thresholdId = thresholdId;
     }
 
     public Area getArea() {
@@ -65,7 +74,7 @@ public class Threshold {
     @Override
     public String toString() {
         return "Threshold{" +
-                "id=" + id +
+                "id=" + thresholdId +
                 ", areaId=" + area.getId() +
                 ", maximum=" + maximum +
                 ", minimum=" + minimum +
@@ -78,7 +87,7 @@ public class Threshold {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Threshold threshold = (Threshold) o;
-        return id == threshold.id && area.equals(threshold.area) && Double.compare(threshold.maximum, maximum) == 0 && Double.compare(threshold.minimum, minimum) == 0 && Objects.equals(type, threshold.type);
+        return thresholdId == threshold.thresholdId && area.equals(threshold.area) && Double.compare(threshold.maximum, maximum) == 0 && Double.compare(threshold.minimum, minimum) == 0 && Objects.equals(type, threshold.type);
     }
 
 }

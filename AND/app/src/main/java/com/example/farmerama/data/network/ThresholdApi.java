@@ -1,6 +1,7 @@
 package com.example.farmerama.data.network;
 
 import com.example.farmerama.data.model.Threshold;
+import com.example.farmerama.data.model.response.LogResponse;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 
@@ -27,4 +28,10 @@ public interface ThresholdApi {
 
     @GET("logs")
     Call<List<ThresholdModificationsResponse>> getThresholdModifications(@Query("date") String date);
+
+    @GET("{areaId}/logs")
+    Call<List<LogResponse>> getLogs(@Path("areaId") int areaId, @Query("type") String type, @Query("date") String date);
+
+    @GET("logs/latest")
+    Call<List<LogResponse>> getLatestLogs();
 }

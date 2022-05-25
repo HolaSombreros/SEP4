@@ -18,9 +18,6 @@ public interface UserApi {
     @GET(".")
     Call<List<UserResponse>> getAllEmployees();
 
-    @GET
-    Call<UserResponse> getEmployeeByEmail(@Query("email") String email, @Query("password") String password);
-
     @GET("{id}")
     Call<UserResponse> getEmployeeById(@Path("id") int id);
 
