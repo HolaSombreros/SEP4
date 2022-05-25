@@ -8,8 +8,6 @@ public enum MeasurementType {
         TEMPERATURE("TEMPERATURE"), HUMIDITY("HUMIDITY"),  CO2("CO2"), SPL("SOUND PRESSURE LEVEL");
     private String type;
 
-    MeasurementType(){}
-
     MeasurementType(String type) {
         this.type = type;
     }

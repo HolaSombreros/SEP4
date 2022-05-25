@@ -28,7 +28,7 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_historical_measurements.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_historical_pager.xml" value="0.33" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_latest_data.xml" value="0.36666666666666664" />
-        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_latest_measurement.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_latest_measurement.xml" value="0.25" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_logs.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/fragment_logs_measurements.xml" value="0.36666666666666664" />
@@ -43,6 +43,7 @@
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_measurement.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/item_threshold_modification.xml" value="0.365625" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/log_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/marker_date.xml" value="0.14895833333333333" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/measurement_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_drawer.xml" value="0.1" />
         <entry key="..\:/Main/School/4thSemester/SEP4/AND/app/src/main/res/layout/menu_header.xml" value="0.36666666666666664" />
@@ -73,17 +74,6 @@
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/layout/new_activity_main.xml" value="0.2" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/menu/bottom_navigation.xml" value="0.3625" />
         <entry key="..\:/Users/tomut/Desktop/S42022/SEP4/SEP4/AND/app/src/main/res/menu/main_menu.xml" value="0.3625" />
-        <entry key="app/src/main/res/drawable/ic_baseline_edgesensor_high_24.xml" value="0.2245" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3292572463768116" />
-        <entry key="app/src/main/res/layout/area_item.xml" value="0.3292572463768116" />
-        <entry key="app/src/main/res/layout/employee_item.xml" value="0.315625" />
-        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.3292572463768116" />
-        <entry key="app/src/main/res/layout/fragment_add_area.xml" value="0.3292572463768116" />
-        <entry key="app/src/main/res/layout/fragment_employee_areas.xml" value="0.37447916666666664" />
-        <entry key="app/src/main/res/layout/fragment_employees.xml" value="0.3292572463768116" />
-        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.37726449275362317" />
-        <entry key="app/src/main/res/layout/measurement_item.xml" value="0.3292572463768116" />
-        <entry key="app/src/main/res/layout/menu_header.xml" value="0.3292572463768116" />
       </map>
     </option>
   </component>

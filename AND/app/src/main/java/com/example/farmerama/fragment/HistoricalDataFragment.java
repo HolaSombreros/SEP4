@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ public class HistoricalDataFragment extends Fragment {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private Spinner areaSpinner;
+    private DatePicker datePicker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,15 +49,22 @@ public class HistoricalDataFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout_historical);
         viewPager2 = view.findViewById(R.id.viewPager_historical);
         areaSpinner = view.findViewById(R.id.area_spinner_historical);
+        datePicker = view.findViewById(R.id.historical_date);
     }
 
     private void setUpViews() {
+        datePicker.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
+
+        datePicker.setOnDateChangedListener((datePicker, i, i1, i2) ->
+                viewModel.retrieveMeasurements(MeasurementType.values()[tabLayout.getSelectedTabPosition()], String.format("%d-%02d-%02d", i, i1+1, i2)));
+
         HistoricalViewPagerAdapter adapter = new HistoricalViewPagerAdapter(getActivity());
         viewPager2.setAdapter(adapter);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                datePicker.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
                 viewModel.retrieveMeasurements(MeasurementType.values()[position], LocalDate.now().toString());
                 System.out.println(LocalDate.now().toString());
             }
@@ -79,6 +88,7 @@ public class HistoricalDataFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
+                datePicker.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
                 viewModel.retrieveMeasurements(MeasurementType.TEMPERATURE, LocalDate.now().toString());
             }
 

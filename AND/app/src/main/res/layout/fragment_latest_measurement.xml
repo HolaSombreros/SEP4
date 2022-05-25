@@ -9,7 +9,6 @@
         android:id="@+id/latestTemperature_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:enabled="false"
         android:inputType="time"
         android:minWidth="48dp"
@@ -19,42 +18,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/latestTemperature_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/measurement"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/latestTemperature_measurementType"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latestTemperature_time" />
+        app:layout_constraintTop_toBottomOf="@+id/latestTemperature_time">
 
-    <TextView
-        android:id="@+id/latestTemperature_measurementType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:text="@string/measurementType"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        app:layout_constraintBottom_toBottomOf="@+id/latestTemperature_value"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/latestTemperature_value"
-        app:layout_constraintTop_toTopOf="@+id/latestTemperature_value" />
 
-    <app.futured.donut.DonutProgressView
-        android:id="@+id/latestMeasurements_donut"
-        android:layout_width="337dp"
-        android:layout_height="354dp"
-        android:foregroundGravity="center"
-        app:donut_bgLineColor="@color/teal_200"
-        app:donut_gapAngle="270"
-        app:donut_gapWidth="20"
-        app:donut_strokeWidth="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latestTemperature_time" />
+        <TextView
+            android:id="@+id/latestTemperature_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/measurement"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/latestTemperature_measurementType"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/latestTemperature_measurementType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="@string/measurementType"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintBottom_toBottomOf="@+id/latestTemperature_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/latestTemperature_value"
+            app:layout_constraintTop_toTopOf="@+id/latestTemperature_value" />
+
+        <app.futured.donut.DonutProgressView
+            android:id="@+id/latestMeasurements_donut"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:donut_bgLineColor="@color/teal_200"
+            app:donut_gapAngle="270"
+            app:donut_gapWidth="20"
+            app:donut_strokeWidth="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

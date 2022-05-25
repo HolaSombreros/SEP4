@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -24,72 +17,72 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/NameFont"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="30sp"
-        android:textColor="#20284e"
-        android:textStyle="bold"
-        android:gravity="center" />
+        <TextView
+            android:id="@+id/textView"
+            style="@style/NameFont"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="#20284e"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/RegisterEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:ems="10"
-        android:drawableStart="@drawable/custom_email_icon"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:focusable="true"
-        android:nextFocusDown="@id/RegisterFirstName"
-        android:hint="@string/e_mail"
-        android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/RegisterEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:drawableStart="@drawable/custom_email_icon"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/e_mail"
+            android:inputType="textEmailAddress"
+            android:nextFocusDown="@id/RegisterFirstName"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
 
-    <EditText
-        android:id="@+id/RegisterFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:drawableStart="@drawable/custom_name"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:focusable="true"
-        android:nextFocusDown="@id/RegisterLastName"
-        android:hint="@string/first_name"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/RegisterFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/custom_name"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName"
+            android:nextFocusDown="@id/RegisterLastName"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
 
-    <EditText
-        android:id="@+id/RegisterLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:drawableStart="@drawable/custom_name"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:hint="@string/last_name"
-        android:focusable="true"
-        android:nextFocusDown="@id/RegisterPassword"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/RegisterLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/custom_name"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName"
+            android:nextFocusDown="@id/RegisterPassword"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
 
 
-    <EditText
-        android:id="@+id/RegisterPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:drawableStart="@drawable/custom_password_icon"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:focusable="true"
-        android:inputType="textPassword"
-        android:hint="@string/password" />
+        <EditText
+            android:id="@+id/RegisterPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/custom_password_icon"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
 
 
         <Spinner
@@ -103,13 +96,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-        android:id="@+id/registerButton"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/register" />
+            android:id="@+id/registerButton"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/register" />
 
     </LinearLayout>
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

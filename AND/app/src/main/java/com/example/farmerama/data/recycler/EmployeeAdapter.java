@@ -46,8 +46,8 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    userRepository.deleteEmployeeById(userList.get(holder.getPosition()).getId());
-                    userList.remove(holder.getPosition());
+              /*      userRepository.deleteEmployeeById(userList.get(holder.getPosition()).getId());
+                    userList.remove(holder.getPosition());*/
             }
         });
     }
