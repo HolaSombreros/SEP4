@@ -38,7 +38,7 @@ void co2Task_runTask() {
 	if((mh_z19_takeMeassuring()) != MHZ19_OK){
 		ppm = 0;
 		_co2CallBack(ppm);
-	}
+	}	
 		
 	xEventGroupSetBits(_doneEventGroup,
 	BIT_CO2_DONE

@@ -26,18 +26,13 @@ void soundTask_initTask(void* params) {
 }
 
 void soundTask_runTask() {
-	xEventGroupWaitBits(_doneEventGroup,
-	BIT_CO2_DONE,
-	pdFALSE, pdTRUE, portMAX_DELAY
-	);
+	xEventGroupWaitBits(_doneEventGroup, BIT_CO2_DONE, pdFALSE, pdTRUE, portMAX_DELAY);
 	
 	uint16_t sound = sen14262_envelope();
-
+	
 	xQueueSendToBack(_soundQueue, &sound, portMAX_DELAY);
 	
-	xEventGroupSetBits(_doneEventGroup,
-	BIT_SOUND_DONE
-	);
+	xEventGroupSetBits(_doneEventGroup, BIT_SOUND_DONE);
 }
 
 static void _run(void* params) {
