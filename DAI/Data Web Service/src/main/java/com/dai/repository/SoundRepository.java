@@ -16,6 +16,6 @@ public interface SoundRepository
 {
   @Query(nativeQuery = true, value = "SELECT TOP 1 measured_date as measuredDate, sound as value FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC")
   SentMeasurement findFirstSoundMeasuredDateOrderByIdDesc(@Param("area_id")int area_id);
-  @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, sound as value FROM measurement WHERE measurement.area_id = :area_id AND convert(date, measurement.measured_date) = :date ORDER BY measurement_id DESC")
+  @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, sound as value FROM measurement WHERE measurement.area_id = :area_id AND convert(date, measurement.measured_date) = :date ORDER BY measurement_id")
   List<SentMeasurement> getAllMeasurementsByDate(@Param("area_id")int area_id, @Param("date")Date date);
 }
