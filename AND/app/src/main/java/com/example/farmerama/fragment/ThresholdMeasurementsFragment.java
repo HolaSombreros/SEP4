@@ -66,7 +66,6 @@ public class ThresholdMeasurementsFragment extends Fragment {
         button.setOnClickListener(l -> {
             viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
                     Double.parseDouble(upperThresholdValue.getText().toString())));
-            Toast.makeText(getActivity(), "Threshold edited!", Toast.LENGTH_SHORT).show();
 //            if(createThreshold.get()) {
 //                viewModel.createThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
 //                        Double.parseDouble(upperThresholdValue.getText().toString())));

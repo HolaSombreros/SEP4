@@ -1,6 +1,7 @@
 package com.example.farmerama.data.repository;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -88,6 +89,7 @@ public class ThresholdRepository {
             public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                 if (response.isSuccessful()) {
                     thresholds.setValue(response.body().getThreshold());
+                    ToastMessage.setToastMessage("Threshold edited!");
                 } else {
                     ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
@@ -108,6 +110,7 @@ public class ThresholdRepository {
             public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                 if(response.isSuccessful()) {
                     thresholds.setValue(response.body().getThreshold());
+                    ToastMessage.setToastMessage("Threshold created!");
                 }
                 else {
                     ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();

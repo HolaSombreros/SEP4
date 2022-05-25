@@ -26,7 +26,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MainActivityViewModel(Application application) {
         super(application);
         sharedPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
-        userRepository = UserRepository.getInstance();
+        userRepository = UserRepository.getInstance(application);
         thresholdRepository = ThresholdRepository.getInstance();
     }
 

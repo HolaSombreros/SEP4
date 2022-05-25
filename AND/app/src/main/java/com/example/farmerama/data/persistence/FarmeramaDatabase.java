@@ -19,6 +19,7 @@ public abstract class FarmeramaDatabase extends RoomDatabase {
     public abstract MeasurementDAO measurementDAO();
     public abstract ThresholdDAO thresholdDAO();
     public abstract UserDAO userDAO();
+    public abstract BarnDAO barnDAO();
 
     public static synchronized FarmeramaDatabase getInstance(Context context){
         if(instance == null) {
