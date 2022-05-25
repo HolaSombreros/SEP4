@@ -5,8 +5,10 @@ import com.example.farmerama.data.model.response.UserResponse;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -29,4 +31,7 @@ public interface UserApi {
 
     @PUT("{id}")
     Call<UserResponse> updateUser(@Path("id") int id, @Body User user);
+
+    @DELETE("{id}")
+    Call<UserResponse> deleteEmployeeById(@Path("id") int id);
 }

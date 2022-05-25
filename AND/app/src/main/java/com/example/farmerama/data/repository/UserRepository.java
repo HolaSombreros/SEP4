@@ -15,6 +15,7 @@ import com.example.farmerama.data.util.ErrorReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -150,6 +151,30 @@ public class UserRepository {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
+    public void deleteEmployeeById(int id)
+    {
+        UserApi userApi = ServiceGenerator.getUserApi();
+        Call<UserResponse> call = userApi.deleteEmployeeById(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if(response.isSuccessful())
+                {
+                    ToastMessage.setToastMessage("Employee Deleted");
+                }
+                else{
+                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.i("Retrofit","Could not delete the employee.");
             }
         });
     }
