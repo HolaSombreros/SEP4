@@ -1,10 +1,14 @@
 package com.example.farmerama.data.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.TypeConverters;
 
+@TypeConverters
 public enum MeasurementType {
         TEMPERATURE("TEMPERATURE"), HUMIDITY("HUMIDITY"),  CO2("CO2"), SPL("SOUND PRESSURE LEVEL");
     private String type;
+
+    MeasurementType(){}
 
     MeasurementType(String type) {
         this.type = type;
@@ -15,6 +19,16 @@ public enum MeasurementType {
         return type;
     }
 
+    public float getMaximum() {
+        switch (type) {
+            case "TEMPERATURE": return 60;
+            case "HUMIDITY": return 100;
+            case "SOUND PRESSURE LEVEL": return 120;
+            case "CO2": return 3000;
+            default: return 0;
+        }
+    }
+
     public String toUnit() {
         switch (type) {
             case "TEMPERATURE": return "°C";
@@ -23,5 +37,13 @@ public enum MeasurementType {
             case "CO2": return "ppm";
         }
         return "";
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

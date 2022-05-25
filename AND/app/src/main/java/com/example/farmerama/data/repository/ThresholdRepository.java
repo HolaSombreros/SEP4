@@ -96,6 +96,27 @@ public class ThresholdRepository {
         });
     }
 
+    public void createThreshold(int areaId, MeasurementType type, Threshold threshold) {
+        Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().createThreshold(areaId, type.toString(), threshold);
+        call.enqueue(new Callback<ThresholdResponse>() {
+            @Override
+            public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
+                if(response.isSuccessful()) {
+                    thresholds.setValue(response.body().getThreshold());
+                }
+                else {
+                    ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
+                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ThresholdResponse> call, Throwable t) {
+                Log.i("Retrofit", "Could not retrieve data");
+            }
+        });
+    }
+
     public void getAllLogs(int areaId, MeasurementType type, String date ){
         Call<List<LogResponse>> call = ServiceGenerator.getThresholdsApi().getLogs(areaId,type.toString(),date);
         call.enqueue(new Callback<List<LogResponse>>() {

@@ -1,19 +1,28 @@
 package com.example.farmerama.data.model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDateTime;
 
+@Entity(tableName = "threshold_modifications_table")
 public class ThresholdModifications {
-
-    private int id;
+    @PrimaryKey
+    private int modificationId;
+    @Embedded
     private Threshold threshold;
+    @Embedded
     private User user;
     private LocalDateTime changedOn;
     private double oldValue;
     private double newValue;
     private ThresholdLogType type;
 
-    public ThresholdModifications(int id, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
-        this.id = id;
+    public ThresholdModifications(){}
+
+    public ThresholdModifications(int modificationId, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
+        this.modificationId = modificationId;
         this.threshold = threshold;
         this.user = user;
         this.changedOn = changedOn;
@@ -22,12 +31,12 @@ public class ThresholdModifications {
         this.type = type;
     }
 
-    public int getId() {
-        return id;
+    public int getModificationId() {
+        return modificationId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setModificationId(int modificationId) {
+        this.modificationId = modificationId;
     }
 
     public Threshold getThreshold() {

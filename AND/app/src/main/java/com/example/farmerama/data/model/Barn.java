@@ -1,35 +1,42 @@
 package com.example.farmerama.data.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Objects;
 
+@Entity(tableName = "barn_table")
 public class Barn {
-    private int id;
-    private String name;
+    @PrimaryKey
+    private int barnId;
+    private String barnName;
 
-    public Barn(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Barn(){}
+
+    public Barn(int barnId, String name) {
+        this.barnId = barnId;
+        this.barnName = name;
     }
 
-    public int getId() {
-        return id;
+    public int getBarnId() {
+        return barnId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBarnId(int barnId) {
+        this.barnId = barnId;
     }
 
-    public String getName() {
-        return name;
+    public String getBarnName() {
+        return barnName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBarnName(String barnName) {
+        this.barnName = barnName;
     }
 
     @Override
     public String toString() {
-        return name;
+        return barnName;
     }
 
     @Override
@@ -37,6 +44,6 @@ public class Barn {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Barn barn = (Barn) o;
-        return id == barn.id && Objects.equals(name, barn.name);
+        return barnId == barn.barnId && Objects.equals(barnName, barn.barnName);
     }
 }
