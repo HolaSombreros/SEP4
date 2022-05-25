@@ -41,7 +41,7 @@ class MeasurementValidatorTest {
     @Test
     void isTemperatureValueValidValueTooSmall() {
         //Arrange
-        double temperatureToCompare = -15;
+        double temperatureToCompare = -30;
 
         //Act
         boolean temperatureValueValid = validator.isTemperatureValueValid(temperatureToCompare);
@@ -78,7 +78,7 @@ class MeasurementValidatorTest {
     @Test
     void isSoundValueValidValueTooBig() {
         //Arrange
-        int soundToCompare = 140;
+        int soundToCompare = 200;
 
         //Act
         boolean soundValueValid = validator.isSoundValueValid(soundToCompare);
@@ -114,7 +114,7 @@ class MeasurementValidatorTest {
     @Test
     void isCo2ValueValidValueTooSmall() {
         //Arrange
-        int co2Value = 100;
+        int co2Value = 0;
 
         //Act
         boolean co2ValueValid = validator.isCo2ValueValid(co2Value);
