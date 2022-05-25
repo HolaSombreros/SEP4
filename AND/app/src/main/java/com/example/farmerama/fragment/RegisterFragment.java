@@ -45,6 +45,7 @@ public class RegisterFragment extends Fragment {
 
     private void initializeViews(View view) {
         email = view.findViewById(R.id.RegisterEmailAddress);
+        email.requestFocus();
         firstName = view.findViewById(R.id.RegisterFirstName);
         lastName = view.findViewById(R.id.RegisterLastName);
         password = view.findViewById(R.id.RegisterPassword);

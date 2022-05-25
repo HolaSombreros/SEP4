@@ -53,6 +53,8 @@ public class ThresholdMeasurementsFragment extends Fragment {
         viewModel.getThresholds().observe(getViewLifecycleOwner(), thresholds -> {
             if(thresholds != null) {
                 upperThresholdValue.setText(String.valueOf(thresholds.getMaximum()));
+                upperThresholdValue.requestFocus();
+                upperThresholdValue.setSelection(upperThresholdValue.getText().length());
                 lowerThresholdValue.setText(String.valueOf(thresholds.getMinimum()));
                 createThreshold.set(false);
             }

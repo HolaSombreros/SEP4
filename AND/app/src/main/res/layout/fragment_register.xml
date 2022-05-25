@@ -41,6 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
+        android:drawableStart="@drawable/custom_email_icon"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:focusable="true"
+        android:nextFocusDown="@id/RegisterFirstName"
         android:hint="@string/e_mail"
         android:inputType="textEmailAddress" />
 
@@ -50,6 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:drawableStart="@drawable/custom_name"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:focusable="true"
+        android:nextFocusDown="@id/RegisterLastName"
         android:hint="@string/first_name"
         android:inputType="textPersonName" />
 
@@ -59,7 +69,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:drawableStart="@drawable/custom_name"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:hint="@string/last_name"
+        android:focusable="true"
+        android:nextFocusDown="@id/RegisterPassword"
         android:inputType="textPersonName" />
 
 
@@ -69,6 +84,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:drawableStart="@drawable/custom_password_icon"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:focusable="true"
         android:inputType="textPassword"
         android:hint="@string/password" />
 
