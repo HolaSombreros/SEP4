@@ -16,6 +16,7 @@ FAKE_VOID_FUNC(uplinkMessageBuilder_setTemperatureData, int16_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setCO2Data, uint16_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setSoundData, uint16_t);
 
+
 class FarmeramaTest : public ::testing::Test {
 protected:
 	void SetUp() override {
@@ -37,7 +38,7 @@ protected:
 };
 
 TEST_F(FarmeramaTest, Create_CallsTaskCreate) {
-	farmerama_create(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+	farmerama_create(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 
 	EXPECT_EQ(1, xTaskCreate_fake.call_count);
 }
@@ -143,3 +144,31 @@ TEST_F(FarmeramaTest, testVerifyxTaskDelayUntilIsCalled) {
 
 	EXPECT_EQ(pdMS_TO_TICKS(300000UL), xTaskDelayUntil_fake.arg1_val);
 }
+
+//BaseType_t voidfunc1outparam_custom_fake1(QueueHandle_t handle, void* a, TickType_t xTicksToWait)
+//{
+//	int num = 15;
+//	handle = nullptr;
+//	a = &num;
+//	xTicksToWait = NULL;
+//	return NULL;
+//}
+
+//void voidfunc1outparam_custom_fake1(uint16_t* a)
+//{
+//	*a = 15;
+//}
+
+//TEST_F(FarmeramaTest, testUplinkMessageBuilder_setTemperatureDataReceivesCorrectData) {
+//	int16_t t = 15;
+//
+//	farmerama_runTask;
+//	BaseType_t (*custom_fakes[])(QueueHandle_t, void*, TickType_t) = {voidfunc1outparam_custom_fake1};
+//
+//	SET_CUSTOM_FAKE_SEQ(xQueueReceive, custom_fakes, 1);
+//
+//	xQueueReceive_fake.arg1_val;
+//
+//	//EXPECT_EQ(test, 15);
+//
+//}

@@ -8,7 +8,7 @@
 #include <task.h>
 
 #define TASK_NAME "FarmeramaTask"
-#define TASK_INTERVAL 3000UL // Default value = 300000UL (5 minutes)
+#define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
 #define TASK_PRIORITY configMAX_PRIORITIES - 1
 #define PORT 1
 
@@ -71,7 +71,7 @@ void farmerama_runTask(void) {
 	uplinkMessageBuilder_setSoundData(sound);
 	
 	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
-	if (message.portNo != PORT) {
+	if (message.portNo == PORT) {
 		xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
 	}
 	

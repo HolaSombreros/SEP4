@@ -110,3 +110,5 @@ fabric.properties
 
 *.atsuo
 IoT.componentinfo.xml
+IoT/Tests/packages/
+IoT/Tests/.vs/

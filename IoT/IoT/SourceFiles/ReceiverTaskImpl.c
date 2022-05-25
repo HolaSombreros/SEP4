@@ -28,7 +28,9 @@ void receiverTask_runTask(void){
 	lora_driver_payload_t payload;
 	// TODO - take most recent payload and clear all old ones?
 	xMessageBufferReceive(_receiverBuffer, &payload, sizeof(lora_driver_payload_t), portMAX_DELAY);
+	printf("I have received message from the buffer");
 	if(payload.len == 15){
+		printf("I have received the message and the message length is %d", payload.len);
 		downlinkMessageDeconstructor_deconstructDownlinkMessage(payload);
 	}
 }
