@@ -71,7 +71,7 @@ void farmerama_runTask(void) {
 	uplinkMessageBuilder_setSoundData(sound);
 	
 	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
-	if (message.portNo != PORT) {
+	if (message.portNo == PORT) {
 		xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
 	}
 	

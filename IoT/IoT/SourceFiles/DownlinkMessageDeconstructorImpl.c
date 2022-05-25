@@ -5,6 +5,7 @@
 
 static SemaphoreHandle_t _mutex;
 
+// TODO - define default values.
 static uint16_t _humidityLOW;
 static int16_t _temperatureLOW;
 static uint16_t _ppmLOW;
