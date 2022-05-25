@@ -10,7 +10,7 @@ public class ThresholdValidator {
         double minimum = threshold.getMinimum();
         double maximum = threshold.getMaximum();
 
-        if (maximum < minimum) {
+        if (maximum <= minimum) {
             throw new Exception("Threshold maximum value must be bigger than minimum!");
         }
 

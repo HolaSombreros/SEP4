@@ -92,4 +92,9 @@ public class ThresholdModelImpl implements ThresholdModel{
     public List<ThresholdLogs> getAllByDate(LocalDate date) throws Exception {
         return Helper.await(thresholdLogDao.getAllByDate(date));
     }
+
+    @Override
+    public Threshold findById(int id) throws Exception {
+        return Helper.await(thresholdDao.getById(id));
+    }
 }

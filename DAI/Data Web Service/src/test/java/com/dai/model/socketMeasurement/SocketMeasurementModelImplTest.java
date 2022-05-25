@@ -38,11 +38,6 @@ class SocketMeasurementModelImplTest {
     private ThresholdDao thresholdDao;
 
     @Test
-    public void data() {
-        assertTrue(true);
-    }
-
-    @Test
     public void saveSocketData() throws Exception {
         //Arrange
         when(measurementDao.saveMeasurement(anyObject())).then(i -> new AsyncResult<>(i.getArguments()[0]));
