@@ -1,10 +1,10 @@
 package com.dai.model.socket;
 
+import com.dai.controllers.DownLinkController;
 import com.dai.controllers.WebsocketClientController;
 import com.dai.dao.area.AreaDao;
 import com.dai.dao.threshold.ThresholdDao;
 import com.dai.helpers.Helper;
-import com.dai.model.socket.ISocketService;
 import com.dai.shared.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 import java.math.BigInteger;
 @Component
 public class SocketService implements ISocketService {
-    private WebsocketClientController clientController;
+    private DownLinkController downlinkController;
     private AreaDao areaDao;
     private ThresholdDao thresholdDao;
     private Gson gson;
 
     @Autowired
-    public SocketService(WebsocketClientController clientController, AreaDao areaDao, ThresholdDao thresholdDao) {
-        this.clientController = clientController;
+    public SocketService(DownLinkController downlinkController, AreaDao areaDao, ThresholdDao thresholdDao) {
+        this.downlinkController = downlinkController;
         this.areaDao = areaDao;
         this.thresholdDao = thresholdDao;
         gson = new Gson();
@@ -33,7 +33,7 @@ public class SocketService implements ISocketService {
             String data = parseValuesToString(areaId);
             Area area = Helper.await(areaDao.read(areaId));
             DownLink downLink = new DownLink("tx", area.getHardwareId(), 1, data);
-            clientController.sendDownLink(gson.toJson(downLink));
+            downlinkController.sendDownLink(gson.toJson(downLink));
         }
         catch (Exception e){
             throw new Exception(e.getMessage());

@@ -7,15 +7,12 @@ import com.dai.dao.area.AreaDao;
 import com.dai.dao.measurement.MeasurementDao;
 import com.dai.helpers.MeasurementValidator;
 import com.dai.shared.*;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class SocketMeasurementModelImpl implements SocketMeasurementModel {
@@ -81,7 +78,6 @@ public class SocketMeasurementModelImpl implements SocketMeasurementModel {
             }
         }
 
-        System.out.println("Received data: " + data.toString());
         System.out.println("Parsed data: " + measurement.toString());
 
         return Helper.await(measurementDao.saveMeasurement(measurement));
