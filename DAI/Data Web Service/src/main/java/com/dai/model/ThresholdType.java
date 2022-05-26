@@ -1,7 +1,8 @@
 package com.dai.model;
 
 public enum ThresholdType {
-    TEMPERATURE("Temperature"), HUMIDITY("Humidity"), CO2("CO₂"), SPL("Sound Pressure Level");
+    TEMPERATURE("Temperature"), HUMIDITY("Humidity"), CO2("CO₂"), SOUND("Sound");
+
 
     private String type;
 

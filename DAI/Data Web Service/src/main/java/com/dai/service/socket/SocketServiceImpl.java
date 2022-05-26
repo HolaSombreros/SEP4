@@ -47,7 +47,7 @@ public class SocketServiceImpl implements SocketService {
         Threshold temp = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.TEMPERATURE));
         Threshold humidity = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.HUMIDITY));
         Threshold co2 = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.CO2));
-        Threshold spl = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.SPL));
+        Threshold spl = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.SOUND));
         if(humidity != null){
             int max = (int)(humidity.getMaximum()*10);
             int min = (int)(humidity.getMinimum()*10);

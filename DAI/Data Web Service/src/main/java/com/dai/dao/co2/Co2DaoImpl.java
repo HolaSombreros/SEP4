@@ -1,5 +1,7 @@
 package com.dai.dao.co2;
 
+import com.dai.model.SentThresholdLog;
+import com.dai.model.ThresholdType;
 import com.dai.repository.Co2Repository;
 import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,10 @@ public class Co2DaoImpl implements Co2Dao {
 
     }
 
-
+    @Override
+    public Future<List<SentThresholdLog>> getAllExceedingThresholdChanges(int areaId, ThresholdType type, LocalDate date) {
+        List<SentThresholdLog> max = co2Repository.getAllExceedingMax(areaId, type.getType(), Date.valueOf(date));
+        max.addAll(co2Repository.getAllExceedingMin(areaId, type.getType(), Date.valueOf(date)));
+        return new AsyncResult<>(max);
+    }
 }

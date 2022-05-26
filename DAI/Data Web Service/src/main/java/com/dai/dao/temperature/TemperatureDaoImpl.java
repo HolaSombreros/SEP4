@@ -1,5 +1,7 @@
 package com.dai.dao.temperature;
 
+import com.dai.model.SentThresholdLog;
+import com.dai.model.ThresholdType;
 import com.dai.repository.TemperatureRepository;
 import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +33,12 @@ public class TemperatureDaoImpl implements TemperatureDao{
     @Override
     public Future<List<SentMeasurement>> readAllByAreaIdAndDate(int areaId, LocalDate date) {
         return new AsyncResult<>(repository.getAllByAreaAndDate(areaId, Date.valueOf(date)));
+    }
+
+    @Override
+    public Future<List<SentThresholdLog>> getAllExceedingThresholdChanges(int areaId, ThresholdType type, LocalDate date) {
+        List<SentThresholdLog> max = repository.getAllExceedingMax(areaId, type.getType(), Date.valueOf(date));
+        max.addAll(repository.getAllExceedingMin(areaId, type.getType(), Date.valueOf(date)));
+        return new AsyncResult<>(max);
     }
 }

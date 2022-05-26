@@ -25,7 +25,7 @@ public class ThresholdValidator {
                     exception("Humidity");
                 break;
 
-            case SPL:
+            case SOUND:
                 if (!(isSoundValueValid((int) minimum) && isSoundValueValid((int) maximum)))
                     exception("Sound");
                 break;
