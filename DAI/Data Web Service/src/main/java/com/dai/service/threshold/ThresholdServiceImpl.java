@@ -1,9 +1,12 @@
 package com.dai.service.threshold;
 
+import com.dai.dao.MeasurementDaoFactory;
 import com.dai.dao.area.AreaDao;
+import com.dai.dao.measurement.MeasurementDao;
 import com.dai.dao.threshold.ThresholdDao;
 import com.dai.dao.thresholdLog.ThresholdLogDao;
 import com.dai.dao.user.UserDao;
+import com.dai.exceptions.BadRequestException;
 import com.dai.helpers.Helper;
 import com.dai.helpers.ThresholdValidator;
 import com.dai.model.*;
@@ -23,19 +26,23 @@ public class ThresholdServiceImpl implements ThresholdService {
     private ThresholdLogDao thresholdLogDao;
     private UserDao userDao;
     private ThresholdValidator thresholdValidator;
+    private MeasurementDaoFactory factory;
 
     @Autowired
-    public ThresholdServiceImpl(ThresholdDao thresholdDao, AreaDao areaDao, ThresholdLogDao thresholdLogDao, UserDao userDao, ThresholdValidator thresholdValidator) {
+    public ThresholdServiceImpl(ThresholdDao thresholdDao, AreaDao areaDao, ThresholdLogDao thresholdLogDao, UserDao userDao, ThresholdValidator thresholdValidator, MeasurementDaoFactory factory) {
         this.thresholdDao = thresholdDao;
         this.areaDao = areaDao;
         this.thresholdLogDao = thresholdLogDao;
         this.userDao = userDao;
         this.thresholdValidator = thresholdValidator;
+        this.factory = factory;
     }
 
     @Override
     public Threshold readByAreaIdAndType(int areaId, ThresholdType type) throws Exception {
-        return Helper.await(thresholdDao.readByAreaIdAndType(areaId, type));
+        Threshold threshold = Helper.await(thresholdDao.readByAreaIdAndType(areaId, type));
+        if(threshold!= null) return threshold;
+        else throw new Exception("Threshold doesn't exist");
     }
 
     @Override
@@ -82,10 +89,17 @@ public class ThresholdServiceImpl implements ThresholdService {
 
     @Override
     public List<SentThresholdLog> readAllExceedingLogsByTypeAndAreaIdAndDate(int areaId, ThresholdType type, LocalDate date) throws Exception {
-        List<SentThresholdLog> min = Helper.await(thresholdDao.readAllExceedingMinByAreaIdAndTypeAndDate(areaId, type, date));
-        List<SentThresholdLog> max = Helper.await(thresholdDao.readAllExceedingMaxByAreaIdAndTypeAndDate(areaId, type, date));
-        max.addAll(min);
-        return max;
+       switch (type){
+           case TEMPERATURE:
+               return Helper.await(factory.getTemperatureDao().getAllExceedingThresholdChanges(areaId, type, date));
+           case HUMIDITY:
+               return Helper.await(factory.getHumidityDao().getAllExceedingThresholdChanges(areaId, type, date));
+           case CO2:
+               return Helper.await(factory.getCo2Dao().getAllExceedingThresholdChanges(areaId, type, date));
+           case SOUND:
+               return Helper.await(factory.getSoundDao().getAllExceedingThresholdChanges(areaId, type, date));
+           default: throw new Exception("Oops, something went wrong");
+       }
     }
 
     @Override

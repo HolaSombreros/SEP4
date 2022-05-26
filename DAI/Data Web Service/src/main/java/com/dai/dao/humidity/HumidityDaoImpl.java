@@ -1,5 +1,7 @@
 package com.dai.dao.humidity;
 
+import com.dai.model.SentThresholdLog;
+import com.dai.model.ThresholdType;
 import com.dai.repository.HumidityRepository;
 import com.dai.model.SentMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +36,12 @@ public class HumidityDaoImpl implements HumidityDao{
     @Override
     public Future<List<SentMeasurement>> readAllByDateAndAreaId(int areaId, LocalDate date) {
         return new AsyncResult<>(humidityRepository.getAllByAreaAndDate(areaId, Date.valueOf(date)));
+    }
+
+    @Override
+    public Future<List<SentThresholdLog>> getAllExceedingThresholdChanges(int areaId, ThresholdType type, LocalDate date) {
+        List<SentThresholdLog> max = humidityRepository.getAllExceedingMax(areaId, type.getType(), Date.valueOf(date));
+        max.addAll(humidityRepository.getAllExceedingMin(areaId, type.getType(), Date.valueOf(date)));
+        return new AsyncResult<>(max);
     }
 }

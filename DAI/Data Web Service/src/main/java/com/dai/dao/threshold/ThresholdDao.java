@@ -11,8 +11,6 @@ import com.dai.model.Threshold;
 
 public interface ThresholdDao {
 
-    Future<List<SentThresholdLog>> readAllExceedingMaxByAreaIdAndTypeAndDate(int areaId, ThresholdType type, LocalDate date);
-    Future<List<SentThresholdLog>> readAllExceedingMinByAreaIdAndTypeAndDate(int areaId, ThresholdType type, LocalDate date);
     Future<Threshold> readByAreaIdAndType(int areaId, ThresholdType type);
     Future<Threshold> create(Threshold threshold);
     Future<Threshold> update(Threshold toThreshold) throws Exception;

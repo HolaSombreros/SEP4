@@ -19,7 +19,6 @@ import java.util.concurrent.Future;
 public class ThresholdDaoImpl implements ThresholdDao{
 
     private ThresholdRepository repository;
-
     @Autowired
     public ThresholdDaoImpl(ThresholdRepository repository) {
         this.repository = repository;
@@ -33,16 +32,6 @@ public class ThresholdDaoImpl implements ThresholdDao{
     @Override
     public Future<Threshold> create(Threshold threshold) {
         return new AsyncResult<>(repository.save(threshold));
-    }
-
-    @Override
-    public Future<List<SentThresholdLog>> readAllExceedingMaxByAreaIdAndTypeAndDate(int areaId, ThresholdType type, LocalDate date) {
-        return new AsyncResult<>(repository.getAllExceedingMax(areaId, type.getType(), Date.valueOf(date)));
-    }
-
-    @Override
-    public Future<List<SentThresholdLog>> readAllExceedingMinByAreaIdAndTypeAndDate(int areaId, ThresholdType type, LocalDate date) {
-        return new AsyncResult<>(repository.getAllExceedingMin(areaId, type.getType(), Date.valueOf(date)));
     }
 
     @Override
