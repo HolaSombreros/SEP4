@@ -22,6 +22,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private SharedPreferences sharedPreferences;
     private ThresholdRepository thresholdRepository;
+    private boolean logged;
 
     public MainActivityViewModel(Application application) {
         super(application);
@@ -54,5 +55,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public LiveData<List<LogObj>> getTodayLogs() {
         return thresholdRepository.getLatestLogs();
+    }
+
+    public void setLogged(boolean b) {
+        logged = b;
+    }
+
+    public boolean isLogged() {
+        return logged;
     }
 }
