@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+        navController.navigate(item.getItemId());
+        return true;
     }
 }

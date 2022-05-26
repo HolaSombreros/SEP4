@@ -17,8 +17,8 @@ public interface IBarnDAO {
     @Insert
     void createArea(Barn barn);
 
-    @Delete
-    void removeArea(Barn barn);
+    @Query("DELETE FROM barn_table")
+    void removeAllBarns();
 
     @Update
     void editArea(Barn barn);

@@ -28,7 +28,7 @@ public interface IAreaDAO {
     @Query("SELECT * FROM area_table")
     LiveData<List<Area>> getAreas();
 
-//    @Query("SELECT * FROM area_table WHERE id = (:id)")
-//    LiveData<Area> getAreaById(int id);
+    @Query("SELECT * FROM area_table WHERE id = (:id)")
+    LiveData<Area> getAreaById(int id);
 
 }
