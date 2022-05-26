@@ -47,8 +47,8 @@ public class TemperatureDaoImpl implements TemperatureDao{
 
     @Override
     public Future<List<NotificationLogs>> getAllNotificationLogs() {
-        List<NotificationLogs> max = repository.getAllMax(Timestamp.valueOf(LocalDateTime.now()), ThresholdType.TEMPERATURE.getType());
-        max.addAll(repository.getAllMin(Timestamp.valueOf(LocalDateTime.now()),ThresholdType.TEMPERATURE.getType()));
+        List<NotificationLogs> max = repository.getAllMax(ThresholdType.TEMPERATURE.getType());
+        max.addAll(repository.getAllMin(ThresholdType.TEMPERATURE.getType()));
         return new AsyncResult<>(max);
     }
 }

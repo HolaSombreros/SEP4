@@ -49,8 +49,8 @@ public class HumidityDaoImpl implements HumidityDao{
     }
     @Override
     public Future<List<NotificationLogs>> getAllNotificationLogs() {
-        List<NotificationLogs> max = humidityRepository.getAllMax(Timestamp.valueOf(LocalDateTime.now()), ThresholdType.TEMPERATURE.getType());
-        max.addAll(humidityRepository.getAllMin(Timestamp.valueOf(LocalDateTime.now()),ThresholdType.TEMPERATURE.getType()));
+        List<NotificationLogs> max = humidityRepository.getAllMax(ThresholdType.HUMIDITY.getType());
+        max.addAll(humidityRepository.getAllMin(ThresholdType.HUMIDITY.getType()));
         return new AsyncResult<>(max);
     }
 }

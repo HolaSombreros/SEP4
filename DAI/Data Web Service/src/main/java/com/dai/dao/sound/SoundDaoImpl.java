@@ -52,8 +52,8 @@ public class SoundDaoImpl implements SoundDao
   }
   @Override
   public Future<List<NotificationLogs>> getAllNotificationLogs() {
-    List<NotificationLogs> max = repository.getAllMax(Timestamp.valueOf(LocalDateTime.now()), ThresholdType.TEMPERATURE.getType());
-    max.addAll(repository.getAllMin(Timestamp.valueOf(LocalDateTime.now()),ThresholdType.TEMPERATURE.getType()));
+    List<NotificationLogs> max = repository.getAllMax(ThresholdType.SOUND.getType());
+    max.addAll(repository.getAllMin(ThresholdType.SOUND.getType()));
     return new AsyncResult<>(max);
   }
 }
