@@ -1,5 +1,6 @@
 package com.example.farmerama.data.repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -10,11 +11,15 @@ import com.example.farmerama.data.adapter.MeasurementApiAdapter;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
+import com.example.farmerama.data.persistence.FarmeramaDatabase;
+import com.example.farmerama.data.persistence.IMeasurementDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,15 +31,25 @@ public class MeasurementRepository {
     private MutableLiveData<List<Measurement>> measurements;
     private static MeasurementRepository instance;
     private MeasurementApiAdapterInterface adapter;
+    private final ExecutorService executorService;
+    private final FarmeramaDatabase database;
+    private IMeasurementDAO measurementDAO;
+    private LiveData<List<Measurement>> measurementsRoom;
 
-    private MeasurementRepository() {
+
+    private MeasurementRepository(Application application) {
         measurements = new MutableLiveData<>();
         adapter = new MeasurementApiAdapter();
+        executorService = Executors.newFixedThreadPool(5);
+        database = FarmeramaDatabase.getInstance(application);
+        measurementDAO = database.measurementDAO();
+        measurementsRoom = measurementDAO.getMeasurements();
+
     }
 
-    public static MeasurementRepository getInstance() {
+    public static MeasurementRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new MeasurementRepository();
+            instance = new MeasurementRepository(application);
         }
         return instance;
     }
@@ -50,9 +65,11 @@ public class MeasurementRepository {
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
                 List<Measurement> list = new ArrayList<>();
+                executorService.execute(measurementDAO::removeMeasurements);
                 if (response.isSuccessful()) {
                     for (MeasurementResponse measurement : response.body()) {
                         list.add(measurement.getMeasurement(type));
+                        executorService.execute(() -> measurementDAO.createMeasurement(measurement.getMeasurement(type)));
                     }
                     if (list.size() != 0) {
                         measurements.setValue(list);
