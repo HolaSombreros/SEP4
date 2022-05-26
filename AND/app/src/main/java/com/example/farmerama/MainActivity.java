@@ -11,8 +11,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.SwitchPreference;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+import androidx.work.impl.model.Preference;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -70,9 +72,6 @@ public class MainActivity extends AppCompatActivity {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
 
-        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.MINUTES).build();
-        WorkManager.getInstance(this).enqueue(request);
-
         ToastMessage.getToastMessage().observe(this, toast -> {
             if (!toast.isEmpty())
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.getTodayLogs().observe(this, logs -> {
             for (LogObj log : logs) {
-                // TODO check if user is logged in and if notifications on
                 publishNotification(log);
             }
         });
@@ -134,11 +132,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLoggedInUser() {
+        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.MINUTES).build();
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
-                // TODO when they log in the first time, set notifications on
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
+
+                if(viewModel.isGettingNotifications())
+                    WorkManager.getInstance(this).enqueue(request);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
@@ -157,19 +158,23 @@ public class MainActivity extends AppCompatActivity {
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);
                 viewModel.setLogged(true);
-                invalidateOptionsMenu();
-            } else {
+            }
+
+            else {
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(false);
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
                 navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
 
+                WorkManager.getInstance(this).cancelAllWork();
+
                 viewModel.removeLoggedInUser();
                 navController.navigate(R.id.loginFragment);
                 viewModel.setLogged(false);
-                invalidateOptionsMenu();
             }
+
+            invalidateOptionsMenu();
         });
     }
 
