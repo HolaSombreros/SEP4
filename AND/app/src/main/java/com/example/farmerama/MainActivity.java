@@ -13,16 +13,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +30,11 @@ import com.example.farmerama.data.model.LogObj;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
 
@@ -100,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 R.id.logsFragment,
                 R.id.thresholdDataFragment,
                 R.id.thresholdModificationFragment,
-                R.id.registerFragment)
+                R.id.registerFragment,
+                R.id.accountFragment,
+                R.id.editAccountFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -142,10 +148,18 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
+                ImageView profilePicture = findViewById(R.id.imageView);
                 if(usernameHeader != null && emailHeader != null)
                 {
                     usernameHeader.setText(loggedInUser.getName());
                     emailHeader.setText(loggedInUser.getEmail());
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/"+loggedInUser.getUserId()+"/profile.jpg");
+                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Picasso.get().load(uri).into(profilePicture);
+                        }
+                    });
                 }
 
 
