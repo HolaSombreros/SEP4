@@ -3,7 +3,7 @@ package com.example.farmerama.data.model.response;
 import com.example.farmerama.data.model.Area;
 
 public class AreaResponse {
-    private int id;
+    private int areaId;
     private BarnResponse barn;
     private String name;
     private String description;
@@ -11,6 +11,6 @@ public class AreaResponse {
     private String hardwareId;
     
     public Area getArea(){
-        return new Area(id, barn.getBarn(), name, description,numberOfPigs, hardwareId);
+        return new Area(areaId, barn.getBarn(), name, description,numberOfPigs, hardwareId);
     }
 }

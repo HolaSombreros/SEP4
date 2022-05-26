@@ -1,5 +1,7 @@
 package com.example.farmerama.data.model;
 
+import static java.time.LocalDateTime.parse;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -26,7 +28,8 @@ public class Measurement {
     }
     public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
-        setMeasuredDate(measuredDate);
+        this.measuredDate = measuredDate;
+        formatDate(measuredDate);
         this.measurementType = type;
     }
 
@@ -92,7 +95,11 @@ public class Measurement {
     }
 
     public void setMeasuredDate(String measuredDate) {
-        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
+        this.measuredDate = measuredDate;
+    }
+
+    public void formatDate(String measuredDate) {
+        LocalDateTime datetime = parse(measuredDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = datetime.format(myFormatObj);
         this.measuredDate = formattedDate;

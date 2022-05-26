@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
-        viewModel.retrieveEmployees();
+        //viewModel.retrieveEmployees();
+        viewModel.retrieveBarns();
         NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for the notification regarding exceeding thresholds");
         NotificationManager notificationManager = getSystemService(NotificationManager.class);

@@ -3,6 +3,7 @@ package com.example.farmerama.data.persistence;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.farmerama.data.model.Measurement;
@@ -13,7 +14,7 @@ import java.util.List;
 @Dao
 public interface IMeasurementDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void createMeasurement(Measurement measurement);
 
     @Query("SELECT * FROM measurement_table")

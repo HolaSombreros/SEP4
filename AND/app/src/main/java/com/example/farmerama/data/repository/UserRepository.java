@@ -37,7 +37,7 @@ public class UserRepository {
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
     private IUserDAO userDAO;
-    private MutableLiveData<List<User>> usersRoom;
+    private LiveData<List<User>> usersRoom;
 
 
     private UserRepository(Application application) {
@@ -48,9 +48,8 @@ public class UserRepository {
         database = FarmeramaDatabase.getInstance(application);
         userDAO = database.userDAO();
         usersRoom  = new MutableLiveData<>();
-        usersRoom.setValue(userDAO.getAllEmployees().getValue());
+        usersRoom = userDAO.getAllEmployees();
         executorService = Executors.newFixedThreadPool(5);
-        Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }
 
     public static synchronized UserRepository getInstance(Application application) {
@@ -69,7 +68,7 @@ public class UserRepository {
     }
 
     public LiveData<List<User>> getAllEmployees() {
-        return users;
+        return userDAO.getAllEmployees();
     }
 
     public LiveData<User> getEmployee() {
@@ -83,14 +82,14 @@ public class UserRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
-                List<User> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    executorService.execute(userDAO::removeUsers);
-                    for(UserResponse user : response.body()) {
-                        list.add(user.getUser());
-                        executorService.execute(() -> userDAO.registerUser(user.getUser()));
-                    }
-                    users.setValue(list);
+                    //executorService.submit(userDAO::removeUsers);
+                    executorService.execute(() -> {
+                        for(UserResponse user : response.body()) {
+                            userDAO.registerUser(user.getUser());
+                        }
+                    });
+
                 }
                 else {
                     ErrorReader<List<UserResponse>> responseErrorReader = new ErrorReader<>();

@@ -44,7 +44,6 @@ public class MeasurementRepository {
         database = FarmeramaDatabase.getInstance(application);
         measurementDAO = database.measurementDAO();
         measurementsRoom = measurementDAO.getMeasurements();
-
     }
 
     public static MeasurementRepository getInstance(Application application) {
@@ -55,7 +54,7 @@ public class MeasurementRepository {
     }
 
     public LiveData<List<Measurement>> getMeasurements() {
-        return measurements;
+        return measurementDAO.getMeasurements();
     }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
@@ -64,16 +63,19 @@ public class MeasurementRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
-                List<Measurement> list = new ArrayList<>();
+                //List<Measurement> list = new ArrayList<>();
                 //executorService.execute(measurementDAO::removeMeasurements);
                 if (response.isSuccessful()) {
-                    for (MeasurementResponse measurement : response.body()) {
-                        list.add(measurement.getMeasurement(type));
-                        //executorService.execute(() -> measurementDAO.createMeasurement(measurement.getMeasurement(type)));
-                    }
-                    if (list.size() != 0) {
-                        measurements.setValue(list);
-                    }
+                    executorService.execute(() -> {
+                        for (MeasurementResponse measurement : response.body()) {
+                            //list.add(measurement.getMeasurement(type));
+                            measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                        }
+                    });
+
+//                    if (list.size() != 0) {
+//                        measurements.setValue(list);
+//                    }
                 } else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
