@@ -30,8 +30,7 @@ public class AreaRepository {
     private static AreaRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private IAreaDAO areaDAO;
-    private LiveData<List<Area>> areasRoom;
+    private  IAreaDAO areaDAO;
 
     private AreaRepository(Application application) {
         areas = new MutableLiveData<>();
@@ -39,7 +38,6 @@ public class AreaRepository {
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
         areaDAO = database.areaDAO();
-        areasRoom = areaDAO.getAreas();
     }
 
     public static AreaRepository getInstance(Application application) {
@@ -54,7 +52,7 @@ public class AreaRepository {
     }
 
     public LiveData<List<Area>> getAreas(){
-        return areas;
+        return areaDAO.getAreas();
     }
 
     public void retrieveAreas() {
@@ -65,13 +63,12 @@ public class AreaRepository {
             @Override
             public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
-                    List<Area> list = new ArrayList<>();
                     executorService.execute(areaDAO::removeAreas);
+                    executorService.execute(database.barnDAO()::removeAllBarns);
+
                     for(AreaResponse areaResponse : response.body()) {
-                        list.add(areaResponse.getArea());
                         executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));
                     }
-                    areas.setValue(list);
                 }
                 else {
                     ErrorReader<List<AreaResponse>> responseErrorReader = new ErrorReader<>();
@@ -82,8 +79,6 @@ public class AreaRepository {
             @Override
             public void onFailure(Call<List<AreaResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
-                //areas.postValue(areaDAO.getAreas().getValue());
-                areas.setValue(areasRoom.getValue());
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.farmerama;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.impl.model.Preference;
 
 import com.example.farmerama.fragment.SettingsFragment;
 

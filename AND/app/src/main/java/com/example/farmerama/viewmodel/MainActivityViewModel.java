@@ -20,13 +20,15 @@ import java.util.List;
 public class MainActivityViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences loginPreferences;
+    private SharedPreferences notificationPreferences;
     private ThresholdRepository thresholdRepository;
     private boolean logged;
 
     public MainActivityViewModel(Application application) {
         super(application);
-        sharedPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        loginPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        notificationPreferences = application.getSharedPreferences("Notification", Context.MODE_PRIVATE);
         userRepository = UserRepository.getInstance(application);
         thresholdRepository = ThresholdRepository.getInstance();
     }
@@ -44,13 +46,13 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void saveLoggedInUser(User user) {
-        sharedPreferences.edit().putString("userEmail", user.getEmail()).apply();
-        sharedPreferences.edit().putString("userPassword", user.getPassword()).apply();
+        loginPreferences.edit().putString("userEmail", user.getEmail()).apply();
+        loginPreferences.edit().putString("userPassword", user.getPassword()).apply();
     }
 
     public void removeLoggedInUser() {
-        sharedPreferences.edit().putString("userEmail", "null").apply();
-        sharedPreferences.edit().putString("userPassword", "null").apply();
+        loginPreferences.edit().putString("userEmail", "null").apply();
+        loginPreferences.edit().putString("userPassword", "null").apply();
     }
 
     public LiveData<List<LogObj>> getTodayLogs() {
@@ -63,5 +65,9 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public boolean isLogged() {
         return logged;
+    }
+
+    public boolean isGettingNotifications() {
+        return notificationPreferences.getBoolean("notification", false);
     }
 }
