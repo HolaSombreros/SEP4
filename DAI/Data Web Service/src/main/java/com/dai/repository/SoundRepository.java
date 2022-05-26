@@ -35,11 +35,11 @@ public interface SoundRepository
     List<SentThresholdLog> getAllExceedingMin(@Param("area_id") int area_id, @Param("type") String type, @Param("date") Date date);
 
     @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT sound as value, minimum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
-            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , -5, :date) AND type like :type")
-    List<NotificationLogs> getAllMin(@Param("date") Timestamp timestamp, @Param("type")String type);
+            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , -5, CURRENT_TIMESTAMP) AND type like :type")
+    List<NotificationLogs> getAllMin(@Param("type")String type);
 
     @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT sound as value, maximum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
-            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , -5, :date) AND type like :type")
-    List<NotificationLogs> getAllMax(@Param("date") Timestamp timestamp, @Param("type")String type);
+            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , -5, CURRENT_TIMESTAMP) AND type like :type")
+    List<NotificationLogs> getAllMax(@Param("type")String type);
 
 }

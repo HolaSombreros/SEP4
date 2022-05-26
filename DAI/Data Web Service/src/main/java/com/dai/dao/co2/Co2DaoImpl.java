@@ -49,8 +49,8 @@ public class Co2DaoImpl implements Co2Dao {
 
     @Override
     public Future<List<NotificationLogs>> getAllNotificationLogs() {
-        List<NotificationLogs> max = co2Repository.getAllMax(Timestamp.valueOf(LocalDateTime.now()), ThresholdType.TEMPERATURE.getType());
-        max.addAll(co2Repository.getAllMin(Timestamp.valueOf(LocalDateTime.now()),ThresholdType.TEMPERATURE.getType()));
+        List<NotificationLogs> max = co2Repository.getAllMax(ThresholdType.CO2.getType());
+        max.addAll(co2Repository.getAllMin(ThresholdType.CO2.getType()));
         return new AsyncResult<>(max);
     }
 }
