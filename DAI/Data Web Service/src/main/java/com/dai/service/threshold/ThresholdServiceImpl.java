@@ -2,11 +2,9 @@ package com.dai.service.threshold;
 
 import com.dai.dao.MeasurementDaoFactory;
 import com.dai.dao.area.AreaDao;
-import com.dai.dao.measurement.MeasurementDao;
 import com.dai.dao.threshold.ThresholdDao;
 import com.dai.dao.thresholdLog.ThresholdLogDao;
 import com.dai.dao.user.UserDao;
-import com.dai.exceptions.BadRequestException;
 import com.dai.helpers.Helper;
 import com.dai.helpers.ThresholdValidator;
 import com.dai.model.*;
@@ -110,5 +108,14 @@ public class ThresholdServiceImpl implements ThresholdService {
     @Override
     public Threshold read(int id) throws Exception {
         return Helper.await(thresholdDao.read(id));
+    }
+
+    @Override
+    public List<NotificationLogs> readAllLogsFromLast5Min() throws Exception {
+        List<NotificationLogs> logs = Helper.await(factory.getTemperatureDao().getAllNotificationLogs());
+        logs.addAll(Helper.await(factory.getSoundDao().getAllNotificationLogs()));
+        logs.addAll(Helper.await(factory.getHumidityDao().getAllNotificationLogs()));
+        logs.addAll(Helper.await(factory.getCo2Dao().getAllNotificationLogs()));
+        return logs;
     }
 }

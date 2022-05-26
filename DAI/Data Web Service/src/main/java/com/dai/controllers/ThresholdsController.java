@@ -73,6 +73,15 @@ public class ThresholdsController {
             throw new BadRequestException(e.getMessage());
         }
     }
+
+    @GetMapping(value = "/logs/latest")
+    public List<NotificationLogs> readAllLatestLogs(){
+        try{
+            return model.readAllLogsFromLast5Min();
+        }catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
     public Threshold requestToThreshold( int areaId, ThresholdValues thresholdValues, ThresholdType type) {
         Area area = new Area();
         area.setId(areaId);
