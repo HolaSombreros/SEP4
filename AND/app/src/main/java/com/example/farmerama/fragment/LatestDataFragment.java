@@ -1,7 +1,6 @@
 package com.example.farmerama.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +74,7 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
+                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getAreaId());
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], true);
             }
 

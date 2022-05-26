@@ -22,7 +22,7 @@ public class MeasurementsViewModel extends AndroidViewModel {
 
     public MeasurementsViewModel(Application application) {
         super(application);
-        this.measurementRepository = MeasurementRepository.getInstance();
+        this.measurementRepository = MeasurementRepository.getInstance(application);
         this.areaRepository = AreaRepository.getInstance(application);
     }
 

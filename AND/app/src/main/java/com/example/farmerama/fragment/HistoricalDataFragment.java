@@ -1,7 +1,5 @@
 package com.example.farmerama.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +85,7 @@ public class HistoricalDataFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
+                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getAreaId());
                 datePicker.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
                 viewModel.retrieveMeasurements(MeasurementType.TEMPERATURE, LocalDate.now().toString());
             }

@@ -95,7 +95,7 @@ public class AddEditAreaFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Edit area");
             title.setText("EDIT AREA");
             viewModel.getSpecificArea(getArguments().getInt("areaId")).observe(getViewLifecycleOwner(), area -> {
-                area.setId(getArguments().getInt("areaId", 1));
+                area.setAreaId(getArguments().getInt("areaId", 1));
                 areaName.setText(area.getName());
                 areaName.setSelection(areaName.getText().length());
                 for (int i = 0; i < adapter.getCount(); i++) {

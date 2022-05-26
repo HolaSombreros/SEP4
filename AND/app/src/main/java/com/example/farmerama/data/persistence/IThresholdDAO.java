@@ -21,7 +21,7 @@ public interface IThresholdDAO {
     @Update
     void editThreshold(Threshold threshold);
 
-    @Query("SELECT * FROM threshold_table WHERE type = (:type) AND areaid = (:areaId)")
+    @Query("SELECT * FROM threshold_table WHERE type = (:type) AND areaareaid = (:areaId)")
     LiveData<List<Threshold>> getThreshold(int areaId, String type);
 
 }
