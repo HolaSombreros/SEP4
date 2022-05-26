@@ -64,7 +64,7 @@ public class AreaRepository {
             public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
                     executorService.execute(areaDAO::removeAreas);
-                    executorService.execute(database.barnDAO()::removeAllBarns);
+                    executorService.execute(database.barnDAO()::removeBarns);
 
                     for(AreaResponse areaResponse : response.body()) {
                         executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));

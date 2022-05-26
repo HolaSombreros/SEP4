@@ -211,7 +211,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        navController.navigate(item.getItemId());
-        return true;
+        if(item.getItemId() == R.id.accountFragment) {
+            navController.navigate(item.getItemId());
+            return true;
+        }
+
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 }
