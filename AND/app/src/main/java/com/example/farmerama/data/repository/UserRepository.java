@@ -31,13 +31,13 @@ import retrofit2.internal.EverythingIsNonNull;
 public class UserRepository {
 
     private static UserRepository instance;
-    private final MutableLiveData<List<User>> users;
+    private  MutableLiveData<List<User>> users;
     private final MutableLiveData<User> user;
     private final MutableLiveData<User> loggedInUser;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private final IUserDAO userDAO;
-    private LiveData<List<User>> usersRoom;
+    private IUserDAO userDAO;
+    private MutableLiveData<List<User>> usersRoom;
 
 
     private UserRepository(Application application) {
@@ -47,7 +47,8 @@ public class UserRepository {
         loggedInUser = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         userDAO = database.userDAO();
-        usersRoom = userDAO.getAllEmployees();
+        usersRoom  = new MutableLiveData<>();
+        usersRoom.setValue(userDAO.getAllEmployees().getValue());
         executorService = Executors.newFixedThreadPool(5);
         Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }

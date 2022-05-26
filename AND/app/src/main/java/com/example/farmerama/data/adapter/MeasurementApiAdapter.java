@@ -19,7 +19,7 @@ public class MeasurementApiAdapter implements MeasurementApiAdapterInterface {
                 return measurementApi.getLatestTemperature(areaId, latest);
             case HUMIDITY:
                 return measurementApi.getLatestHumidity(areaId, latest);
-            case SPL:
+            case SOUND:
                 return measurementApi.getLatestSpl(areaId, latest);
             case CO2:
                 return measurementApi.getLatestCo2(areaId, latest);
@@ -36,7 +36,7 @@ public class MeasurementApiAdapter implements MeasurementApiAdapterInterface {
                 return measurementApi.getTemperatures(areaId,date);
             case HUMIDITY:
                 return measurementApi.getHumidities(areaId, date);
-            case SPL:
+            case SOUND:
                 return measurementApi.getSpls(areaId, date);
             case CO2:
                 return measurementApi.getCo2s(areaId, date);

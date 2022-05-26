@@ -31,15 +31,15 @@ public class BarnRepository {
     private static BarnRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private final IBarnDAO IBarnDAO;
+    private final IBarnDAO barnDAO;
     private LiveData<List<Barn>> barnsRoom;
 
     private BarnRepository(Application application) {
         barns = new MutableLiveData<>();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
-        IBarnDAO = database.barnDAO();
-        barnsRoom = IBarnDAO.getBarns();
+        barnDAO = database.barnDAO();
+        barnsRoom = barnDAO.getBarns();
     }
 
     public static BarnRepository getInstance(Application application) {
@@ -63,8 +63,10 @@ public class BarnRepository {
             public void onResponse(Call<List<BarnResponse>> call, Response<List<BarnResponse>> response) {
                 if (response.isSuccessful()) {
                     List<Barn> list = new ArrayList<>();
+                    executorService.execute(barnDAO::removeBarns);
                     for(BarnResponse barnResponse : response.body()) {
                         list.add(barnResponse.getBarn());
+                        executorService.execute(() -> barnDAO.createArea(barnResponse.getBarn()));
                     }
                     barns.setValue(list);
                 }

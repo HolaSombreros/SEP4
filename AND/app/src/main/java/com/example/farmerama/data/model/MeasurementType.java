@@ -5,7 +5,7 @@ import androidx.room.TypeConverters;
 
 @TypeConverters
 public enum MeasurementType {
-        TEMPERATURE("TEMPERATURE"), HUMIDITY("HUMIDITY"),  CO2("CO2"), SPL("SOUND PRESSURE LEVEL");
+        TEMPERATURE("TEMPERATURE"), HUMIDITY("HUMIDITY"),  CO2("CO2"), SOUND("SOUND");
     private String type;
 
     MeasurementType(String type) {

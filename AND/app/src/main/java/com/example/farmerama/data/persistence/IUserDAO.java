@@ -17,9 +17,6 @@ public interface IUserDAO {
     @Insert
     void registerUser(User user);
 
-    @Delete
-    void removeUser(User user);
-
     @Query("DELETE FROM user_table")
     void removeUsers();
 
