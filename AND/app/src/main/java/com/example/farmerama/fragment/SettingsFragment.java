@@ -32,7 +32,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         storagePreference.setOnPreferenceClickListener(pref -> {
             AlertDialog.Builder deleteDialogBuilder = new AlertDialog.Builder(getActivity());
-            deleteDialogBuilder.setMessage("Are you sure you want to delete this area?");
+            deleteDialogBuilder.setMessage("Are you sure you want to remove the local storage?");
             deleteDialogBuilder.setPositiveButton("Yes", (dialogInterface, i) -> {
                 viewModel.removeLocalData();
             });

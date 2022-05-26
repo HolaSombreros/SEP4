@@ -25,6 +25,6 @@ public class SettingsViewModel extends AndroidViewModel {
     }
 
     public void setGettingNotifications(boolean newValue) {
-        notificationPreferences.edit().putBoolean("notification", newValue);
+        notificationPreferences.edit().putBoolean("notification", newValue).apply();
     }
 }

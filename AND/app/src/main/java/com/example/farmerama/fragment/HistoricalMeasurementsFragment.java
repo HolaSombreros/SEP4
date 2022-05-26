@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +87,6 @@ public class HistoricalMeasurementsFragment extends Fragment {
             lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
-
                     TimeMarkerView tmv = new TimeMarkerView(getContext(), R.layout.marker_date);
                     tmv.refreshContent(measurements.get((int) e.getX()).getDateTime());
                     lineChart.setMarker(tmv);
@@ -109,7 +109,7 @@ public class HistoricalMeasurementsFragment extends Fragment {
 
         @Override
         public void setOffset(MPPointF offset) {
-            super.setOffset(new MPPointF(offset.x/2, -offset.y));
+            super.setOffset(new MPPointF(offset.x / 2, -offset.y));
         }
 
         public void refreshContent(String date) {
@@ -123,7 +123,6 @@ public class HistoricalMeasurementsFragment extends Fragment {
             Point size = new Point();
             display.getSize(size);
             int width = size.x;
-
             int w = getWidth();
             if ((width - posX - w) < w) {
                 posX -= w;
