@@ -53,11 +53,11 @@ public class AreaDaoImpl implements AreaDao{
 
     @Override
     public Future<Area> readByNameAndBarn(String name, int barnId) {
-        return new AsyncResult<>(repository.getFirstByNameAndBarnId(name, barnId));
+        return new AsyncResult<>(repository.getFirstByNameAndBarnBarnId(name, barnId));
     }
 
     @Override
     public Future<Area> delete(int id) {
-        return new AsyncResult<>(repository.deleteById(id));
+        return new AsyncResult<>(repository.deleteByAreaId(id));
     }
 }

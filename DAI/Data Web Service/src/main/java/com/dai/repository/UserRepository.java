@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
     User findFirstByEmail(String email);
-    User deleteById(int id);
+    User deleteByUserId(int id);
     List<User> findAll();
 }

@@ -41,7 +41,7 @@ public class BarnDaoImpl implements BarnDao {
 
     @Override
     public Future<Barn> delete(int id) {
-        return new AsyncResult<>(barnRepository.deleteById(id));
+        return new AsyncResult<>(barnRepository.deleteByBarnId(id));
     }
 
     @Override

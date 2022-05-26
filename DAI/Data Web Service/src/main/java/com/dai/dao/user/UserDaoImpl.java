@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Async
     public Future<User> delete(int id) {
-        return new AsyncResult<>(repository.deleteById(id));
+        return new AsyncResult<>(repository.deleteByUserId(id));
     }
 
     @Override
