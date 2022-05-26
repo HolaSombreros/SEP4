@@ -51,7 +51,7 @@ public class  AreasController {
     @PutMapping(value = "/{id}")
     public Area update(@PathVariable(name = "id") int id, @RequestBody Area area){
         try{
-            area.setId(id);
+            area.setAreaId(id);
             return areasService.update(area);
         }catch (Exception e) {
             throw new BadRequestException(e.getMessage());

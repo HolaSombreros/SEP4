@@ -43,7 +43,7 @@ public class UsersController {
     @PutMapping(value = "/{id}")
     public User update(@PathVariable(name = "id") int id, @RequestBody User user) {
         try {
-            user.setId(id);
+            user.setUserId(id);
             return userModel.update(user);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());

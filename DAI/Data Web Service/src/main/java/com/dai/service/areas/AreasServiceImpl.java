@@ -24,7 +24,7 @@ public class AreasServiceImpl implements AreasService {
     }
     @Override
     public Area create(Area area) throws Exception {
-        Barn barn = Helper.await(barnDao.read(area.getBarn().getId()));
+        Barn barn = Helper.await(barnDao.read(area.getBarn().getBarnId()));
 
      /*   if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
             throw new BadRequestException("Area already exists");
@@ -61,7 +61,7 @@ public class AreasServiceImpl implements AreasService {
     @Override
     public Area update(Area area) {
         try{
-            if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
+            if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getBarnId()) != null){
                 throw new BadRequestException("Area already exists");
             }
             return Helper.await(areasDao.update(area));

@@ -84,7 +84,7 @@ public class ThresholdsController {
     }
     public Threshold requestToThreshold( int areaId, ThresholdValues thresholdValues, ThresholdType type) {
         Area area = new Area();
-        area.setId(areaId);
+        area.setAreaId(areaId);
         return new Threshold(-1, thresholdValues.getMinimum(), thresholdValues.getMaximum(), type, area);
     }
 }

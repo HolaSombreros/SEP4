@@ -46,7 +46,7 @@ public class ThresholdServiceImpl implements ThresholdService {
     @Override
     public Threshold create(Threshold threshold) throws Exception {
         thresholdValidator.validateThreshold(threshold);
-        Area area = Helper.await(areaDao.read(threshold.getArea().getId()));
+        Area area = Helper.await(areaDao.read(threshold.getArea().getAreaId()));
         threshold.setArea(area);
         return Helper.await(thresholdDao.create(threshold));
     }
@@ -63,7 +63,7 @@ public class ThresholdServiceImpl implements ThresholdService {
 
         thresholdValidator.validateThreshold(newThreshold);
 
-        Threshold currentThreshold = Helper.await(thresholdDao.readByAreaIdAndType(newThreshold.getArea().getId(), newThreshold.getType()));
+        Threshold currentThreshold = Helper.await(thresholdDao.readByAreaIdAndType(newThreshold.getArea().getAreaId(), newThreshold.getType()));
 
         double maxNew = newThreshold.getMaximum();
         double maxOld = currentThreshold.getMaximum();

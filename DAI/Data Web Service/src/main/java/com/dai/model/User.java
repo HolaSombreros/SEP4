@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;
+    private int userId;
 
     @NotNull(message = "Please fill in all the required fields")
     @Column(name = "name")
@@ -40,8 +40,8 @@ public class User {
         this.role = role;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
     public String getEmail() {
@@ -60,8 +60,8 @@ public class User {
         return role;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setName(String name) {

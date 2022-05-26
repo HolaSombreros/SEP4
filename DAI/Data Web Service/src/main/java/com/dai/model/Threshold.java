@@ -9,7 +9,7 @@ public class Threshold {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "threshold_id")
-    private int id;
+    private int thresholdId;
 
     @Column(name = "minimum")
     private double minimum;
@@ -30,19 +30,19 @@ public class Threshold {
 
 
     public Threshold(int id, double minimum, double maximum, ThresholdType type, Area area) {
-        this.id = id;
+        this.thresholdId = id;
         this.minimum = minimum;
         this.maximum = maximum;
         this.type = type;
         this.area = area;
     }
 
-    public int getId() {
-        return id;
+    public int getThresholdId() {
+        return thresholdId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setThresholdId(int thresholdId) {
+        this.thresholdId = thresholdId;
     }
 
     public double getMinimum() {
