@@ -1,5 +1,6 @@
 package com.dai.dao.temperature;
 
+import com.dai.model.NotificationLogs;
 import com.dai.model.SentThresholdLog;
 import com.dai.model.ThresholdType;
 import com.dai.repository.TemperatureRepository;
@@ -11,7 +12,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -39,6 +42,13 @@ public class TemperatureDaoImpl implements TemperatureDao{
     public Future<List<SentThresholdLog>> getAllExceedingThresholdChanges(int areaId, ThresholdType type, LocalDate date) {
         List<SentThresholdLog> max = repository.getAllExceedingMax(areaId, type.getType(), Date.valueOf(date));
         max.addAll(repository.getAllExceedingMin(areaId, type.getType(), Date.valueOf(date)));
+        return new AsyncResult<>(max);
+    }
+
+    @Override
+    public Future<List<NotificationLogs>> getAllNotificationLogs() {
+        List<NotificationLogs> max = repository.getAllMax(Timestamp.valueOf(LocalDateTime.now()), ThresholdType.TEMPERATURE.getType());
+        max.addAll(repository.getAllMin(Timestamp.valueOf(LocalDateTime.now()),ThresholdType.TEMPERATURE.getType()));
         return new AsyncResult<>(max);
     }
 }

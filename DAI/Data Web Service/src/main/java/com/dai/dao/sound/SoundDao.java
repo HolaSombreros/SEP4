@@ -1,5 +1,6 @@
 package com.dai.dao.sound;
 
+import com.dai.model.NotificationLogs;
 import com.dai.model.SentMeasurement;
 import com.dai.model.SentThresholdLog;
 import com.dai.model.ThresholdType;
@@ -15,4 +16,5 @@ public interface SoundDao
   Future<List<SentMeasurement>> readAllByAreaIdAndDate(int areaId, LocalDate date);
 
   Future<List<SentThresholdLog>> getAllExceedingThresholdChanges(int areaId, ThresholdType type, LocalDate date);
+  Future<List<NotificationLogs>> getAllNotificationLogs();
 }

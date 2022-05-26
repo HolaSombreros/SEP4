@@ -1,14 +1,14 @@
 package com.dai.repository;
 
-import com.dai.model.Measurement;
-import com.dai.model.SentMeasurement;
-import com.dai.model.SentThresholdLog;
+import com.dai.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -31,4 +31,13 @@ public interface TemperatureRepository extends JpaRepository<Measurement, Intege
             "                convert(date ,measurement.measured_date) = :date) as measurements\n" +
             "                WHERE value < threshold ORDER BY measurement_id DESC")
     List<SentThresholdLog> getAllExceedingMin(@Param("area_id") int area_id, @Param("type") String type, @Param("date") Date date);
+
+
+    @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT temperature as value, minimum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
+            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , -5, :date) AND type like :type")
+    List<NotificationLogs> getAllMin(@Param("date") Timestamp timestamp,  @Param("type")String type);
+
+    @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT temperature as value, maximum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
+            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , -5, :date) AND type like :type")
+    List<NotificationLogs> getAllMax(@Param("date") Timestamp timestamp, @Param("type")String type);
 }
