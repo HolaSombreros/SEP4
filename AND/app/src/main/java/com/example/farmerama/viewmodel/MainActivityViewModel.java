@@ -30,6 +30,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         thresholdRepository = ThresholdRepository.getInstance();
     }
 
+    public void retrieveEmployees() {
+        //userRepository.retrieveAllEmployees();
+    }
+
     public LiveData<User> getLoggedInUser() {
         return userRepository.getLoggedInUser();
     }

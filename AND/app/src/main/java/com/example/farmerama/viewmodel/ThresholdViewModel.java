@@ -29,7 +29,7 @@ public class ThresholdViewModel extends AndroidViewModel {
         super(application);
         this.thresholdRepository = ThresholdRepository.getInstance();
         this.userRepository = UserRepository.getInstance(application);
-        this.areaRepository = AreaRepository.getInstance();
+        this.areaRepository = AreaRepository.getInstance(application);
     }
 
     public LiveData<Threshold> getThresholds() {

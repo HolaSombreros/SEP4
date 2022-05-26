@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity(tableName = "user_table")
-public class User implements Serializable {
+public class User {
     @PrimaryKey
     private int userId;
     private String name;
@@ -34,6 +34,13 @@ public class User implements Serializable {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public User(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.name = "GUEST";
     }
 
     public String getName() {

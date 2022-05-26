@@ -19,7 +19,7 @@ public class AreaViewModel extends AndroidViewModel {
 
     public AreaViewModel(Application application) {
         super(application);
-        repository = AreaRepository.getInstance() ;
+        repository = AreaRepository.getInstance(application) ;
     }
 
     public LiveData<Area> getSpecificArea(int areaId){

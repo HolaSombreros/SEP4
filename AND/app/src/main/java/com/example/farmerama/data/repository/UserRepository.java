@@ -15,7 +15,6 @@ import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.persistence.IUserDAO;
-import com.example.farmerama.data.persistence.UserDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
@@ -85,9 +84,9 @@ public class UserRepository {
             public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
                 List<User> list = new ArrayList<>();
                 if (response.isSuccessful()) {
+                    executorService.execute(userDAO::removeUsers);
                     for(UserResponse user : response.body()) {
                         list.add(user.getUser());
-                        executorService.execute(userDAO::removeUsers);
                         executorService.execute(() -> userDAO.registerUser(user.getUser()));
                     }
                     users.setValue(list);
@@ -172,7 +171,8 @@ public class UserRepository {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
-                loggedInUser.setValue(userDAO.getLoggedUser(employee.getEmail(), employee.getPassword()).getValue());
+                loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), "OFFLINE"));
+                //userDAO.getLoggedUser(employee.getEmail(), employee.getPassword()).getValue());
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.farmerama.data.repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -8,29 +9,43 @@ import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.response.AreaResponse;
 import com.example.farmerama.data.network.AreaApi;
 import com.example.farmerama.data.network.ServiceGenerator;
+import com.example.farmerama.data.persistence.FarmeramaDatabase;
+import com.example.farmerama.data.persistence.IAreaDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class AreaRepository {
-    private final MutableLiveData<List<Area>> areas;
+    private  MutableLiveData<List<Area>> areas;
     private final MutableLiveData<Area> specificArea;
     private static AreaRepository instance;
+    private final ExecutorService executorService;
+    private final FarmeramaDatabase database;
+    private  IAreaDAO areaDAO;
+    private MutableLiveData<List<Area>> areasRoom;
 
-    private AreaRepository() {
+    private AreaRepository(Application application) {
         areas = new MutableLiveData<>();
         specificArea = new MutableLiveData<>();
+        executorService = Executors.newFixedThreadPool(5);
+        database = FarmeramaDatabase.getInstance(application);
+        areaDAO = database.areaDAO();
+        areasRoom = new MutableLiveData<>();
+        areasRoom.setValue(areaDAO.getAreas().getValue());
     }
 
-    public static AreaRepository getInstance() {
+    public static AreaRepository getInstance(Application application) {
         if(instance == null) {
-            return new AreaRepository();
+            return new AreaRepository(application);
         }
         return instance;
     }
@@ -52,8 +67,10 @@ public class AreaRepository {
             public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
                     List<Area> list = new ArrayList<>();
+                    executorService.execute(areaDAO::removeAreas);
                     for(AreaResponse areaResponse : response.body()) {
                         list.add(areaResponse.getArea());
+                        executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));
                     }
                     areas.setValue(list);
                 }
@@ -66,6 +83,8 @@ public class AreaRepository {
             @Override
             public void onFailure(Call<List<AreaResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
+                //areas.postValue(areaDAO.getAreas().getValue());
+                areas = areasRoom;
             }
         });
     }
