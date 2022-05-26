@@ -10,7 +10,7 @@ public class Measurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "measurement_id")
-    private int id;
+    private int measurementId;
     @Column(name = "measured_date")
     private LocalDateTime measuredDate;
     @Column(name = "temperature")
@@ -30,7 +30,7 @@ public class Measurement {
     }
 
     public Measurement(int id, LocalDateTime measuredDate, double temperature, double humidity, int co2, double sound, Area area) {
-        this.id = id;
+        this.measurementId = id;
         this.measuredDate = measuredDate;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -53,12 +53,12 @@ public class Measurement {
         this.area = area;
     }
 
-    public int getId() {
-        return id;
+    public int getMeasurementId() {
+        return measurementId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMeasurementId(int measurementId) {
+        this.measurementId = measurementId;
     }
 
     public LocalDateTime getMeasuredDate() {

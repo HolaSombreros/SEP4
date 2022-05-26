@@ -10,7 +10,7 @@ public class Area implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "area_id")
-    private int id;
+    private int areaId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="barn_id")
@@ -32,7 +32,7 @@ public class Area implements Serializable{
     }
 
     public Area(int id, Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
-        this.id = id;
+        this.areaId = id;
         this.barn = barn;
         this.name = name;
         this.description = description;
@@ -40,12 +40,12 @@ public class Area implements Serializable{
         this.hardwareId = hardwareId;
     }
 
-    public int getId() {
-        return id;
+    public int getAreaId() {
+        return areaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
     }
 
     public Barn getBarn() {

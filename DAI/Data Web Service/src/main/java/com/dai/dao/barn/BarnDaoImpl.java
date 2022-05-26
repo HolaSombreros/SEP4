@@ -34,7 +34,7 @@ public class BarnDaoImpl implements BarnDao {
 
     @Override
     public Future<Barn> update(Barn barn) {
-        Barn entity = barnRepository.findById(barn.getId()).get();
+        Barn entity = barnRepository.findById(barn.getBarnId()).get();
         entity.setName(barn.getName());
         return new AsyncResult<>(barnRepository.save(entity));
     }

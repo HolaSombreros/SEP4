@@ -34,7 +34,7 @@ public class AreaDaoImpl implements AreaDao{
 
     @Override
     public Future<Area> update(Area area) {
-        Area byId = repository.findById(area.getId()).get();
+        Area byId = repository.findById(area.getAreaId()).get();
         byId.setName(area.getName());
         byId.setDescription(area.getDescription());
         byId.setHardwareId(area.getHardwareId());

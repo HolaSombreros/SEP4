@@ -8,7 +8,7 @@ public class Barn {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "barn_id")
-    private int id;
+    private int barnId;
     @Column(name = "name")
     private String name;
 
@@ -19,12 +19,12 @@ public class Barn {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public int getBarnId() {
+        return barnId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBarnId(int barnId) {
+        this.barnId = barnId;
     }
 
     public String getName() {
