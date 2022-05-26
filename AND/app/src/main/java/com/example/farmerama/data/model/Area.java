@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "area_table")
 public class Area {
     @Embedded
-    private Barn barn;
+    private Barn barnArea;
     @PrimaryKey
     private int id;
     private String name;
@@ -18,15 +18,15 @@ public class Area {
     public Area(){}
 
     public Area(Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
-        this.barn = barn;
+        this.barnArea = barn;
         this.name = name;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
         this.hardwareId = hardwareId;
     }
 
-    public Area(int id, Barn barn, String name, String description, int noOfPigs, String hardwareId) {
-        this.barn = barn;
+    public Area(int id, Barn barnArea, String name, String description, int noOfPigs, String hardwareId) {
+        this.barnArea = barnArea;
         this.id = id;
         this.name = name;
         this.description = description;
@@ -34,8 +34,8 @@ public class Area {
         this.hardwareId = hardwareId;
     }
 
-    public Barn getBarn() {
-        return barn;
+    public Barn getBarnArea() {
+        return barnArea;
     }
 
     public void setBarnId(Barn barn) {
@@ -90,7 +90,7 @@ public class Area {
         this.hardwareId = hardwareId;
     }
 
-    public void setBarn(Barn barn) {
-        this.barn = barn;
+    public void setBarnArea(Barn barnArea) {
+        this.barnArea = barnArea;
     }
 }

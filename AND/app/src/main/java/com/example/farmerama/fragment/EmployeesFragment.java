@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
 import com.example.farmerama.viewmodel.RegisterViewModel;
 

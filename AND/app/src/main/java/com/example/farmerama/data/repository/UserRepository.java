@@ -14,6 +14,7 @@ import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
+import com.example.farmerama.data.persistence.IUserDAO;
 import com.example.farmerama.data.persistence.UserDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
@@ -36,8 +37,8 @@ public class UserRepository {
     private final MutableLiveData<User> loggedInUser;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private final UserDAO userDAO;
-    private List<User> usersRoom;
+    private final IUserDAO userDAO;
+    private LiveData<List<User>> usersRoom;
 
 
     private UserRepository(Application application) {
@@ -86,10 +87,8 @@ public class UserRepository {
                 if (response.isSuccessful()) {
                     for(UserResponse user : response.body()) {
                         list.add(user.getUser());
-                        User userInRoom = userDAO.getEmployeeById(user.getUser().getUserId());
-                        if(userInRoom != null) {
-                            executorService.execute(() ->userDAO.registerUser(user.getUser()));
-                        }
+                        executorService.execute(userDAO::removeUsers);
+                        executorService.execute(() -> userDAO.registerUser(user.getUser()));
                     }
                     users.setValue(list);
                 }
@@ -102,7 +101,7 @@ public class UserRepository {
             @Override
             public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
-                users.setValue(usersRoom);
+                users.setValue(usersRoom.getValue());
             }
         });
     }
@@ -173,6 +172,7 @@ public class UserRepository {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
+                loggedInUser.setValue(userDAO.getLoggedUser(employee.getEmail(), employee.getPassword()).getValue());
             }
         });
     }
