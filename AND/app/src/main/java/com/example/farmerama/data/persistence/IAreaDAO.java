@@ -1,6 +1,7 @@
 package com.example.farmerama.data.persistence;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -18,8 +19,8 @@ public interface IAreaDAO {
     void createArea(Area area);
 
 
-    @Delete
-    void removeAreas(List<Area> areas);
+    @Query("DELETE FROM area_table")
+    void removeAreas();
 
     @Update
     void editArea(Area area);

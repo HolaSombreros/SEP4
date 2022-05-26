@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        viewModel.retrieveEmployees();
         NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for the notification regarding exceeding thresholds");
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -154,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
                 if (loggedInUser.getRole().equals("EMPLOYEE")) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                     navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
+                }
+                if(loggedInUser.getRole().equals("OFFLINE")) {
+
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);

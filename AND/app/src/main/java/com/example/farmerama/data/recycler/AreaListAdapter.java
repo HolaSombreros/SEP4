@@ -38,7 +38,7 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return  areas.size();
+        return areas.size();
     }
 
     public void setOnClickListener(OnClickListener listener) {

@@ -23,7 +23,7 @@ public class MeasurementsViewModel extends AndroidViewModel {
     public MeasurementsViewModel(Application application) {
         super(application);
         this.measurementRepository = MeasurementRepository.getInstance();
-        this.areaRepository = AreaRepository.getInstance();
+        this.areaRepository = AreaRepository.getInstance(application);
     }
 
     public LiveData<List<Measurement>> getMeasurements() {

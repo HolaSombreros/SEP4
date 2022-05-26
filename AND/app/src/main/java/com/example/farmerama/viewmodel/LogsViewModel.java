@@ -27,7 +27,7 @@ public class LogsViewModel extends AndroidViewModel {
     public LogsViewModel(@NonNull Application application) {
         super(application);
         this.repository = ThresholdRepository.getInstance();
-        this.areaRepository = AreaRepository.getInstance();
+        this.areaRepository = AreaRepository.getInstance(application);
         date = LocalDate.now().toString();
         type = MeasurementType.TEMPERATURE;
     }
