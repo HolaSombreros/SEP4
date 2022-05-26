@@ -11,7 +11,6 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -83,7 +82,7 @@ public class LogsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
-                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
+                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getAreaId());
                viewModel.retrieveLogs();
             }
 

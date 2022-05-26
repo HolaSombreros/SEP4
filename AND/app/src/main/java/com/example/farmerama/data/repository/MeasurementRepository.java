@@ -65,11 +65,11 @@ public class MeasurementRepository {
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
                 List<Measurement> list = new ArrayList<>();
-                executorService.execute(measurementDAO::removeMeasurements);
+                //executorService.execute(measurementDAO::removeMeasurements);
                 if (response.isSuccessful()) {
                     for (MeasurementResponse measurement : response.body()) {
                         list.add(measurement.getMeasurement(type));
-                        executorService.execute(() -> measurementDAO.createMeasurement(measurement.getMeasurement(type)));
+                        //executorService.execute(() -> measurementDAO.createMeasurement(measurement.getMeasurement(type)));
                     }
                     if (list.size() != 0) {
                         measurements.setValue(list);

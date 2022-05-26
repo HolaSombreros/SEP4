@@ -75,7 +75,7 @@ public class Threshold {
     public String toString() {
         return "Threshold{" +
                 "id=" + thresholdId +
-                ", areaId=" + area.getId() +
+                ", areaId=" + area.getAreaId() +
                 ", maximum=" + maximum +
                 ", minimum=" + minimum +
                 ", type='" + type + '\'' +

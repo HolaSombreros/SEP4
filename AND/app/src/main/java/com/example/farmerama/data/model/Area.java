@@ -4,12 +4,14 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "area_table")
 public class Area {
     @Embedded
     private Barn barnArea;
     @PrimaryKey
-    private int id;
+    private int areaId;
     private String name;
     private String description;
     private int numberOfPigs;
@@ -25,9 +27,9 @@ public class Area {
         this.hardwareId = hardwareId;
     }
 
-    public Area(int id, Barn barnArea, String name, String description, int noOfPigs, String hardwareId) {
+    public Area(int areaId, Barn barnArea, String name, String description, int noOfPigs, String hardwareId) {
         this.barnArea = barnArea;
-        this.id = id;
+        this.areaId = areaId;
         this.name = name;
         this.description = description;
         this.numberOfPigs = noOfPigs;
@@ -50,12 +52,12 @@ public class Area {
         this.numberOfPigs = numberOfPigs;
     }
 
-    public int getId() {
-        return id;
+    public int getAreaId() {
+        return areaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
     }
 
     public String getName() {
@@ -92,5 +94,13 @@ public class Area {
 
     public void setBarnArea(Barn barnArea) {
         this.barnArea = barnArea;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barnArea, area.barnArea) && Objects.equals(name, area.name) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
     }
 }

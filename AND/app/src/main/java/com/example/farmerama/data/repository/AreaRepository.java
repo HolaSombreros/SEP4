@@ -14,7 +14,6 @@ import com.example.farmerama.data.persistence.IAreaDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,8 +63,7 @@ public class AreaRepository {
             public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
                     executorService.execute(areaDAO::removeAreas);
-                    executorService.execute(database.barnDAO()::removeBarns);
-
+                    executorService.execute(database.barnDAO()::removeAllBarns);
                     for(AreaResponse areaResponse : response.body()) {
                         executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));
                     }
@@ -131,7 +129,7 @@ public class AreaRepository {
 
     public void editArea(Area area) {
         AreaApi areaApi = ServiceGenerator.getAreaApi();
-        Call<AreaResponse> call = areaApi.editArea(area.getId(), area);
+        Call<AreaResponse> call = areaApi.editArea(area.getAreaId(), area);
         call.enqueue(new Callback<AreaResponse>() {
             @EverythingIsNonNull
             @Override

@@ -63,7 +63,7 @@ public class BarnRepository {
             public void onResponse(Call<List<BarnResponse>> call, Response<List<BarnResponse>> response) {
                 if (response.isSuccessful()) {
                     List<Barn> list = new ArrayList<>();
-                    executorService.execute(barnDAO::removeBarns);
+                    executorService.execute(barnDAO::removeAllBarns);
                     for(BarnResponse barnResponse : response.body()) {
                         list.add(barnResponse.getBarn());
                         executorService.execute(() -> barnDAO.createArea(barnResponse.getBarn()));

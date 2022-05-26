@@ -62,7 +62,7 @@ public class AreasFragment extends Fragment {
 
         adapter.setOnClickListener(area -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("areaId", ((Area) area).getId());
+            bundle.putInt("areaId", ((Area) area).getAreaId());
             navController.navigate(R.id.addAreaFragment, bundle);
         });
 
