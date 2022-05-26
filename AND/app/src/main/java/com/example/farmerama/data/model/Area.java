@@ -4,6 +4,8 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "area_table")
 public class Area {
     @Embedded
@@ -92,5 +94,13 @@ public class Area {
 
     public void setBarnArea(Barn barnArea) {
         this.barnArea = barnArea;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barnArea, area.barnArea) && Objects.equals(name, area.name) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
     }
 }

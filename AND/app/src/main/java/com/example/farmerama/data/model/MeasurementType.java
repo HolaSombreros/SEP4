@@ -21,7 +21,7 @@ public enum MeasurementType {
         switch (type) {
             case "TEMPERATURE": return 60;
             case "HUMIDITY": return 100;
-            case "SOUND PRESSURE LEVEL": return 120;
+            case "SOUND": return 120;
             case "CO2": return 3000;
             default: return 0;
         }
@@ -31,7 +31,7 @@ public enum MeasurementType {
         switch (type) {
             case "TEMPERATURE": return "°C";
             case "HUMIDITY": return "%";
-            case "SOUND PRESSURE LEVEL": return "dB";
+            case "SOUND": return "dB";
             case "CO2": return "ppm";
         }
         return "";

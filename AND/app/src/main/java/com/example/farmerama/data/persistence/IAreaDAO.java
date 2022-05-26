@@ -30,5 +30,4 @@ public interface IAreaDAO {
 
     @Query("SELECT * FROM area_table WHERE areaId = (:id)")
     LiveData<Area> getAreaById(int id);
-
 }
