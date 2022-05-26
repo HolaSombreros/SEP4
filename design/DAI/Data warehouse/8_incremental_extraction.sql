@@ -1,4 +1,4 @@
-USE dwh
+USE [dwh]
 
 /**** Extract to stage and transform ****/
 
@@ -18,7 +18,7 @@ insert into [stage].[DimArea]
 ([area_id]
  ,[name])
  SELECT [area_id], [name]
- FROM [source].[dbo].[area] a
+ FROM [farmerama].[dbo].[area] a
 
  truncate table [stage].[FactEnvironment]
 
@@ -33,12 +33,20 @@ insert into [stage].[DimArea]
  ,[co2]
  ,[sound])
  SELECT m.[measurement_id], a.[area_id],[measured_date], DATEPART(minute, [measured_date]), DATEPART(hour, [measured_date]), [temperature], [humidity], [co2], [sound]
- FROM [source].[dbo].[measurement] m
- INNER JOIN [source].[dbo].[area] a
+ FROM [farmerama].[dbo].[measurement] m
+ INNER JOIN [farmerama].[dbo].[area] a
  on m.[area_id] = a.[area_id]
  WHERE measured_date > (@LastLoadDate)
 
-  ALTER TABLE [stage].[FactEnvironment] ADD CONSTRAINT FK_FactEnvironment_0 FOREIGN KEY (area_id) REFERENCES [stage].[DimArea] (area_id)
+ -- Transformation: because the devices can send data within the same minute, there will be duplicate key issues
+-- in the dwh schema if the records with same time are not removed (at least one, but here we are deleting both)
+DELETE FROM stage.FactEnvironment
+WHERE CONCAT(measuredDate, '.' ,minute, '.', hour) in
+(SELECT CONCAT(measuredDate, '.' ,minute, '.', hour) FROM stage.FactEnvironment
+GROUP BY CONCAT(measuredDate, '.' ,minute, '.', hour)
+HAVING COUNT(*) > 1)
+
+ALTER TABLE [stage].[FactEnvironment] ADD CONSTRAINT FK_FactEnvironment_0 FOREIGN KEY (area_id) REFERENCES [stage].[DimArea] (area_id)
 
 
 

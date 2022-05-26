@@ -1,21 +1,23 @@
 USE [dwh]
 
-/*** Populate DimDate ***/
+-- Populate DimDate --
 
 ALTER TABLE [dwh].[FactEnvironment] DROP CONSTRAINT FK_FactEnvironment_1;
 
-truncate table dwh.[DimDate]
+truncate table [dwh].[DimDate]
 
 DECLARE @StartDate DATE;
 DECLARE @EndDate DATE;
-/* Date of the first record in the source sn */
+
+-- Date of the first record in the source sn --
 SET @StartDate = '2021-04-01'
-/* Add only 2, otherwise it takes too long. But the value should be larger for the final draft. */
+
+-- Add only 2, otherwise it takes too long to tun it in the cloud. But the value should be larger for the final draft. --
 SET @EndDate = DATEADD(YEAR, 2, GETDATE())
 
 WHILE @StartDate <= @EndDate
     BEGIN
-    INSERT INTO dwh.[DimDate]
+    INSERT INTO [dwh].[DimDate]
     ([D_ID],
 		[Date],
 		[Day],
