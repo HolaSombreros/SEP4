@@ -49,9 +49,9 @@ public class SocketServiceImpl implements SocketService {
         Threshold co2 = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.CO2));
         Threshold spl = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.SPL));
         if(humidity != null){
-            int max = (int)humidity.getMaximum();
-            int min = (int) humidity.getMinimum();
-            values +=Integer.toHexString(max) + Integer.toHexString(min);
+            int max = (int)(humidity.getMaximum()*10);
+            int min = (int)(humidity.getMinimum()*10);
+            values += String.format("%04x", max) + String.format("%04x", min);
             bytes += "11";
         }
         else{
@@ -59,9 +59,9 @@ public class SocketServiceImpl implements SocketService {
             values += "00000000";
         }
         if(temp != null){
-            int max = (int)temp.getMaximum();
-            int min = (int)temp.getMinimum();
-            values +=Integer.toHexString(max) + Integer.toHexString(min);
+            int max = (int)(temp.getMaximum()*10);
+            int min = (int)(temp.getMinimum()*10);
+            values += String.format("%04x", max) + String.format("%04x", min);
             bytes += "11";
         }
         else{
@@ -71,7 +71,7 @@ public class SocketServiceImpl implements SocketService {
         if(co2 != null){
             int max = (int)co2.getMaximum();
             int min = (int)co2.getMinimum();
-            values +=Integer.toHexString(max) + Integer.toHexString(min);
+            values += String.format("%04x", max) + String.format("%04x", min);;
             bytes += "11";
         }
         else{
@@ -80,7 +80,7 @@ public class SocketServiceImpl implements SocketService {
         }
         if(spl != null){
             int max = (int)spl.getMaximum();
-            values += Integer.toHexString(max);
+            values += String.format("%04x", max);
             bytes += "1";
         }
         else{
@@ -90,6 +90,7 @@ public class SocketServiceImpl implements SocketService {
 
         String flag = new BigInteger(bytes,2).toString(16);
         values+=flag;
+        System.out.println(values);
         return values;
     }
 }
