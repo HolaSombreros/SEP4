@@ -1,31 +1,62 @@
 package com.example.farmerama.data.persistence;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Dao
-public interface UserDAO {
+public class UserDAO implements IUserDAO {
+    private MutableLiveData<List<User>> users;
+    private static UserDAO userDAO;
+    private static Object lock = new Object();
 
-    @Insert
-    void registerUser(User user);
+    public static UserDAO getInstance() {
+        if(userDAO == null) {
+            synchronized (lock) {
+                if(userDAO == null) {
+                    userDAO = new UserDAO();
+                }
+            }
+        }
+        return userDAO;
+    }
 
-    @Delete
-    void removeUser(User user);
+    private UserDAO() {
+        users = new MutableLiveData<>();
+        users.setValue(new ArrayList<>());
+    }
+    @Override
+    public void registerUser(User user) {
+        List<User> currentUsers = users.getValue();
+        currentUsers.add(user);
+        users.postValue(currentUsers);
+    }
 
-    @Update
-    void editArea(User user);
+    @Override
+    public void removeUser(User user) {
 
-    @Query("SELECT * FROM user_table")
-    List<User> getAllEmployees();
+    }
 
-    @Query("SELECT * FROM user_table WHERE userId = (:id)")
-    User getEmployeeById(int id);
+    @Override
+    public void removeUsers() {
+        users.postValue(new ArrayList<>());
+    }
 
+    @Override
+    public LiveData<List<User>> getAllEmployees() {
+        return users;
+    }
+
+    @Override
+    public LiveData<User> getLoggedUser(String email, String password) {
+        return null;
+    }
+
+    @Override
+    public LiveData<User> getEmployeeById(int id) {
+        return null;
+    }
 }

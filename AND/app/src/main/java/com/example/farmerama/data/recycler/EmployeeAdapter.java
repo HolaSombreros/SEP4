@@ -1,6 +1,6 @@
 package com.example.farmerama.data.recycler;
 
-import android.app.Activity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
     private List<User> userList;
-    private UserRepository userRepository;
 
     public EmployeeAdapter(){
          this.userList = new ArrayList<>();
@@ -34,7 +32,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     public EmployeeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate (R.layout.item_employee, parent, false);
-        userRepository = UserRepository.getInstance();
         return new ViewHolder(view);
     }
 

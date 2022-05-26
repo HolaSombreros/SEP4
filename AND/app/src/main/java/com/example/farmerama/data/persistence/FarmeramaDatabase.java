@@ -7,19 +7,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.farmerama.data.model.Area;
+import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.User;
 
-@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class}, version = 2)
+@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class}, version = 2)
 public abstract class FarmeramaDatabase extends RoomDatabase {
 
     private static FarmeramaDatabase instance;
-    public abstract AreaDAO areaDAO();
-    public abstract MeasurementDAO measurementDAO();
-    public abstract ThresholdDAO thresholdDAO();
-    public abstract UserDAO userDAO();
-    public abstract BarnDAO barnDAO();
+    public abstract IAreaDAO areaDAO();
+    public abstract IMeasurementDAO measurementDAO();
+    public abstract IThresholdDAO thresholdDAO();
+    public abstract IUserDAO userDAO();
+    public abstract IBarnDAO barnDAO();
 
     public static synchronized FarmeramaDatabase getInstance(Context context){
         if(instance == null) {

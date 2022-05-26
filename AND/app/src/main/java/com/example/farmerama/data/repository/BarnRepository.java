@@ -10,7 +10,7 @@ import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.response.BarnResponse;
 import com.example.farmerama.data.network.BarnApi;
 import com.example.farmerama.data.network.ServiceGenerator;
-import com.example.farmerama.data.persistence.BarnDAO;
+import com.example.farmerama.data.persistence.IBarnDAO;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
@@ -31,15 +31,15 @@ public class BarnRepository {
     private static BarnRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private final BarnDAO barnDAO;
-    private List<Barn> barnsRoom;
+    private final IBarnDAO IBarnDAO;
+    private LiveData<List<Barn>> barnsRoom;
 
     private BarnRepository(Application application) {
         barns = new MutableLiveData<>();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
-        barnDAO  = database.barnDAO();
-        barnsRoom = barnDAO.getBarns();
+        IBarnDAO = database.barnDAO();
+        barnsRoom = IBarnDAO.getBarns();
     }
 
     public static BarnRepository getInstance(Application application) {
@@ -77,7 +77,7 @@ public class BarnRepository {
             @Override
             public void onFailure(Call<List<BarnResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
-                barns.setValue(barnsRoom);
+                barns.setValue(barnsRoom.getValue());
             }
         });
     }

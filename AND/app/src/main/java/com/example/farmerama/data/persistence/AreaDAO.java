@@ -1,31 +1,66 @@
 package com.example.farmerama.data.persistence;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Dao
-public interface AreaDAO {
+public class AreaDAO implements IAreaDAO {
+    private MutableLiveData<List<Area>> areas;
+    private static AreaDAO areaDAO;
+    private static Object lock = new Object();
 
-    @Insert
-    void createArea(Area area);
+    public static AreaDAO getInstance() {
+        if(areaDAO == null) {
+            synchronized (lock) {
+                if(areaDAO == null) {
+                    areaDAO = new AreaDAO();
+                }
+            }
+        }
+        return areaDAO;
+    }
 
-    @Delete
-    void removeArea(Area area);
+    private AreaDAO() {
+        areas = new MutableLiveData<>();
+        areas.setValue(new ArrayList<>());
+    }
 
-    @Update
-    void editArea(Area area);
+    @Override
+    public void createArea(Area area) {
+       List<Area> currentAreas = areas.getValue();
+       currentAreas.add(area);
+       areas.postValue(currentAreas);
+    }
 
-    @Query("SELECT * FROM area_table")
-    List<Area> getAreas();
+    @Override
+    public void removeAreas(List<Area> area) {
+        areas.setValue(new ArrayList<>());
+    }
 
-    @Query("SELECT * FROM area_table WHERE id = (:id)")
-    Area getAreaById(int id);
+    @Override
+    public void editArea(Area area) {
 
+    }
+
+    @Override
+    public LiveData<List<Area>> getAreas() {
+        return areas;
+    }
+
+//    @Override
+//    public LiveData<Area> getAreaById(int id) {
+//        List<Area> currentAreas = areas.getValue();
+//        if(currentAreas != null) {
+//            for (Area area : currentAreas) {
+//                if(area.getId() == id) {
+//                    return ;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 }
