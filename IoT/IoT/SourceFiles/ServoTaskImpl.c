@@ -32,9 +32,12 @@ void servoTask_runTask() {
 	xQueueReceive(_servoQueue, &co2, portMAX_DELAY);
 	xQueueReceive(_servoQueue, &sound, portMAX_DELAY);
 	
+	vTaskDelay(pdMS_TO_TICKS(5000));
+	
 	int16_t low = downlinkMessageDeconstructor_getTemperatureDataLow();
 	int16_t high = downlinkMessageDeconstructor_getTemperatureDataHigh();
-	
+	printf("Low: %d\n", low);
+	printf("High: %d\n", high);
 	if(temperature < low){
 		rc_servo_setPosition(SERVO_PORT, -100);
 	}else if(temperature > high){
