@@ -13,9 +13,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface HumidityRepository extends JpaRepository<Measurement, Integer> {
-    @Query(nativeQuery = true, value = "SELECT TOP 1 measured_date as measuredDate, humidity as value, measurement_id as measurementId FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC")
+    @Query(nativeQuery = true, value = "SELECT TOP 1 measured_date as measuredDate, humidity as value, measurement_id as measurementId, area_id as areaId FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC")
     SentMeasurement getLatestByArea(@Param("area_id")int area_id);
-    @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, humidity as value, measurement_id as measurementId FROM measurement WHERE measurement.area_id = :area_id AND convert(date, measurement.measured_date) = :date ORDER BY measurement_id")
+    @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, humidity as value, measurement_id as measurementId, area_id as areaId FROM measurement WHERE measurement.area_id = :area_id AND convert(date, measurement.measured_date) = :date ORDER BY measurement_id")
     List<SentMeasurement> getAllByAreaAndDate(@Param("area_id")int area_id, @Param("date")Date date);
 
     @Query(nativeQuery = true, value = "SELECT  measuredDate, value, threshold FROM (SELECT measured_date as measuredDate, humidity as value, maximum as threshold, measurement_id\n" +

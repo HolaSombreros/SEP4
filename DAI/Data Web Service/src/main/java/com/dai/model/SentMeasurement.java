@@ -6,4 +6,5 @@ public interface SentMeasurement{
     LocalDateTime getMeasuredDate();
     double getValue();
     int getMeasurementId();
+    int getAreaId();
 }
