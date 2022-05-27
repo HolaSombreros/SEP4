@@ -2,9 +2,7 @@
 #include <avr/io.h>
 #include <stdio_driver.h>
 #include <serial.h>
-
 #include <ATMEGA_FreeRTOS.h>
-#include <task.h>
 #include <queue.h>
 #include <event_groups.h>
 #include <hih8120.h>
@@ -21,7 +19,7 @@
 #include <SoundTask.h>
 #include <SenderTask.h>
 #include <ServoTask.h>
-#include <DownlinkMessageDeconstructor.h>
+#include <Configuration.h>
 #include <ReceiverTask.h>
 
 static QueueHandle_t _humidityQueue;
@@ -37,6 +35,16 @@ static EventGroupHandle_t _doneEventGroup;
 static SemaphoreHandle_t _mutex;
 
 static MessageBufferHandle_t _messageBuffer;
+
+static void _createQueues(void) {
+	_humidityQueue = xQueueCreate(10, sizeof(uint16_t));
+	_temperatureQueue = xQueueCreate(10, sizeof(int16_t));
+	_co2Queue = xQueueCreate(10, sizeof(uint16_t));
+	_soundQueue = xQueueCreate(10, sizeof(uint16_t));
+	_servoQueue = xQueueCreate(10, sizeof(int16_t));
+	_messageBuffer = xMessageBufferCreate(sizeof(lora_driver_payload_t)*5);
+	_senderQueue = xQueueCreate(10, sizeof(lora_driver_payload_t));
+}
 
 static void _initDrivers(void) {
 	puts("Initializing drivers...");
@@ -57,16 +65,6 @@ static void _createTasks(void) {
 	receiverTask_create(_messageBuffer);
 }
 
-static void _createQueues(void) {	
-	_humidityQueue = xQueueCreate(10, sizeof(uint16_t));
-	_temperatureQueue = xQueueCreate(10, sizeof(int16_t));
-	_co2Queue = xQueueCreate(10, sizeof(uint16_t));
-	_soundQueue = xQueueCreate(10, sizeof(uint16_t));
-	_servoQueue = xQueueCreate(10, sizeof(int16_t));
-	_messageBuffer = xMessageBufferCreate(sizeof(lora_driver_payload_t)*5);
-	_senderQueue = xQueueCreate(10, sizeof(lora_driver_payload_t));
-}
-
 static void _createEventGroups(void) {
 	_actEventGroup = xEventGroupCreate();
 	_doneEventGroup = xEventGroupCreate();
@@ -84,7 +82,7 @@ int main(void) {
 	_createEventGroups();
 	_createTasks();
 	_createMutexes();
-	downlinkMessageDeconstructor_create(_mutex);
+	configuration_create(_mutex);
 	
 	puts("Starting...");
 	vTaskStartScheduler();

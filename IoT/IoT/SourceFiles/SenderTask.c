@@ -4,22 +4,28 @@
 #include <status_leds.h>
 #include <lora_driver.h>
 #include <stdint.h>
+#include <task.h>
 
 #define TASK_NAME "SenderTask"
 #define TASK_PRIORITY configMAX_PRIORITIES - 2
-
 #define LORA_appEUI "F2DDE2E826DE9BA5"
 #define LORA_appKEY "FA15F6404AD2D77F878514403C7422DD"
-
-static QueueHandle_t _senderQueue;
 
 static void _run(void* params);
 static void _connectToLoRaWAN();
 
+static QueueHandle_t _senderQueue;
+
 void senderTask_create(QueueHandle_t senderQueue) {
 	_senderQueue = senderQueue;
 	
-	xTaskCreate(_run, TASK_NAME, configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY, NULL);
+	xTaskCreate(_run, 
+				TASK_NAME, 
+				configMINIMAL_STACK_SIZE, 
+				NULL, 
+				TASK_PRIORITY, 
+				NULL
+	);
 }
 
 void senderTask_initTask(void* params) {
@@ -35,20 +41,7 @@ void senderTask_initTask(void* params) {
 void senderTask_runTask() {	
 	lora_driver_payload_t uplinkPayload;
 	xQueueReceive(_senderQueue, &uplinkPayload, portMAX_DELAY);
-	
-  	lora_driver_returnCode_t returnCode;
-  	if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
-		  puts("TX");
- 	 	//printf("\n\nTX - Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
- 	 	//printf("\nCO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d", uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
- 	} else if (returnCode == LORA_MAC_RX) {
-		  puts("RX");
- 	 	//printf("\n\nRX - Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
- 	 	//printf("\nCO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d", uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
-  	} else {
-		printf("Something went wrong - %d\n", returnCode);
-	}
- 	
+  	lora_driver_sendUploadMessage(false, &uplinkPayload);
 }
 
 static void _run(void* params) {

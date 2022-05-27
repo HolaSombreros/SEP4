@@ -1,7 +1,8 @@
 #include <HumidityTemperatureTask.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <task.h>
 #include <hih8120.h>
+#include <Configuration.h>
 
 #define TASK_NAME "HumidityTemperatureTask"
 #define TASK_PRIORITY configMAX_PRIORITIES - 2
@@ -16,7 +17,10 @@ static EventGroupHandle_t _doneEventGroup;
 static uint16_t _latestHumidity;
 static int16_t _latestTemperature;
 
-void humidityTemperatureTask_create(QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup) {
+void humidityTemperatureTask_create(QueueHandle_t humidityQueue, 
+									QueueHandle_t temperatureQueue, 
+									EventGroupHandle_t actEventGroup, 
+									EventGroupHandle_t doneEventGroup) {
 	_humidityQueue = humidityQueue;
 	_temperatureQueue = temperatureQueue;
 	_actEventGroup = actEventGroup;
@@ -25,7 +29,13 @@ void humidityTemperatureTask_create(QueueHandle_t humidityQueue, QueueHandle_t t
 	_latestHumidity = 0;
 	_latestTemperature = 0;
 	
-	xTaskCreate(_run, TASK_NAME, configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY, NULL);
+	xTaskCreate(_run, 
+				TASK_NAME, 
+				configMINIMAL_STACK_SIZE, 
+				NULL, 
+				TASK_PRIORITY, 
+				NULL
+	);
 }
 
 void humidityTemperatureTask_initTask(void* params) {
@@ -34,8 +44,10 @@ void humidityTemperatureTask_initTask(void* params) {
 
 void humidityTemperatureTask_runTask() {
 	xEventGroupWaitBits(_actEventGroup, 
-		BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT,
-		pdTRUE, pdFALSE, portMAX_DELAY
+					    BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT,
+						pdTRUE,	
+						pdFALSE, 
+						portMAX_DELAY
 	);
 	
 	if (hih8120_wakeup() == HIH8120_OK) {
@@ -43,24 +55,20 @@ void humidityTemperatureTask_runTask() {
 		
 		if (hih8120_measure() == HIH8120_OK) {
 			vTaskDelay(pdMS_TO_TICKS(50));
-			
 			_latestHumidity = hih8120_getHumidityPercent_x10();
 			_latestTemperature = hih8120_getTemperature_x10();
 		} else {
-			_latestHumidity = 2000;
-			_latestTemperature = -1000;
+			_latestHumidity = CONFIG_INVALID_HUMIDITY_VALUE;
+			_latestTemperature = CONFIG_INVALID_TEMPERATURE_VALUE;
 		}
 	} else {
-		_latestHumidity = 2000;
-		_latestTemperature = -1000;
+		_latestHumidity = CONFIG_INVALID_HUMIDITY_VALUE;
+		_latestTemperature = CONFIG_INVALID_TEMPERATURE_VALUE;
 	}
 	
 	xQueueSendToBack(_humidityQueue, &_latestHumidity, portMAX_DELAY);
 	xQueueSendToBack(_temperatureQueue, &_latestTemperature, portMAX_DELAY);
-	
-	xEventGroupSetBits(_doneEventGroup, 
-		BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE
-	);
+	xEventGroupSetBits(_doneEventGroup, BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE);
 }
 
 static void _run(void* params) {

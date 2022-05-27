@@ -8,7 +8,7 @@
 #include <task.h>
 
 #define TASK_NAME "FarmeramaTask"
-#define TASK_INTERVAL 300000UL // Default value = 300000UL (5 minutes)
+#define TASK_INTERVAL 300000UL
 #define TASK_PRIORITY configMAX_PRIORITIES - 1
 #define PORT 1
 
@@ -23,7 +23,14 @@ static QueueHandle_t _servoQueue;
 static EventGroupHandle_t _actEventGroup;
 static EventGroupHandle_t _doneEventGroup;
 
-void farmerama_create(QueueHandle_t senderQueue, QueueHandle_t humidityQueue, QueueHandle_t temperatureQueue, QueueHandle_t co2Queue, QueueHandle_t soundQueue, QueueHandle_t servoQueue, EventGroupHandle_t actEventGroup, EventGroupHandle_t doneEventGroup) {
+void farmerama_create(QueueHandle_t senderQueue, 
+				      QueueHandle_t humidityQueue, 
+					  QueueHandle_t temperatureQueue, 
+					  QueueHandle_t co2Queue, 
+					  QueueHandle_t soundQueue, 
+					  QueueHandle_t servoQueue, 
+					  EventGroupHandle_t actEventGroup, 
+					  EventGroupHandle_t doneEventGroup) {
 	_senderQueue = senderQueue;
 	_humidityQueue = humidityQueue;
 	_temperatureQueue = temperatureQueue;
@@ -33,7 +40,13 @@ void farmerama_create(QueueHandle_t senderQueue, QueueHandle_t humidityQueue, Qu
 	_actEventGroup = actEventGroup;
 	_doneEventGroup = doneEventGroup;
 	
-	xTaskCreate(_run, TASK_NAME, configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY, NULL);
+	xTaskCreate(_run, 
+			    TASK_NAME, 
+				configMINIMAL_STACK_SIZE, 
+				NULL, 
+				TASK_PRIORITY, 
+				NULL
+	);
 }
 
 void farmerama_initTask(void* params) {
@@ -41,20 +54,19 @@ void farmerama_initTask(void* params) {
 }
 
 void farmerama_runTask(void) {	
-	xEventGroupSetBits(_actEventGroup, 
-		BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT
-	);
+	xEventGroupSetBits(_actEventGroup, BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT);
 	
 	xEventGroupWaitBits(_doneEventGroup, 
-		BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE | BIT_CO2_DONE | BIT_SOUND_DONE,
-		pdTRUE, pdTRUE, pdMS_TO_TICKS(TASK_INTERVAL)
+						BIT_HUMIDITY_DONE | BIT_TEMPERATURE_DONE | BIT_CO2_DONE | BIT_SOUND_DONE,
+						pdTRUE, 
+						pdTRUE, 
+						pdMS_TO_TICKS(TASK_INTERVAL)
 	);
 	
 	uint16_t humidity;
 	int16_t temperature;
 	uint16_t ppm;
 	uint16_t sound;
-	
 	xQueueReceive(_humidityQueue, &humidity, pdMS_TO_TICKS(10000));
 	xQueueReceive(_temperatureQueue, &temperature, pdMS_TO_TICKS(10000));
 	xQueueReceive(_co2Queue, &ppm, pdMS_TO_TICKS(10000));
@@ -66,8 +78,8 @@ void farmerama_runTask(void) {
 	uplinkMessageBuilder_setSoundData(sound);
 	
 	lora_driver_payload_t message = uplinkMessageBuilder_buildUplinkMessage(PORT);
-	if (message.portNo == PORT) {
-		xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
+	if (message.len > 0) {
+		xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(10000));
 	}
 	
 	xQueueSendToBack(_servoQueue, &humidity, pdMS_TO_TICKS(10000));

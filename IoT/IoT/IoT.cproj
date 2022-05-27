@@ -292,7 +292,7 @@
     <Compile Include="HeaderFiles\CO2Task.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\DownlinkMessageDeconstructor.h">
+    <Compile Include="HeaderFiles\Configuration.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HeaderFiles\Farmerama.h">
@@ -316,16 +316,16 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SourceFiles\CO2TaskImpl.c">
+    <Compile Include="SourceFiles\CO2Task.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SourceFiles\DownlinkMessageDeconstructorImpl.c">
+    <Compile Include="SourceFiles\Configuration.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\Farmerama.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SourceFiles\ReceiverTaskImpl.c">
+    <Compile Include="SourceFiles\ReceiverTask.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\SenderTask.c">
@@ -334,10 +334,10 @@
     <Compile Include="SourceFiles\HumidityTemperatureTask.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SourceFiles\ServoTaskImpl.c">
+    <Compile Include="SourceFiles\ServoTask.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SourceFiles\SoundTaskImpl.c">
+    <Compile Include="SourceFiles\SoundTask.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\UplinkMessageBuilder.c">

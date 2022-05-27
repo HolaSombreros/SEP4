@@ -16,7 +16,6 @@ FAKE_VOID_FUNC(uplinkMessageBuilder_setTemperatureData, int16_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setCO2Data, uint16_t);
 FAKE_VOID_FUNC(uplinkMessageBuilder_setSoundData, uint16_t);
 
-
 class FarmeramaTest : public ::testing::Test {
 protected:
 	void SetUp() override {
@@ -41,9 +40,14 @@ TEST_F(FarmeramaTest, Create_CallsTaskCreate) {
 	farmerama_create(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 
 	EXPECT_EQ(1, xTaskCreate_fake.call_count);
+
+	EXPECT_EQ(configMINIMAL_STACK_SIZE, xTaskCreate_fake.arg2_val);
+	EXPECT_EQ(NULL, xTaskCreate_fake.arg3_val);
+	EXPECT_EQ(configMAX_PRIORITIES - 1, xTaskCreate_fake.arg4_val);
+	EXPECT_EQ(NULL, xTaskCreate_fake.arg5_val);
 }
 
-TEST_F(FarmeramaTest, testVerifyxEventGroupSetBitSetsTheCorrectBits) {
+TEST_F(FarmeramaTest, Task_SetsEventGroupBitsToStartHumidityAndTemperature) {
 	//Arrange
 	//Act
 	farmerama_runTask();
@@ -54,7 +58,7 @@ TEST_F(FarmeramaTest, testVerifyxEventGroupSetBitSetsTheCorrectBits) {
 	EXPECT_EQ(BIT_HUMIDITY_ACT | BIT_TEMPERATURE_ACT, xEventGroupSetBits_fake.arg1_val);
 }
 
-TEST_F(FarmeramaTest, testVerifyxEventGroupWaitBitsWaitsForAllBitsToBeSet) {
+TEST_F(FarmeramaTest, Task_WaitsForAllEventGroupBitsToBeSet) {
 	//Arrange
 	//Act
 	farmerama_runTask();
@@ -68,7 +72,7 @@ TEST_F(FarmeramaTest, testVerifyxEventGroupWaitBitsWaitsForAllBitsToBeSet) {
 	EXPECT_EQ(pdMS_TO_TICKS(300000UL), xEventGroupWaitBits_fake.arg4_val);
 }
 
-TEST_F(FarmeramaTest, testVerifyxQueueReceiveIsCalled) {
+TEST_F(FarmeramaTest, Task_ReceivesFourMeasurementsFromTheQueue) {
 	// Arrange
 	// Act
 	farmerama_runTask();
@@ -82,93 +86,75 @@ TEST_F(FarmeramaTest, testVerifyxQueueReceiveIsCalled) {
 	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueReceive_fake.arg2_history[3]);
 }
 
-TEST_F(FarmeramaTest, testVerifyxQueueSendToBackIsCalled) {
+TEST_F(FarmeramaTest, Task_SendsMeasurementsToServoQueue) {
 	farmerama_runTask();
 
-	EXPECT_EQ(1, xQueueSendToBack_fake.call_count);
+	EXPECT_EQ(4, xQueueSendToBack_fake.call_count);
 
-	EXPECT_EQ(pdMS_TO_TICKS(1000), xQueueSendToBack_fake.arg2_val);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueSendToBack_fake.arg2_history[0]);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueSendToBack_fake.arg2_history[1]);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueSendToBack_fake.arg2_history[2]);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueSendToBack_fake.arg2_history[3]);
 }
 
-TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderHumidityIsCalled) {
+TEST_F(FarmeramaTest, Task_CallsUplinkMessageBuilderSetHumidityData) {
 	farmerama_runTask();
 
 	EXPECT_EQ(1, uplinkMessageBuilder_setHumidityData_fake.call_count);
-
-	EXPECT_EQ(15, uplinkMessageBuilder_setHumidityData_fake.arg0_val);
 }
 
-TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderTemperatureIsCalled) {
+TEST_F(FarmeramaTest, Task_CallsUplinkMessageBuilderSetTemperatureData) {
 	farmerama_runTask();
-
-	uint16_t temp = 15;
-
-	xQueueReceive_fake.arg1_val = &temp;
-	EXPECT_EQ(uplinkMessageBuilder_setTemperatureData_fake.arg0_val, temp);
 
 	EXPECT_EQ(1, uplinkMessageBuilder_setTemperatureData_fake.call_count);
 }
 
-TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderCO2IsCalled) {
+TEST_F(FarmeramaTest, Task_CallsUplinkMessageBuilderSetCo2Data) {
 	farmerama_runTask();
 
 	EXPECT_EQ(1, uplinkMessageBuilder_setCO2Data_fake.call_count);
 }
 
-TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderSoundIsCalled) {
+TEST_F(FarmeramaTest, Task_CallsUplinkMessageBuilderSetSoundData) {
 	farmerama_runTask();
 
 	EXPECT_EQ(1, uplinkMessageBuilder_setSoundData_fake.call_count);
 }
 
-TEST_F(FarmeramaTest, testVerifyUplinkMessageBuilderReturns) {
+TEST_F(FarmeramaTest, Task_CallsBuildUplinkMessageWithPortNumber) {
 	farmerama_runTask();
 
-	uplinkMessageBuilder_buildUplinkMessage_fake.return_val.portNo = 1;
 	EXPECT_EQ(1, uplinkMessageBuilder_buildUplinkMessage_fake.call_count);
 	EXPECT_EQ(1, uplinkMessageBuilder_buildUplinkMessage_fake.arg0_val);
-	
-	EXPECT_EQ(1, xQueueSendToBack_fake.call_count);
 }
 
-TEST_F(FarmeramaTest, testVerifyxTaskGetTickCountIsCalled) {
+TEST_F(FarmeramaTest, Task_SendsToServerTaskIfUplinkMessageBuilderReturnsFilledPayload) {
+	uplinkMessageBuilder_buildUplinkMessage_fake.return_val.len = 8;
+	
+	farmerama_runTask();
+	
+	EXPECT_EQ(5, xQueueSendToBack_fake.call_count);
+	EXPECT_EQ(pdMS_TO_TICKS(10000), xQueueSendToBack_fake.arg2_history[4]);
+}
+
+TEST_F(FarmeramaTest, Task_DoesNotSendToServerTaskIfUplinkMessageBuilderReturnsEmptyPayload) {
+	uplinkMessageBuilder_buildUplinkMessage_fake.return_val.len = 0;
+	
+	farmerama_runTask();
+
+	EXPECT_EQ(4, xQueueSendToBack_fake.call_count);
+}
+
+TEST_F(FarmeramaTest, Task_CallsTaskGetTickCount) {
 	farmerama_runTask();
 
 	EXPECT_EQ(1, xTaskGetTickCount_fake.call_count);
 }
 
-TEST_F(FarmeramaTest, testVerifyxTaskDelayUntilIsCalled) {
+TEST_F(FarmeramaTest, Task_CallsDelayUntilWithFiveMinuteDelay) {
 	farmerama_runTask();
 
 	EXPECT_EQ(1, xTaskDelayUntil_fake.call_count);
 
 	EXPECT_EQ(pdMS_TO_TICKS(300000UL), xTaskDelayUntil_fake.arg1_val);
 }
-
-//BaseType_t voidfunc1outparam_custom_fake1(QueueHandle_t handle, void* a, TickType_t xTicksToWait)
-//{
-//	int num = 15;
-//	handle = nullptr;
-//	a = &num;
-//	xTicksToWait = NULL;
-//	return NULL;
-//}
-
-//void voidfunc1outparam_custom_fake1(uint16_t* a)
-//{
-//	*a = 15;
-//}
-
-//TEST_F(FarmeramaTest, testUplinkMessageBuilder_setTemperatureDataReceivesCorrectData) {
-//	int16_t t = 15;
-//
-//	farmerama_runTask;
-//	BaseType_t (*custom_fakes[])(QueueHandle_t, void*, TickType_t) = {voidfunc1outparam_custom_fake1};
-//
-//	SET_CUSTOM_FAKE_SEQ(xQueueReceive, custom_fakes, 1);
-//
-//	xQueueReceive_fake.arg1_val;
-//
-//	//EXPECT_EQ(test, 15);
-//
-//}
