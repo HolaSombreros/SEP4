@@ -1,13 +1,10 @@
 package com.example.farmerama;
 
-
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.concurrent.futures.CallbackToFutureAdapter;
-import androidx.concurrent.futures.ResolvableFuture;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,22 +22,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.ListenableWorker;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
+
+import android.content.SharedPreferences;
 
 import com.example.farmerama.data.model.LogObj;
-import com.example.farmerama.data.repository.ThresholdRepository;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -57,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private MainActivityViewModel viewModel;
+    private String prevStarted = "yes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +55,19 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setupNavigation();
         setUpLoggedInUser();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        } else {
+            navController.navigate(R.id.loginFragment);
+        }
     }
 
     @Override
@@ -84,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpViews() {
         viewModel.retrieveBarns();
-
         NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for the notification regarding exceeding thresholds");
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
 
-            if (id == R.id.loginFragment) {
+            if (id == R.id.loginFragment || id == R.id.introVPFragment) {
                 toolbar.setVisibility(View.GONE);
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             } else {
@@ -144,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
-//        usernameHeader = findViewById(R.id.UsernameHeader);
-//        emailHeader = findViewById(R.id.EmailHeader);
     }
 
     private void setUpLoggedInUser() {
