@@ -46,6 +46,15 @@ static void _createQueues(void) {
 	_senderQueue = xQueueCreate(10, sizeof(lora_driver_payload_t));
 }
 
+static void _createEventGroups(void) {
+	_actEventGroup = xEventGroupCreate();
+	_doneEventGroup = xEventGroupCreate();
+}
+
+static void _createMutexes(void){
+	_mutex = xSemaphoreCreateMutex();
+}
+
 static void _initDrivers(void) {
 	puts("Initializing drivers...");
 	hih8120_initialise();
@@ -63,15 +72,6 @@ static void _createTasks(void) {
 	servoTask_create(_servoQueue);
 	senderTask_create(_senderQueue);
 	receiverTask_create(_messageBuffer);
-}
-
-static void _createEventGroups(void) {
-	_actEventGroup = xEventGroupCreate();
-	_doneEventGroup = xEventGroupCreate();
-}
-
-static void _createMutexes(void){
-	_mutex = xSemaphoreCreateMutex();
 }
 
 int main(void) {

@@ -26,9 +26,6 @@ void humidityTemperatureTask_create(QueueHandle_t humidityQueue,
 	_actEventGroup = actEventGroup;
 	_doneEventGroup = doneEventGroup;
 	
-	_latestHumidity = 0;
-	_latestTemperature = 0;
-	
 	xTaskCreate(_run, 
 				TASK_NAME, 
 				configMINIMAL_STACK_SIZE, 

@@ -3,7 +3,6 @@
 #include <SoundTask.h>
 #include <HumidityTemperatureTask.h>
 #include <UplinkMessageBuilder.h>
-#include <stdio.h>
 #include <lora_driver.h>
 #include <task.h>
 
