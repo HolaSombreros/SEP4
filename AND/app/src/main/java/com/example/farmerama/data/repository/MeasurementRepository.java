@@ -3,6 +3,7 @@ package com.example.farmerama.data.repository;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,9 +16,13 @@ import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.persistence.IMeasurementDAO;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.firebase.firestore.local.QueryResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,6 +49,7 @@ public class MeasurementRepository {
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
         measurementDAO = database.measurementDAO();
+
     }
 
     public static MeasurementRepository getInstance(Application application) {
@@ -52,13 +58,21 @@ public class MeasurementRepository {
         }
         return instance;
     }
-    public LiveData<Measurement> getLatestMeasurement(MeasurementType measurementType, int areaId) {
-        return measurementDAO.getLatestMeasurement(measurementType, areaId);
+
+    public LiveData<Measurement> getLatestMeasurement() {
+        return latestMeasurement;
     }
 
     public LiveData<List<Measurement>> getMeasurements() {
-        return measurementDAO.getMeasurements();
+        return measurementDAO.getHistoricalMeasurements(MeasurementType.CO2, 9);
     }
+
+//    public void setAreaId(int id) {
+//        areaId = id;
+//    }
+//    public void setMeasurementType(MeasurementType measurementType) {
+//        this.measurementType = measurementType;
+//    }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         Call<List<MeasurementResponse>> call = adapter.retrieveLatestMeasurement(type, areaId, latest);
@@ -84,6 +98,10 @@ public class MeasurementRepository {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
+            executorService.execute(() -> {
+                latestMeasurement.postValue(measurementDAO.getLatestMeasurement(type, areaId));
+                Log.i("LATEST", type.getType() + areaId);
+            });
     }
 
     public void retrieveMeasurements(int areaId, MeasurementType type, String date) {
@@ -93,7 +111,6 @@ public class MeasurementRepository {
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
                 if (response.isSuccessful()) {
-                    //executorService.execute(measurementDAO::removeMeasurements);
                     executorService.execute(() -> {
                         for (MeasurementResponse measurement : response.body()) {
                             measurementDAO.createMeasurement(measurement.getMeasurement(type));

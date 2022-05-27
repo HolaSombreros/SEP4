@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Measurement;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class MeasurementsViewModel extends AndroidViewModel {
     private MeasurementRepository measurementRepository;
+    //private MutableLiveData<Measurement> measurement;
     private AreaRepository areaRepository;
     private SharedPreferences sharedPreferences;
     private int areaId;
@@ -24,6 +26,7 @@ public class MeasurementsViewModel extends AndroidViewModel {
 
     public MeasurementsViewModel(Application application) {
         super(application);
+        //measurement = new MutableLiveData<>();
         this.measurementRepository = MeasurementRepository.getInstance(application);
         this.areaRepository = AreaRepository.getInstance(application);
         this.sharedPreferences = application.getSharedPreferences("Latest", Context.MODE_PRIVATE);
@@ -38,7 +41,7 @@ public class MeasurementsViewModel extends AndroidViewModel {
     }
 
     public LiveData<Measurement> getLatestMeasurement() {
-        return measurementRepository.getLatestMeasurement(measurementType, areaId);
+        return measurementRepository.getLatestMeasurement();
     }
 
     public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {
@@ -65,4 +68,8 @@ public class MeasurementsViewModel extends AndroidViewModel {
     public void setAreaId(int id) {
         areaId = id;
     }
+//
+//    public void setMeasurementType(MeasurementType measurementType) {
+//        measurementRepository.setMeasurementType(measurementType);
+//    }
 }

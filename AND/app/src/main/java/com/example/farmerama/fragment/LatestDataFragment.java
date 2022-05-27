@@ -58,9 +58,9 @@ public class LatestDataFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 //viewModel.getLatestMeasurements(MeasurementType.values()[position]);
+                //viewModel.setMeasurementType(MeasurementType.values()[position]);
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[position], true);
                 //viewModel.saveLatestInformation(MeasurementType.values()[viewPager2.getCurrentItem()]);
-
             }
         });
 
@@ -88,8 +88,10 @@ public class LatestDataFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
+
+                //viewModel.setMeasurementType(MeasurementType.values()[viewPager2.getCurrentItem()]);
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
-                viewModel.saveLatestInformation(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
+                //viewModel.saveLatestInformation(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
             }
 
             @Override
