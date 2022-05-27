@@ -2,20 +2,25 @@ package com.example.farmerama.data.model;
 
 import static java.time.LocalDateTime.parse;
 
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity(tableName = "measurement_table")
+import javax.annotation.Nonnull;
+
+@Entity(tableName = "measurement_table", primaryKeys = {"measurementId", "measurementType"})
 public class Measurement {
-    @PrimaryKey
+    @NonNull
     private int measurementId;
     private boolean latest;
     private int areaId;
     private double value;
     private String measuredDate;
+    @NonNull
     private MeasurementType measurementType;
 
     public Measurement(){}

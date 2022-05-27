@@ -49,7 +49,6 @@ public class MeasurementRepository {
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
         measurementDAO = database.measurementDAO();
-
     }
 
     public static MeasurementRepository getInstance(Application application) {
@@ -66,13 +65,6 @@ public class MeasurementRepository {
     public LiveData<List<Measurement>> getMeasurements() {
         return measurementDAO.getHistoricalMeasurements(MeasurementType.CO2, 9);
     }
-
-//    public void setAreaId(int id) {
-//        areaId = id;
-//    }
-//    public void setMeasurementType(MeasurementType measurementType) {
-//        this.measurementType = measurementType;
-//    }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         Call<List<MeasurementResponse>> call = adapter.retrieveLatestMeasurement(type, areaId, latest);
