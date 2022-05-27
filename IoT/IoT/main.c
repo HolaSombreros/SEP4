@@ -63,7 +63,7 @@ static void _createQueues(void) {
 	_co2Queue = xQueueCreate(10, sizeof(uint16_t));
 	_soundQueue = xQueueCreate(10, sizeof(uint16_t));
 	_servoQueue = xQueueCreate(10, sizeof(int16_t));
-	_messageBuffer = xMessageBufferCreate(sizeof(lora_driver_payload_t));
+	_messageBuffer = xMessageBufferCreate(sizeof(lora_driver_payload_t)*5);
 	_senderQueue = xQueueCreate(10, sizeof(lora_driver_payload_t));
 }
 
@@ -79,8 +79,8 @@ static void _createMutexes(void){
 int main(void) {
 	stdio_initialise(ser_USART0);
 	
-	_initDrivers();
 	_createQueues();
+	_initDrivers();
 	_createEventGroups();
 	_createTasks();
 	_createMutexes();
