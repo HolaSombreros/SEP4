@@ -60,11 +60,6 @@ void farmerama_runTask(void) {
 	xQueueReceive(_co2Queue, &ppm, pdMS_TO_TICKS(10000));
 	xQueueReceive(_soundQueue, &sound, pdMS_TO_TICKS(10000));
 	
-	xQueueSendToBack(_servoQueue, &humidity, pdMS_TO_TICKS(10000));
-	xQueueSendToBack(_servoQueue, &temperature, pdMS_TO_TICKS(10000));
-	xQueueSendToBack(_servoQueue, &ppm, pdMS_TO_TICKS(10000));
-	xQueueSendToBack(_servoQueue, &sound, pdMS_TO_TICKS(10000));
-	
 	uplinkMessageBuilder_setHumidityData(humidity);
 	uplinkMessageBuilder_setTemperatureData(temperature);
 	uplinkMessageBuilder_setCO2Data(ppm);
@@ -74,6 +69,11 @@ void farmerama_runTask(void) {
 	if (message.portNo == PORT) {
 		xQueueSendToBack(_senderQueue, &message, pdMS_TO_TICKS(1000));
 	}
+	
+	xQueueSendToBack(_servoQueue, &humidity, pdMS_TO_TICKS(10000));
+	xQueueSendToBack(_servoQueue, &temperature, pdMS_TO_TICKS(10000));
+	xQueueSendToBack(_servoQueue, &ppm, pdMS_TO_TICKS(10000));
+	xQueueSendToBack(_servoQueue, &sound, pdMS_TO_TICKS(10000));
 	
 	TickType_t lastWakeTime = xTaskGetTickCount();
 	xTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS(TASK_INTERVAL));
