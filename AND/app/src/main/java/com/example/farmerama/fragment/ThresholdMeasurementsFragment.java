@@ -50,7 +50,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
 
     private void setUpViews() {
        AtomicBoolean createThreshold = new AtomicBoolean(false);
-        viewModel.getThresholds().observe(getViewLifecycleOwner(), thresholds -> {
+        viewModel.getThreshold().observe(getViewLifecycleOwner(), thresholds -> {
             if(thresholds != null) {
                 upperThresholdValue.setText(String.valueOf(thresholds.getMaximum()));
                 upperThresholdValue.requestFocus();

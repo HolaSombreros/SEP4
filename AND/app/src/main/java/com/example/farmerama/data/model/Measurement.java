@@ -27,9 +27,10 @@ public class Measurement {
         this.measurementType = type;
     }
 
-    public Measurement(int measurementId, double value, String measuredDate, MeasurementType measurementType) {
+    public Measurement(int measurementId, int areaId, double value, String measuredDate, MeasurementType measurementType) {
         this.measurementId = measurementId;
         this.value = value;
+        this.areaId = areaId;
         formatDate(measuredDate);
         this.measurementType = measurementType;
     }

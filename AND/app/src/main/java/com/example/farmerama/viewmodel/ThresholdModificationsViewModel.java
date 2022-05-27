@@ -17,7 +17,7 @@ public class ThresholdModificationsViewModel extends AndroidViewModel {
 
     public ThresholdModificationsViewModel(@NonNull Application application) {
         super(application);
-        thresholdRepository = ThresholdRepository.getInstance();
+        thresholdRepository = ThresholdRepository.getInstance(application);
     }
 
     public void retrieveThresholdsModifications(String date) {

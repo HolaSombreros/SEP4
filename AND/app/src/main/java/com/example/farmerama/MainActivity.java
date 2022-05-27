@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView emailHeader = findViewById(R.id.EmailHeader);
                 ImageView profilePicture = findViewById(R.id.imageView);
                 if (usernameHeader != null && emailHeader != null) {
-                    usernameHeader.setText(loggedInUser.getName());
+                    usernameHeader.setText(loggedInUser.getUserName());
                     emailHeader.setText(loggedInUser.getEmail());
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/" + loggedInUser.getUserId() + "/profile.jpg");
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profilePicture));

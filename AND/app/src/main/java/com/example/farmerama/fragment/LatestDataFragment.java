@@ -10,7 +10,6 @@ import android.widget.Spinner;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -58,7 +57,10 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                //viewModel.getLatestMeasurements(MeasurementType.values()[position]);
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[position], true);
+                //viewModel.saveLatestInformation(MeasurementType.values()[viewPager2.getCurrentItem()]);
+
             }
         });
 
@@ -72,7 +74,7 @@ public class LatestDataFragment extends Fragment {
             List<String> areasName = new ArrayList<>();
             areasRetrieved[0] = areas;
             for(Area area : areas) {
-                    areasName.add(area.getName());
+                    areasName.add(area.getAreaName());
             }
             ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, areasName);

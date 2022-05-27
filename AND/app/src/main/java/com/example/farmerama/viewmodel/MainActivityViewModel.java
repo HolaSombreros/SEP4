@@ -34,7 +34,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         notificationPreferences = application.getSharedPreferences("Notification", Context.MODE_PRIVATE);
         userRepository = UserRepository.getInstance(application);
         barnRepository = BarnRepository.getInstance(application);
-        thresholdRepository = ThresholdRepository.getInstance();
+        thresholdRepository = ThresholdRepository.getInstance(application);
     }
     public void retrieveBarns() {
         barnRepository.retrieveBarns();

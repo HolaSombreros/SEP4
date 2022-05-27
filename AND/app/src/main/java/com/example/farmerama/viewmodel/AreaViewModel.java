@@ -38,7 +38,7 @@ public class AreaViewModel extends AndroidViewModel {
         List<String> list = new ArrayList<>();
         if(repository.getAreas().getValue() != null) {
             for(Area area : repository.getAreas().getValue()) {
-                list.add(area.getName());
+                list.add(area.getAreaName());
             }
         }
         return new MutableLiveData<>(list);

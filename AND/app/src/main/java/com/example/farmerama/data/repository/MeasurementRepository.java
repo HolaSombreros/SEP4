@@ -92,23 +92,13 @@ public class MeasurementRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
-                //List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    executorService.execute(measurementDAO::removeMeasurements);
+                    //executorService.execute(measurementDAO::removeMeasurements);
                     executorService.execute(() -> {
-                                for (MeasurementResponse measurement : response.body()) {
-                                    Log.i("SIZE" , String.valueOf(measurement.getMeasurement(type).getValue()));
-                                    //for(Measurement measurement1 : measurementDAO.getMeasurements().getValue()) {
-                                        measurementDAO.createMeasurement(measurement.getMeasurement(type));
-                                    //}
-                                    //list.add(measurement.getMeasurement(type));
-                                    //measurementDAO.createMeasurement(measurement.getMeasurement(type));
-                                }
-                            });
-//                    for (MeasurementResponse measurement : response.body()) {
-//                        list.add(measurement.getMeasurement(type));
-//                    }
-//                    measurements.setValue(list);
+                        for (MeasurementResponse measurement : response.body()) {
+                            measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                        }
+                    });
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();

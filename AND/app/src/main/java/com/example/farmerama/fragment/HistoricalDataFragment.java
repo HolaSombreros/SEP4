@@ -102,8 +102,9 @@ public class HistoricalDataFragment extends Fragment {
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
             List<String> areasName = new ArrayList<>();
             areasRetrieved[0] = areas;
-            for (Area area : areas) {
-                areasName.add(area.getName());
+            for(Area area : areas) {
+                areasName.add(area.getAreaName());
+
             }
             ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, areasName);

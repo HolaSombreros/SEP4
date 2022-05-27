@@ -51,7 +51,7 @@ public class LatestMeasurementFragment extends Fragment {
     }
 
     private void setUpViews() {
-        viewModel.getLatestMeasurements().observe(getViewLifecycleOwner(), measurement -> {
+        viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
             if (measurement != null) {
                 List<DonutSection> donutSection = new ArrayList<>();
                 donut.clear();
