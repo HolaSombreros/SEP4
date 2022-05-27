@@ -14,17 +14,18 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.work.ListenableWorker;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +33,12 @@ import com.example.farmerama.data.model.LogObj;
 import com.example.farmerama.data.repository.ThresholdRepository;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
-        //viewModel.retrieveEmployees();
         viewModel.retrieveBarns();
         NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for the notification regarding exceeding thresholds");
@@ -87,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 publishNotification(log);
             }
         });
-
     }
 
     private void setupNavigation() {
@@ -149,9 +152,18 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
-                if (usernameHeader != null && emailHeader != null) {
+                ImageView profilePicture = findViewById(R.id.imageView);
+                if(usernameHeader != null && emailHeader != null)
+                {
                     usernameHeader.setText(loggedInUser.getName());
                     emailHeader.setText(loggedInUser.getEmail());
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/"+loggedInUser.getUserId()+"/profile.jpg");
+                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Picasso.get().load(uri).into(profilePicture);
+                        }
+                    });
                 }
                 toolbar.setVisibility(View.VISIBLE);
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
