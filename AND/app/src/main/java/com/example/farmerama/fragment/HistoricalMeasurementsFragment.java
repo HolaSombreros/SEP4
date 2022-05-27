@@ -81,7 +81,6 @@ public class HistoricalMeasurementsFragment extends Fragment {
             if (!measurements.isEmpty()) {
                 lineChart.getAxisLeft().setAxisMaximum(measurements.get(0).getMeasurementType().getMaximum());
                 lineChart.getAxisLeft().setAxisMinimum(0);
-                lineChart.zoomIn();
             }
             lineChart.animateX(3000);
 

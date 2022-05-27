@@ -11,13 +11,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.SwitchPreference;
+import androidx.work.ListenableWorker;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.impl.model.Preference;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,10 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farmerama.data.model.LogObj;
-import com.example.farmerama.data.util.NotificationWorker;
+import com.example.farmerama.data.repository.ThresholdRepository;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.TimeUnit;
 
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 publishNotification(log);
             }
         });
+
     }
 
     private void setupNavigation() {
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLoggedInUser() {
-        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.MINUTES).build();
+        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MINUTES).build();
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
@@ -218,4 +222,31 @@ public class MainActivity extends AppCompatActivity {
 
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
+
+    public class NotificationWorker extends ListenableWorker {
+
+        public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+            super(context, workerParams);
+        }
+
+        @NonNull
+        @Override
+        public ListenableFuture<Result> startWork() {
+            ThresholdRepository.getInstance().retrieveTodayLogs();
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
+                    .setSmallIcon(R.mipmap.application_launcher)
+                    .setContentTitle("Measurement out of the thresholds")
+                    .setContentText(String.format("Exceeded %s in area %s", "A", "A"))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setChannelId("22");
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
+            notificationManager.notify(22, builder.build());
+
+
+            return null;
+        }
+    }
+
 }
