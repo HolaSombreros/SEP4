@@ -29,22 +29,21 @@ import retrofit2.internal.EverythingIsNonNull;
 public class MeasurementRepository {
 
     private MutableLiveData<List<Measurement>> measurements;
+    private MutableLiveData<Measurement> latestMeasurement;
     private static MeasurementRepository instance;
     private MeasurementApiAdapterInterface adapter;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
     private IMeasurementDAO measurementDAO;
-    private LiveData<List<Measurement>> measurementsRoom;
 
 
     private MeasurementRepository(Application application) {
         measurements = new MutableLiveData<>();
+        latestMeasurement = new MutableLiveData<>();
         adapter = new MeasurementApiAdapter();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
         measurementDAO = database.measurementDAO();
-        measurementsRoom = measurementDAO.getMeasurements();
-
     }
 
     public static MeasurementRepository getInstance(Application application) {
@@ -53,9 +52,12 @@ public class MeasurementRepository {
         }
         return instance;
     }
+    public LiveData<Measurement> getLatestMeasurement(MeasurementType measurementType, int areaId) {
+        return measurementDAO.getLatestMeasurement(measurementType, areaId);
+    }
 
     public LiveData<List<Measurement>> getMeasurements() {
-        return measurements;
+        return measurementDAO.getMeasurements();
     }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
@@ -64,16 +66,12 @@ public class MeasurementRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
-                List<Measurement> list = new ArrayList<>();
-                //executorService.execute(measurementDAO::removeMeasurements);
                 if (response.isSuccessful()) {
-                    for (MeasurementResponse measurement : response.body()) {
-                        list.add(measurement.getMeasurement(type));
-                        //executorService.execute(() -> measurementDAO.createMeasurement(measurement.getMeasurement(type)));
-                    }
-                    if (list.size() != 0) {
-                        measurements.setValue(list);
-                    }
+                    executorService.execute(() -> {
+                        for (MeasurementResponse measurement : response.body()) {
+                            measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                        }
+                    });
                 } else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
@@ -94,12 +92,23 @@ public class MeasurementRepository {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<List<MeasurementResponse>> call, Response<List<MeasurementResponse>> response) {
-                List<Measurement> list = new ArrayList<>();
+                //List<Measurement> list = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    for (MeasurementResponse measurement : response.body()) {
-                        list.add(measurement.getMeasurement(type));
-                    }
-                    measurements.setValue(list);
+                    executorService.execute(measurementDAO::removeMeasurements);
+                    executorService.execute(() -> {
+                                for (MeasurementResponse measurement : response.body()) {
+                                    Log.i("SIZE" , String.valueOf(measurement.getMeasurement(type).getValue()));
+                                    //for(Measurement measurement1 : measurementDAO.getMeasurements().getValue()) {
+                                        measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                                    //}
+                                    //list.add(measurement.getMeasurement(type));
+                                    //measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                                }
+                            });
+//                    for (MeasurementResponse measurement : response.body()) {
+//                        list.add(measurement.getMeasurement(type));
+//                    }
+//                    measurements.setValue(list);
                 }
                 else {
                     ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();

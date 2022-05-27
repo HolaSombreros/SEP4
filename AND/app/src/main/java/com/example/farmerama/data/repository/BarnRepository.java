@@ -15,7 +15,6 @@ import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,7 +50,7 @@ public class BarnRepository {
     }
 
     public LiveData<List<Barn>> getBarns() {
-        return barns;
+        return barnDAO.getBarns();
     }
 
     public void retrieveBarns() {
@@ -62,13 +61,18 @@ public class BarnRepository {
             @Override
             public void onResponse(Call<List<BarnResponse>> call, Response<List<BarnResponse>> response) {
                 if (response.isSuccessful()) {
-                    List<Barn> list = new ArrayList<>();
-                    executorService.execute(barnDAO::removeAllBarns);
-                    for(BarnResponse barnResponse : response.body()) {
-                        list.add(barnResponse.getBarn());
-                        executorService.execute(() -> barnDAO.createArea(barnResponse.getBarn()));
-                    }
-                    barns.setValue(list);
+                    //List<Barn> list = new ArrayList<>();
+                    //executorService.submit(barnDAO::removeAllBarns);
+                    executorService.execute(() -> {
+                        for(BarnResponse barnResponse : response.body()) {
+                            barnDAO.createBarn(barnResponse.getBarn());
+                        }
+                    });
+//                    for(BarnResponse barnResponse : response.body()) {
+//                        //list.add(barnResponse.getBarn());
+//                        executorService.submit(() -> barnDAO.createBarn(barnResponse.getBarn()));
+//                    }
+                    //barns.setValue(list);
                 }
                 else {
                     ErrorReader<List<BarnResponse>> responseErrorReader = new ErrorReader<>();
@@ -79,7 +83,7 @@ public class BarnRepository {
             @Override
             public void onFailure(Call<List<BarnResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
-                barns.setValue(barnsRoom.getValue());
+                //barns.setValue(barnsRoom.getValue());
             }
         });
     }

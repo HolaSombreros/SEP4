@@ -12,6 +12,7 @@ import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.LogObj;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.AreaRepository;
+import com.example.farmerama.data.repository.BarnRepository;
 import com.example.farmerama.data.repository.ThresholdRepository;
 import com.example.farmerama.data.repository.UserRepository;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class MainActivityViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
+    private BarnRepository barnRepository;
     private SharedPreferences loginPreferences;
     private SharedPreferences notificationPreferences;
     private ThresholdRepository thresholdRepository;
@@ -30,7 +32,11 @@ public class MainActivityViewModel extends AndroidViewModel {
         loginPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
         notificationPreferences = application.getSharedPreferences("Notification", Context.MODE_PRIVATE);
         userRepository = UserRepository.getInstance(application);
+        barnRepository = BarnRepository.getInstance(application);
         thresholdRepository = ThresholdRepository.getInstance();
+    }
+    public void retrieveBarns() {
+        barnRepository.retrieveBarns();
     }
 
     public void retrieveEmployees() {

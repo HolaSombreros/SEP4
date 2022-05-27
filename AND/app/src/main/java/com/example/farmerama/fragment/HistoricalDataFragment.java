@@ -94,7 +94,7 @@ public class HistoricalDataFragment extends Fragment {
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "Sound"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();

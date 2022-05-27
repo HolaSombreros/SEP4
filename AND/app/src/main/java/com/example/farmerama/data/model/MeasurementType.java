@@ -27,6 +27,16 @@ public enum MeasurementType {
         }
     }
 
+    public static MeasurementType formatString(String measurement) {
+        switch (measurement) {
+            case "TEMPERATURE": return TEMPERATURE;
+            case "HUMIDITY" : return HUMIDITY;
+            case "SOUND": return SOUND;
+            case "CO2": return CO2;
+            default: return null;
+        }
+    }
+
     public String toUnit() {
         switch (type) {
             case "TEMPERATURE": return "°C";

@@ -41,4 +41,9 @@ public class Barn {
         Barn barn = (Barn) o;
         return barnId == barn.barnId && Objects.equals(barnName, barn.barnName);
     }
+
+    @Override
+    public String toString() {
+        return barnName;
+    }
 }

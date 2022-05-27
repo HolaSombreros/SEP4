@@ -1,8 +1,12 @@
 package com.example.farmerama.data.repository;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+
+import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.farmerama.data.model.Area;
@@ -18,6 +22,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.xml.transform.Result;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +35,8 @@ public class AreaRepository {
     private static AreaRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private  IAreaDAO areaDAO;
+    private IAreaDAO areaDAO;
+
 
     private AreaRepository(Application application) {
         areas = new MutableLiveData<>();
@@ -62,11 +69,18 @@ public class AreaRepository {
             @Override
             public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
-                    executorService.execute(areaDAO::removeAreas);
-                    executorService.execute(database.barnDAO()::removeAllBarns);
-                    for(AreaResponse areaResponse : response.body()) {
-                        executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));
-                    }
+                    //executorService.submit(areaDAO::removeAreas);
+                    //executorService.submit(database.barnDAO()::removeAllBarns);
+
+                   // System.out.println("HELLO4" + areaDAO.getAreas().getValue().size());
+                    //executorService.execute(database.barnDAO()::removeAllBarns);
+                    executorService.execute(() -> {
+                                for(AreaResponse areaResponse : response.body()) {
+                                    areaDAO.createArea(areaResponse.getArea());
+                                }
+                    });
+                    //executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));
+
                 }
                 else {
                     ErrorReader<List<AreaResponse>> responseErrorReader = new ErrorReader<>();

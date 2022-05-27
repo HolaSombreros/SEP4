@@ -51,20 +51,35 @@ public class LatestMeasurementFragment extends Fragment {
     }
 
     private void setUpViews() {
-        viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
-            if (measurements.size() != 0) {
+        viewModel.getLatestMeasurements().observe(getViewLifecycleOwner(), measurement -> {
+            if (measurement != null) {
                 List<DonutSection> donutSection = new ArrayList<>();
                 donut.clear();
-                donut.setCap(measurements.get(0).getMeasurementType().getMaximum());
-                donutSection.add(new DonutSection(measurements.get(0).getMeasurementType().toString(),
-                        Color.parseColor("#2C4A78"), (float) measurements.get(0).getValue()));
+                donut.setCap(measurement.getMeasurementType().getMaximum());
+                donutSection.add(new DonutSection(measurement.getMeasurementType().toString(),
+                        Color.parseColor("#2C4A78"), (float) measurement.getValue()));
                 donut.submitData(donutSection);
 
-                measurementTextView.setText(String.valueOf(measurements.get(0).getValue()));
-                timeText.setText(measurements.get(0).getDateTime());
-                if (measurements.get(0).getMeasurementType() != null)
-                    typeTextView.setText(measurements.get(0).getMeasurementType().toUnit());
+                measurementTextView.setText(String.valueOf(measurement.getValue()));
+                timeText.setText(measurement.getDateTime());
+                if (measurement.getMeasurementType() != null)
+                    typeTextView.setText(measurement.getMeasurementType().toUnit());
             }
         });
+//        viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
+//            if (measurements.size() != 0) {
+//                List<DonutSection> donutSection = new ArrayList<>();
+//                donut.clear();
+//                donut.setCap(measurements.get(0).getMeasurementType().getMaximum());
+//                donutSection.add(new DonutSection(measurements.get(0).getMeasurementType().toString(),
+//                        Color.parseColor("#2C4A78"), (float) measurements.get(0).getValue()));
+//                donut.submitData(donutSection);
+//
+//                measurementTextView.setText(String.valueOf(measurements.get(0).getValue()));
+//                timeText.setText(measurements.get(0).getDateTime());
+//                if (measurements.get(0).getMeasurementType() != null)
+//                    typeTextView.setText(measurements.get(0).getMeasurementType().toUnit());
+//            }
+//        });
     }
 }
