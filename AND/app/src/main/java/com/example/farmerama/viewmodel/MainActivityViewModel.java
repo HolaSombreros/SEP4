@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.farmerama.R;
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.LogObj;
 import com.example.farmerama.data.model.User;
@@ -47,6 +48,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         sharedPreferences.edit().putString("userEmail", "null").apply();
         sharedPreferences.edit().putString("userPassword", "null").apply();
     }
+
 
     public LiveData<List<LogObj>> getTodayLogs() {
         return thresholdRepository.getLatestLogs();

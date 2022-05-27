@@ -19,6 +19,7 @@ import androidx.work.WorkerParameters;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private MainActivityViewModel viewModel;
+    private String prevStarted = "yes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setupNavigation();
         setUpLoggedInUser();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        } else {
+            navController.navigate(R.id.loginFragment);
+        }
     }
 
     @Override
@@ -98,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.employeesFragment,
                 R.id.logsFragment,
                 R.id.thresholdModificationFragment,
-                R.id.registerFragment)
+                R.id.registerFragment,
+                R.id.accountFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -120,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
 
-            if (id == R.id.loginFragment) {
+            if (id == R.id.loginFragment || id == R.id.introVPFragment) {
                 toolbar.setVisibility(View.GONE);
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             } else {
@@ -158,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.loginFragment);
             }
         });
+
     }
 
     private void publishNotification(LogObj log) {
@@ -185,4 +202,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
+
+
 }
