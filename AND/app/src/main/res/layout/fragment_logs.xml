@@ -10,15 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <DatePicker
+        <TextView
             android:id="@+id/log_date"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAlignment="center"
+            android:layout_marginHorizontal="16dp"/>
 
         <Spinner
             android:id="@+id/area_spinner"

@@ -1,5 +1,6 @@
 package com.example.farmerama.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,20 +13,29 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.viewmodel.AccountViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class AccountFragment extends Fragment {
 
     private NavController navController;
+    private ImageView profilePicture;
     private TextView email;
     private TextView name;
     private TextView role;
     private AccountViewModel viewModel;
     private FloatingActionButton edit;
+    private StorageReference storageRef;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +52,8 @@ public class AccountFragment extends Fragment {
 
     private void initializeViews(View view) {
         navController = Navigation.findNavController(view);
+        profilePicture = view.findViewById(R.id.userProfilePicture);
+        progressBar = view.findViewById(R.id.progressbar);
         email = view.findViewById(R.id.email);
         name = view.findViewById(R.id.name);
         role = view.findViewById(R.id.role);
@@ -57,6 +69,15 @@ public class AccountFragment extends Fragment {
                 name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_account_circle_24, 0, 0, 0);
                 role.setText(user.getRole());
                 role.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_work_24, 0, 0, 0);
+                progressBar.setVisibility(View.VISIBLE);
+                storageRef = FirebaseStorage.getInstance().getReference().child("users/"+user.getUserId()+"/profile.jpg");
+                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(profilePicture);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
 
             }
         });
