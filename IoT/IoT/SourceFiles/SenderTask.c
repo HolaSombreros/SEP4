@@ -29,22 +29,26 @@ void senderTask_initTask(void* params) {
 	vTaskDelay(150);
 	lora_driver_flushBuffers();
 	
-	//_connectToLoRaWAN();
+	_connectToLoRaWAN();
 }
 
 void senderTask_runTask() {	
 	lora_driver_payload_t uplinkPayload;
 	xQueueReceive(_senderQueue, &uplinkPayload, portMAX_DELAY);
 	
-//  	lora_driver_returnCode_t returnCode;
-//  	if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
-// 	 	
-// 	} else if (returnCode == LORA_MAC_RX) {
-// 	 	// ?
-//  	}
+  	lora_driver_returnCode_t returnCode;
+  	if ((returnCode = lora_driver_sendUploadMessage(false, &uplinkPayload)) == LORA_MAC_TX_OK) {
+		  puts("TX");
+ 	 	//printf("\n\nTX - Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
+ 	 	//printf("\nCO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d", uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
+ 	} else if (returnCode == LORA_MAC_RX) {
+		  puts("RX");
+ 	 	//printf("\n\nRX - Humidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
+ 	 	//printf("\nCO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d", uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
+  	} else {
+		printf("Something went wrong - %d\n", returnCode);
+	}
  	
-	printf("\n\nHumidity high: %d | Humidity low: %d | Temperature high: %d | Temperature low: %d", uplinkPayload.bytes[0], uplinkPayload.bytes[1], uplinkPayload.bytes[2], uplinkPayload.bytes[3]);
-	printf("\nCO2 high: %d | CO2 low: %d | Sound high: %d | Sound low: %d", uplinkPayload.bytes[4], uplinkPayload.bytes[5], uplinkPayload.bytes[6], uplinkPayload.bytes[7]);
 }
 
 static void _run(void* params) {
