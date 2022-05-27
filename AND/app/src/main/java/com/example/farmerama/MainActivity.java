@@ -1,8 +1,10 @@
 package com.example.farmerama;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.concurrent.futures.ResolvableFuture;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,9 +14,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.work.ListenableWorker;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+import androidx.work.WorkerParameters;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -22,6 +27,7 @@ import android.content.Intent;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -141,23 +147,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLoggedInUser() {
-        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MINUTES).build();
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(NotificationWorker.class).setInitialDelay(5, TimeUnit.MINUTES).build();
+
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
-                if(viewModel.isGettingNotifications())
-                    WorkManager.getInstance(this).enqueue(request);
+                WorkManager.getInstance(getApplicationContext()).enqueue(request);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
                 ImageView profilePicture = findViewById(R.id.imageView);
-                if(usernameHeader != null && emailHeader != null)
-                {
+                if (usernameHeader != null && emailHeader != null) {
                     usernameHeader.setText(loggedInUser.getName());
                     emailHeader.setText(loggedInUser.getEmail());
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/"+loggedInUser.getUserId()+"/profile.jpg");
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/" + loggedInUser.getUserId() + "/profile.jpg");
                     storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -173,15 +178,13 @@ public class MainActivity extends AppCompatActivity {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                     navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
                 }
-                if(loggedInUser.getRole().equals("OFFLINE")) {
+                if (loggedInUser.getRole().equals("OFFLINE")) {
 
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
                 navController.navigate(R.id.latestDataFragment);
                 viewModel.setLogged(true);
-            }
-
-            else {
+            } else {
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(false);
                 }
@@ -228,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if(item.getItemId() == R.id.accountFragment) {
+        if (item.getItemId() == R.id.accountFragment) {
             navController.navigate(item.getItemId());
             return true;
         }
@@ -238,28 +241,43 @@ public class MainActivity extends AppCompatActivity {
 
     public class NotificationWorker extends ListenableWorker {
 
+        private ResolvableFuture<Result> mFuture;
+
         public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
             super(context, workerParams);
+
+            viewModel.getTodayLogs().observeForever(logObjs -> {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
+                        .setSmallIcon(R.mipmap.application_launcher)
+                        .setContentTitle("Measurement out of the thresholds")
+                        .setContentText(String.format("Exceeded %s in area %s", "A", "A"))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setChannelId("22");
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
+                notificationManager.notify(22, builder.build());
+            });
         }
 
+        @SuppressLint("RestrictedApi")
         @NonNull
         @Override
         public ListenableFuture<Result> startWork() {
-            ThresholdRepository.getInstance().retrieveTodayLogs();
+            mFuture = ResolvableFuture.create();
+            Log.i("Notification", "reached");
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
-                    .setSmallIcon(R.mipmap.application_launcher)
-                    .setContentTitle("Measurement out of the thresholds")
-                    .setContentText(String.format("Exceeded %s in area %s", "A", "A"))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setChannelId("22");
+            if (viewModel.isLogged() && viewModel.isGettingNotifications()) {
+            // do work
+                ThresholdRepository.getInstance().retrieveTodayLogs();
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
-            notificationManager.notify(22, builder.build());
+            // Rescheduling work
 
+                OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(NotificationWorker.class).setInitialDelay(10, TimeUnit.SECONDS).build();
+                WorkManager.getInstance(getApplicationContext()).enqueue(request);
+            }
 
-            return null;
+            mFuture.set(Result.success());
+            return mFuture;
         }
     }
-
 }

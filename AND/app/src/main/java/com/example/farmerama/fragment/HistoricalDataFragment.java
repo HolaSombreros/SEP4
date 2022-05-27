@@ -75,7 +75,7 @@ public class HistoricalDataFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.retrieveMeasurements(MeasurementType.TEMPERATURE, date.getText().toString());
+                viewModel.retrieveMeasurements(MeasurementType.values()[tabLayout.getSelectedTabPosition()], date.getText().toString());
             }
 
             @Override
@@ -88,9 +88,7 @@ public class HistoricalDataFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                date.setText(LocalDate.now().toString());
-                viewModel.retrieveMeasurements(MeasurementType.values()[position], LocalDate.now().toString());
-                System.out.println(LocalDate.now().toString());
+                viewModel.retrieveMeasurements(MeasurementType.values()[position], date.getText().toString());
             }
         });
 
@@ -117,10 +115,8 @@ public class HistoricalDataFragment extends Fragment {
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
-                date.setText(LocalDate.now().toString());
-                viewModel.retrieveMeasurements(MeasurementType.TEMPERATURE, LocalDate.now().toString());
+                viewModel.retrieveMeasurements(MeasurementType.values()[tabLayout.getSelectedTabPosition()], date.getText().toString());
             }
 
             @Override

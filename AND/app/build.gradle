@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation "androidx.concurrent:concurrent-futures:1.1.0"
     implementation("app.futured.donut:donut:2.2.2")
     implementation("app.futured.donut:donut-compose:2.2.2")
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

@@ -1,6 +1,9 @@
 package com.example.farmerama.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
 
 public class LogsFragment extends Fragment {
@@ -29,7 +34,7 @@ public class LogsFragment extends Fragment {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private LogsViewModel viewModel;
-    private DatePicker date;
+    private TextView date;
 
     @Nullable
     @Override
@@ -81,9 +86,8 @@ public class LogsFragment extends Fragment {
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getAreaId());
-               viewModel.retrieveLogs();
+                viewModel.retrieveLogs();
             }
 
             @Override
@@ -92,17 +96,31 @@ public class LogsFragment extends Fragment {
             }
         });
 
-        date.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
+        date.setText(LocalDate.now().toString());
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                (view, year, monthOfYear, dayOfMonth)
+                        -> date.setText(String.format("%d-%02d-%02d", year, monthOfYear+1, dayOfMonth)),
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
+        date.setOnClickListener(view -> datePickerDialog.show());
+
+        date.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.retrieveLogs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
 
         viewModel.retrieveLogs();
-
-        date.setOnDateChangedListener((datePicker, i, i1, i2) ->{
-        viewModel.setDate(String.format("%d-%02d-%02d", i, i1+1, i2));
-            viewModel.retrieveLogs();
-
-                });
-
     }
-
 }
 
