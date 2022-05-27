@@ -41,7 +41,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J42700025568</avrtoolserialnumber>
+    <avrtoolserialnumber>J41800033302</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9801</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
@@ -51,7 +51,7 @@
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J42700025568</ToolNumber>
+      <ToolNumber>J41800033302</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
@@ -289,16 +289,25 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HeaderFiles\CO2Task.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HeaderFiles\Configuration.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HeaderFiles\Farmerama.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\MeasurementReturnCode.h">
+    <Compile Include="HeaderFiles\ReceiverTask.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HeaderFiles\SenderTask.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\TaskReturnCode.h">
+    <Compile Include="HeaderFiles\ServoTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HeaderFiles\SoundTask.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HeaderFiles\UplinkMessageBuilder.h">
@@ -307,13 +316,28 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="SourceFiles\CO2Task.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\Configuration.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SourceFiles\Farmerama.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\ReceiverTask.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\SenderTask.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\HumidityTemperatureTask.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\ServoTask.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SourceFiles\SoundTask.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SourceFiles\UplinkMessageBuilder.c">
@@ -383,9 +407,6 @@
       <SubType>compile</SubType>
     </None>
     <Compile Include="HeaderFiles\HumidityTemperatureTask.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="LoRaWANHandler.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
