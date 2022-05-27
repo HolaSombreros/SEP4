@@ -14,10 +14,10 @@ import java.util.List;
 
 
 public interface Co2Repository extends JpaRepository<Measurement, Integer> {
-    @Query(nativeQuery = true, value = "SELECT TOP 1 measured_date as measuredDate, co2 as value FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC")
+    @Query(nativeQuery = true, value = "SELECT TOP 1 measured_date as measuredDate, co2 as value, measurement_id as measurementId FROM measurement WHERE measurement.area_id = :area_id ORDER BY measurement_id DESC")
     SentMeasurement getLatestCo2(@Param("area_id") int area_id);
 
-    @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, co2 as value FROM measurement WHERE measurement.area_id = :area_id AND convert(date, measurement.measured_date) = :date ORDER BY measurement_id")
+    @Query(nativeQuery = true, value = "SELECT measured_date as measuredDate, co2 as value, measurement_id as measurementId FROM measurement WHERE measurement.area_id = :area_id AND convert(date, measurement.measured_date) = :date ORDER BY measurement_id")
     List<SentMeasurement> getAllCo2sInDate(@Param("area_id") int areaId, @Param("date") Date date);
     @Query(nativeQuery = true, value = "SELECT  measuredDate, value, threshold FROM (SELECT measured_date as measuredDate, co2 as value, maximum as threshold, measurement_id\n" +
             "                FROM measurement JOIN threshold t on measurement.area_id = t.area_id AND t.type like :type WHERE measurement.area_id = :area_id AND\n" +
