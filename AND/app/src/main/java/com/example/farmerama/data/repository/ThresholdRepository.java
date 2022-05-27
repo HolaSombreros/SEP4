@@ -186,7 +186,7 @@ public class ThresholdRepository {
                     for (LogResponse logResponse : response.body()) {
                         list.add(logResponse.getLog());
                     }
-                    logs.setValue(list);
+                    latestLogs.setValue(list);
                 } else {
                     ErrorReader<List<LogResponse>> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
