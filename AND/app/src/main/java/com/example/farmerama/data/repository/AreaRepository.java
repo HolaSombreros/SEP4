@@ -35,8 +35,7 @@ public class AreaRepository {
     private static AreaRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private  IAreaDAO areaDAO;
-    Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
+    private IAreaDAO areaDAO;
 
 
     private AreaRepository(Application application) {

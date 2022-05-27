@@ -20,17 +20,18 @@ public class Measurement {
 
     public Measurement(){}
 
-    public Measurement(int measurementId, double value, String dateTime, MeasurementType measurementType) {
-        this.measurementId = measurementId;
-        this.value = value;
-        //this.measuredDate = dateTime;
-        this.measurementType = measurementType;
-    }
     public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
         this.measuredDate = measuredDate;
         formatDate(measuredDate);
         this.measurementType = type;
+    }
+
+    public Measurement(int measurementId, double value, String measuredDate, MeasurementType measurementType) {
+        this.measurementId = measurementId;
+        this.value = value;
+        formatDate(measuredDate);
+        this.measurementType = measurementType;
     }
 
     public Measurement(int measurementId, boolean latest, int areaId, double value, String measuredDate, MeasurementType measurementType) {
