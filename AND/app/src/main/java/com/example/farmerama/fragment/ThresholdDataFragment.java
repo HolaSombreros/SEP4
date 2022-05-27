@@ -61,17 +61,19 @@ public class ThresholdDataFragment extends Fragment {
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "Sound"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();
         final List<Area>[] areasRetrieved = new List[]{new ArrayList<>()};
 
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
+            //viewModel.setAreaId(areas.get(0).getAreaId());
+            //viewModel.setMeasurementType(MeasurementType.TEMPERATURE);
             List<String> areasName = new ArrayList<>();
             areasRetrieved[0] = areas;
             for(Area area : areas) {
-                areasName.add(area.getName());
+                areasName.add(area.getAreaName());
             }
             ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, areasName);

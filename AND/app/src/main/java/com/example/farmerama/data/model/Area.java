@@ -2,7 +2,6 @@ package com.example.farmerama.data.model;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
@@ -13,25 +12,25 @@ public class Area {
     private Barn barnArea;
     @PrimaryKey
     private int areaId;
-    private String name;
+    private String areaName;
     private String description;
     private int numberOfPigs;
     private String hardwareId;
 
     public Area(){}
 
-    public Area(Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
+    public Area(Barn barn, String areaName, String description, int numberOfPigs, String hardwareId) {
         this.barnArea = barn;
-        this.name = name;
+        this.areaName = areaName;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
         this.hardwareId = hardwareId;
     }
 
-    public Area(int areaId, Barn barnArea, String name, String description, int noOfPigs, String hardwareId) {
+    public Area(int areaId, Barn barnArea, String areaName, String description, int noOfPigs, String hardwareId) {
         this.barnArea = barnArea;
         this.areaId = areaId;
-        this.name = name;
+        this.areaName = areaName;
         this.description = description;
         this.numberOfPigs = noOfPigs;
         this.hardwareId = hardwareId;
@@ -61,12 +60,12 @@ public class Area {
         this.areaId = areaId;
     }
 
-    public String getName() {
-        return name;
+    public String getAreaName() {
+        return areaName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getDescription() {
@@ -102,6 +101,6 @@ public class Area {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Area area = (Area) o;
-        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barnArea, area.barnArea) && Objects.equals(name, area.name) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
+        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barnArea, area.barnArea) && Objects.equals(areaName, area.areaName) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
     }
 }

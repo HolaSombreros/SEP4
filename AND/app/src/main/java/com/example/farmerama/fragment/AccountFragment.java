@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.viewmodel.AccountViewModel;
-import com.example.farmerama.viewmodel.AddEditAreaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AccountFragment extends Fragment {
@@ -55,7 +53,7 @@ public class AccountFragment extends Fragment {
             if(user != null){
                 email.setText(user.getEmail());
                 email.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_alternate_email_24, 0, 0, 0);
-                name.setText(user.getName());
+                name.setText(user.getUserName());
                 name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_account_circle_24, 0, 0, 0);
                 role.setText(user.getRole());
                 role.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_work_24, 0, 0, 0);

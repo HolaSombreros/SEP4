@@ -18,11 +18,8 @@ public interface IThresholdDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void createThreshold(Threshold threshold);
 
+    @Query("SELECT * FROM threshold_table WHERE areaareaId = (:areaId) AND type = (:type)")
+    LiveData<Threshold> getThreshold(int areaId, String type);
 
-    @Update
-    void editThreshold(Threshold threshold);
-
-    @Query("SELECT * FROM threshold_table WHERE type = (:type) AND areaareaid = (:areaId)")
-    LiveData<List<Threshold>> getThreshold(int areaId, String type);
 
 }

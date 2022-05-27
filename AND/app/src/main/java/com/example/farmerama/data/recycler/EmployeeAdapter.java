@@ -37,7 +37,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeAdapter.ViewHolder holder, int position) {
-        holder.name.setText(userList.get(position).getName());
+        holder.name.setText(userList.get(position).getUserName());
         //TODO: need to get lifeCycleOwner such that it verifies the user loggedin and it doesn't allow to delete that one
         //TODO: if delete user with you are logged in = throws null exception error and app stops working.
         holder.delete.setOnClickListener(new View.OnClickListener() {

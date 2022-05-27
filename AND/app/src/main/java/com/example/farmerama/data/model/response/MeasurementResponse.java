@@ -10,8 +10,9 @@ public class MeasurementResponse {
     private double value;
     private String measuredDate;
     private int measurementId;
+    private int areaId;
 
     public Measurement getMeasurement(MeasurementType type) {
-        return new Measurement(measurementId,value, measuredDate, type);
+        return new Measurement(measurementId,areaId, value, measuredDate, type);
     }
 }

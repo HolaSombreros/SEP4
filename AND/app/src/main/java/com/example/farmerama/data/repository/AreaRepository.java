@@ -69,18 +69,11 @@ public class AreaRepository {
             @Override
             public void onResponse(Call<List<AreaResponse>> call, Response<List<AreaResponse>> response) {
                 if (response.isSuccessful()) {
-                    //executorService.submit(areaDAO::removeAreas);
-                    //executorService.submit(database.barnDAO()::removeAllBarns);
-
-                   // System.out.println("HELLO4" + areaDAO.getAreas().getValue().size());
-                    //executorService.execute(database.barnDAO()::removeAllBarns);
                     executorService.execute(() -> {
-                                for(AreaResponse areaResponse : response.body()) {
-                                    areaDAO.createArea(areaResponse.getArea());
-                                }
+                            for(AreaResponse areaResponse : response.body()) {
+                                areaDAO.createArea(areaResponse.getArea());
+                            }
                     });
-                    //executorService.execute(() -> areaDAO.createArea(areaResponse.getArea()));
-
                 }
                 else {
                     ErrorReader<List<AreaResponse>> responseErrorReader = new ErrorReader<>();

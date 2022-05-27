@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Measurement;
@@ -14,7 +13,6 @@ import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.repository.AreaRepository;
 import com.example.farmerama.data.repository.MeasurementRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MeasurementsViewModel extends AndroidViewModel {
@@ -39,9 +37,10 @@ public class MeasurementsViewModel extends AndroidViewModel {
         measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
     }
 
-    public LiveData<Measurement> getLatestMeasurements() {
+    public LiveData<Measurement> getLatestMeasurement() {
         return measurementRepository.getLatestMeasurement(measurementType, areaId);
     }
+
     public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {
         measurementRepository.retrieveLatestMeasurement(areaId, measurementType, true);
     }
@@ -49,12 +48,8 @@ public class MeasurementsViewModel extends AndroidViewModel {
     public void saveLatestInformation(MeasurementType measurementType, int areaId){
         this.areaId = areaId;
         this.measurementType = measurementType;
-
-//        sharedPreferences.edit().putString("measurementType", measurementType.toString()).apply();
-//        sharedPreferences.edit().putInt("areaId", areaId).apply();
     }
-
-
+    // for historical
     public void retrieveMeasurements(MeasurementType type, String date) {
         measurementRepository.retrieveMeasurements(areaId, type, date);
     }
@@ -65,16 +60,6 @@ public class MeasurementsViewModel extends AndroidViewModel {
 
     public LiveData<List<Area>> getAreas() {
        return areaRepository.getAreas();
-    }
-
-    public LiveData<List<String>> getAreasName() {
-        List<String> list = new ArrayList<>();
-        if(areaRepository.getAreas().getValue() != null) {
-            for(Area area : areaRepository.getAreas().getValue()) {
-                list.add(area.getName());
-            }
-        }
-        return new MutableLiveData<>(list);
     }
 
     public void setAreaId(int id) {

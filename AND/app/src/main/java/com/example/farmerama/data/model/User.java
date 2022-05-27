@@ -3,13 +3,11 @@ package com.example.farmerama.data.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
-
 @Entity(tableName = "user_table")
 public class User {
     @PrimaryKey
     private int userId;
-    private String name;
+    private String userName;
     private String email;
     private String password;
     private String role;
@@ -17,16 +15,16 @@ public class User {
     public User(){}
 
     public User(String firstname,String lastname, String email, String password,String role) {
-        this.name = firstname + " " + lastname;
+        this.userName = firstname + " " + lastname;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public User(int userId, String name, String email, String password, String role) {
+    public User(int userId, String userName, String email, String password, String role) {
         this.userId = userId;
         this.email = email;
-        this.name = name;
+        this.userName = userName;
         this.password = password;
         this.role = role;
     }
@@ -40,15 +38,15 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.name = "GUEST";
+        this.userName = "GUEST";
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getUserId() {

@@ -27,13 +27,13 @@ public class ThresholdViewModel extends AndroidViewModel {
 
     public ThresholdViewModel(@NonNull Application application) {
         super(application);
-        this.thresholdRepository = ThresholdRepository.getInstance();
+        this.thresholdRepository = ThresholdRepository.getInstance(application);
         this.userRepository = UserRepository.getInstance(application);
         this.areaRepository = AreaRepository.getInstance(application);
     }
 
-    public LiveData<Threshold> getThresholds() {
-        return thresholdRepository.getThresholds();
+    public LiveData<Threshold> getThreshold() {
+        return thresholdRepository.getThreshold();
     }
 
     public LiveData<List<Area>> getAreas() {
@@ -59,20 +59,13 @@ public class ThresholdViewModel extends AndroidViewModel {
         }
     }
 
-    public LiveData<List<String>> getAreasName() {
-        List<String> list = new ArrayList<>();
-        if(areaRepository.getAreas().getValue() != null) {
-            for(Area area : areaRepository.getAreas().getValue()) {
-                list.add(area.getName());
-            }
-        }
-        return new MutableLiveData<>(list);
-    }
     public void setAreaId(int id) {
-        areaId = id;
+        thresholdRepository.setAreaId(id);
+        //areaId = id;
     }
     public void setMeasurementType(MeasurementType measurementType) {
-        this.measurementType = measurementType;
+        thresholdRepository.setMeasurementType(measurementType);
+        //this.measurementType = measurementType;
     }
 
 }

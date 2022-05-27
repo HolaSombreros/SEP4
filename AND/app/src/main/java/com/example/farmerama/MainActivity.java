@@ -11,10 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.SwitchPreference;
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.impl.model.Preference;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -27,12 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.farmerama.data.model.LogObj;
-import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private NavController navController;
@@ -134,19 +128,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLoggedInUser() {
-        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.MINUTES).build();
+        //PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.MINUTES).build();
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
-                if(viewModel.isGettingNotifications())
-                    WorkManager.getInstance(this).enqueue(request);
+                //if(viewModel.isGettingNotifications())
+                    //WorkManager.getInstance(this).enqueue(request);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
                 if (usernameHeader != null && emailHeader != null) {
-                    usernameHeader.setText(loggedInUser.getName());
+                    usernameHeader.setText(loggedInUser.getUserName());
                     emailHeader.setText(loggedInUser.getEmail());
                 }
                 toolbar.setVisibility(View.VISIBLE);

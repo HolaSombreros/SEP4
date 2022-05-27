@@ -1,5 +1,6 @@
 package com.example.farmerama.data.repository;
 
+import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,11 +15,15 @@ import com.example.farmerama.data.model.response.LogResponse;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
+import com.example.farmerama.data.persistence.FarmeramaDatabase;
+import com.example.farmerama.data.persistence.IThresholdDAO;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,23 +36,41 @@ public class ThresholdRepository {
     private MutableLiveData<List<ThresholdModification>> thresholdModifications;
     private MutableLiveData<List<LogObj>> logs;
     private MutableLiveData<List<LogObj>> latestLogs;
+    private IThresholdDAO thresholdDAO;
+    private FarmeramaDatabase database;
+    private final ExecutorService executorService;
+    private int areaId;
+    private MeasurementType measurementType;
 
-    private ThresholdRepository() {
+
+    private ThresholdRepository(Application application) {
         thresholds = new MutableLiveData<>();
         thresholdModifications = new MutableLiveData<>();
         logs = new MutableLiveData<>();
         latestLogs = new MutableLiveData<>();
+        database = FarmeramaDatabase.getInstance(application);
+        executorService = Executors.newFixedThreadPool(5);
+        thresholdDAO = database.thresholdDAO();
+        this.areaId = 1;
+        this.measurementType = MeasurementType.TEMPERATURE;
     }
 
-    public static ThresholdRepository getInstance() {
+    public static ThresholdRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new ThresholdRepository();
+            instance = new ThresholdRepository(application);
         }
         return instance;
     }
 
-    public LiveData<Threshold> getThresholds() {
-        return thresholds;
+    public LiveData<Threshold> getThreshold() {
+        return thresholdDAO.getThreshold(areaId, measurementType.toString());
+    }
+
+    public void setAreaId(int id) {
+        areaId = id;
+    }
+    public void setMeasurementType(MeasurementType measurementType) {
+        this.measurementType = measurementType;
     }
 
     public LiveData<List<LogObj>> getLogs() {
@@ -68,7 +91,7 @@ public class ThresholdRepository {
             @Override
             public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                 if (response.isSuccessful()) {
-                    thresholds.setValue(response.body().getThreshold());
+                    executorService.execute(() -> thresholdDAO.createThreshold(response.body().getThreshold()));
                 } else {
                     ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
                     ToastMessage.setToastMessage(responseErrorReader.errorReader(response));

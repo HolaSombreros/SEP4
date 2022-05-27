@@ -61,7 +61,7 @@ public class EditAccountFragment extends Fragment {
                 viewModel.setUserId(user.getUserId());
 
                 email.setText(user.getEmail());
-                String[] tokens = user.getName().split(" ");
+                String[] tokens = user.getUserName().split(" ");
                 firstName.setText("");
                 for (int i = 0; i < tokens.length - 1; i++)
                     firstName.setText(firstName.getText().toString() + tokens[i] + " ");
