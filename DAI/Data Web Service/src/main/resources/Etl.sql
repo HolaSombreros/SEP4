@@ -4,6 +4,7 @@ USE dwh;
 -- New and future load dates.
 DECLARE @NewLoadDate INT;
 DECLARE @NewLastLoadDate DATETIME;
+-- Two hours have to be added because of the server's timezone
 SET @NewLastLoadDate = dateadd(HOUR, 2, getdate());
 SET @NewLoadDate = CONVERT(CHAR(8), @NewLastLoadDate, 112);
 -- Add one minute to the last load date to make sure it doesn''t load records in that minute in the next load */
@@ -171,7 +172,7 @@ FROM [stage].[FactEnvironment] f
          inner join [dwh].[DimDate] as d
                     on d.Date = f.measuredDate
          inner join [dwh].[DimTime] as t
-                    on t.[minute] = f.[minute] AND t.[hour] = f.[hour]
+                    on t.[MinutesSinceMidnight] = f.[minute] AND t.[HoursSinceMidnight] = f.[hour]
 WHERE a.ValidTo = 99990101;
 
 INSERT INTO etl.LogUpdate ([Table], [LastLoadDate])
