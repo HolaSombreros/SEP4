@@ -65,7 +65,7 @@ public class ThresholdsController {
         }
     }
 
-    @GetMapping(value = "/logs", params = "date")
+    @GetMapping(value = "/modifications", params = "date")
     public List<ThresholdLogs> readAllLogsByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
         try{
             return model.readAllLogsByDate(date);
