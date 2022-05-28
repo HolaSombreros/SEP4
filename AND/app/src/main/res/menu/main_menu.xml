@@ -2,56 +2,86 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <group android:checkableBehavior="single">
+<group
+    android:id="@+id/group1"
+    android:checkableBehavior="single">
+    <item
+        android:id="@+id/home"
+        android:title="Home">
+        <menu>
 
-        <item
-        android:id="@+id/latestDataFragment"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/latest_measurements" />
-
-        <item
-        android:id="@+id/historicalDataFragment"
-        android:icon="@drawable/ic_baseline_history_24"
-        android:title="@string/historical_measurements" />
-        <item
-            android:id="@+id/areasFragment"
-            android:icon="@drawable/ic_baseline_location_on_24"
-            android:title="@string/areas" />
+            <item
+                android:id="@+id/latestDataFragment"
+                android:icon="@drawable/ic_baseline_home_24"
+                android:title="@string/latest_measurements" />
 
 
-        <item
-            android:id="@+id/employeesFragment"
-            android:icon="@drawable/ic_baseline_supervisor_account_24"
-            android:title="@string/employees" />
+            <item
+                android:id="@+id/historicalDataFragment"
+                android:icon="@drawable/ic_baseline_history_24"
+                android:title="@string/historical_measurements" />
 
-        <item
-            android:id="@+id/registerFragment"
-            android:icon="@drawable/ic_baseline_person_add_24"
-            android:title="@string/register" />
+            <item
+                android:id="@+id/areasFragment"
+                android:icon="@drawable/ic_baseline_location_on_24"
+                android:title="@string/areas" />
 
-        <item
-            android:id="@+id/loginFragment"
-            android:icon="@drawable/ic_baseline_login_24"
-            android:title="@string/Login" />
-        </group>
+            <item
+                android:id="@+id/loginFragment"
+                android:icon="@drawable/ic_baseline_login_24"
+                android:title="@string/Login" />
 
+        </menu>
+    </item>
+</group>
+
+<group
+    android:id="@+id/group2"
+    android:checkableBehavior="single">
+    <item
+        android:id="@+id/employees"
+        android:title="Employees">
+        <menu>
+    <item
+        android:id="@+id/employeesFragment"
+        android:icon="@drawable/ic_baseline_supervisor_account_24"
+        android:title="@string/employees" />
+
+    <item
+        android:id="@+id/registerFragment"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:title="@string/register" />
+
+        </menu>
+    </item>
+</group>
+
+
+    <group
+        android:id="@+id/group3"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_group"
-            android:title="@string/Thresholds">
+            android:id="@+id/threshold"
+            android:title="Thresholds">
             <menu>
-                <item
-                    android:id="@+id/thresholdDataFragment"
-                    android:icon="@drawable/ic_baseline_rule_24"
-                    android:title="@string/Thresholds" />
-                <item
-                    android:id="@+id/logsFragment"
-                    android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-                    android:title="@string/exceeded_measurements" />
 
-                <item
-                    android:id="@+id/thresholdModificationFragment"
-                    android:icon="@drawable/ic_baseline_content_paste_24"
-                    android:title="@string/threshold_modifications" />
+
+    <item
+        android:id="@+id/thresholdDataFragment"
+        android:icon="@drawable/ic_baseline_rule_24"
+        android:title="@string/Thresholds" />
+    <item
+        android:id="@+id/logsFragment"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        android:title="@string/exceeded_measurements" />
+
+    <item
+        android:id="@+id/thresholdModificationFragment"
+        android:icon="@drawable/ic_baseline_content_paste_24"
+        android:title="@string/threshold_modifications" />
+
             </menu>
         </item>
+    </group>
+
 </menu>

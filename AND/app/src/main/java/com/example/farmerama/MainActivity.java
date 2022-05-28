@@ -1,10 +1,20 @@
 package com.example.farmerama;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.concurrent.futures.ResolvableFuture;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,38 +23,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.work.WorkManager;
-import androidx.work.ListenableWorker;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkerParameters;
+import androidx.work.WorkRequest;
 
-import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.Intent;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import com.example.farmerama.data.model.LogObj;
-
-import com.example.farmerama.data.repository.ThresholdRepository;
-
+import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -58,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private MainActivityViewModel viewModel;
+    private String prevStarted = "yes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +57,19 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setupNavigation();
         setUpLoggedInUser();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        } else {
+            navController.navigate(R.id.loginFragment);
+        }
     }
 
     @Override
@@ -95,10 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
         });
 
-        viewModel.getTodayLogs().observe(this, logs -> {
-            for (LogObj log : logs) {
+        viewModel.getTodayLogs().observeForever(logObjs -> {
+            for (LogObj log : logObjs)
                 publishNotification(log);
-            }
         });
     }
 
@@ -137,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
 
-            if (id == R.id.loginFragment) {
+            if (id == R.id.loginFragment || id == R.id.introVPFragment) {
                 toolbar.setVisibility(View.GONE);
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             } else {
@@ -145,19 +147,19 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
-//        usernameHeader = findViewById(R.id.UsernameHeader);
-//        emailHeader = findViewById(R.id.EmailHeader);
     }
 
     private void setUpLoggedInUser() {
-        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(NotificationWorker.class).setInitialDelay(5, TimeUnit.MINUTES).build();
+        WorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
 
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
-                WorkManager.getInstance(getApplicationContext()).enqueue(request);
+                // TODO check better
+                if (viewModel.isGettingNotifications())
+                    WorkManager.getInstance(this).enqueue(request);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
@@ -166,12 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     usernameHeader.setText(loggedInUser.getUserName());
                     emailHeader.setText(loggedInUser.getEmail());
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/" + loggedInUser.getUserId() + "/profile.jpg");
-                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Picasso.get().load(uri).into(profilePicture);
-                        }
-                    });
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profilePicture));
                 }
                 toolbar.setVisibility(View.VISIBLE);
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
@@ -206,14 +203,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void publishNotification(LogObj log) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "22")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
                 .setSmallIcon(R.mipmap.application_launcher)
                 .setContentTitle("Measurement out of the thresholds")
                 .setContentText(String.format("Exceeded %s in area %s", log.getMeasurementType(), log.getAreaName()))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setChannelId("22");
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
         notificationManager.notify(22, builder.build());
     }
 
@@ -240,47 +237,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
-    }
-
-    public class NotificationWorker extends ListenableWorker {
-
-        private ResolvableFuture<Result> mFuture;
-
-        public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
-            super(context, workerParams);
-
-            viewModel.getTodayLogs().observeForever(logObjs -> {
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
-                        .setSmallIcon(R.mipmap.application_launcher)
-                        .setContentTitle("Measurement out of the thresholds")
-                        .setContentText(String.format("Exceeded %s in area %s", "A", "A"))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setChannelId("22");
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
-                notificationManager.notify(22, builder.build());
-            });
-        }
-
-        @SuppressLint("RestrictedApi")
-        @NonNull
-        @Override
-        public ListenableFuture<Result> startWork() {
-            mFuture = ResolvableFuture.create();
-            Log.i("Notification", "reached");
-
-            if (viewModel.isLogged() && viewModel.isGettingNotifications()) {
-            // do work
-                ThresholdRepository.getInstance(getApplication()).retrieveTodayLogs();
-
-            // Rescheduling work
-
-                OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(NotificationWorker.class).setInitialDelay(10, TimeUnit.SECONDS).build();
-                WorkManager.getInstance(getApplicationContext()).enqueue(request);
-            }
-
-            mFuture.set(Result.success());
-            return mFuture;
-        }
     }
 }
