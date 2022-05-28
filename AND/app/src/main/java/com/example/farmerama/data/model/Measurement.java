@@ -10,7 +10,6 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.annotation.Nonnull;
 
 @Entity(tableName = "measurement_table", primaryKeys = {"measurementId", "measurementType"})
 public class Measurement {

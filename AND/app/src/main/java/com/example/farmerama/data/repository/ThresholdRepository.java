@@ -2,7 +2,6 @@ package com.example.farmerama.data.repository;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,6 +18,7 @@ import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.persistence.IThresholdDAO;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,27 +32,23 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class ThresholdRepository {
     private static ThresholdRepository instance;
-    private MutableLiveData<Threshold> thresholds;
+    private MutableLiveData<Threshold> threshold;
     private MutableLiveData<List<ThresholdModification>> thresholdModifications;
     private MutableLiveData<List<LogObj>> logs;
     private MutableLiveData<List<LogObj>> latestLogs;
     private IThresholdDAO thresholdDAO;
     private FarmeramaDatabase database;
     private final ExecutorService executorService;
-    private int areaId;
-    private MeasurementType measurementType;
 
 
     private ThresholdRepository(Application application) {
-        thresholds = new MutableLiveData<>();
+        threshold = new MutableLiveData<>();
         thresholdModifications = new MutableLiveData<>();
         logs = new MutableLiveData<>();
         latestLogs = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
         thresholdDAO = database.thresholdDAO();
-        this.areaId = 1;
-        this.measurementType = MeasurementType.TEMPERATURE;
     }
 
     public static ThresholdRepository getInstance(Application application) {
@@ -63,14 +59,7 @@ public class ThresholdRepository {
     }
 
     public LiveData<Threshold> getThreshold() {
-        return thresholdDAO.getThreshold(areaId, measurementType.toString());
-    }
-
-    public void setAreaId(int id) {
-        areaId = id;
-    }
-    public void setMeasurementType(MeasurementType measurementType) {
-        this.measurementType = measurementType;
+        return threshold;
     }
 
     public LiveData<List<LogObj>> getLogs() {
@@ -103,6 +92,19 @@ public class ThresholdRepository {
                 Log.i("Retrofit", "Could not retrieve data");
             }
         });
+        ListenableFuture<Threshold> future = thresholdDAO.getThreshold(areaId, type.getType());
+        future.addListener(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    threshold.postValue(future.get());
+                }
+                catch (Exception e) {
+
+                }
+            }
+        }, Executors.newSingleThreadExecutor());
+
     }
 
     public void editThreshold(int areaId, MeasurementType type, Threshold threshold, int userId) {
@@ -111,7 +113,7 @@ public class ThresholdRepository {
             @Override
             public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                 if (response.isSuccessful()) {
-                    thresholds.setValue(response.body().getThreshold());
+                    ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
                     ToastMessage.setToastMessage("Threshold edited!");
                 } else {
                     ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
@@ -132,7 +134,7 @@ public class ThresholdRepository {
             @Override
             public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                 if(response.isSuccessful()) {
-                    thresholds.setValue(response.body().getThreshold());
+                    ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
                     ToastMessage.setToastMessage("Threshold created!");
                 }
                 else {

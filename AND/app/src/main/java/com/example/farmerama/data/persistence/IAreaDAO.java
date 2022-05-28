@@ -19,7 +19,6 @@ public interface IAreaDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void createArea(Area area);
 
-
     @Query("DELETE FROM area_table")
     void removeAreas();
 

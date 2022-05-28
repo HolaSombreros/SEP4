@@ -62,12 +62,10 @@ public class ThresholdViewModel extends AndroidViewModel {
     }
 
     public void setAreaId(int id) {
-        thresholdRepository.setAreaId(id);
-        //areaId = id;
+        areaId = id;
     }
     public void setMeasurementType(MeasurementType measurementType) {
-        thresholdRepository.setMeasurementType(measurementType);
-        //this.measurementType = measurementType;
+        this.measurementType = measurementType;
     }
 
 }

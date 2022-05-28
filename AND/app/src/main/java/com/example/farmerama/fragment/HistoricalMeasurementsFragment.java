@@ -92,11 +92,13 @@ public class HistoricalMeasurementsFragment extends Fragment {
                     lineChart.setMarker(tmv);
                 }
 
-                @Override
-                public void onNothingSelected() {
-                }
-            });
+                    @Override
+                    public void onNothingSelected() {
+                    }
+                });
+
         });
+
     }
 
     public class TimeMarkerView extends MarkerView {

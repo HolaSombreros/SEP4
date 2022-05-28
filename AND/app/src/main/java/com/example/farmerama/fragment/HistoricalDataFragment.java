@@ -88,7 +88,6 @@ public class HistoricalDataFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                //viewModel.setMeasurementType(MeasurementType.values()[position]);
                 viewModel.retrieveMeasurements(MeasurementType.values()[position], date.getText().toString());
             }
         });
@@ -117,7 +116,7 @@ public class HistoricalDataFragment extends Fragment {
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
+                viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
                 viewModel.retrieveMeasurements(MeasurementType.values()[tabLayout.getSelectedTabPosition()], date.getText().toString());
             }
 

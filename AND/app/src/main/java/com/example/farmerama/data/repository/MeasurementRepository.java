@@ -63,7 +63,7 @@ public class MeasurementRepository {
     }
 
     public LiveData<List<Measurement>> getMeasurements() {
-        return measurementDAO.getHistoricalMeasurements(MeasurementType.CO2, 9);
+        return measurements;
     }
 
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
@@ -120,6 +120,10 @@ public class MeasurementRepository {
             public void onFailure(Call<List<MeasurementResponse>> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
             }
+        });
+        executorService.execute(() -> {
+            measurements.postValue(measurementDAO.getHistoricalMeasurements(type, areaId));
+            Log.i("HISTORICAL", type.getType() + areaId);
         });
     }
 }

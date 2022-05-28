@@ -83,7 +83,7 @@ public class LatestDataFragment extends Fragment {
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
+                //tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
             }

@@ -85,7 +85,7 @@ public class ThresholdDataFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
+                //tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
                 viewModel.getLatestThresholds(MeasurementType.values()[viewPager2.getCurrentItem()]);
             }

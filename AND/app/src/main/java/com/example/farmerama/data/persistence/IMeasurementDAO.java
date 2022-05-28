@@ -29,6 +29,6 @@ public interface IMeasurementDAO {
     Measurement getLatestMeasurement(MeasurementType measurementType, int areaId);
 
     @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType) AND areaId = (:areaId)")
-    LiveData<List<Measurement>> getHistoricalMeasurements(MeasurementType measurementType, int areaId);
+    List<Measurement> getHistoricalMeasurements(MeasurementType measurementType, int areaId);
 
 }

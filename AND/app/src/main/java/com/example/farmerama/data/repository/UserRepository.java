@@ -83,7 +83,6 @@ public class UserRepository {
             @Override
             public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
                 if (response.isSuccessful()) {
-                    //executorService.submit(userDAO::removeUsers);
                     executorService.execute(() -> {
                         for(UserResponse user : response.body()) {
                             userDAO.registerUser(user.getUser());
