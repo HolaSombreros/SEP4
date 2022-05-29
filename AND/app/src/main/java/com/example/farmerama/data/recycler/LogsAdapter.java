@@ -22,6 +22,11 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
         logs = new ArrayList<>();
     }
 
+    public void setLogs(List<ExceededLog> logs) {
+        this.logs=logs;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public LogsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,20 +47,19 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
         return logs.size();
     }
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView thresholdValue;
         private final TextView exceededValue;
         private final EditText date;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             thresholdValue = itemView.findViewById(R.id.threshold_value_item);
             exceededValue = itemView.findViewById(R.id.exceeded_item);
             date = itemView.findViewById(R.id.log_date_item);
         }
-    }
-
-    public void setLogs(List<ExceededLog> logs) {
-        this.logs=logs;
-        notifyDataSetChanged();
     }
 }
