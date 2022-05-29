@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,19 +59,20 @@ public class ThresholdMeasurementsFragment extends Fragment {
             }
             else {
                 createThreshold.set(true);
+                upperThresholdValue.setText("");
+                lowerThresholdValue.setText("");
             }
         });
 
         button.setOnClickListener(l -> {
-            viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
-                    Double.parseDouble(upperThresholdValue.getText().toString())));
-//            if(createThreshold.get()) {
-//                viewModel.createThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
-//                        Double.parseDouble(upperThresholdValue.getText().toString())));
-//            }
-//            else {
-//
-//            }
+            if(createThreshold.get()) {
+                viewModel.createThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
+                        Double.parseDouble(upperThresholdValue.getText().toString())));
+            }
+            else {
+                viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
+                        Double.parseDouble(upperThresholdValue.getText().toString())));
+            }
 
         });
     }

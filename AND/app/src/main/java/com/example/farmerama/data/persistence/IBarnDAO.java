@@ -23,9 +23,9 @@ public interface IBarnDAO {
     void removeAllBarns();
 
     @Update
-    void editArea(Barn barn);
+    void editBarn(Barn barn);
 
     @Query("SELECT * FROM barn_table")
-    LiveData<List<Barn>> getBarns();
+    List<Barn> getBarns();
 
 }

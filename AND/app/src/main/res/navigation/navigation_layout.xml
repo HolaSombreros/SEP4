@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmerama.fragment.RegisterFragment"
-        android:label="Register a new user!"
+        android:label="Register a new user"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/thresholdModificationFragment"

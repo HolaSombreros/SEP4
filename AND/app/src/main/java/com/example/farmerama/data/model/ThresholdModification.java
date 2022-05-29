@@ -1,9 +1,14 @@
 package com.example.farmerama.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.farmerama.data.util.Converters;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(tableName = "threshold_modifications_table")
@@ -14,10 +19,12 @@ public class ThresholdModification {
     private Threshold threshold;
     @Embedded
     private User user;
+    @TypeConverters(Converters.class)
     private LocalDateTime changedOn;
     private double oldValue;
     private double newValue;
-    private ThresholdLogType type;
+    @NonNull
+    private ThresholdLogType logType;
 
     public ThresholdModification(){}
 
@@ -28,7 +35,7 @@ public class ThresholdModification {
         this.changedOn = changedOn;
         this.oldValue = oldValue;
         this.newValue = newValue;
-        this.type = type;
+        this.logType = type;
     }
 
     public int getModificationId() {
@@ -79,11 +86,11 @@ public class ThresholdModification {
         this.newValue = newValue;
     }
 
-    public ThresholdLogType getType() {
-        return type;
+    public ThresholdLogType getLogType() {
+        return logType;
     }
 
-    public void setType(ThresholdLogType type) {
-        this.type = type;
+    public void setLogType(ThresholdLogType logType) {
+        this.logType = logType;
     }
 }

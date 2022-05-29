@@ -5,14 +5,19 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Barn;
+import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.Threshold;
+import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.util.Converters;
 
-@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class}, version = 2)
+@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 11)
+@TypeConverters({Converters.class})
 public abstract class FarmeramaDatabase extends RoomDatabase {
 
     private static FarmeramaDatabase instance;
@@ -21,8 +26,9 @@ public abstract class FarmeramaDatabase extends RoomDatabase {
     public abstract IThresholdDAO thresholdDAO();
     public abstract IUserDAO userDAO();
     public abstract IBarnDAO barnDAO();
+    public abstract IExceededLogDAO exceededLogDAO();
 
-    public static synchronized FarmeramaDatabase getInstance(Context context){
+    public static FarmeramaDatabase getInstance(Context context){
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             FarmeramaDatabase.class, "farmerama_database")
@@ -31,5 +37,4 @@ public abstract class FarmeramaDatabase extends RoomDatabase {
         }
         return instance;
     }
-
 }

@@ -9,14 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.LogObj;
+import com.example.farmerama.data.model.ExceededLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
 
-    private List<LogObj> logs;
+    private List<ExceededLog> logs;
 
     public LogsAdapter() {
         logs = new ArrayList<>();
@@ -54,7 +54,7 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
         }
     }
 
-    public void setLogs(List<LogObj> logs) {
+    public void setLogs(List<ExceededLog> logs) {
         this.logs=logs;
         notifyDataSetChanged();
     }

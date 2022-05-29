@@ -6,14 +6,12 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.farmerama.R;
-import com.example.farmerama.data.model.Area;
-import com.example.farmerama.data.model.LogObj;
+import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.AreaRepository;
 import com.example.farmerama.data.repository.BarnRepository;
+import com.example.farmerama.data.repository.ExceededLogsRepository;
 import com.example.farmerama.data.repository.ThresholdRepository;
 import com.example.farmerama.data.repository.UserRepository;
 
@@ -23,9 +21,10 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
     private BarnRepository barnRepository;
+    private AreaRepository areaRepository;
     private SharedPreferences loginPreferences;
     private SharedPreferences notificationPreferences;
-    private ThresholdRepository thresholdRepository;
+    private ExceededLogsRepository exceededLogsRepository;
     private boolean logged;
 
     public MainActivityViewModel(Application application) {
@@ -34,11 +33,14 @@ public class MainActivityViewModel extends AndroidViewModel {
         notificationPreferences = application.getSharedPreferences("Notification", Context.MODE_PRIVATE);
         userRepository = UserRepository.getInstance(application);
         barnRepository = BarnRepository.getInstance(application);
-        thresholdRepository = ThresholdRepository.getInstance(application);
+        exceededLogsRepository = ExceededLogsRepository.getInstance(application);
+        areaRepository = AreaRepository.getInstance(application);
     }
     public void retrieveBarns() {
         barnRepository.retrieveBarns();
     }
+
+    public void retrieveAreas(){areaRepository.retrieveAreas();}
 
     public void retrieveEmployees() {
         //userRepository.retrieveAllEmployees();
@@ -63,8 +65,8 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<LogObj>> getTodayLogs() {
-        return thresholdRepository.getLatestLogs();
+    public LiveData<List<ExceededLog>> getTodayLogs() {
+        return exceededLogsRepository.getLatestLogs();
     }
 
     public void setLogged(boolean b) {

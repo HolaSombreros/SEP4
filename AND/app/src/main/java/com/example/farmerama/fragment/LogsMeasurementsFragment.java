@@ -45,7 +45,8 @@ public class LogsMeasurementsFragment extends Fragment {
         logsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         logsAdapter = new LogsAdapter();
-        viewModel.getLogs().observe(getViewLifecycleOwner(), logs ->{
+        viewModel.getLogs().observe(getViewLifecycleOwner(), logs -> {
+            logs.size();
             logsAdapter.setLogs(logs);
         });
         logsRecycler.setAdapter(logsAdapter);

@@ -48,7 +48,6 @@ public class LogsFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(LogsViewModel.class);
         initializeViews(view);
         setUpViews();
-
     }
 
     private void initializeViews(View view) {
@@ -66,11 +65,11 @@ public class LogsFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 viewModel.setType(MeasurementType.values()[position]);
-               viewModel.retrieveLogs();
+               viewModel.retrieveLogs(date.getText().toString());
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "Sound"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();
@@ -87,7 +86,7 @@ public class LogsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getAreaId());
-                viewModel.retrieveLogs();
+                viewModel.retrieveLogs(date.getText().toString());
             }
 
             @Override
@@ -100,12 +99,15 @@ public class LogsFragment extends Fragment {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 (view, year, monthOfYear, dayOfMonth)
-                        -> date.setText(String.format("%d-%02d-%02d", year, monthOfYear+1, dayOfMonth)),
+                        ->
+            date.setText(String.format("%d-%02d-%02d", year, monthOfYear+1, dayOfMonth)),
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
-        date.setOnClickListener(view -> datePickerDialog.show());
+        date.setOnClickListener(view -> {datePickerDialog.show();
+            viewModel.setDate(date.getText().toString());
+        });
 
         date.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,14 +115,14 @@ public class LogsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.retrieveLogs();
+                viewModel.retrieveLogs(date.getText().toString());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
 
-        viewModel.retrieveLogs();
+        viewModel.retrieveLogs(date.getText().toString());
     }
 }
 

@@ -40,7 +40,7 @@ public class ThresholdModificationsAdapter extends RecyclerView.Adapter<Threshol
         holder.employee.setText(list.get(position).getUser().getUserName());
         holder.area.setText(list.get(position).getThreshold().getArea().getAreaName());
         holder.measurementType.setText(list.get(position).getThreshold().getType());
-        holder.minMax.setText(list.get(position).getType().toString());
+        holder.minMax.setText(list.get(position).getLogType().getLogType());
         holder.oldNewValue.setText(String.format("%.2f -> %.2f", list.get(position).getOldValue(), list.get(position).getNewValue()));
     }
 

@@ -57,10 +57,7 @@ public class LatestDataFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                //viewModel.getLatestMeasurements(MeasurementType.values()[position]);
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[position], true);
-                //viewModel.saveLatestInformation(MeasurementType.values()[viewPager2.getCurrentItem()]);
-
             }
         });
 
@@ -71,10 +68,11 @@ public class LatestDataFragment extends Fragment {
         final List<Area>[] areasRetrieved = new List[]{new ArrayList<>()};
 
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
+            areas.size();
             List<String> areasName = new ArrayList<>();
             areasRetrieved[0] = areas;
             for(Area area : areas) {
-                    areasName.add(area.getAreaName());
+                areasName.add(area.getAreaName());
             }
             ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, areasName);
@@ -86,10 +84,8 @@ public class LatestDataFragment extends Fragment {
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
                 viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
-                viewModel.saveLatestInformation(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
             }
 
             @Override

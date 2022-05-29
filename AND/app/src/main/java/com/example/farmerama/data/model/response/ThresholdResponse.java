@@ -11,6 +11,6 @@ public class ThresholdResponse {
 
 
     public Threshold getThreshold() {
-        return new Threshold(thresholdId, area.getArea(), minimum, maximum, type);
+        return new Threshold(thresholdId, area.getArea(), maximum, minimum, type);
     }
 }

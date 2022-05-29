@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Measurement;
@@ -38,7 +39,7 @@ public class MeasurementsViewModel extends AndroidViewModel {
     }
 
     public LiveData<Measurement> getLatestMeasurement() {
-        return measurementRepository.getLatestMeasurement(measurementType, areaId);
+        return measurementRepository.getLatestMeasurement();
     }
 
     public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {

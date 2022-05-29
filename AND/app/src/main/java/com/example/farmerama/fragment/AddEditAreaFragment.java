@@ -119,12 +119,10 @@ public class AddEditAreaFragment extends Fragment {
                         areaDescription.getText().toString(),
                         noOfPigs.getText().toString(),
                         hardwareId.getText().toString())) {
-                    Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been edited!", Toast.LENGTH_SHORT).show();
                     navController.popBackStack();
                 }
             } else if (viewModel.createNewArea(areaName.getText().toString(), areaDescription.getText().toString(),
                     noOfPigs.getText().toString(), hardwareId.getText().toString())) {
-                Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been created!", Toast.LENGTH_SHORT).show();
                 navController.popBackStack();
             }
         });

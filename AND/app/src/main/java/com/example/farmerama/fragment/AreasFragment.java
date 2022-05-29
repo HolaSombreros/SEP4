@@ -56,7 +56,7 @@ public class AreasFragment extends Fragment {
         viewModel.getAllAreas();
         AreaListAdapter adapter = new AreaListAdapter();
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
-            adapter.setAreas(areas);
+                adapter.setAreas(areas);
         });
         areasRecycler.setAdapter(adapter);
 
