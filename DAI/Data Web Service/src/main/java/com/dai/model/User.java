@@ -13,15 +13,18 @@ public class User {
     private int userId;
 
     @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     @Column(name = "name")
     private String name;
 
     @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     @Email(message = "Email is not valid")
     @Column(name = "email")
     private String email;
 
     @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     @Size(min = 6, message = "Password is not valid")
     @Column(name = "password")
     private String password;
