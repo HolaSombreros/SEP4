@@ -1,16 +1,19 @@
 package com.dai.model;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class LoginUser {
 
     @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     @Email(message = "Email is not valid")
     private String email;
 
     @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     @Size(min = 6, message = "Password is not valid")
     private String password;
 

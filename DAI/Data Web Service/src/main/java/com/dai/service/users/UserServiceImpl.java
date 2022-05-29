@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws Exception {
+        if(user.getRole() == null)
+            throw new Exception("Please assign a role first");
         User userExistingCheck = Helper.await(userDao.readByMail(user.getEmail()));
         if (userExistingCheck != null) {
             throw new Exception("Email already exists");
@@ -40,11 +42,15 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User update(User user) throws Exception {
+        if(read(user.getUserId()) == null)
+            throw new Exception("User with the given ID doesn't exist");
         return Helper.await(userDao.update(user));
     }
 
     @Override
     public User delete(int id) throws Exception {
+        if(read(id) == null)
+            throw new Exception("User with the given ID doesn't exist");
         return Helper.await(userDao.delete(id));
     }
 
