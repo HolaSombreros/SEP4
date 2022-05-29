@@ -65,7 +65,7 @@ public class LogsFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 viewModel.setType(MeasurementType.values()[position]);
-               viewModel.retrieveLogs(date.getText().toString());
+                viewModel.retrieveLogs(date.getText().toString());
             }
         });
 
