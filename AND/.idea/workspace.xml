@@ -195,4 +195,11 @@
     <MESSAGE value="model, repo, dao" />
     <option name="LAST_COMMIT_MESSAGE" value="model, repo, dao" />
   </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="android.app.SharedPreferencesImpl" memberName="mMap" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
 </project>

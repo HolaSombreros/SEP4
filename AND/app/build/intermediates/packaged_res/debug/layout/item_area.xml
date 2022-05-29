@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    android:background="@drawable/dummy"
+    android:padding="15dp"
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/areaItem_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:text="Name"
+        app:layout_constraintHorizontal_weight="2"
+        android:textColor="#20284e"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/areaItem_barnName"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/areaItem_barnName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:text="Barn"
+        android:textColor="#20284e"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/areaItem_name"
+        app:layout_constraintEnd_toStartOf="@+id/areaItem_layout"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/areaItem_name"
+        app:layout_constraintTop_toTopOf="@+id/areaItem_name" />
+
+    <LinearLayout
+        android:id="@+id/areaItem_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/areaItem_barnName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@id/areaItem_barnName"
+        app:layout_constraintTop_toTopOf="@+id/areaItem_barnName">
+
+        <TextView
+            android:id="@+id/areaItem_noOfPigsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Number of pigs:"
+            android:textColor="#20284e"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/areaItem_noOfPigs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:textColor="#20284e"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

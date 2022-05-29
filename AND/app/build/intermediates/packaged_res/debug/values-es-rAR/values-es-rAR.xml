@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_area">Agregar nueva área</string>
+    <string name="app_name">Farmerama</string>
+    <string name="area_name">Nombre del área</string>
+    <string name="areas">Áreas</string>
+    <string name="continue_as_a_guest">Continuar como invitado</string>
+    <string name="create">Crear</string>
+    <string name="description">Apellido</string>
+    <string name="e_mail">E-mail</string>
+    <string name="e_mail_address">Dirección de correo electrónico</string>
+    <string name="employees">Empleados</string>
+    <string name="first_name">Primer nombre</string>
+    <string name="hardwareId">Identificación del hardware</string>
+    <string name="home">Casa</string>
+    <string name="last_name">Apellido</string>
+    <string name="latest_measurements">Últimas medidas</string>
+    <string name="latest_temperature">Última temperatura</string>
+    <string name="login">Acceso</string>
+    <string name="measurement">Medición</string>
+    <string name="measurementType">tipo</string>
+    <string name="my_account">Mi cuenta</string>
+    <string name="noPigs">Número de cerdos</string>
+    <string name="password">Clave</string>
+    <string name="register">Registro</string>
+    <string name="role">Role</string>
+    <string name="sensors">Sensores</string>
+    <string name="time">Tiempo</string>
+</resources>

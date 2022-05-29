@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_area" translatable="false">Tilføj nyt område</string>
+    <string name="app_name">Farmerama</string>
+    <string name="area_name" translatable="false">Områdenavn</string>
+    <string name="areas">Områder</string>
+    <string name="continue_as_a_guest" translatable="false">Fortsæt som gæst</string>
+    <string name="create" translatable="false">Skabe</string>
+    <string name="description" translatable="false">Beskrivelse</string>
+    <string name="e_mail" translatable="false">Email</string>
+    <string name="e_mail_address" translatable="false">Email adresse</string>
+    <string name="employees">Medarbejdere</string>
+    <string name="first_name" translatable="false">Fornavn</string>
+    <string name="hardwareId" translatable="false">Hardware-id</string>
+    <string name="hello_blank_fragment" translatable="false">Hej tomt fragment</string>
+    <string name="home">Hjem</string>
+    <string name="last_name" translatable="false">Efternavn</string>
+    <string name="latest_measurements">Seneste målinger</string>
+    <string name="latest_temperature">Seneste temperatur</string>
+    <string name="login" translatable="false">Log på</string>
+    <string name="measurement">Måling</string>
+    <string name="measurementType" translatable="false">Slags</string>
+    <string name="my_account">Min konto</string>
+    <string name="noPigs" translatable="false">Antal Grise</string>
+    <string name="password" translatable="false">Adgangskode</string>
+    <string name="register" translatable="false">Tilmeld</string>
+    <string name="role" translatable="false">Rolle</string>
+    <string name="sensors">Sensorer</string>
+    <string name="time" translatable="false">Tid</string>
+</resources>

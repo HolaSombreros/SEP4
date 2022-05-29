@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: app.futured.donut:donut-compose:2.2.2@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/70350cb8477668d0c273f0e8d2862235/transformed/donut-compose-2.2.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/86387875dd900127af27ffc363feffdd/transformed/donut-compose-2.2.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/86387875dd900127af27ffc363feffdd/transformed/donut-compose-2.2.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/86387875dd900127af27ffc363feffdd/transformed/donut-compose-2.2.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.futured.donut/donut-compose/2.2.2/1c09f5bf039df85238ebc9af7c26de86a61eb738/donut-compose-2.2.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.futured.donut/donut-compose/2.2.2/9dd028bc4506366496eb842d30a6211d3c0a8491/donut-compose-2.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

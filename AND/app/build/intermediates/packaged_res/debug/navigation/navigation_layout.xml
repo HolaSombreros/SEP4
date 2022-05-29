@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_layout"
+    app:startDestination="@id/introVPFragment">
+
+    <fragment
+        android:id="@+id/latestDataFragment"
+        android:name="com.example.farmerama.fragment.LatestDataFragment"
+        android:label="Latest Measurements"
+        tools:layout="@layout/fragment_latest_data" />
+
+    <fragment
+        android:id="@+id/latestMeasurementFragment"
+        android:name="com.example.farmerama.fragment.LatestMeasurementFragment"
+        android:label="fragment_latest_temperature"
+        tools:layout="@layout/fragment_latest_measurement" />
+
+    <fragment
+        android:id="@+id/thresholdDataFragment"
+        android:name="com.example.farmerama.fragment.ThresholdDataFragment"
+        android:label="Thresholds"
+        tools:layout="@layout/fragment_threshold_data" />
+
+    <fragment
+        android:id="@+id/thresholdMeasurementFragment"
+        android:name="com.example.farmerama.fragment.ThresholdMeasurementsFragment"
+        android:label="Thresholds"
+        tools:layout="@layout/fragment_threshold_measurements" />
+    <fragment
+        android:id="@+id/historicalMeasurementsFragment"
+        android:name="com.example.farmerama.fragment.HistoricalMeasurementsFragment"
+        android:label="Historical Measurements"
+        tools:layout="@layout/fragment_historical_measurements" />
+    <fragment
+        android:id="@+id/historicalDataFragment"
+        android:name="com.example.farmerama.fragment.HistoricalDataFragment"
+        android:label="Historical Measurements"
+        tools:layout="@layout/fragment_historical_data" />
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.farmerama.fragment.AccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/fragment_account"/>
+    <fragment
+        android:id="@+id/editAccountFragment"
+        android:name="com.example.farmerama.fragment.EditAccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/fragment_edit_account"/>
+    <fragment
+        android:id="@+id/employeesFragment"
+        android:name="com.example.farmerama.fragment.EmployeesFragment"
+        android:label="Employees"
+        tools:layout="@layout/fragment_employees"/>
+    <fragment
+        android:id="@+id/areasFragment"
+        android:name="com.example.farmerama.fragment.AreasFragment"
+        android:label="Areas"
+        tools:layout="@layout/fragment_areas"/>
+    <fragment
+        android:id="@+id/addAreaFragment"
+        android:name="com.example.farmerama.fragment.AddEditAreaFragment"
+        android:label="Add Area"
+        tools:layout="@layout/fragment_add_edit_area"/>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.farmerama.fragment.LoginFragment"
+        android:label="Login Fragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.farmerama.fragment.RegisterFragment"
+        android:label="Register a new user"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/thresholdModificationFragment"
+        android:name="com.example.farmerama.fragment.ThresholdModificationsFragment"
+        android:label="Thresholds Modification"
+        tools:layout="@layout/fragment_threshold_modifications" />
+    <fragment
+        android:id="@+id/logsFragment"
+        android:name="com.example.farmerama.fragment.LogsFragment"
+        android:label="Exceeded measurements"
+        tools:layout="@layout/fragment_logs" />
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.example.farmerama.fragment.IntroFragment"
+        android:label="IntroFragment"
+        tools:layout="@layout/fragment_intro"/>
+    <fragment
+        android:id="@+id/introVPFragment"
+        android:name="com.example.farmerama.fragment.IntroVPFragment"
+        android:label="IntroVPFragment"
+        tools:layout="@layout/fragment_intro_pager"/>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.farmerama.fragment.SettingsFragment"
+        android:label="Settings" />
+</navigation>

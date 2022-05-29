@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: app.futured.donut:donut:2.2.2@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1982a5dad79bc351ce2b2230f4455e57/transformed/donut-2.2.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1982a5dad79bc351ce2b2230f4455e57/transformed/donut-2.2.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1982a5dad79bc351ce2b2230f4455e57/transformed/donut-2.2.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.futured.donut/donut/2.2.2/51b0418df772377c00929fc60a4f8175f0992c99/donut-2.2.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.futured.donut/donut/2.2.2/f30c69ed883f9e3237b6d64f89391d7f78c0cd52/donut-2.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
