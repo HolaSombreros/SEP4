@@ -37,7 +37,6 @@ public class AreaRepository {
     private static AreaRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private IAreaDAO areaDAO;
     private ConnectivityChecker checker;
 
     private AreaRepository(Application application) {
@@ -46,7 +45,6 @@ public class AreaRepository {
         specificArea = new MutableLiveData<>();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
-        areaDAO = database.areaDAO();
     }
 
     public static AreaRepository getInstance(Application application) {
@@ -64,10 +62,6 @@ public class AreaRepository {
         return areas;
     }
 
-    public void removeLocalData(){
-        areaDAO.removeAreas();
-    }
-
     public void retrieveAreas() {
         if(checker.isOnlineMode()) {
             AreaApi areaApi = ServiceGenerator.getAreaApi();
@@ -80,7 +74,7 @@ public class AreaRepository {
                         List<Area> areaList = new ArrayList<>();
                         executorService.execute(() -> {
                             for(AreaResponse areaResponse : response.body()) {
-                                areaDAO.createArea(areaResponse.getArea());
+                                database.areaDAO().createArea(areaResponse.getArea());
                                 areaList.add(areaResponse.getArea());
                             }
                             areas.postValue(areaList);
@@ -99,7 +93,7 @@ public class AreaRepository {
             });
         }
         else {
-            executorService.execute(() -> areas.postValue(areaDAO.getAreas()));
+            executorService.execute(() -> areas.postValue(database.areaDAO().getAreas()));
         }
     }
 
@@ -127,7 +121,7 @@ public class AreaRepository {
             });
         }
         else {
-            executorService.execute(()-> specificArea.postValue(areaDAO.getAreaById(areaId)));
+            executorService.execute(()-> specificArea.postValue(database.areaDAO().getAreaById(areaId)));
         }
     }
 

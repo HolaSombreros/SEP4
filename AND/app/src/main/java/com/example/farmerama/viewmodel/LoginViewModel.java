@@ -11,16 +11,14 @@ import com.example.farmerama.data.repository.UserRepository;
 import com.example.farmerama.data.util.ValidationUser;
 
 
-public class LoginViewModel extends AndroidViewModel {
+public class LoginViewModel extends FactoryViewModel {
 
-    private final UserRepository repository;
     private ValidationUser validation;
     private SharedPreferences sharedPreferences;
 
     public LoginViewModel(Application application) {
         super(application);
         sharedPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
-        repository = UserRepository.getInstance(application);
         validation = new ValidationUser();
 
         if (!sharedPreferences.getString("userEmail", "null").equals("null"))
@@ -32,6 +30,6 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void loginUser(String email, String password) {
-        repository.loginUser(new User(email, password));
+        getUserRepository().loginUser(new User(email, password));
     }
 }

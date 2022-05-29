@@ -10,16 +10,14 @@ import androidx.lifecycle.ViewModel;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.UserRepository;
 
-public class AccountViewModel extends AndroidViewModel {
-    private UserRepository userRepository;
+public class AccountViewModel extends FactoryViewModel {
 
     public AccountViewModel(Application application){
         super(application);
-        this.userRepository = UserRepository.getInstance(application);
     }
 
     public LiveData<User> getUser(){
-        return userRepository.getLoggedInUser();
+        return getUserRepository().getLoggedInUser();
     }
 
 }

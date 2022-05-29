@@ -31,7 +31,6 @@ import retrofit2.Response;
 public class ThresholdRepository {
     private static ThresholdRepository instance;
     private MutableLiveData<Threshold> thresholdData;
-    private IThresholdDAO thresholdDAO;
     private FarmeramaDatabase database;
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
@@ -41,7 +40,6 @@ public class ThresholdRepository {
         thresholdData = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
-        thresholdDAO = database.thresholdDAO();
     }
 
     public static ThresholdRepository getInstance(Application application) {
@@ -55,9 +53,6 @@ public class ThresholdRepository {
         return thresholdData;
     }
 
-    public void removeLocalData(){
-        thresholdDAO.removeThresholds();
-    }
 
     public void retrieveThreshold(MeasurementType type, int areaId) {
         if(checker.isOnlineMode()){
@@ -67,7 +62,7 @@ public class ThresholdRepository {
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if (response.isSuccessful()) {
                         executorService.execute(() -> {
-                            thresholdDAO.createThreshold(response.body().getThreshold());
+                            database.thresholdDAO().createThreshold(response.body().getThreshold());
                             thresholdData.postValue(response.body().getThreshold());
                         });
                     } else {
@@ -83,7 +78,7 @@ public class ThresholdRepository {
             });
         }
         else {
-            ListenableFuture<Threshold> future = thresholdDAO.getThreshold(areaId, type.getType());
+            ListenableFuture<Threshold> future = database.thresholdDAO().getThreshold(areaId, type.getType());
             future.addListener(new Runnable() {
                 @Override
                 public void run() {

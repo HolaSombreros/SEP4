@@ -8,19 +8,17 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.farmerama.data.repository.UserRepository;
 
-public class SettingsViewModel extends AndroidViewModel {
+public class SettingsViewModel extends FactoryViewModel {
 
-    private UserRepository repository;
     private SharedPreferences notificationPreferences;
 
     public SettingsViewModel(Application application) {
         super(application);
-        repository = UserRepository.getInstance(application);
         notificationPreferences = application.getSharedPreferences("Notification", Context.MODE_PRIVATE);
     }
 
     public void removeLocalData() {
-        repository.removeLocalData();
+        getUserRepository().removeLocalData();
     }
 
     public void setGettingNotifications(boolean newValue) {

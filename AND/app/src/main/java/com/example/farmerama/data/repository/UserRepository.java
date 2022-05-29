@@ -108,7 +108,6 @@ public class UserRepository {
                 @Override
                 public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                     Log.i("Retrofit", "Could not retrieve data");
-                    //users.setValue(usersRoom.getValue());
                 }
             });
         }
@@ -215,8 +214,7 @@ public class UserRepository {
             call.enqueue(new Callback<UserResponse>() {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                    if(response.isSuccessful())
-                    {
+                    if(response.isSuccessful()) {
                         ToastMessage.setToastMessage("Employee Deleted");
                     }
                     else{

@@ -13,31 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AreaViewModel extends AndroidViewModel {
-
-    private final AreaRepository repository;
+public class AreaViewModel extends FactoryViewModel {
 
     public AreaViewModel(Application application) {
         super(application);
-        repository = AreaRepository.getInstance(application) ;
     }
 
     public LiveData<Area> getSpecificArea(int areaId){
-        repository.retrieveAreaById(areaId);
-        return repository.getSpecificArea();
+        getAreaRepository().retrieveAreaById(areaId);
+        return getAreaRepository().getSpecificArea();
     }
     public LiveData<List<Area>> getAreas(){
-        return repository.getAreas();
+        return getAreaRepository().getAreas();
     }
 
     public void getAllAreas() {
-        repository.retrieveAreas();
+        getAreaRepository().retrieveAreas();
     }
 
     public LiveData<List<String>> getAreasName() {
         List<String> list = new ArrayList<>();
-        if(repository.getAreas().getValue() != null) {
-            for(Area area : repository.getAreas().getValue()) {
+        if(getAreaRepository().getAreas().getValue() != null) {
+            for(Area area : getAreaRepository().getAreas().getValue()) {
                 list.add(area.getAreaName());
             }
         }

@@ -30,7 +30,6 @@ public class ThresholdModificationRepository {
     private FarmeramaDatabase database;
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
-    private IThresholdModificationDAO thresholdModificationDAO;
 
     public static ThresholdModificationRepository getInstance(Application application) {
         if(instance == null) {
@@ -43,15 +42,10 @@ public class ThresholdModificationRepository {
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
         checker = new ConnectivityChecker(application);
-        thresholdModificationDAO = database.thresholdModificationDAO();
     }
 
     public LiveData<List<ThresholdModification>> getThresholdModifications() {
         return thresholdModifications;
-    }
-
-    public void removeLocalData(){
-        thresholdModificationDAO.removeThresholdModification();
     }
 
     public void retrieveThresholdModifications(String date) {
@@ -65,7 +59,7 @@ public class ThresholdModificationRepository {
                         executorService.execute( () -> {
                             for (ThresholdModificationsResponse modification : response.body()) {
                                 list.add(modification.getModification());
-                                thresholdModificationDAO.createThresholdModification(modification.getModification());
+                                database.thresholdModificationDAO().createThresholdModification(modification.getModification());
                             }
                             thresholdModifications.postValue(list);
                         });
@@ -83,7 +77,7 @@ public class ThresholdModificationRepository {
         }
         else {
             executorService.execute( () -> {
-                thresholdModifications.postValue(thresholdModificationDAO.getThresholdModifications(date));
+                thresholdModifications.postValue(database.thresholdModificationDAO().getThresholdModifications(date));
             });
         }
     }

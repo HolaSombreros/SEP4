@@ -33,14 +33,12 @@ public class ExceededLogsRepository {
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
     private static ExceededLogsRepository instance;
-    private IExceededLogDAO exceededLogDAO;
 
     private ExceededLogsRepository(Application application) {
         logs = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
         checker = new ConnectivityChecker(application);
-        exceededLogDAO = database.exceededLogDAO();
         latestLogs = new MutableLiveData<>();
     }
 
@@ -59,10 +57,6 @@ public class ExceededLogsRepository {
         return latestLogs;
     }
 
-    public void removeLocalData(){
-        exceededLogDAO.removeExceededLogs();
-    }
-
     public void retrieveLogs(int areaId, MeasurementType type, String date) {
         if(checker.isOnlineMode()) {
             Call<List<LogResponse>> call = ServiceGenerator.getThresholdsApi().getLogs(areaId,type.toString(),date);
@@ -75,7 +69,7 @@ public class ExceededLogsRepository {
                         executorService.execute( () -> {
                             for (LogResponse logResponse : response.body()) {
                                 list.add(logResponse.getLog(type));
-                                exceededLogDAO.createExceededLog(logResponse.getLog(type));
+                                database.exceededLogDAO().createExceededLog(logResponse.getLog(type));
                             }
                             logs.postValue(list);
                         });
@@ -92,7 +86,7 @@ public class ExceededLogsRepository {
             });
         }
         else {
-            executorService.execute( () -> logs.postValue(exceededLogDAO.getExceededLogs()));
+            executorService.execute( () -> logs.postValue(database.exceededLogDAO().getExceededLogs()));
         }
     }
 

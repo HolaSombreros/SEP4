@@ -32,14 +32,12 @@ public class BarnRepository {
     private static BarnRepository instance;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private final IBarnDAO barnDAO;
     private ConnectivityChecker checker;
 
     private BarnRepository(Application application) {
         barns = new MutableLiveData<>();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
-        barnDAO = database.barnDAO();
         checker = new ConnectivityChecker(application);
     }
 
@@ -55,10 +53,6 @@ public class BarnRepository {
         return barns;
     }
 
-    public void removeLocalDate(){
-        barnDAO.removeAllBarns();
-    }
-
     public void retrieveBarns() {
         if(checker.isOnlineMode()) {
             BarnApi barnApi = ServiceGenerator.getBarnApi();
@@ -71,7 +65,7 @@ public class BarnRepository {
                         List<Barn> list = new ArrayList<>();
                         executorService.execute(() -> {
                             for(BarnResponse barnResponse : response.body()) {
-                                barnDAO.createBarn(barnResponse.getBarn());
+                                database.barnDAO().createBarn(barnResponse.getBarn());
                                 list.add(barnResponse.getBarn());
                             }
                             barns.postValue(list);
@@ -90,7 +84,7 @@ public class BarnRepository {
             });
         }
         else {
-            executorService.execute( ()-> barns.postValue(barnDAO.getBarns()));
+            executorService.execute( ()-> barns.postValue(database.barnDAO().getBarns()));
         }
 
 

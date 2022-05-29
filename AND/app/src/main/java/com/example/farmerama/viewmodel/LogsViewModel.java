@@ -18,41 +18,37 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogsViewModel extends AndroidViewModel {
-    private ExceededLogsRepository repository;
-    private AreaRepository areaRepository;
+public class LogsViewModel extends FactoryViewModel {
     private int areaId;
     private MeasurementType type;
     private String date;
 
     public LogsViewModel(@NonNull Application application) {
         super(application);
-        this.repository = ExceededLogsRepository.getInstance(application);
-        this.areaRepository = AreaRepository.getInstance(application);
         date = LocalDate.now().toString();
         type = MeasurementType.TEMPERATURE;
     }
 
     public LiveData<List<ExceededLog>> getLogs() {
-        return repository.getLogs();
+        return getExceededLogsRepository().getLogs();
     }
 
     public void retrieveLogs(String date) {
-        repository.retrieveLogs(areaId, type, date);
+        getExceededLogsRepository().retrieveLogs(areaId, type, date);
     }
 
     public void getAllAreas() {
-        areaRepository.retrieveAreas();
+        getAreaRepository().retrieveAreas();
     }
 
     public LiveData<List<Area>> getAreas() {
-        return areaRepository.getAreas();
+        return getAreaRepository().getAreas();
     }
 
     public LiveData<List<String>> getAreasName() {
         List<String> list = new ArrayList<>();
-        if(areaRepository.getAreas().getValue() != null) {
-            for(Area area : areaRepository.getAreas().getValue()) {
+        if(getAreaRepository().getAreas().getValue() != null) {
+            for(Area area : getAreaRepository().getAreas().getValue()) {
                 list.add(area.getAreaName());
             }
         }

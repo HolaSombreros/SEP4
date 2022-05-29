@@ -41,7 +41,6 @@ public class MeasurementRepository {
     private MeasurementApiAdapterInterface adapter;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private IMeasurementDAO measurementDAO;
     private ConnectivityChecker onlineChecker;
 
 
@@ -51,7 +50,6 @@ public class MeasurementRepository {
         adapter = new MeasurementApiAdapter();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
-        measurementDAO = database.measurementDAO();
         onlineChecker = new ConnectivityChecker(application);
     }
 
@@ -70,10 +68,6 @@ public class MeasurementRepository {
         return measurements;
     }
 
-    public void removeLocalData(){
-        measurementDAO.removeMeasurements();
-    }
-
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         if(onlineChecker.isOnlineMode()) {
             Call<List<MeasurementResponse>> call = adapter.retrieveLatestMeasurement(type, areaId, latest);
@@ -84,7 +78,7 @@ public class MeasurementRepository {
                     if (response.isSuccessful()) {
                         executorService.execute(() -> {
                             for (MeasurementResponse measurement : response.body()) {
-                                measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                                database.measurementDAO().createMeasurement(measurement.getMeasurement(type));
                                 latestMeasurement.postValue(measurement.getMeasurement(type));
                             }
                         });
@@ -103,7 +97,7 @@ public class MeasurementRepository {
         }
         else {
             executorService.execute(() -> {
-                latestMeasurement.postValue(measurementDAO.getLatestMeasurement(type, areaId));
+                latestMeasurement.postValue(database.measurementDAO().getLatestMeasurement(type, areaId));
             });
         }
     }
@@ -119,7 +113,7 @@ public class MeasurementRepository {
                         List<Measurement> measurementsList = new ArrayList<>();
                         executorService.execute(() -> {
                             for (MeasurementResponse measurement : response.body()) {
-                                measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                                database.measurementDAO().createMeasurement(measurement.getMeasurement(type));
                                 measurementsList.add(measurement.getMeasurement(type));
                             }
                             measurements.postValue(measurementsList);
@@ -139,7 +133,7 @@ public class MeasurementRepository {
         }
         else {
             executorService.execute(() -> {
-                measurements.postValue(measurementDAO.getHistoricalMeasurements(type, areaId));
+                measurements.postValue(database.measurementDAO().getHistoricalMeasurements(type, areaId));
             });
         }
     }

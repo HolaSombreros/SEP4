@@ -10,24 +10,22 @@ import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.repository.UserRepository;
 import com.example.farmerama.data.util.ValidationUser;
 
-public class EditAccountViewModel extends AndroidViewModel {
+public class EditAccountViewModel extends FactoryViewModel {
 
-    private UserRepository userRepository;
     private ValidationUser validation;
     private int userId;
 
     public EditAccountViewModel(@NonNull Application application) {
         super(application);
-        userRepository = UserRepository.getInstance(application);
         validation = new ValidationUser();
     }
 
     public LiveData<User> getLoggedInUser() {
-        return userRepository.getLoggedInUser();
+        return getUserRepository().getLoggedInUser();
     }
 
     public void saveAccount(User user) {
-        userRepository.updateUser(user);
+        getUserRepository().updateUser(user);
     }
 
     public boolean validate(String firstName, String lastName,String email, String password, String role){

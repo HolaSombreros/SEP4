@@ -11,35 +11,33 @@ import com.example.farmerama.data.util.ValidationUser;
 
 import java.util.List;
 
-public class RegisterViewModel extends AndroidViewModel
+public class RegisterViewModel extends FactoryViewModel
 {
-    private final UserRepository repository;
     private ValidationUser validation;
 
     public RegisterViewModel(Application application) {
         super(application);
-        repository = UserRepository.getInstance(application);
         validation = new ValidationUser();
     }
 
     public LiveData<List<User>> getAllEmployees(){
-        return repository.getAllEmployees();
+        return getUserRepository().getAllEmployees();
     }
 
     public void retrieveAllEmployees(){
-        repository.retrieveAllEmployees();
+        getUserRepository().retrieveAllEmployees();
     }
 
     public void getUserById(int id) {
-        repository.retrieveUserById(id);
+        getUserRepository().retrieveUserById(id);
     }
 
     public LiveData<User> getEmployee(){
-        return repository.getEmployee();
+        return getUserRepository().getEmployee();
     }
 
     public void registerUser(User employee) {
-        repository.register(employee);
+        getUserRepository().register(employee);
     }
 
     public boolean validate(String firstName, String lastName,String email, String password, String role){

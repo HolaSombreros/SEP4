@@ -15,26 +15,20 @@ import com.example.farmerama.data.util.ToastMessage;
 
 import java.util.List;
 
-public class AddEditAreaViewModel extends AndroidViewModel {
+public class AddEditAreaViewModel extends FactoryViewModel {
 
-    private AreaRepository areaRepository;
-    private BarnRepository barnRepository;
-    private UserRepository userRepository;
     private Barn barn;
 
     public AddEditAreaViewModel(Application application) {
         super(application);
-        areaRepository = AreaRepository.getInstance(application);
-        barnRepository = BarnRepository.getInstance(application);
-        userRepository = UserRepository.getInstance(application);
     }
 
     public LiveData<List<Barn>> getBarns() {
-        return barnRepository.getBarns();
+        return getBarnRepository().getBarns();
     }
 
     public void retrieveAllBarns() {
-        barnRepository.retrieveBarns();
+        getBarnRepository().retrieveBarns();
     }
 
     public void setBarn(Barn barn) {
@@ -44,7 +38,7 @@ public class AddEditAreaViewModel extends AndroidViewModel {
     public boolean createNewArea(String name, String description, String noOfPigs, String hardwareId) {
         if(areaValidation(name, noOfPigs, hardwareId)) {
             Area area = new Area(barn, name, description, Integer.parseInt(noOfPigs), hardwareId);
-            areaRepository.createArea(area);
+            getAreaRepository().createArea(area);
             return true;
         }
         return false;
@@ -52,14 +46,14 @@ public class AddEditAreaViewModel extends AndroidViewModel {
     public boolean editArea(int id, String name, String description, String noOfPigs, String hardwareId) {
         if(areaValidation(name, noOfPigs, hardwareId)) {
             Area area = new Area(id, barn, name, description, Integer.parseInt(noOfPigs), hardwareId);
-            areaRepository.editArea(area);
+            getAreaRepository().editArea(area);
             return true;
         }
         return false;
     }
 
     public LiveData<User> getLoggedInUser() {
-        return userRepository.getLoggedInUser();
+        return getUserRepository().getLoggedInUser();
     }
 
     public boolean areaValidation(String name, String noOfPigs, String hardwareId) {
@@ -92,11 +86,11 @@ public class AddEditAreaViewModel extends AndroidViewModel {
     }
 
     public void removeArea(int areaId) {
-        areaRepository.removeArea(areaId);
+        getAreaRepository().removeArea(areaId);
     }
 
     public LiveData<Area> getSpecificArea(int areaId){
-        areaRepository.retrieveAreaById(areaId);
-        return areaRepository.getSpecificArea();
+        getAreaRepository().retrieveAreaById(areaId);
+        return getAreaRepository().getSpecificArea();
     }
 }
