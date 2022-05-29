@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.saveLoggedInUser(loggedInUser);
 
                 // TODO check better
+
                 if (viewModel.isGettingNotifications())
                     WorkManager.getInstance(this).enqueue(request);
 
