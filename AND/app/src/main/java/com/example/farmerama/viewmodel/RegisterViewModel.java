@@ -42,7 +42,16 @@ public class RegisterViewModel extends AndroidViewModel
         repository.register(employee);
     }
 
+    public LiveData<User> getLoggedInUser() {
+        return repository.getLoggedInUser();
+    }
+
     public boolean validate(String firstName, String lastName,String email, String password, String role){
         return validation.verifyRegister(firstName, lastName, email, password, role);
+    }
+
+    public void deleteEmployeeById(User id)
+    {
+        repository.deleteEmployeeById(id.getId());
     }
 }

@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
 import com.example.farmerama.viewmodel.RegisterViewModel;
 
@@ -21,6 +20,7 @@ public class EmployeesFragment extends Fragment {
 
     private RegisterViewModel registerViewModel;
     private RecyclerView recyclerView;
+    Button delete;
     public EmployeesFragment() {
         // Required empty public constructor
     }
@@ -28,7 +28,9 @@ public class EmployeesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_employees, container, false);
+        View view = inflater.inflate(R.layout.fragment_employees, container, false);
+        delete = view.findViewById(R.id.deleteEmployee);
+        return view;
     }
 
 
@@ -42,12 +44,17 @@ public class EmployeesFragment extends Fragment {
 
         EmployeeAdapter adapter = new EmployeeAdapter();
 
+
         registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
             adapter.setUserList(employees);
-            recyclerView.setAdapter(adapter);
-
         });
+        recyclerView.setAdapter(adapter);
         registerViewModel.retrieveAllEmployees();
+
+        adapter.setOnDeleteListener(userId -> {
+            registerViewModel.deleteEmployeeById(userId);
+        });
+
 
 //        registerViewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
 
