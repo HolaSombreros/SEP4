@@ -68,8 +68,6 @@ public class ThresholdDataFragment extends Fragment {
         final List<Area>[] areasRetrieved = new List[]{new ArrayList<>()};
 
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
-            //viewModel.setAreaId(areas.get(0).getAreaId());
-            //viewModel.setMeasurementType(MeasurementType.TEMPERATURE);
             List<String> areasName = new ArrayList<>();
             areasRetrieved[0] = areas;
             for(Area area : areas) {
@@ -85,7 +83,6 @@ public class ThresholdDataFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //tabLayout.selectTab(tabLayout.getTabAt(0));
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
                 viewModel.getLatestThresholds(MeasurementType.values()[viewPager2.getCurrentItem()]);
             }

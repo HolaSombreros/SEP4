@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.farmerama.data.util.DateFormatter;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,7 +29,7 @@ public class Measurement {
     public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
         this.measuredDate = measuredDate;
-        formatDate(measuredDate);
+        this.measuredDate = DateFormatter.formatDate(measuredDate);
         this.measurementType = type;
     }
 
@@ -35,7 +37,7 @@ public class Measurement {
         this.measurementId = measurementId;
         this.value = value;
         this.areaId = areaId;
-        formatDate(measuredDate);
+        this.measuredDate = DateFormatter.formatDate(measuredDate);
         this.measurementType = measurementType;
     }
 
@@ -104,10 +106,4 @@ public class Measurement {
         this.measuredDate = measuredDate;
     }
 
-    public void formatDate(String measuredDate) {
-        LocalDateTime datetime = parse(measuredDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = datetime.format(myFormatObj);
-        this.measuredDate = formattedDate;
-    }
 }

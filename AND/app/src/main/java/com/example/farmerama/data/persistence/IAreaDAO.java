@@ -22,12 +22,10 @@ public interface IAreaDAO {
     @Query("DELETE FROM area_table")
     void removeAreas();
 
-    @Update
-    void editArea(Area area);
 
     @Query("SELECT * FROM area_table")
-    LiveData<List<Area>> getAreas();
+    List<Area> getAreas();
 
-    @Query("SELECT * FROM area_table WHERE areaId = (:id)")
-    LiveData<Area> getAreaById(int id);
+    @Query("SELECT * FROM area_table WHERE areaId =(:id)")
+    Area getAreaById(int id);
 }

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.MeasurementType;
@@ -14,7 +13,6 @@ import com.example.farmerama.data.repository.AreaRepository;
 import com.example.farmerama.data.repository.ThresholdRepository;
 import com.example.farmerama.data.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ThresholdViewModel extends AndroidViewModel {
@@ -37,7 +35,7 @@ public class ThresholdViewModel extends AndroidViewModel {
     }
 
     public void getLatestThresholds(MeasurementType type) {
-        thresholdRepository.retrieveThresholds(type, areaId);
+        thresholdRepository.retrieveThreshold(type, areaId);
     }
 
     public LiveData<List<Area>> getAreas() {

@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.data.model.LogObj;
+import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.ThresholdModification;
@@ -16,10 +16,12 @@ import com.example.farmerama.data.model.response.ThresholdResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.persistence.IThresholdDAO;
+import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,18 +36,16 @@ public class ThresholdRepository {
     private static ThresholdRepository instance;
     private MutableLiveData<Threshold> threshold;
     private MutableLiveData<List<ThresholdModification>> thresholdModifications;
-    private MutableLiveData<List<LogObj>> logs;
-    private MutableLiveData<List<LogObj>> latestLogs;
     private IThresholdDAO thresholdDAO;
     private FarmeramaDatabase database;
     private final ExecutorService executorService;
+    private ConnectivityChecker checker;
 
 
     private ThresholdRepository(Application application) {
+        checker = new ConnectivityChecker(application);
         threshold = new MutableLiveData<>();
         thresholdModifications = new MutableLiveData<>();
-        logs = new MutableLiveData<>();
-        latestLogs = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
         thresholdDAO = database.thresholdDAO();
@@ -62,167 +62,132 @@ public class ThresholdRepository {
         return threshold;
     }
 
-    public LiveData<List<LogObj>> getLogs() {
-        return logs;
-    }
-
-    public LiveData<List<LogObj>> getLatestLogs() {
-        return latestLogs;
-    }
-
     public LiveData<List<ThresholdModification>> getThresholdModifications() {
         return thresholdModifications;
     }
 
-    public void retrieveThresholds(MeasurementType type, int areaId) {
-        Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().getLatestThresholds(areaId, type.toString());
-        call.enqueue(new Callback<ThresholdResponse>() {
-            @Override
-            public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
-                if (response.isSuccessful()) {
-                    executorService.execute(() -> thresholdDAO.createThreshold(response.body().getThreshold()));
-                } else {
-                    ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+    public void retrieveThreshold(MeasurementType type, int areaId) {
+        if(checker.isOnlineMode()){
+            Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().getLatestThresholds(areaId, type.toString());
+            call.enqueue(new Callback<ThresholdResponse>() {
+                @Override
+                public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
+                    if (response.isSuccessful()) {
+                        executorService.execute(() -> thresholdDAO.createThreshold(response.body().getThreshold()));
+                        threshold.postValue(response.body().getThreshold());
+                    } else {
+                        ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ThresholdResponse> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
-        ListenableFuture<Threshold> future = thresholdDAO.getThreshold(areaId, type.getType());
-        future.addListener(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    threshold.postValue(future.get());
+                @Override
+                public void onFailure(Call<ThresholdResponse> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
                 }
-                catch (Exception e) {
+            });
+        }
+        else {
+            ListenableFuture<Threshold> future = thresholdDAO.getThreshold(areaId, type.getType());
+            future.addListener(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        threshold.postValue(future.get());
+                    }
+                    catch (Exception e) {
 
+                    }
                 }
-            }
-        }, Executors.newSingleThreadExecutor());
-
+            }, Executors.newSingleThreadExecutor());
+        }
     }
 
     public void editThreshold(int areaId, MeasurementType type, Threshold threshold, int userId) {
-        Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().editThreshold(areaId, type.toString(), userId, threshold);
-        call.enqueue(new Callback<ThresholdResponse>() {
-            @Override
-            public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
-                if (response.isSuccessful()) {
-                    ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
-                    ToastMessage.setToastMessage("Threshold edited!");
-                } else {
-                    ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+        if(checker.isOnlineMode()){
+            Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().editThreshold(areaId, type.toString(), userId, threshold);
+            call.enqueue(new Callback<ThresholdResponse>() {
+                @Override
+                public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
+                    if (response.isSuccessful()) {
+                        ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
+                        ToastMessage.setToastMessage("Threshold edited!");
+                    } else {
+                        ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ThresholdResponse> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
+                @Override
+                public void onFailure(Call<ThresholdResponse> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
+                }
+            });
+        }
+        else {
+            ToastMessage.setToastMessage("OFFLINE MODE");
+        }
     }
 
     public void createThreshold(int areaId, MeasurementType type, Threshold threshold) {
-        Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().createThreshold(areaId, type.toString(), threshold);
-        call.enqueue(new Callback<ThresholdResponse>() {
-            @Override
-            public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
-                if(response.isSuccessful()) {
-                    ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
-                    ToastMessage.setToastMessage("Threshold created!");
-                }
-                else {
-                    ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ThresholdResponse> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
-    }
-
-    public void retrieveLogs(int areaId, MeasurementType type, String date ){
-        Call<List<LogResponse>> call = ServiceGenerator.getThresholdsApi().getLogs(areaId,type.toString(),date);
-        call.enqueue(new Callback<List<LogResponse>>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<List<LogResponse>> call, Response<List<LogResponse>> response) {
-                if (response.isSuccessful()) {
-                    List<LogObj> list = new ArrayList<>();
-                    for (LogResponse logResponse : response.body()) {
-                        list.add(logResponse.getLog(type));
+        if(checker.isOnlineMode()){
+            Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().createThreshold(areaId, type.toString(), threshold);
+            call.enqueue(new Callback<ThresholdResponse>() {
+                @Override
+                public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
+                    if(response.isSuccessful()) {
+                        ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
+                        ToastMessage.setToastMessage("Threshold created!");
                     }
-                    logs.setValue(list);
-                } else {
-                    ErrorReader<List<LogResponse>> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    else {
+                        ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<List<LogResponse>> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
+
+                @Override
+                public void onFailure(Call<ThresholdResponse> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
+                }
+            });
+        }
+        else {
+            ToastMessage.setToastMessage("OFFLINE MODE");
+        }
     }
+
 
     public void retrieveThresholdModifications(String date) {
-        Call<List<ThresholdModificationsResponse>> call = ServiceGenerator.getThresholdsApi().getThresholdModifications(date);
-        call.enqueue(new Callback<List<ThresholdModificationsResponse>>() {
-            @Override
-            public void onResponse(Call<List<ThresholdModificationsResponse>> call, Response<List<ThresholdModificationsResponse>> response) {
-                if (response.isSuccessful()) {
-                    List<ThresholdModification> list = new ArrayList<>();
+        if(checker.isOnlineMode()) {
+            Call<List<ThresholdModificationsResponse>> call = ServiceGenerator.getThresholdsApi().getThresholdModifications(date);
+            call.enqueue(new Callback<List<ThresholdModificationsResponse>>() {
+                @Override
+                public void onResponse(Call<List<ThresholdModificationsResponse>> call, Response<List<ThresholdModificationsResponse>> response) {
+                    if (response.isSuccessful()) {
+                        List<ThresholdModification> list = new ArrayList<>();
+                        executorService.execute( () -> {
+                            for (ThresholdModificationsResponse modification : response.body()) {
+                                list.add(modification.getModification());
+                                thresholdDAO.createThresholdModification(modification.getModification());
+                            }
+                            thresholdModifications.postValue(list);
+                        });
 
-                    for (ThresholdModificationsResponse modification : response.body()) {
-                        list.add(modification.getModification());
+                    } else {
+                        ErrorReader<List<ThresholdModificationsResponse>> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                     }
-                    thresholdModifications.setValue(list);
-                } else {
-                    ErrorReader<List<ThresholdModificationsResponse>> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                 }
-            }
-
-            @Override
-            public void onFailure(Call<List<ThresholdModificationsResponse>> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
-    }
-
-    public void retrieveTodayLogs() {
-        Call<List<LogResponse>> call = ServiceGenerator.getThresholdsApi().getLatestLogs();
-        call.enqueue(new Callback<List<LogResponse>>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<List<LogResponse>> call, Response<List<LogResponse>> response) {
-                if (response.isSuccessful()) {
-                    List<LogObj> list = new ArrayList<>();
-                    for (LogResponse logResponse : response.body()) {
-                        list.add(logResponse.getLog());
-                    }
-                    latestLogs.setValue(list);
-                } else {
-                    ErrorReader<List<LogResponse>> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                @Override
+                public void onFailure(Call<List<ThresholdModificationsResponse>> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
                 }
-            }
+            });
+        }
+        else {
+            executorService.execute( () -> {
+                thresholdModifications.postValue(thresholdDAO.getThresholdModifications(date));
+            });
+        }
 
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<List<LogResponse>> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
     }
 }

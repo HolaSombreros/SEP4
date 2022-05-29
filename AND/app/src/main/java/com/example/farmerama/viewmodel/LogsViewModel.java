@@ -8,9 +8,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
-import com.example.farmerama.data.model.LogObj;
+import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.repository.AreaRepository;
+import com.example.farmerama.data.repository.ExceededLogsRepository;
 import com.example.farmerama.data.repository.ThresholdRepository;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogsViewModel extends AndroidViewModel {
-    private ThresholdRepository repository;
+    private ExceededLogsRepository repository;
     private AreaRepository areaRepository;
     private int areaId;
     private MeasurementType type;
@@ -26,17 +27,17 @@ public class LogsViewModel extends AndroidViewModel {
 
     public LogsViewModel(@NonNull Application application) {
         super(application);
-        this.repository = ThresholdRepository.getInstance(application);
+        this.repository = ExceededLogsRepository.getInstance(application);
         this.areaRepository = AreaRepository.getInstance(application);
         date = LocalDate.now().toString();
         type = MeasurementType.TEMPERATURE;
     }
 
-    public LiveData<List<LogObj>> getLogs() {
+    public LiveData<List<ExceededLog>> getLogs() {
         return repository.getLogs();
     }
 
-    public void retrieveLogs() {
+    public void retrieveLogs(String date) {
         repository.retrieveLogs(areaId, type, date);
     }
 

@@ -23,22 +23,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 
 import android.content.SharedPreferences;
 
-import com.example.farmerama.data.model.LogObj;
-import com.example.farmerama.data.util.NotificationWorker;
+import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private NavController navController;
@@ -87,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        viewModel.retrieveAreas();
         viewModel.retrieveBarns();
         NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for the notification regarding exceeding thresholds");
@@ -99,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewModel.getTodayLogs().observeForever(logObjs -> {
-            for (LogObj log : logObjs)
+            for (ExceededLog log : logObjs)
                 publishNotification(log);
         });
     }
@@ -150,16 +146,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLoggedInUser() {
-        WorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
+//        WorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
 
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
-                // TODO check better
-                if (viewModel.isGettingNotifications())
-                    WorkManager.getInstance(this).enqueue(request);
+//                // TODO check better
+//                if (viewModel.isGettingNotifications())
+//                    WorkManager.getInstance(this).enqueue(request);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
@@ -202,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void publishNotification(LogObj log) {
+    private void publishNotification(ExceededLog log) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
                 .setSmallIcon(R.mipmap.application_launcher)
                 .setContentTitle("Measurement out of the thresholds")

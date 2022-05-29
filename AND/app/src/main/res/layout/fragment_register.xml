@@ -18,78 +18,127 @@
 
 
         <TextView
-            android:id="@+id/textView"
             style="@style/NameFont"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textColor="#20284e"
+            android:textColor="@color/blue_700"
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/RegisterEmailAddress"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_emailContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:drawableStart="@drawable/custom_email_icon"
-            android:ems="10"
-            android:focusable="true"
+            android:layout_marginTop="52dp"
             android:hint="@string/e_mail"
-            android:inputType="textEmailAddress"
-            android:nextFocusDown="@id/RegisterFirstName"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp" />
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_header">
 
-        <EditText
-            android:id="@+id/RegisterFirstName"
-            android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/RegisterEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:drawableStart="@drawable/custom_email_icon"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/RegisterFirstName"
+                android:textStyle="bold"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/custom_name"
-            android:ems="10"
-            android:focusable="true"
+            android:layout_marginTop="8dp"
             android:hint="@string/first_name"
-            android:inputType="textPersonName"
-            android:nextFocusDown="@id/RegisterLastName"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp" />
-
-        <EditText
-            android:id="@+id/RegisterLastName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
             android:drawableStart="@drawable/custom_name"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/last_name"
-            android:inputType="textPersonName"
-            android:nextFocusDown="@id/RegisterPassword"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_header">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/RegisterFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:drawableStart="@drawable/custom_name"
+                android:inputType="text"
+                android:nextFocusDown="@id/RegisterLastName"
+                android:textStyle="bold"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/RegisterPassword"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastNameContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/custom_password_icon"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp" />
+            android:hint="@string/last_name"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/custom_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_header">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/RegisterLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:drawableStart="@drawable/custom_name"
+                android:inputType="text"
+                android:nextFocusDown="@id/RegisterPassword"
+                android:textStyle="bold"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_passwordContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:drawableStart="@drawable/custom_password_icon"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
+            app:endIconMode="password_toggle"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_emailContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/RegisterPassword"
+                android:drawableStart="@drawable/custom_password_icon"
+                android:drawablePadding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:focusable="true"
+                android:textStyle="bold"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/Role"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -97,9 +146,9 @@
 
         <Button
             android:id="@+id/registerButton"
-            android:layout_width="210dp"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:text="@string/register" />
 
     </LinearLayout>

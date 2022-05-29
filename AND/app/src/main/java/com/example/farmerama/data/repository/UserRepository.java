@@ -1,11 +1,8 @@
 package com.example.farmerama.data.repository;
 
 import android.app.Application;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
-import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,6 +12,7 @@ import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.persistence.IUserDAO;
+import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
@@ -36,19 +34,17 @@ public class UserRepository {
     private final MutableLiveData<User> loggedInUser;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
+    private ConnectivityChecker checker;
     private IUserDAO userDAO;
-    private LiveData<List<User>> usersRoom;
-
 
     private UserRepository(Application application) {
         super();
+        checker = new ConnectivityChecker(application);
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         userDAO = database.userDAO();
-        usersRoom  = new MutableLiveData<>();
-        usersRoom = userDAO.getAllEmployees();
         executorService = Executors.newFixedThreadPool(5);
     }
 
@@ -68,7 +64,7 @@ public class UserRepository {
     }
 
     public LiveData<List<User>> getAllEmployees() {
-        return userDAO.getAllEmployees();
+        return users;
     }
 
     public LiveData<User> getEmployee() {
@@ -76,55 +72,71 @@ public class UserRepository {
     }
 
     public void retrieveAllEmployees() {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call<List<UserResponse>> call = userApi.getAllEmployees();
-        call.enqueue(new Callback<List<UserResponse>>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
-                if (response.isSuccessful()) {
-                    executorService.execute(() -> {
-                        for(UserResponse user : response.body()) {
-                            userDAO.registerUser(user.getUser());
-                        }
-                    });
-
+        if(checker.isOnlineMode()) {
+            UserApi userApi = ServiceGenerator.getUserApi();
+            Call<List<UserResponse>> call = userApi.getAllEmployees();
+            call.enqueue(new Callback<List<UserResponse>>() {
+                @EverythingIsNonNull
+                @Override
+                public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
+                    if (response.isSuccessful()) {
+                        List<User> usersList = new ArrayList<>();
+                        executorService.execute(() -> {
+                            for(UserResponse user : response.body()) {
+                                userDAO.registerUser(user.getUser());
+                                usersList.add(user.getUser());
+                            }
+                        });
+                        users.postValue(usersList);
+                    }
+                    else {
+                        ErrorReader<List<UserResponse>> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else {
-                    ErrorReader<List<UserResponse>> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                @EverythingIsNonNull
+                @Override
+                public void onFailure(Call<List<UserResponse>> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
+                    //users.setValue(usersRoom.getValue());
                 }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<List<UserResponse>> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-                users.setValue(usersRoom.getValue());
-            }
-        });
+            });
+        }
+        else {
+            executorService.execute(()->{
+                users.postValue(userDAO.getAllEmployees());
+            });
+        }
     }
 
     public void retrieveUserById(int id) {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.getEmployeeById(id);
-        call.enqueue(new Callback<UserResponse>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.isSuccessful()) {
-                    user.setValue( response.body().getUser());
+        if(checker.isOnlineMode()) {
+            UserApi userApi = ServiceGenerator.getUserApi();
+            Call<UserResponse> call = userApi.getEmployeeById(id);
+            call.enqueue(new Callback<UserResponse>() {
+                @EverythingIsNonNull
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if (response.isSuccessful()) {
+                        user.setValue(response.body().getUser());
+                    } else {
+                        ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else {
-                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+
+                @EverythingIsNonNull
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
+                    Log.i("Retrofit", "could not retrieve");
                 }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit", "could not retrieve");
-            }
-        });
+            });
+        }
+        else {
+            executorService.execute(() -> {
+                user.postValue(userDAO.getEmployeeById(id));
+            });
+        }
     }
 
     public void register(User employee) {
@@ -171,7 +183,6 @@ public class UserRepository {
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.i("Retrofit", "Could not retrieve data");
                 loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), "OFFLINE"));
-                //userDAO.getLoggedUser(employee.getEmail(), employee.getPassword()).getValue());
             }
         });
     }

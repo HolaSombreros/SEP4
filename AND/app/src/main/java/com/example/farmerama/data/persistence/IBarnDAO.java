@@ -26,6 +26,6 @@ public interface IBarnDAO {
     void editBarn(Barn barn);
 
     @Query("SELECT * FROM barn_table")
-    LiveData<List<Barn>> getBarns();
+    List<Barn> getBarns();
 
 }

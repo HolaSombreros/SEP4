@@ -23,12 +23,12 @@ public interface IUserDAO {
 
 
     @Query("SELECT * FROM user_table")
-    LiveData<List<User>> getAllEmployees();
+    List<User> getAllEmployees();
 
     @Query("SELECT * FROM user_table WHERE email = (:email) AND password = (:password)")
     LiveData<User> getLoggedUser(String email, String password);
 
     @Query("SELECT * FROM user_table WHERE userId = (:id)")
-    LiveData<User> getEmployeeById(int id);
+    User getEmployeeById(int id);
 
 }

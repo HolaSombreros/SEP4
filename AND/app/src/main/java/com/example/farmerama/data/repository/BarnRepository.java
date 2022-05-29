@@ -12,9 +12,11 @@ import com.example.farmerama.data.network.BarnApi;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.persistence.IBarnDAO;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
+import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,14 +33,14 @@ public class BarnRepository {
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
     private final IBarnDAO barnDAO;
-    private LiveData<List<Barn>> barnsRoom;
+    private ConnectivityChecker checker;
 
     private BarnRepository(Application application) {
         barns = new MutableLiveData<>();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
         barnDAO = database.barnDAO();
-        barnsRoom = barnDAO.getBarns();
+        checker = new ConnectivityChecker(application);
     }
 
     public static BarnRepository getInstance(Application application) {
@@ -50,41 +52,43 @@ public class BarnRepository {
     }
 
     public LiveData<List<Barn>> getBarns() {
-        return barnDAO.getBarns();
+        return barns;
     }
 
     public void retrieveBarns() {
-        BarnApi barnApi = ServiceGenerator.getBarnApi();
-        Call<List<BarnResponse>> call = barnApi.getBarns();
-        call.enqueue(new Callback<List<BarnResponse>>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<List<BarnResponse>> call, Response<List<BarnResponse>> response) {
-                if (response.isSuccessful()) {
-                    //List<Barn> list = new ArrayList<>();
-                    //executorService.submit(barnDAO::removeAllBarns);
-                    executorService.execute(() -> {
-                        for(BarnResponse barnResponse : response.body()) {
-                            barnDAO.createBarn(barnResponse.getBarn());
-                        }
-                    });
-//                    for(BarnResponse barnResponse : response.body()) {
-//                        //list.add(barnResponse.getBarn());
-//                        executorService.submit(() -> barnDAO.createBarn(barnResponse.getBarn()));
-//                    }
-                    //barns.setValue(list);
+        if(checker.isOnlineMode()) {
+            BarnApi barnApi = ServiceGenerator.getBarnApi();
+            Call<List<BarnResponse>> call = barnApi.getBarns();
+            call.enqueue(new Callback<List<BarnResponse>>() {
+                @EverythingIsNonNull
+                @Override
+                public void onResponse(Call<List<BarnResponse>> call, Response<List<BarnResponse>> response) {
+                    if (response.isSuccessful()) {
+                        List<Barn> list = new ArrayList<>();
+                        executorService.execute(() -> {
+                            for(BarnResponse barnResponse : response.body()) {
+                                barnDAO.createBarn(barnResponse.getBarn());
+                                list.add(barnResponse.getBarn());
+                            }
+                            barns.postValue(list);
+                        });
+                    }
+                    else {
+                        ErrorReader<List<BarnResponse>> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else {
-                    ErrorReader<List<BarnResponse>> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                @EverythingIsNonNull
+                @Override
+                public void onFailure(Call<List<BarnResponse>> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
                 }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<List<BarnResponse>> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-                //barns.setValue(barnsRoom.getValue());
-            }
-        });
+            });
+        }
+        else {
+            executorService.execute( ()-> barns.postValue(barnDAO.getBarns()));
+        }
+
+
     }
 }

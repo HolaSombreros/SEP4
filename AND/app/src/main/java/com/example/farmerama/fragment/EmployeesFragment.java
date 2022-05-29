@@ -43,8 +43,10 @@ public class EmployeesFragment extends Fragment {
         EmployeeAdapter adapter = new EmployeeAdapter();
 
         registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-            adapter.setUserList(employees);
-            recyclerView.setAdapter(adapter);
+            if(employees != null) {
+                adapter.setUserList(employees);
+                recyclerView.setAdapter(adapter);
+            }
 
         });
         registerViewModel.retrieveAllEmployees();

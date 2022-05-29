@@ -1,39 +1,43 @@
 package com.example.farmerama.data.model;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.farmerama.data.util.DateFormatter;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-@Entity(tableName = "measurement_log_table")
-public class LogObj {
-    @PrimaryKey
+@Entity(tableName = "exceeded_log_table", primaryKeys = {"logId", "measurementType"})
+public class ExceededLog {
+    @NonNull
     private int logId;
+    @NonNull
     private MeasurementType measurementType;
     private String areaName;
     private String measuredDate;
     private double thresholdValue;
     private double exceededValue;
 
-    public LogObj(){}
+    public ExceededLog(){}
 
-    public LogObj(int logId, MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
+    public ExceededLog(int logId, MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
         this.logId = logId;
         this.measurementType = measurementType;
-        this.measuredDate = measuredDate;
+        this.measuredDate = DateFormatter.formatDate(measuredDate);
         this.thresholdValue = thresholdValue;
         this.exceededValue = exceededValue;
     }
 
-    public LogObj(MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
+    public ExceededLog(MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
         this.measurementType = measurementType;
-        setMeasuredDate(measuredDate);
+        this.measuredDate = DateFormatter.formatDate(measuredDate);
         this.thresholdValue = thresholdValue;
         this.exceededValue = exceededValue;
     }
 
-    public LogObj(String areaName, MeasurementType type) {
+    public ExceededLog(String areaName, MeasurementType type) {
         this.measurementType = type;
         this.areaName = areaName;
     }
@@ -67,10 +71,7 @@ public class LogObj {
     }
 
     public void setMeasuredDate(String measuredDate) {
-        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = datetime.format(myFormatObj);
-        this.measuredDate = formattedDate;
+        this.measuredDate = measuredDate;
     }
 
     public double getThresholdValue() {
