@@ -28,7 +28,7 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class ExceededLogsRepository {
     private MutableLiveData<List<ExceededLog>> logs;
-    private MutableLiveData<List<ExceededLog>> latestLogs;
+    private static MutableLiveData<List<ExceededLog>> latestLogs;
     private FarmeramaDatabase database;
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
@@ -93,7 +93,7 @@ public class ExceededLogsRepository {
         }
     }
 
-    public void retrieveTodayLogs() {
+    public static void retrieveTodayLogs() {
         Call<List<LogResponse>> call = ServiceGenerator.getThresholdsApi().getLatestLogs();
         call.enqueue(new Callback<List<LogResponse>>() {
             @EverythingIsNonNull
