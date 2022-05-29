@@ -16,4 +16,7 @@ public interface IExceededLogDAO {
 
     @Query("SELECT * FROM exceeded_log_table")
     List<ExceededLog> getExceededLogs();
+
+    @Query("DELETE FROM exceeded_log_table")
+    void removeExceededLogs();
 }

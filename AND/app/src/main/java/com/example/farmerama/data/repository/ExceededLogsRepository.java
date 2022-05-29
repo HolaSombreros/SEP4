@@ -59,6 +59,10 @@ public class ExceededLogsRepository {
         return latestLogs;
     }
 
+    public void removeLocalData(){
+        exceededLogDAO.removeExceededLogs();
+    }
+
     public void retrieveLogs(int areaId, MeasurementType type, String date) {
         if(checker.isOnlineMode()) {
             Call<List<LogResponse>> call = ServiceGenerator.getThresholdsApi().getLogs(areaId,type.toString(),date);
@@ -75,7 +79,6 @@ public class ExceededLogsRepository {
                             }
                             logs.postValue(list);
                         });
-                        list.size();
                     } else {
                         ErrorReader<List<LogResponse>> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));

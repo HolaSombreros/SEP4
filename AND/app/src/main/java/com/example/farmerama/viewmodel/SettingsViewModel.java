@@ -20,8 +20,7 @@ public class SettingsViewModel extends AndroidViewModel {
     }
 
     public void removeLocalData() {
-        // TODO implement
-        // repository.removeLocalData();
+        repository.removeLocalData();
     }
 
     public void setGettingNotifications(boolean newValue) {

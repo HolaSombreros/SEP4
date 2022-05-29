@@ -18,13 +18,11 @@ public interface IThresholdDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void createThreshold(Threshold threshold);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void createThresholdModification(ThresholdModification thresholdModification);
+    @Query("DELETE FROM threshold_table")
+    void removeThresholds();
 
     @Query("SELECT * FROM threshold_table WHERE areaareaId = (:areaId) AND type = (:type)")
     ListenableFuture<Threshold> getThreshold(int areaId, String type);
 
-    @Query("SELECT * FROM threshold_modifications_table WHERE changedOn = (:date)")
-    List<ThresholdModification> getThresholdModifications(String date);
 
 }

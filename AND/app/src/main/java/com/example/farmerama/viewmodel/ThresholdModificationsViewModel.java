@@ -7,17 +7,18 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.ThresholdModification;
+import com.example.farmerama.data.repository.ThresholdModificationRepository;
 import com.example.farmerama.data.repository.ThresholdRepository;
 
 import java.util.List;
 
 public class ThresholdModificationsViewModel extends AndroidViewModel {
 
-    private ThresholdRepository thresholdRepository;
+    private ThresholdModificationRepository thresholdRepository;
 
     public ThresholdModificationsViewModel(@NonNull Application application) {
         super(application);
-        thresholdRepository = ThresholdRepository.getInstance(application);
+        thresholdRepository = ThresholdModificationRepository.getInstance(application);
     }
 
     public void retrieveThresholdsModifications(String date) {

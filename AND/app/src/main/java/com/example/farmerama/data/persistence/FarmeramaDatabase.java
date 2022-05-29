@@ -27,6 +27,7 @@ public abstract class FarmeramaDatabase extends RoomDatabase {
     public abstract IUserDAO userDAO();
     public abstract IBarnDAO barnDAO();
     public abstract IExceededLogDAO exceededLogDAO();
+    public abstract IThresholdModificationDAO thresholdModificationDAO();
 
     public static FarmeramaDatabase getInstance(Context context){
         if(instance == null) {

@@ -64,6 +64,10 @@ public class AreaRepository {
         return areas;
     }
 
+    public void removeLocalData(){
+        areaDAO.removeAreas();
+    }
+
     public void retrieveAreas() {
         if(checker.isOnlineMode()) {
             AreaApi areaApi = ServiceGenerator.getAreaApi();

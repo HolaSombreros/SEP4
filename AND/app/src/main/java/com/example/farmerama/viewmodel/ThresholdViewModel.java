@@ -31,7 +31,7 @@ public class ThresholdViewModel extends AndroidViewModel {
     }
 
     public LiveData<Threshold> getThreshold() {
-        return thresholdRepository.getThreshold();
+        return thresholdRepository.getThresholdData();
     }
 
     public void getLatestThresholds(MeasurementType type) {

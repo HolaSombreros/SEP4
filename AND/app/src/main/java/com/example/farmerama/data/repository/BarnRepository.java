@@ -55,6 +55,10 @@ public class BarnRepository {
         return barns;
     }
 
+    public void removeLocalDate(){
+        barnDAO.removeAllBarns();
+    }
+
     public void retrieveBarns() {
         if(checker.isOnlineMode()) {
             BarnApi barnApi = ServiceGenerator.getBarnApi();

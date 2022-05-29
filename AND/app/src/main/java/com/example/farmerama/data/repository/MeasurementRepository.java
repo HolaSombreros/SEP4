@@ -70,6 +70,10 @@ public class MeasurementRepository {
         return measurements;
     }
 
+    public void removeLocalData(){
+        measurementDAO.removeMeasurements();
+    }
+
     public void retrieveLatestMeasurement(int areaId, MeasurementType type, boolean latest) {
         if(onlineChecker.isOnlineMode()) {
             Call<List<MeasurementResponse>> call = adapter.retrieveLatestMeasurement(type, areaId, latest);

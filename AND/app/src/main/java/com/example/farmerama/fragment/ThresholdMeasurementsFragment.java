@@ -73,7 +73,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
                 viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
                         Double.parseDouble(upperThresholdValue.getText().toString())));
             }
-
+            createThreshold.set(false);
         });
     }
 
