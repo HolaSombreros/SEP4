@@ -2,6 +2,9 @@ package com.example.farmerama.data.model.response;
 
 import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
+import com.example.farmerama.data.util.DateFormatter;
+
+import java.time.LocalDateTime;
 
 
 public class LogResponse {
@@ -13,7 +16,8 @@ public class LogResponse {
     private double value;
 
     public ExceededLog getLog(MeasurementType type) {
-        return new ExceededLog(measurementId,type, measuredDate, threshold, value);
+        LocalDateTime dateTime = LocalDateTime.parse(measuredDate);
+        return new ExceededLog(measurementId,type, dateTime, threshold, value);
     }
 
     public ExceededLog getLog() {

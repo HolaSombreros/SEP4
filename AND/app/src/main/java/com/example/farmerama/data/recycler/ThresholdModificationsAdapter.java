@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
+import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.ThresholdModification;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ThresholdModificationsAdapter extends RecyclerView.Adapter<Threshol
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.employee.setText(list.get(position).getUser().getUserName());
         holder.area.setText(list.get(position).getThreshold().getArea().getAreaName());
-        holder.measurementType.setText(list.get(position).getThreshold().getType());
+        holder.measurementType.setText(list.get(position).getThreshold().getType().toString());
         holder.minMax.setText(list.get(position).getLogType().getLogType());
         holder.oldNewValue.setText(String.format("%.2f -> %.2f", list.get(position).getOldValue(), list.get(position).getNewValue()));
     }
