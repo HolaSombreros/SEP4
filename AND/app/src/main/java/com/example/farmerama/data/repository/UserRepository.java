@@ -6,14 +6,12 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
-import com.example.farmerama.data.persistence.IUserDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
@@ -173,6 +171,7 @@ public class UserRepository {
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if (response.isSuccessful()) {
                         user.setValue(response.body().getUser());
+                        executorService.execute(() -> database.userDAO().registerUser(response.body().getUser()));
                         ToastMessage.setToastMessage("Account successfully added");
                     }
                     else {
@@ -221,8 +220,7 @@ public class UserRepository {
         }
     }
 
-    public void deleteEmployeeById(int id)
-    {
+    public void deleteEmployeeById(int id) {
         if(checker.isOnlineMode()) {
             UserApi userApi = ServiceGenerator.getUserApi();
             Call<UserResponse> call = userApi.deleteEmployeeById(id);
@@ -230,6 +228,7 @@ public class UserRepository {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if(response.isSuccessful()) {
+                        executorService.execute(() -> database.userDAO().removeUser(user.getValue()));
                         ToastMessage.setToastMessage("Employee Deleted");
                     }
                     else{
@@ -259,6 +258,7 @@ public class UserRepository {
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if(response.isSuccessful()) {
                         loggedInUser.setValue(response.body().getUser());
+                        executorService.execute(() -> database.userDAO().updateUser(response.body().getUser()));
                         ToastMessage.setToastMessage("The account has been successfully updated");
                     }
                     else {

@@ -23,6 +23,12 @@ public interface IAreaDAO {
     @Query("DELETE FROM area_table")
     void removeAreas();
 
+    @Update
+    void updateArea(Area area);
+
+    @Delete
+    void removeArea(Area area);
+
     @Query("SELECT * FROM area_table")
     ListenableFuture<List<Area>> getAreas();
 

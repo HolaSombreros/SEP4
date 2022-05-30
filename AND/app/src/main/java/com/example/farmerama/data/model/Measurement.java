@@ -1,18 +1,13 @@
 package com.example.farmerama.data.model;
 
-import static java.time.LocalDateTime.parse;
-
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.farmerama.data.util.Converters;
-import com.example.farmerama.data.util.DateFormatter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 @Entity(tableName = "measurement_table", primaryKeys = {"measurementId", "measurementType"})

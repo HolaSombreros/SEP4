@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -21,9 +20,12 @@ import androidx.navigation.Navigation;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.Barn;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.viewmodel.AddEditAreaViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AddEditAreaFragment extends Fragment {
 
@@ -72,7 +74,6 @@ public class AddEditAreaFragment extends Fragment {
         ArrayAdapter<Barn> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         viewModel.getBarns().observe(getViewLifecycleOwner(), barns -> {
             adapter.clear();
             adapter.addAll(barns);
@@ -99,7 +100,7 @@ public class AddEditAreaFragment extends Fragment {
                 areaName.setText(area.getAreaName());
                 areaName.setSelection(areaName.getText().length());
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    if (adapter.getItem(i).equals(area.getBarnArea())) {
+                    if (adapter.getItem(i).getBarnId() == area.getBarn().getBarnId()) {
                         barnSpinner.setSelection(i);
                         break;
                     }
@@ -128,7 +129,7 @@ public class AddEditAreaFragment extends Fragment {
         });
 
         viewModel.getLoggedInUser().observe(getViewLifecycleOwner(), user -> {
-            if (user.getRole().equals("ADMINISTRATOR") && getArguments() != null)
+            if (user.getRole().equals(UserRole.ADMINISTRATOR) && getArguments() != null)
                 remove.setVisibility(View.VISIBLE);
             else
                 remove.setVisibility(View.INVISIBLE);
@@ -137,6 +138,7 @@ public class AddEditAreaFragment extends Fragment {
         AlertDialog.Builder deleteDialogBuilder = new AlertDialog.Builder(getActivity());
         deleteDialogBuilder.setMessage("Are you sure you want to delete this area?");
         deleteDialogBuilder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            viewModel.getSpecificArea(getArguments().getInt("areaId"));
             viewModel.removeArea(getArguments().getInt("areaId"));
             navController.popBackStack();
         });

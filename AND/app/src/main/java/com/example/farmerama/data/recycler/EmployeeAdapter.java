@@ -18,7 +18,6 @@ import java.util.List;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
     private List<User> userList;
-    private UserRepository userRepository;
     private onDeleteListener onDeleteListener;
 
 
@@ -31,8 +30,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void setOnDeleteListener(onDeleteListener onDeleteListener)
-    {
+    public void setOnDeleteListener(onDeleteListener onDeleteListener) {
       this.onDeleteListener = onDeleteListener;
     }
 
@@ -41,23 +39,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     public EmployeeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate (R.layout.item_employee, parent, false);
-//        userRepository = UserRepository.getInstance();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeAdapter.ViewHolder holder, int position) {
-
         holder.name.setText(userList.get(position).getUserName());
-        //TODO: need to get lifeCycleOwner such that it verifies the user loggedin and it doesn't allow to delete that one
-        //TODO: if delete user with you are logged in = throws null exception error and app stops working.
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userRepository.deleteEmployeeById(userList.get(holder.getPosition()).getUserId());
-                userList.remove(holder.getPosition());
-            }
-        });
     }
 
     @Override

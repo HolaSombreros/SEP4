@@ -151,6 +151,7 @@ public class AreaRepository {
                 @Override
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
+                        executorService.execute(() -> database.areaDAO().createArea(response.body().getArea()));
                         specificArea.setValue(response.body().getArea());
                         ToastMessage.setToastMessage("Area has been created!");
                     }
@@ -181,6 +182,7 @@ public class AreaRepository {
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
                         specificArea.setValue(response.body().getArea());
+                        executorService.execute(() -> database.areaDAO().updateArea(response.body().getArea()));
                     }
                     else {
                         ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
@@ -208,6 +210,7 @@ public class AreaRepository {
                 @Override
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
+                        executorService.execute(() -> database.areaDAO().removeArea(specificArea.getValue()));
                         ToastMessage.setToastMessage("The area has been successfully deleted");
                     }
                     else {

@@ -9,13 +9,13 @@ import java.util.Objects;
 public class Barn {
     @PrimaryKey
     private int barnId;
-    private String barnName;
+    private String name;
 
     public Barn(){}
 
     public Barn(int barnId, String name) {
         this.barnId = barnId;
-        this.barnName = name;
+        this.name = name;
     }
 
     public int getBarnId() {
@@ -26,12 +26,12 @@ public class Barn {
         this.barnId = barnId;
     }
 
-    public String getBarnName() {
-        return barnName;
+    public String getName() {
+        return name;
     }
 
-    public void setBarnName(String barnName) {
-        this.barnName = barnName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -39,11 +39,11 @@ public class Barn {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Barn barn = (Barn) o;
-        return barnId == barn.barnId && Objects.equals(barnName, barn.barnName);
+        return barnId == barn.barnId && Objects.equals(name, barn.name);
     }
 
     @Override
     public String toString() {
-        return barnName;
+        return name;
     }
 }
