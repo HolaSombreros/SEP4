@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ import java.util.List;
 public class HistoricalMeasurementsFragment extends Fragment {
     private MeasurementsViewModel viewModel;
     private LineChart lineChart;
+    private ProgressBar pbHistorical;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,9 +55,12 @@ public class HistoricalMeasurementsFragment extends Fragment {
 
     private void initializeViews(View view) {
         lineChart = view.findViewById(R.id.chart1);
+        pbHistorical = view.findViewById(R.id.pbHistorical);
     }
 
     private void setupViews() {
+        pbHistorical.setVisibility(View.VISIBLE);
+        lineChart.setVisibility(View.INVISIBLE);
 
         lineChart.getDescription().setEnabled(false);
         lineChart.setDrawGridBackground(false);
@@ -68,7 +73,10 @@ public class HistoricalMeasurementsFragment extends Fragment {
         lineChart.getDescription().setTextColor(ContextCompat.getColor(getContext(), R.color.blue_200));
         lineChart.getXAxis().setTextColor(ContextCompat.getColor(getContext(), R.color.blue_200));
 
+
         viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
+            pbHistorical.setVisibility(View.INVISIBLE);
+            lineChart.setVisibility(View.VISIBLE);
 
             List<Entry> entries = new ArrayList<>();
             for (int i = 0; i < measurements.size(); i++) {

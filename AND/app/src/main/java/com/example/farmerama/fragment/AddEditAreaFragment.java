@@ -75,9 +75,11 @@ public class AddEditAreaFragment extends Fragment {
                 android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         viewModel.getBarns().observe(getViewLifecycleOwner(), barns -> {
+            int position = barnSpinner.getSelectedItemPosition();
             adapter.clear();
             adapter.addAll(barns);
             barnSpinner.setAdapter(adapter);
+            barnSpinner.setSelection(position);
         });
 
         barnSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -100,7 +102,7 @@ public class AddEditAreaFragment extends Fragment {
                 areaName.setText(area.getAreaName());
                 areaName.setSelection(areaName.getText().length());
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    if (adapter.getItem(i).getBarnId() == area.getBarn().getBarnId()) {
+                    if (adapter.getItem(i).equals(area.getBarn())) {
                         barnSpinner.setSelection(i);
                         break;
                     }
@@ -129,7 +131,7 @@ public class AddEditAreaFragment extends Fragment {
         });
 
         viewModel.getLoggedInUser().observe(getViewLifecycleOwner(), user -> {
-            if (user.getRole().equals(UserRole.ADMINISTRATOR) && getArguments() != null)
+            if (user.getRole() == UserRole.ADMINISTRATOR && getArguments() != null)
                 remove.setVisibility(View.VISIBLE);
             else
                 remove.setVisibility(View.INVISIBLE);

@@ -153,7 +153,7 @@ public class AreaRepository {
                     if (response.isSuccessful()) {
                         executorService.execute(() -> database.areaDAO().createArea(response.body().getArea()));
                         specificArea.setValue(response.body().getArea());
-                        ToastMessage.setToastMessage("Area has been created!");
+                        ToastMessage.setToastMessage("Area successfully added");
                     }
                     else {
                         ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
@@ -183,6 +183,7 @@ public class AreaRepository {
                     if (response.isSuccessful()) {
                         specificArea.setValue(response.body().getArea());
                         executorService.execute(() -> database.areaDAO().updateArea(response.body().getArea()));
+                        ToastMessage.setToastMessage("Area successfully updated");
                     }
                     else {
                         ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();

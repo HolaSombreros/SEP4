@@ -2,6 +2,8 @@ package com.example.farmerama;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,10 +25,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.PreferenceManager;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 
 import android.content.SharedPreferences;
 
@@ -34,7 +35,6 @@ import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
-import com.example.farmerama.fragment.IntroVPFragment;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private MainActivityViewModel viewModel;
-    private String prevStarted = "yes";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setupNavigation();
         setUpLoggedInUser();
-
-        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(prevStarted, Boolean.TRUE);
-            editor.apply();
-        }
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
         });
 
-        viewModel.getTodayLogs().observeForever(logObjs -> {
-            for (ExceededLog log : logObjs)
-                publishNotification(log);
+        viewModel.getTodayLogs().observeForever(exceededLogs -> {
+            for (int i = 0; i < exceededLogs.size(); i++) {
+                publishNotification(exceededLogs.get(i), i);
+            }
         });
     }
 
@@ -150,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLoggedInUser() {
-        WorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
+        PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
 
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
@@ -158,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.saveLoggedInUser(loggedInUser);
 
                 if (viewModel.isGettingNotifications())
-                    WorkManager.getInstance(this).enqueue(request);
+                    WorkManager.getInstance(this).enqueueUniquePeriodicWork("notification", ExistingPeriodicWorkPolicy.KEEP, request);
 
                 TextView usernameHeader = findViewById(R.id.UsernameHeader);
                 TextView emailHeader = findViewById(R.id.EmailHeader);
@@ -207,16 +197,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void publishNotification(ExceededLog log) {
+    private void publishNotification(ExceededLog log, int id) {
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
                 .setSmallIcon(R.mipmap.application_launcher)
                 .setContentTitle("Measurement out of the thresholds")
                 .setContentText(String.format("Exceeded %s in area %s", log.getMeasurementType(), log.getAreaName()))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setGroup("Exceeded Measurements")
+                .setContentIntent(resultPendingIntent)
                 .setChannelId("22");
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
-        notificationManager.notify(22, builder.build());
+        notificationManager.notify(id, builder.build());
     }
 
     @Override
