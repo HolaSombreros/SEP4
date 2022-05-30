@@ -21,6 +21,7 @@ import androidx.navigation.Navigation;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.Barn;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.viewmodel.AddEditAreaViewModel;
 
 import java.util.ArrayList;
@@ -74,9 +75,11 @@ public class AddEditAreaFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         viewModel.getBarns().observe(getViewLifecycleOwner(), barns -> {
+            int position = barnSpinner.getSelectedItemPosition();
             adapter.clear();
             adapter.addAll(barns);
             barnSpinner.setAdapter(adapter);
+            barnSpinner.setSelection(position);
         });
 
         barnSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -128,7 +131,7 @@ public class AddEditAreaFragment extends Fragment {
         });
 
         viewModel.getLoggedInUser().observe(getViewLifecycleOwner(), user -> {
-            if (user.getRole().equals("ADMINISTRATOR") && getArguments() != null)
+            if (user.getRole() == UserRole.ADMINISTRATOR && getArguments() != null)
                 remove.setVisibility(View.VISIBLE);
             else
                 remove.setVisibility(View.INVISIBLE);

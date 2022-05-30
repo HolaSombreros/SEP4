@@ -64,8 +64,6 @@
                 android:hint="Email"
                 android:layout_marginHorizontal="32dp"
                 android:drawableStart="@drawable/custom_email_icon"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
                 android:focusable="true"
                 android:nextFocusDown="@id/editAccount_firstName"
                 android:inputType="text"
@@ -79,60 +77,52 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:hint="First Name"
-                android:layout_marginHorizontal="32dp"
                 android:drawableStart="@drawable/custom_name"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
                 android:focusable="true"
-                android:nextFocusDown="@id/editAccount_LastName"
+                android:hint="First Name"
                 android:inputType="text"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:nextFocusDown="@id/editAccount_LastName"
+                app:layout_constraintEnd_toEndOf="@+id/editAccount_email"
+                app:layout_constraintStart_toStartOf="@+id/editAccount_email"
                 app:layout_constraintTop_toBottomOf="@+id/editAccount_email" />
+
             <EditText
                 android:id="@+id/editAccount_LastName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:hint="Last Name"
-                android:layout_marginHorizontal="32dp"
                 android:drawableStart="@drawable/custom_name"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
                 android:focusable="true"
-                android:nextFocusDown="@id/editAccount_password"
+                android:hint="Last Name"
                 android:inputType="text"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:nextFocusDown="@id/editAccount_password"
+                app:layout_constraintEnd_toEndOf="@+id/editAccount_firstName"
+                app:layout_constraintStart_toStartOf="@+id/editAccount_firstName"
                 app:layout_constraintTop_toBottomOf="@+id/editAccount_firstName" />
+
             <EditText
                 android:id="@+id/editAccount_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginHorizontal="32dp"
-                android:hint="Password"
                 android:drawableStart="@drawable/custom_password_icon"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
                 android:focusable="true"
+                android:hint="Password"
                 android:inputType="text"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/editAccount_LastName"
+                app:layout_constraintStart_toStartOf="@+id/editAccount_LastName"
                 app:layout_constraintTop_toBottomOf="@+id/editAccount_LastName" />
 
 
             <Spinner
                 android:id="@+id/editAccount_role"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.088"
+                app:layout_constraintEnd_toEndOf="@+id/editAccount_password"
                 app:layout_constraintStart_toStartOf="@+id/editAccount_password"
                 app:layout_constraintTop_toBottomOf="@+id/editAccount_password" />
 
@@ -140,12 +130,11 @@
                 android:id="@+id/editAccount_saveButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/save"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/editAccount_role"
+                app:layout_constraintStart_toStartOf="@+id/editAccount_role"
                 app:layout_constraintTop_toBottomOf="@+id/editAccount_role" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
