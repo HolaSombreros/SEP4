@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
@@ -19,36 +20,47 @@ public class EmployeesFragment extends Fragment {
 
     private RegisterViewModel registerViewModel;
     private RecyclerView recyclerView;
+    Button delete;
+    public EmployeesFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_employees, container, false);
+        View view = inflater.inflate(R.layout.fragment_employees, container, false);
+        delete = view.findViewById(R.id.deleteEmployee);
+        return view;
     }
+
+
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
-        initializeViews(view);
-        setUpViews();
-    }
-
-    private void initializeViews(View view) {
         recyclerView = view.findViewById(R.id.rev);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.hasFixedSize();
-    }
 
-    private void setUpViews() {
         EmployeeAdapter adapter = new EmployeeAdapter();
 
-        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-            if(employees != null) {
-                adapter.setUserList(employees);
-                recyclerView.setAdapter(adapter);
-            }
 
+        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
+            adapter.setUserList(employees);
         });
+        recyclerView.setAdapter(adapter);
         registerViewModel.retrieveAllEmployees();
+
+        adapter.setOnDeleteListener(userId -> {
+            registerViewModel.deleteEmployeeById(userId);
+        });
+
+
+//        registerViewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
+
+//        });
+
     }
+
+
 }

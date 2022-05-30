@@ -19,7 +19,6 @@ import java.util.List;
 public class MeasurementsViewModel extends FactoryViewModel {
     private SharedPreferences sharedPreferences;
     private int areaId;
-    private MeasurementType measurementType;
 
     public MeasurementsViewModel(Application application) {
         super(application);
@@ -38,20 +37,12 @@ public class MeasurementsViewModel extends FactoryViewModel {
         return getMeasurementRepository().getLatestMeasurement();
     }
 
-    public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {
-        getMeasurementRepository().retrieveLatestMeasurement(areaId, measurementType, true);
-    }
-
-    public void saveLatestInformation(MeasurementType measurementType, int areaId){
-        this.areaId = areaId;
-        this.measurementType = measurementType;
-    }
     // for historical
     public void retrieveMeasurements(MeasurementType type, String date) {
         getMeasurementRepository().retrieveMeasurements(areaId, type, date);
     }
 
-    public void getAllAreas() {
+    public void retrieveAreas() {
         getAreaRepository().retrieveAreas();
     }
 

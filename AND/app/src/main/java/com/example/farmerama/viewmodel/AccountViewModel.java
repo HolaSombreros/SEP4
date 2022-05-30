@@ -20,4 +20,7 @@ public class AccountViewModel extends FactoryViewModel {
         return getUserRepository().getLoggedInUser();
     }
 
+    public void deleteEmployeeById(int userId) {
+        getUserRepository().deleteEmployeeById(userId);
+    }
 }

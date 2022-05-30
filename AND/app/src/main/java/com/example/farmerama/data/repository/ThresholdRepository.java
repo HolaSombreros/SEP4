@@ -35,6 +35,7 @@ public class ThresholdRepository {
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
 
+
     private ThresholdRepository(Application application) {
         checker = new ConnectivityChecker(application);
         thresholdData = new MutableLiveData<>();

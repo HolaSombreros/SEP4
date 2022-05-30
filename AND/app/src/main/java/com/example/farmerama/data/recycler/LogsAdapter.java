@@ -1,4 +1,5 @@
 package com.example.farmerama.data.recycler;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,12 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull LogsAdapter.ViewHolder holder, int position) {
-        holder.thresholdValue.setText(String.valueOf(logs.get(position).getThresholdValue()));
-        holder.exceededValue.setText(String.valueOf(logs.get(position).getExceededValue()));
-        holder.date.setText(String.valueOf(logs.get(position).getMeasuredDate()));
+        holder.thresholdValue.setText("Threshold: " + logs.get(position).getThresholdValue());
+        holder.exceededValue.setText("Exceeded: " + logs.get(position).getExceededValue());
+        holder.date.setText("Date: " + logs.get(position).getMeasuredDate());
     }
 
     @Override

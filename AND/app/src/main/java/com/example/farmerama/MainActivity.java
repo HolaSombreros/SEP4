@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         return viewModel.isLogged();
     }
 
-
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
@@ -182,7 +181,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
-                navController.navigate(R.id.latestDataFragment);
+
+                if (!viewModel.isLogged()) {
+                    navController.navigate(R.id.latestDataFragment);
+                }
+
                 viewModel.setLogged(true);
             } else {
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {

@@ -3,30 +3,22 @@ package com.example.farmerama.data.repository;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.adapter.MeasurementApiAdapterInterface;
 import com.example.farmerama.data.adapter.MeasurementApiAdapter;
-import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
-import com.example.farmerama.data.persistence.IMeasurementDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.firebase.firestore.local.QueryResult;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -126,6 +118,9 @@ public class MeasurementRepository {
                             }
                             measurements.postValue(measurementsList);
                         });
+                        if (measurementsList.size() == 0) {
+                            ToastMessage.setToastMessage("No data available");
+                        }
                     } else {
                         ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));

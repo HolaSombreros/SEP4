@@ -19,7 +19,7 @@ public class ValidationUser {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         if(email.trim().isEmpty()) {
-            ToastMessage.setToastMessage("Email field cannot be empty");
+            ToastMessage.setToastMessage("Email missing");
             return false;
         }
         if(!matcher.matches()) {
@@ -37,7 +37,7 @@ public class ValidationUser {
      */
     private boolean verifyPassword(String password){
         if(password.trim().isEmpty()) {
-            ToastMessage.setToastMessage("Password cannot be empty");
+            ToastMessage.setToastMessage("Password missing");
             return false;
         }
         if(password.length() < 6){

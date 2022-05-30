@@ -111,7 +111,7 @@ public class HistoricalDataFragment extends Fragment {
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             areaSpinner.setAdapter(adapter2);
         });
-        viewModel.getAllAreas();
+        viewModel.retrieveAreas();
 
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
