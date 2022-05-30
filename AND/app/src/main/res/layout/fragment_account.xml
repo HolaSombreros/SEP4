@@ -57,41 +57,68 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginHorizontal="24dp"
-            android:text="Name"
-            android:textSize="32sp"
+            android:layout_marginTop="52dp"
+            android:hint="Name"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_baseline_account_circle_24"
+                android:inputType="text"
+                android:textStyle="bold"
+                android:focusable="true"
+                android:nextFocusDown="@id/LoginPassword"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailContainerMyAccount"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Email"
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="@+id/name"
-            app:layout_constraintStart_toStartOf="@+id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            android:layout_marginTop="48dp"
+            android:hint="@string/e_mail"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameContainer">
 
-        <TextView
-            android:id="@+id/role"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/custom_email_icon"
+                android:inputType="textEmailAddress"
+                android:textStyle="bold"
+                android:focusable="true"
+                android:nextFocusDown="@id/LoginPassword"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/myRole"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Role"
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="@+id/email"
-            app:layout_constraintStart_toStartOf="@+id/email"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
-
-
+            android:layout_marginTop="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailContainerMyAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

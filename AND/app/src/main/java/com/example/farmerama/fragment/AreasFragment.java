@@ -60,8 +60,10 @@ public class AreasFragment extends Fragment {
         viewModel.getAllAreas();
         AreaListAdapter adapter = new AreaListAdapter();
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
+            if(areas != null) {
                 adapter.setAreas(areas);
-            progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
         });
         areasRecycler.setAdapter(adapter);
 
