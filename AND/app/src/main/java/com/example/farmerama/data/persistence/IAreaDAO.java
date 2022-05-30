@@ -10,6 +10,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.farmerama.data.model.Area;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -23,8 +24,8 @@ public interface IAreaDAO {
     void removeAreas();
 
     @Query("SELECT * FROM area_table")
-    List<Area> getAreas();
+    ListenableFuture<List<Area>> getAreas();
 
     @Query("SELECT * FROM area_table WHERE areaId =(:id)")
-    Area getAreaById(int id);
+    ListenableFuture<Area> getAreaById(int id);
 }

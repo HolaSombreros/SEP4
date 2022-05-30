@@ -21,7 +21,7 @@ public interface IThresholdDAO {
     @Query("DELETE FROM threshold_table")
     void removeThresholds();
 
-    @Query("SELECT * FROM threshold_table WHERE areaareaId = (:areaId) AND type = (:type)")
+    @Query("SELECT * FROM threshold_table WHERE areaareaId = (:areaId) AND measurementType = (:type)")
     ListenableFuture<Threshold> getThreshold(int areaId, String type);
 
 

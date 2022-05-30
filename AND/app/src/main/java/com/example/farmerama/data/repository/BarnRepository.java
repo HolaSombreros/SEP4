@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.response.BarnResponse;
 import com.example.farmerama.data.network.BarnApi;
@@ -15,6 +16,7 @@ import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,9 +86,15 @@ public class BarnRepository {
             });
         }
         else {
-            executorService.execute( ()-> barns.postValue(database.barnDAO().getBarns()));
+            ListenableFuture<List<Barn>> result = database.barnDAO().getBarns();
+            result.addListener(() -> {
+                try {
+                    barns.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
-
-
     }
 }

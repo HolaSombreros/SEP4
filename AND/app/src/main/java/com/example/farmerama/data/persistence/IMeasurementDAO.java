@@ -19,16 +19,16 @@ public interface IMeasurementDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void createMeasurement(Measurement measurement);
 
-    @Query("SELECT * FROM measurement_table")
-    LiveData<List<Measurement>> getMeasurements();
+//    @Query("SELECT * FROM measurement_table")
+//    ListenableFuture<LiveData<List<Measurement>>> getMeasurements();
 
     @Query("DELETE FROM measurement_table")
     void removeMeasurements();
 
     @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType) AND areaId = (:areaId) ORDER BY measurementId DESC")
-    Measurement getLatestMeasurement(MeasurementType measurementType, int areaId);
+    ListenableFuture<Measurement> getLatestMeasurement(MeasurementType measurementType, int areaId);
 
     @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType) AND areaId = (:areaId)")
-    List<Measurement> getHistoricalMeasurements(MeasurementType measurementType, int areaId);
+    ListenableFuture<List<Measurement>> getHistoricalMeasurements(MeasurementType measurementType, int areaId);
 
 }

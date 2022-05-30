@@ -1,5 +1,6 @@
 package com.example.farmerama.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -14,16 +15,26 @@ public class Threshold {
     private Area area;
     private double maximum;
     private double minimum;
-    private String type;
+    @NonNull
+    private MeasurementType measurementType;
 
     public Threshold(){}
 
-    public Threshold(int thresholdId, Area area, double maximum, double minimum, String type) {
+    public Threshold(int thresholdId, Area area, double maximum, double minimum, MeasurementType type) {
         this.minimum = minimum;
         this.maximum = maximum;
         this.area = area;
         this.thresholdId = thresholdId;
-        this.type = type;
+        this.measurementType = type;
+    }
+
+    @NonNull
+    public MeasurementType getMeasurementType() {
+        return measurementType;
+    }
+
+    public void setMeasurementType(@NonNull MeasurementType measurementType) {
+        this.measurementType = measurementType;
     }
 
     public Threshold(double minimum, double maximum) {
@@ -63,12 +74,12 @@ public class Threshold {
         this.minimum = minimum;
     }
 
-    public String getType() {
-        return type;
+    public MeasurementType getType() {
+        return measurementType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(MeasurementType type) {
+        this.measurementType = type;
     }
 
     @Override
@@ -78,7 +89,7 @@ public class Threshold {
                 ", areaId=" + area.getAreaId() +
                 ", maximum=" + maximum +
                 ", minimum=" + minimum +
-                ", type='" + type + '\'' +
+                ", type='" + measurementType + '\'' +
                 '}';
     }
 
@@ -87,7 +98,7 @@ public class Threshold {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Threshold threshold = (Threshold) o;
-        return thresholdId == threshold.thresholdId && area.equals(threshold.area) && Double.compare(threshold.maximum, maximum) == 0 && Double.compare(threshold.minimum, minimum) == 0 && Objects.equals(type, threshold.type);
+        return thresholdId == threshold.thresholdId && area.equals(threshold.area) && Double.compare(threshold.maximum, maximum) == 0 && Double.compare(threshold.minimum, minimum) == 0 && Objects.equals(measurementType, threshold.measurementType);
     }
 
 }

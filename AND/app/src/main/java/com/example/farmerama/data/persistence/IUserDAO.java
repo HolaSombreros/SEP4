@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.farmerama.data.model.User;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -23,12 +24,9 @@ public interface IUserDAO {
 
 
     @Query("SELECT * FROM user_table")
-    List<User> getAllEmployees();
-
-    @Query("SELECT * FROM user_table WHERE email = (:email) AND password = (:password)")
-    LiveData<User> getLoggedUser(String email, String password);
+    ListenableFuture<List<User>> getAllEmployees();
 
     @Query("SELECT * FROM user_table WHERE userId = (:id)")
-    User getEmployeeById(int id);
+    ListenableFuture<User> getEmployeeById(int id);
 
 }

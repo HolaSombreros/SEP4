@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.farmerama.data.model.ThresholdModification;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 @Dao
@@ -17,5 +18,5 @@ public interface IThresholdModificationDAO {
     void removeThresholdModification();
 
     @Query("SELECT * FROM threshold_modifications_table WHERE changedOn = (:date)")
-    List<ThresholdModification> getThresholdModifications(String date);
+    ListenableFuture<List<ThresholdModification>> getThresholdModifications(String date);
 }
