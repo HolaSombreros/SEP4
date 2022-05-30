@@ -52,8 +52,8 @@ public class AreaDaoImpl implements AreaDao{
     }
 
     @Override
-    public Future<Area> readByNameAndBarn(String name, int barnId) {
-        return new AsyncResult<>(repository.getFirstByNameAndBarnBarnId(name, barnId));
+    public Future<Boolean> readByNameAndBarn(String name, int barnId) {
+        return new AsyncResult<>(repository.existsByNameAndBarnBarnId(name, barnId));
     }
 
     @Override

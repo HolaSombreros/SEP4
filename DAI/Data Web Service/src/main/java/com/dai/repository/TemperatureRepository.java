@@ -34,10 +34,10 @@ public interface TemperatureRepository extends JpaRepository<Measurement, Intege
 
 
     @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT temperature as value, minimum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
-            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , -5, CURRENT_TIMESTAMP) AND type like :type")
+            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , 115, CURRENT_TIMESTAMP) AND type like :type")
     List<NotificationLogs> getAllMin(@Param("type")String type);
 
     @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT temperature as value, maximum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
-            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , -5, CURRENT_TIMESTAMP) AND type like :type")
+            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , 115, CURRENT_TIMESTAMP) AND type like :type")
     List<NotificationLogs> getAllMax(@Param("type")String type);
 }

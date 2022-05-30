@@ -1,6 +1,8 @@
 package com.dai.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -17,6 +19,8 @@ public class Area implements Serializable{
     private Barn barn;
 
     @Column(name = "name")
+    @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     private String name;
 
     @Column(name = "description")
@@ -26,6 +30,8 @@ public class Area implements Serializable{
     private int numberOfPigs;
 
     @Column(name = "hardware_id")
+    @NotNull(message = "Please fill in all the required fields")
+    @NotEmpty(message = "Please fill in all the required fields")
     private String hardwareId;
 
     public Area() {

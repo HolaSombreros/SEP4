@@ -25,11 +25,10 @@ public class AreasServiceImpl implements AreasService {
     @Override
     public Area create(Area area) throws Exception {
         Barn barn = Helper.await(barnDao.read(area.getBarn().getBarnId()));
-
-     /*   if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getId()) != null){
+        boolean exists = Helper.await(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getBarnId()));
+        if(exists){
             throw new BadRequestException("Area already exists");
-        }*/
-
+        }
         if(barn!=null)
         {
             return Helper.await(areasDao.create(area));
@@ -61,9 +60,8 @@ public class AreasServiceImpl implements AreasService {
     @Override
     public Area update(Area area) {
         try{
-            if(areasDao.readByNameAndBarn(area.getName(), area.getBarn().getBarnId()) != null){
-                throw new BadRequestException("Area already exists");
-            }
+            if(area.getName().isEmpty() || area.getHardwareId().isEmpty())
+                throw new BadRequestException("Please fill in all the required fields");
             return Helper.await(areasDao.update(area));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
@@ -73,6 +71,8 @@ public class AreasServiceImpl implements AreasService {
     @Override
     public Area delete(int id) {
         try {
+            if(read(id)== null)
+                throw new BadRequestException("Area with the given id doesn't exist");
             return Helper.await(areasDao.delete(id));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
