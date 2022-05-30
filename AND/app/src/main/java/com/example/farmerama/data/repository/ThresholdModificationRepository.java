@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
@@ -14,6 +15,7 @@ import com.example.farmerama.data.persistence.IThresholdModificationDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,9 +78,15 @@ public class ThresholdModificationRepository {
             });
         }
         else {
-            executorService.execute( () -> {
-                thresholdModifications.postValue(database.thresholdModificationDAO().getThresholdModifications(date));
-            });
+            ListenableFuture<List<ThresholdModification>> result = database.thresholdModificationDAO().getThresholdModifications(date);
+            result.addListener(() -> {
+                try {
+                    thresholdModifications.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 }

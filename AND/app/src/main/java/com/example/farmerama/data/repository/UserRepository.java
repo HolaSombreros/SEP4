@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.model.response.UserResponse;
@@ -16,6 +17,7 @@ import com.example.farmerama.data.persistence.IUserDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,9 +115,15 @@ public class UserRepository {
             });
         }
         else {
-            executorService.execute(()->{
-                users.postValue(database.userDAO().getAllEmployees());
-            });
+            ListenableFuture<List<User>> future = database.userDAO().getAllEmployees();
+            future.addListener(() -> {
+                try{
+                    users.postValue(future.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newSingleThreadExecutor());
         }
     }
 
@@ -143,9 +151,15 @@ public class UserRepository {
             });
         }
         else {
-            executorService.execute(() -> {
-                user.postValue(database.userDAO().getEmployeeById(id));
-            });
+            ListenableFuture<User> future = database.userDAO().getEmployeeById(id);
+            future.addListener(() -> {
+                try{
+                    user.postValue(future.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newSingleThreadExecutor());
         }
     }
 

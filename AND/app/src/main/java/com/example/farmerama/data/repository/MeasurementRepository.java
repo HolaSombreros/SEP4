@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.adapter.MeasurementApiAdapterInterface;
 import com.example.farmerama.data.adapter.MeasurementApiAdapter;
+import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
@@ -19,6 +20,7 @@ import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.firestore.local.QueryResult;
 
 import java.net.ConnectException;
@@ -96,9 +98,15 @@ public class MeasurementRepository {
             });
         }
         else {
-            executorService.execute(() -> {
-                latestMeasurement.postValue(database.measurementDAO().getLatestMeasurement(type, areaId));
-            });
+            ListenableFuture<Measurement> result = database.measurementDAO().getLatestMeasurement(type, areaId);
+            result.addListener(() -> {
+                try {
+                    latestMeasurement.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 
@@ -132,9 +140,15 @@ public class MeasurementRepository {
             });
         }
         else {
-            executorService.execute(() -> {
-                measurements.postValue(database.measurementDAO().getHistoricalMeasurements(type, areaId));
-            });
+            ListenableFuture<List<Measurement>> result = database.measurementDAO().getHistoricalMeasurements(type, areaId);
+            result.addListener(() -> {
+                try {
+                    measurements.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 }

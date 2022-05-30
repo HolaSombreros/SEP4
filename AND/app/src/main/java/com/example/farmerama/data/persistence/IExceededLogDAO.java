@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.farmerama.data.model.ExceededLog;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface IExceededLogDAO {
     void createExceededLog(ExceededLog log);
 
     @Query("SELECT * FROM exceeded_log_table")
-    List<ExceededLog> getExceededLogs();
+    ListenableFuture<List<ExceededLog>> getExceededLogs();
 
     @Query("DELETE FROM exceeded_log_table")
     void removeExceededLogs();

@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.farmerama.data.model.Barn;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -26,6 +27,6 @@ public interface IBarnDAO {
     void editBarn(Barn barn);
 
     @Query("SELECT * FROM barn_table")
-    List<Barn> getBarns();
+    ListenableFuture<List<Barn>> getBarns();
 
 }

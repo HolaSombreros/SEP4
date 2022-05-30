@@ -16,7 +16,7 @@ import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.util.Converters;
 
-@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 12)
+@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 13)
 @TypeConverters({Converters.class})
 public abstract class FarmeramaDatabase extends RoomDatabase {
 

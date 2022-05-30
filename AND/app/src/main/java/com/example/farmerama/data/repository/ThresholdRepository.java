@@ -79,15 +79,12 @@ public class ThresholdRepository {
         }
         else {
             ListenableFuture<Threshold> future = database.thresholdDAO().getThreshold(areaId, type.getType());
-            future.addListener(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        thresholdData.postValue(future.get());
-                    }
-                    catch (Exception e) {
-
-                    }
+            future.addListener(() -> {
+                try{
+                    thresholdData.postValue(future.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
                 }
             }, Executors.newSingleThreadExecutor());
         }
