@@ -11,6 +11,6 @@ public interface AreaDao {
     Future<Area> update(Area area);
     Future<Area> readByHardwareId(String id);
     Future<List<Area>> readAll();
-    Future<Area> readByNameAndBarn(String name, int barnId);
+    Future<Boolean> readByNameAndBarn(String name, int barnId);
     Future<Area> delete(int id);
 }
