@@ -62,6 +62,8 @@ public class AreasServiceImpl implements AreasService {
         try{
             if(area.getName().isEmpty() || area.getHardwareId().isEmpty())
                 throw new BadRequestException("Please fill in all the required fields");
+            if(!(Helper.await(areasDao.readByHardwareId(area.getHardwareId())).getAreaId() == area.getAreaId()))
+                throw new BadRequestException("Please use another hardware");
             return Helper.await(areasDao.update(area));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
