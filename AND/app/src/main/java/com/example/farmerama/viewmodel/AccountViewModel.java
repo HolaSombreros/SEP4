@@ -19,4 +19,7 @@ public class AccountViewModel extends ViewModel {
         return userRepository.getLoggedInUser();
     }
 
+    public void deleteEmployeeById(int userId) {
+        userRepository.deleteEmployeeById(userId);
+    }
 }
