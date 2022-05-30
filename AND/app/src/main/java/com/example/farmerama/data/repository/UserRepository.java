@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
@@ -197,7 +198,7 @@ public class UserRepository {
                 @Override
                 public void onFailure(Call<UserResponse> call, Throwable t) {
                     Log.i("Retrofit", "Could not retrieve data");
-                    loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), "OFFLINE"));
+                    loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), UserRole.OFFLINE));
                 }
             });
         }

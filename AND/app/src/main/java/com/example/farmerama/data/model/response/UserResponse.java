@@ -1,15 +1,17 @@
 package com.example.farmerama.data.model.response;
 
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.model.UserRole;
 
 public class UserResponse {
     private int userId;
-    private String name;
+    private String userName;
     private String email;
     private String password;
-    private String role;
+    private UserRole role;
 
     public User getUser(){
-        return new User(userId, name, email, password, role);
+
+        return new User(userId, userName, email, password, role);
     }
 }

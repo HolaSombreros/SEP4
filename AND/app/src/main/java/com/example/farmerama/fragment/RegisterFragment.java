@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.viewmodel.RegisterViewModel;
 
 public class RegisterFragment extends Fragment {
@@ -69,7 +70,7 @@ public class RegisterFragment extends Fragment {
         String userRole=role.getSelectedItem().toString();
 
         if(viewModel.validate(userFirstName, userLastName, userEmail, userPassword, userRole)){
-            viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, userRole));
+            viewModel.registerUser(new User(userFirstName, userLastName, userEmail, userPassword, UserRole.valueOf(userRole)));
         }
     }
 }

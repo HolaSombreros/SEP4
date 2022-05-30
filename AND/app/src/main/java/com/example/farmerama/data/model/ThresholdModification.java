@@ -8,7 +8,6 @@ import androidx.room.TypeConverters;
 
 import com.example.farmerama.data.util.Converters;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(tableName = "threshold_modifications_table")
