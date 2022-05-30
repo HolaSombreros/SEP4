@@ -37,14 +37,6 @@ public class MeasurementsViewModel extends FactoryViewModel {
         return getMeasurementRepository().getLatestMeasurement();
     }
 
-    public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {
-        getMeasurementRepository().retrieveLatestMeasurement(areaId, measurementType, true);
-    }
-
-    public void saveLatestInformation(MeasurementType measurementType, int areaId){
-        this.areaId = areaId;
-        this.measurementType = measurementType;
-    }
     // for historical
     public void retrieveMeasurements(MeasurementType type, String date) {
         getMeasurementRepository().retrieveMeasurements(areaId, type, date);
