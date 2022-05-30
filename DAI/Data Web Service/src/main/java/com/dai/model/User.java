@@ -2,6 +2,7 @@ package com.dai.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -32,6 +33,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role = UserRole.EMPLOYEE;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
+    private List<ThresholdLogs> thresholdLogs;
 
     public User() {
     }

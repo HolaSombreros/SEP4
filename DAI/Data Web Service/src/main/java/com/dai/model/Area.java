@@ -2,6 +2,7 @@ package com.dai.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "area")
@@ -27,6 +28,10 @@ public class Area implements Serializable{
 
     @Column(name = "hardware_id")
     private String hardwareId;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "area_id")
+    private List<Measurement> measurements;
 
     public Area() {
     }
