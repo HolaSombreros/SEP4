@@ -1,13 +1,12 @@
 USE dwh;
-
--- Checks for new records in the stage
+-- Incremental load and Type 2 changes script
 -- New and future load dates.
 DECLARE @NewLoadDate INT;
 DECLARE @NewLastLoadDate DATETIME;
 -- Two hours have to be added because of the server's timezone
 SET @NewLastLoadDate = dateadd(HOUR, 2, getdate());
 SET @NewLoadDate = CONVERT(CHAR(8), @NewLastLoadDate, 112);
--- Add one minute to the last load date to make sure it doesn''t load records in that minute in the next load */
+-- Add one minute to the last load date to make sure it doesn't load records in that minute in the next load */
 SET @NewLastLoadDate = DATEADD(mi, 1, @NewLastLoadDate);
 
 DECLARE @FutureDate INT;
@@ -104,7 +103,9 @@ SET [sound] =
 WHERE [sound] is null OR [sound] NOT BETWEEN 0 AND 150;
 
 -- Incremental Load
--- start get added
+
+-- Checks for new records in the stage
+
 INSERT INTO [dwh].[DimArea] ([AreaId],
                              [Name],
                              [ValidFrom],
