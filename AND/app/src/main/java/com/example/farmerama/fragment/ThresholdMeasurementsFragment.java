@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
     private EditText lowerThresholdValue;
     private ThresholdViewModel viewModel;
     private Button button;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,12 +43,15 @@ public class ThresholdMeasurementsFragment extends Fragment {
        upperThresholdValue = view.findViewById(R.id.upperThreshold);
        lowerThresholdValue = view.findViewById(R.id.lowerThreshold);
        button = view.findViewById(R.id.saveThreshold);
+       progressBar = view.findViewById(R.id.pbThresholds);
     }
 
     private void setUpViews() {
+        progressBar.setVisibility(View.VISIBLE);
        AtomicBoolean createThreshold = new AtomicBoolean(false);
         viewModel.getThreshold().observe(getViewLifecycleOwner(), thresholds -> {
             if(thresholds != null) {
+                progressBar.setVisibility(View.INVISIBLE);
                 upperThresholdValue.setText(String.valueOf(thresholds.getMaximum()));
                 upperThresholdValue.requestFocus();
                 upperThresholdValue.setSelection(upperThresholdValue.getText().length());
@@ -55,6 +60,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
             }
             else {
                 createThreshold.set(true);
+                progressBar.setVisibility(View.INVISIBLE);
                 upperThresholdValue.setText("");
                 lowerThresholdValue.setText("");
             }

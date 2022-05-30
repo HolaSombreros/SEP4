@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ public class ThresholdModificationsFragment extends Fragment {
     private ThresholdModificationsViewModel viewModel;
     private TextView date;
     private RecyclerView recycler;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,12 +47,14 @@ public class ThresholdModificationsFragment extends Fragment {
     private void initializeViews(View view) {
         date = view.findViewById(R.id.thresholdModification_date);
         recycler = view.findViewById(R.id.thresholdModification_recycler);
+        progressBar = view.findViewById(R.id.pbThresholdsModifications);
     }
 
     private void setupViews() {
 
 
         date.setText(LocalDate.now().toString());
+        progressBar.setVisibility(View.VISIBLE);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 (view, year, monthOfYear, dayOfMonth)
@@ -79,7 +83,10 @@ public class ThresholdModificationsFragment extends Fragment {
         recycler.hasFixedSize();
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         ThresholdModificationsAdapter adapter = new ThresholdModificationsAdapter();
-        viewModel.getThresholdsModifications().observe(getViewLifecycleOwner(), adapter::setModifications);
+        viewModel.getThresholdsModifications().observe(getViewLifecycleOwner(), thresholdModifications -> {
+            adapter.setModifications(thresholdModifications);
+            progressBar.setVisibility(View.INVISIBLE);
+        });
         recycler.setAdapter(adapter);
     }
 }

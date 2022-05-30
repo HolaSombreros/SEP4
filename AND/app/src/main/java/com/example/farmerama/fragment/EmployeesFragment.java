@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
@@ -19,6 +20,7 @@ public class EmployeesFragment extends Fragment {
 
     private RegisterViewModel registerViewModel;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,15 +39,18 @@ public class EmployeesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rev);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.hasFixedSize();
+        progressBar = view.findViewById(R.id.pbEmployees);
     }
 
     private void setUpViews() {
+        progressBar.setVisibility(View.VISIBLE);
         EmployeeAdapter adapter = new EmployeeAdapter();
 
         registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
             if(employees != null) {
                 adapter.setUserList(employees);
                 recyclerView.setAdapter(adapter);
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
         });

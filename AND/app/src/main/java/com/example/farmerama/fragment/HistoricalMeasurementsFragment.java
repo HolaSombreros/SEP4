@@ -58,6 +58,8 @@ public class HistoricalMeasurementsFragment extends Fragment {
     }
 
     private void setupViews() {
+        pbHistorical.setVisibility(View.VISIBLE);
+        lineChart.setVisibility(View.INVISIBLE);
 
         lineChart.getDescription().setEnabled(false);
         lineChart.setDrawGridBackground(false);
@@ -70,9 +72,10 @@ public class HistoricalMeasurementsFragment extends Fragment {
         lineChart.getDescription().setTextColor(ContextCompat.getColor(getContext(), R.color.blue_200));
         lineChart.getXAxis().setTextColor(ContextCompat.getColor(getContext(), R.color.blue_200));
 
+
         viewModel.getMeasurements().observe(getViewLifecycleOwner(), measurements -> {
-            pbHistorical.setVisibility(View.VISIBLE);
-            lineChart.setVisibility(View.INVISIBLE);
+            pbHistorical.setVisibility(View.INVISIBLE);
+            lineChart.setVisibility(View.VISIBLE);
 
             List<Entry> entries = new ArrayList<>();
             for (int i = 0; i < measurements.size(); i++) {
@@ -86,8 +89,6 @@ public class HistoricalMeasurementsFragment extends Fragment {
             if (!measurements.isEmpty()) {
                 lineChart.getAxisLeft().setAxisMaximum(measurements.get(0).getMeasurementType().getMaximum());
                 lineChart.getAxisLeft().setAxisMinimum(0);
-                pbHistorical.setVisibility(View.INVISIBLE);
-                lineChart.setVisibility(View.VISIBLE);
             }
             lineChart.animateX(3000);
 
