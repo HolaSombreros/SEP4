@@ -9,17 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.LogObj;
+import com.example.farmerama.data.model.ExceededLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
 
-    private List<LogObj> logs;
+    private List<ExceededLog> logs;
 
     public LogsAdapter() {
         logs = new ArrayList<>();
+    }
+
+    public void setLogs(List<ExceededLog> logs) {
+        this.logs=logs;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,20 +47,19 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
         return logs.size();
     }
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView thresholdValue;
         private final TextView exceededValue;
         private final EditText date;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             thresholdValue = itemView.findViewById(R.id.threshold_value_item);
             exceededValue = itemView.findViewById(R.id.exceeded_item);
             date = itemView.findViewById(R.id.log_date_item);
         }
-    }
-
-    public void setLogs(List<LogObj> logs) {
-        this.logs=logs;
-        notifyDataSetChanged();
     }
 }

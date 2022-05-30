@@ -1,6 +1,9 @@
 package com.example.farmerama.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -23,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
 
 public class LogsFragment extends Fragment {
@@ -30,7 +34,7 @@ public class LogsFragment extends Fragment {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private LogsViewModel viewModel;
-    private DatePicker date;
+    private TextView date;
 
     @Nullable
     @Override
@@ -44,7 +48,6 @@ public class LogsFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(LogsViewModel.class);
         initializeViews(view);
         setUpViews();
-
     }
 
     private void initializeViews(View view) {
@@ -62,11 +65,11 @@ public class LogsFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 viewModel.setType(MeasurementType.values()[position]);
-               viewModel.retrieveLogs();
+                viewModel.retrieveLogs(date.getText().toString());
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "Sound"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();
@@ -82,9 +85,8 @@ public class LogsFragment extends Fragment {
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
-                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
-               viewModel.retrieveLogs();
+                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getAreaId());
+                viewModel.retrieveLogs(date.getText().toString());
             }
 
             @Override
@@ -93,17 +95,34 @@ public class LogsFragment extends Fragment {
             }
         });
 
-        date.updateDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()-1, LocalDate.now().getDayOfMonth());
+        date.setText(LocalDate.now().toString());
 
-        viewModel.retrieveLogs();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                (view, year, monthOfYear, dayOfMonth)
+                        ->
+            date.setText(String.format("%d-%02d-%02d", year, monthOfYear+1, dayOfMonth)),
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
-        date.setOnDateChangedListener((datePicker, i, i1, i2) ->{
-        viewModel.setDate(String.format("%d-%02d-%02d", i, i1+1, i2));
-            viewModel.retrieveLogs();
+        date.setOnClickListener(view -> {datePickerDialog.show();
+            viewModel.setDate(date.getText().toString());
+        });
 
-                });
+        date.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.retrieveLogs(date.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        viewModel.retrieveLogs(date.getText().toString());
     }
-
 }
 

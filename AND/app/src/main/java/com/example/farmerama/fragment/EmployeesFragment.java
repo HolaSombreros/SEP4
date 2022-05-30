@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
 import com.example.farmerama.viewmodel.RegisterViewModel;
 
@@ -44,8 +43,10 @@ public class EmployeesFragment extends Fragment {
         EmployeeAdapter adapter = new EmployeeAdapter();
 
         registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-            adapter.setUserList(employees);
-            recyclerView.setAdapter(adapter);
+            if(employees != null) {
+                adapter.setUserList(employees);
+                recyclerView.setAdapter(adapter);
+            }
 
         });
         registerViewModel.retrieveAllEmployees();

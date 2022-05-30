@@ -1,8 +1,11 @@
 package com.example.farmerama.data.persistence;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -11,21 +14,17 @@ import com.example.farmerama.data.model.Area;
 import java.util.List;
 
 @Dao
-public interface AreaDAO {
+public interface IAreaDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void createArea(Area area);
 
-    @Delete
-    void removeArea(Area area);
-
-    @Update
-    void editArea(Area area);
+    @Query("DELETE FROM area_table")
+    void removeAreas();
 
     @Query("SELECT * FROM area_table")
     List<Area> getAreas();
 
-    @Query("SELECT * FROM area_table WHERE id = (:id)")
+    @Query("SELECT * FROM area_table WHERE areaId =(:id)")
     Area getAreaById(int id);
-
 }

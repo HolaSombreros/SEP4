@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Notifcation">
+        <SwitchPreference
+            android:title="Do you want to receive notifications?"
+            android:defaultValue="false"
+            android:key="notification">
+        </SwitchPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Local Storage">
+        <Preference
+            android:summary="Removing your internal storage means losing all the data accessible in offline mode"
+            android:title="Remove Local Storage"
+            android:key="removeStorage">
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -95,11 +95,11 @@ public class AddEditAreaFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Edit area");
             title.setText("EDIT AREA");
             viewModel.getSpecificArea(getArguments().getInt("areaId")).observe(getViewLifecycleOwner(), area -> {
-                area.setId(getArguments().getInt("areaId", 1));
-                areaName.setText(area.getName());
+                area.setAreaId(getArguments().getInt("areaId", 1));
+                areaName.setText(area.getAreaName());
                 areaName.setSelection(areaName.getText().length());
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    if (adapter.getItem(i).equals(area.getBarn())) {
+                    if (adapter.getItem(i).equals(area.getBarnArea())) {
                         barnSpinner.setSelection(i);
                         break;
                     }
@@ -119,12 +119,10 @@ public class AddEditAreaFragment extends Fragment {
                         areaDescription.getText().toString(),
                         noOfPigs.getText().toString(),
                         hardwareId.getText().toString())) {
-                    Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been edited!", Toast.LENGTH_SHORT).show();
                     navController.popBackStack();
                 }
             } else if (viewModel.createNewArea(areaName.getText().toString(), areaDescription.getText().toString(),
                     noOfPigs.getText().toString(), hardwareId.getText().toString())) {
-                Toast.makeText(getActivity(), "Area " + areaName.getText().toString() + " has been created!", Toast.LENGTH_SHORT).show();
                 navController.popBackStack();
             }
         });

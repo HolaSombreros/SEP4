@@ -26,7 +26,7 @@ public interface ThresholdApi {
     @PUT("{areaId}")
     Call<ThresholdResponse> editThreshold(@Path("areaId") int areaId, @Query("type") String type, @Query("userId") int userId, @Body Threshold threshold);
 
-    @GET("logs")
+    @GET("modifications")
     Call<List<ThresholdModificationsResponse>> getThresholdModifications(@Query("date") String date);
 
     @GET("{areaId}/logs")

@@ -17,7 +17,6 @@
     <string name="role">Role</string>
     <string name="area_name">Nombre del área</string>
     <string name="login">Acceso</string>
-    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
     <string name="hardwareId">Identificación del hardware</string>
     <string name="continue_as_a_guest">Continuar como invitado</string>
     <string name="first_name">Primer nombre</string>

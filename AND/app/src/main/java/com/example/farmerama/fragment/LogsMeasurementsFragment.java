@@ -20,7 +20,6 @@ import com.example.farmerama.viewmodel.LogsViewModel;
 public class LogsMeasurementsFragment extends Fragment {
 
     private RecyclerView logsRecycler;
-    private LogsAdapter logsAdapter;
     private LogsViewModel viewModel;
 
     @Override
@@ -44,10 +43,8 @@ public class LogsMeasurementsFragment extends Fragment {
         logsRecycler.hasFixedSize();
         logsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        logsAdapter = new LogsAdapter();
-        viewModel.getLogs().observe(getViewLifecycleOwner(), logs ->{
-            logsAdapter.setLogs(logs);
-        });
+        LogsAdapter logsAdapter = new LogsAdapter();
+        viewModel.getLogs().observe(getViewLifecycleOwner(), logsAdapter::setLogs);
         logsRecycler.setAdapter(logsAdapter);
     }
 

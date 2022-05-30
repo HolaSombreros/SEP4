@@ -4,38 +4,40 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "area_table")
 public class Area {
     @Embedded
-    private Barn barn;
+    private Barn barnArea;
     @PrimaryKey
-    private int id;
-    private String name;
+    private int areaId;
+    private String areaName;
     private String description;
     private int numberOfPigs;
     private String hardwareId;
 
     public Area(){}
 
-    public Area(Barn barn, String name, String description, int numberOfPigs, String hardwareId) {
-        this.barn = barn;
-        this.name = name;
+    public Area(Barn barn, String areaName, String description, int numberOfPigs, String hardwareId) {
+        this.barnArea = barn;
+        this.areaName = areaName;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
         this.hardwareId = hardwareId;
     }
 
-    public Area(int id, Barn barn, String name, String description, int noOfPigs, String hardwareId) {
-        this.barn = barn;
-        this.id = id;
-        this.name = name;
+    public Area(int areaId, Barn barnArea, String areaName, String description, int noOfPigs, String hardwareId) {
+        this.barnArea = barnArea;
+        this.areaId = areaId;
+        this.areaName = areaName;
         this.description = description;
         this.numberOfPigs = noOfPigs;
         this.hardwareId = hardwareId;
     }
 
-    public Barn getBarn() {
-        return barn;
+    public Barn getBarnArea() {
+        return barnArea;
     }
 
     public void setBarnId(Barn barn) {
@@ -50,20 +52,20 @@ public class Area {
         this.numberOfPigs = numberOfPigs;
     }
 
-    public int getId() {
-        return id;
+    public int getAreaId() {
+        return areaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
     }
 
-    public String getName() {
-        return name;
+    public String getAreaName() {
+        return areaName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getDescription() {
@@ -90,7 +92,15 @@ public class Area {
         this.hardwareId = hardwareId;
     }
 
-    public void setBarn(Barn barn) {
-        this.barn = barn;
+    public void setBarnArea(Barn barnArea) {
+        this.barnArea = barnArea;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barnArea, area.barnArea) && Objects.equals(areaName, area.areaName) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
     }
 }

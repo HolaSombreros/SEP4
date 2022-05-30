@@ -7,19 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeasurementResponse {
-    private List<Measurement> measurements;
     private double value;
     private String measuredDate;
-
-    public MeasurementResponse() {
-        measurements = new ArrayList<>();
-    }
+    private int measurementId;
+    private int areaId;
 
     public Measurement getMeasurement(MeasurementType type) {
-        return new Measurement(value, measuredDate, type);
-    }
-
-    public List<Measurement> getMeasurements(){
-        return measurements;
+        return new Measurement(measurementId,areaId, value, measuredDate, type);
     }
 }

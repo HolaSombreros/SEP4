@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_layout"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/introVPFragment">
 
     <fragment
         android:id="@+id/latestDataFragment"
@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.farmerama.fragment.RegisterFragment"
-        android:label="Register a new user!"
+        android:label="Register a new user"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/thresholdModificationFragment"
@@ -84,4 +84,19 @@
         android:name="com.example.farmerama.fragment.LogsFragment"
         android:label="Exceeded measurements"
         tools:layout="@layout/fragment_logs" />
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.example.farmerama.fragment.IntroFragment"
+        android:label="IntroFragment"
+        tools:layout="@layout/fragment_intro"/>
+    <fragment
+        android:id="@+id/introVPFragment"
+        android:name="com.example.farmerama.fragment.IntroVPFragment"
+        android:label="IntroVPFragment"
+        tools:layout="@layout/fragment_intro_pager"/>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.farmerama.fragment.SettingsFragment"
+        android:label="Settings" />
 </navigation>

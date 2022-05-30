@@ -35,15 +35,15 @@ public class Barn {
     }
 
     @Override
-    public String toString() {
-        return barnName;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Barn barn = (Barn) o;
         return barnId == barn.barnId && Objects.equals(barnName, barn.barnName);
+    }
+
+    @Override
+    public String toString() {
+        return barnName;
     }
 }

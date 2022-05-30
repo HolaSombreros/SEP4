@@ -9,7 +9,6 @@ public enum ThresholdLogType {
 
     String logType;
 
-    ThresholdLogType(){}
     ThresholdLogType(String logType) {
         this.logType = logType;
     }

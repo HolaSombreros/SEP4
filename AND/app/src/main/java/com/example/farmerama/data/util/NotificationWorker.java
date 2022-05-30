@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.farmerama.data.repository.ThresholdRepository;
+import com.example.farmerama.data.repository.ExceededLogsRepository;
 
 public class NotificationWorker extends Worker {
 
@@ -14,9 +14,10 @@ public class NotificationWorker extends Worker {
         super(context, workerParams);
     }
 
+    @NonNull
     @Override
     public Result doWork() {
-        ThresholdRepository.getInstance().retrieveTodayLogs();
+        ExceededLogsRepository.retrieveTodayLogs();
         return Result.success();
     }
 }

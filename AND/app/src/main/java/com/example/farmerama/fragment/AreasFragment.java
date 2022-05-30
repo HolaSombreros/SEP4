@@ -56,13 +56,13 @@ public class AreasFragment extends Fragment {
         viewModel.getAllAreas();
         AreaListAdapter adapter = new AreaListAdapter();
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
-            adapter.setAreas(areas);
+                adapter.setAreas(areas);
         });
         areasRecycler.setAdapter(adapter);
 
         adapter.setOnClickListener(area -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("areaId", ((Area) area).getId());
+            bundle.putInt("areaId", ((Area) area).getAreaId());
             navController.navigate(R.id.addAreaFragment, bundle);
         });
 

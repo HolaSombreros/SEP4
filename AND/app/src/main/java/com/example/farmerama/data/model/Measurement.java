@@ -1,33 +1,44 @@
 package com.example.farmerama.data.model;
 
+import static java.time.LocalDateTime.parse;
+
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.example.farmerama.data.util.DateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity(tableName = "measurement_table")
+
+@Entity(tableName = "measurement_table", primaryKeys = {"measurementId", "measurementType"})
 public class Measurement {
-    @PrimaryKey
+    @NonNull
     private int measurementId;
     private boolean latest;
     private int areaId;
     private double value;
     private String measuredDate;
+    @NonNull
     private MeasurementType measurementType;
 
     public Measurement(){}
 
-    public Measurement(int measurementId, double value, String dateTime, MeasurementType measurementType) {
-        this.measurementId = measurementId;
-        this.value = value;
-        //this.measuredDate = dateTime;
-        this.measurementType = measurementType;
-    }
     public Measurement(double value, String measuredDate, MeasurementType type) {
         this.value = value;
-        setMeasuredDate(measuredDate);
+        this.measuredDate = measuredDate;
+        this.measuredDate = DateFormatter.formatDate(measuredDate);
         this.measurementType = type;
+    }
+
+    public Measurement(int measurementId, int areaId, double value, String measuredDate, MeasurementType measurementType) {
+        this.measurementId = measurementId;
+        this.value = value;
+        this.areaId = areaId;
+        this.measuredDate = DateFormatter.formatDate(measuredDate);
+        this.measurementType = measurementType;
     }
 
     public Measurement(int measurementId, boolean latest, int areaId, double value, String measuredDate, MeasurementType measurementType) {
@@ -92,9 +103,7 @@ public class Measurement {
     }
 
     public void setMeasuredDate(String measuredDate) {
-        LocalDateTime datetime =LocalDateTime.parse(measuredDate);
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = datetime.format(myFormatObj);
-        this.measuredDate = formattedDate;
+        this.measuredDate = measuredDate;
     }
+
 }

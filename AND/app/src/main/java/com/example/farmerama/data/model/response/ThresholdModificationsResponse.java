@@ -5,13 +5,14 @@ import com.example.farmerama.data.model.ThresholdLogType;
 import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ThresholdModificationsResponse {
 
     private int logId;
-    private Threshold threshold;
-    private User user;
+    private ThresholdResponse threshold;
+    private UserResponse user;
     private String changedOn;
     private double oldValue;
     private double newValue;
@@ -19,6 +20,6 @@ public class ThresholdModificationsResponse {
 
     public ThresholdModification getModification() {
         LocalDateTime dateTime = LocalDateTime.parse(changedOn);
-        return new ThresholdModification(logId, threshold, user, dateTime, oldValue, newValue, type);
+        return new ThresholdModification(logId, threshold.getThreshold(), user.getUser(), dateTime, oldValue, newValue, type);
     }
 }

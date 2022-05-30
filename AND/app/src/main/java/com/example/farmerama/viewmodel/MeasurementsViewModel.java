@@ -1,6 +1,8 @@
 package com.example.farmerama.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -12,49 +14,49 @@ import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.repository.AreaRepository;
 import com.example.farmerama.data.repository.MeasurementRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MeasurementsViewModel extends AndroidViewModel {
-    private MeasurementRepository measurementRepository;
-    private AreaRepository areaRepository;
+public class MeasurementsViewModel extends FactoryViewModel {
+    private SharedPreferences sharedPreferences;
     private int areaId;
+    private MeasurementType measurementType;
 
     public MeasurementsViewModel(Application application) {
         super(application);
-        this.measurementRepository = MeasurementRepository.getInstance();
-        this.areaRepository = AreaRepository.getInstance();
+        this.sharedPreferences = application.getSharedPreferences("Latest", Context.MODE_PRIVATE);
     }
 
     public LiveData<List<Measurement>> getMeasurements() {
-        return measurementRepository.getMeasurements();
+        return getMeasurementRepository().getMeasurements();
     }
 
     public void retrieveLatestMeasurement(MeasurementType type, boolean latest) {
-        measurementRepository.retrieveLatestMeasurement(areaId, type, latest);
+        getMeasurementRepository().retrieveLatestMeasurement(areaId, type, latest);
     }
 
+    public LiveData<Measurement> getLatestMeasurement() {
+        return getMeasurementRepository().getLatestMeasurement();
+    }
 
+    public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {
+        getMeasurementRepository().retrieveLatestMeasurement(areaId, measurementType, true);
+    }
+
+    public void saveLatestInformation(MeasurementType measurementType, int areaId){
+        this.areaId = areaId;
+        this.measurementType = measurementType;
+    }
+    // for historical
     public void retrieveMeasurements(MeasurementType type, String date) {
-        measurementRepository.retrieveMeasurements(areaId, type, date);
+        getMeasurementRepository().retrieveMeasurements(areaId, type, date);
     }
 
     public void getAllAreas() {
-        areaRepository.retrieveAreas();
+        getAreaRepository().retrieveAreas();
     }
 
     public LiveData<List<Area>> getAreas() {
-       return areaRepository.getAreas();
-    }
-
-    public LiveData<List<String>> getAreasName() {
-        List<String> list = new ArrayList<>();
-        if(areaRepository.getAreas().getValue() != null) {
-            for(Area area : areaRepository.getAreas().getValue()) {
-                list.add(area.getName());
-            }
-        }
-        return new MutableLiveData<>(list);
+       return getAreaRepository().getAreas();
     }
 
     public void setAreaId(int id) {

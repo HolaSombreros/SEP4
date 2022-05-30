@@ -5,10 +5,8 @@ import androidx.room.TypeConverters;
 
 @TypeConverters
 public enum MeasurementType {
-        TEMPERATURE("TEMPERATURE"), HUMIDITY("HUMIDITY"),  CO2("CO2"), SPL("SOUND PRESSURE LEVEL");
+        TEMPERATURE("TEMPERATURE"), HUMIDITY("HUMIDITY"),  CO2("CO2"), SOUND("SOUND");
     private String type;
-
-    MeasurementType(){}
 
     MeasurementType(String type) {
         this.type = type;
@@ -23,9 +21,19 @@ public enum MeasurementType {
         switch (type) {
             case "TEMPERATURE": return 60;
             case "HUMIDITY": return 100;
-            case "SOUND PRESSURE LEVEL": return 120;
+            case "SOUND": return 120;
             case "CO2": return 3000;
             default: return 0;
+        }
+    }
+
+    public static MeasurementType formatString(String measurement) {
+        switch (measurement) {
+            case "TEMPERATURE": return TEMPERATURE;
+            case "HUMIDITY" : return HUMIDITY;
+            case "SOUND": return SOUND;
+            case "CO2": return CO2;
+            default: return null;
         }
     }
 
@@ -33,7 +41,7 @@ public enum MeasurementType {
         switch (type) {
             case "TEMPERATURE": return "°C";
             case "HUMIDITY": return "%";
-            case "SOUND PRESSURE LEVEL": return "dB";
+            case "SOUND": return "dB";
             case "CO2": return "ppm";
         }
         return "";

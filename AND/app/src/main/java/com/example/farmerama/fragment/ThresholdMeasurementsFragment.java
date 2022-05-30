@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,9 +18,7 @@ import com.example.farmerama.viewmodel.ThresholdViewModel;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThresholdMeasurementsFragment extends Fragment {
-    private TextView upperThreshold;
     private EditText upperThresholdValue;
-    private TextView lowerThreshold;
     private EditText lowerThresholdValue;
     private ThresholdViewModel viewModel;
     private Button button;
@@ -41,16 +38,14 @@ public class ThresholdMeasurementsFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-       upperThreshold = view.findViewById(R.id.upperThresholdText);
        upperThresholdValue = view.findViewById(R.id.upperThreshold);
-       lowerThreshold = view.findViewById(R.id.lowerThresholdText);
        lowerThresholdValue = view.findViewById(R.id.lowerThreshold);
        button = view.findViewById(R.id.saveThreshold);
     }
 
     private void setUpViews() {
        AtomicBoolean createThreshold = new AtomicBoolean(false);
-        viewModel.getThresholds().observe(getViewLifecycleOwner(), thresholds -> {
+        viewModel.getThreshold().observe(getViewLifecycleOwner(), thresholds -> {
             if(thresholds != null) {
                 upperThresholdValue.setText(String.valueOf(thresholds.getMaximum()));
                 upperThresholdValue.requestFocus();
@@ -60,21 +55,21 @@ public class ThresholdMeasurementsFragment extends Fragment {
             }
             else {
                 createThreshold.set(true);
+                upperThresholdValue.setText("");
+                lowerThresholdValue.setText("");
             }
         });
 
         button.setOnClickListener(l -> {
-            viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
-                    Double.parseDouble(upperThresholdValue.getText().toString())));
-            Toast.makeText(getActivity(), "Threshold edited!", Toast.LENGTH_SHORT).show();
-//            if(createThreshold.get()) {
-//                viewModel.createThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
-//                        Double.parseDouble(upperThresholdValue.getText().toString())));
-//            }
-//            else {
-//
-//            }
-
+            if(createThreshold.get()) {
+                viewModel.createThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
+                        Double.parseDouble(upperThresholdValue.getText().toString())));
+            }
+            else {
+                viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
+                        Double.parseDouble(upperThresholdValue.getText().toString())));
+            }
+            createThreshold.set(false);
         });
     }
 

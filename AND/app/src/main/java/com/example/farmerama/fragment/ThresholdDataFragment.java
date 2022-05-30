@@ -14,11 +14,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.farmerama.R;
+import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.fragment.pageadapter.ThresholdAdapter;
 import com.example.farmerama.viewmodel.ThresholdViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ThresholdDataFragment extends Fragment {
     private ThresholdViewModel viewModel;
@@ -57,14 +61,20 @@ public class ThresholdDataFragment extends Fragment {
             }
         });
 
-        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "SPL"};
+        String[] tabTitles = {"Temperature", "Humidity", "CO₂", "Sound"};
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();
+        final List<Area>[] areasRetrieved = new List[]{new ArrayList<>()};
 
         viewModel.getAreas().observe(getViewLifecycleOwner(), areas -> {
+            List<String> areasName = new ArrayList<>();
+            areasRetrieved[0] = areas;
+            for(Area area : areas) {
+                areasName.add(area.getAreaName());
+            }
             ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(),
-                    android.R.layout.simple_spinner_item, viewModel.getAreasName().getValue());
+                    android.R.layout.simple_spinner_item, areasName);
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter2);
         });
@@ -73,8 +83,7 @@ public class ThresholdDataFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tabLayout.selectTab(tabLayout.getTabAt(0));
-                viewModel.setAreaId(viewModel.getAreas().getValue().get(i).getId());
+                viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
                 viewModel.getLatestThresholds(MeasurementType.values()[viewPager2.getCurrentItem()]);
             }
 
