@@ -135,7 +135,7 @@ public class AreaRepository {
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
                         specificArea.setValue(response.body().getArea());
-                        ToastMessage.setToastMessage("Area has been created!");
+                        ToastMessage.setToastMessage("Area successfully added");
                     }
                     else {
                         ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
@@ -164,6 +164,7 @@ public class AreaRepository {
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
                         specificArea.setValue(response.body().getArea());
+                        ToastMessage.setToastMessage("Area successfully updated");
                     }
                     else {
                         ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
