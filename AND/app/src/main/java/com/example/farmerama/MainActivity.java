@@ -23,6 +23,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
@@ -32,6 +33,7 @@ import android.content.SharedPreferences;
 import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
+import com.example.farmerama.fragment.IntroVPFragment;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityViewModel viewModel;
     private String prevStarted = "yes";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,20 +60,16 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setupNavigation();
         setUpLoggedInUser();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(prevStarted, Boolean.TRUE);
             editor.apply();
-        } else {
-            navController.navigate(R.id.loginFragment);
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
