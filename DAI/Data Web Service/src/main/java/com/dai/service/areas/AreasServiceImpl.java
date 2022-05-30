@@ -77,7 +77,7 @@ public class AreasServiceImpl implements AreasService {
     @Override
     public Area delete(int id) throws Exception {
         if (id == 9 || id == 14) {
-            throw new Exception("Cannot delete areas 9 and 14.");
+            throw new Exception("Cannot delete area");
         }
         try {
             if(read(id)== null)

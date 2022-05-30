@@ -21,7 +21,7 @@ public class Threshold {
     @Column(name = "type")
     private ThresholdType type;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
     private Area area;
 

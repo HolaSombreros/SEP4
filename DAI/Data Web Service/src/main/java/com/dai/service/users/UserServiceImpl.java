@@ -1,5 +1,6 @@
 package com.dai.service.users;
 
+import com.dai.exceptions.BadRequestException;
 import com.dai.helpers.Helper;
 import com.dai.dao.user.UserDao;
 import com.dai.model.LoginUser;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws Exception {
-        if(user.getRole() == null)
+        if (user.getRole() == null)
             throw new Exception("Please assign a role first");
         User userExistingCheck = Helper.await(userDao.readByMail(user.getEmail()));
         if (userExistingCheck != null) {
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
         }
         return Helper.await(userDao.create(user));
     }
+
     @Override
     public User read(int id) throws Exception {
         User await;
@@ -40,16 +42,19 @@ public class UserServiceImpl implements UserService {
         }
         return await;
     }
+
     @Override
     public User update(User user) throws Exception {
-        if(read(user.getUserId()) == null)
+        if (read(user.getUserId()) == null)
             throw new Exception("User with the given ID doesn't exist");
+        if(user.getEmail().isEmpty() || user.getUserName().isEmpty() || user.getPassword().isEmpty())
+            throw new Exception("Please fill in all the fields");
         return Helper.await(userDao.update(user));
     }
 
     @Override
     public User delete(int id) throws Exception {
-        if(read(id) == null)
+        if (read(id) == null)
             throw new Exception("User with the given ID doesn't exist");
         return Helper.await(userDao.delete(id));
     }
@@ -63,10 +68,9 @@ public class UserServiceImpl implements UserService {
     public User login(LoginUser user) throws Exception {
         Future<User> userFuture = userDao.readByMail(user.getEmail());
         User dbUser = Helper.await(userFuture);
-        if (dbUser == null)
-        {
+        if (dbUser == null) {
             throw new Exception("Email not registered");
-        } else if(!dbUser.getPassword().equals(user.getPassword())) {
+        } else if (!dbUser.getPassword().equals(user.getPassword())) {
             throw new Exception("Invalid email/password combination");
         }
         return dbUser;
