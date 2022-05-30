@@ -40,18 +40,14 @@ public class MainActivityViewModel extends FactoryViewModel {
 
     public void logOut() {
         getUserRepository().logOut();
+        loginPreferences.edit().putString("userEmail", "null").apply();
+        loginPreferences.edit().putString("userPassword", "null").apply();
     }
 
     public void saveLoggedInUser(User user) {
         loginPreferences.edit().putString("userEmail", user.getEmail()).apply();
         loginPreferences.edit().putString("userPassword", user.getPassword()).apply();
     }
-
-    public void removeLoggedInUser() {
-        loginPreferences.edit().putString("userEmail", "null").apply();
-        loginPreferences.edit().putString("userPassword", "null").apply();
-    }
-
 
     public LiveData<List<ExceededLog>> getTodayLogs() {
         return getExceededLogsRepository().getLatestLogs();
