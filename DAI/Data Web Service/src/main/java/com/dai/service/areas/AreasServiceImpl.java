@@ -29,6 +29,9 @@ public class AreasServiceImpl implements AreasService {
         if(exists){
             throw new BadRequestException("Area already exists");
         }
+        Area validateHardware = Helper.await(areasDao.readByHardwareId(area.getHardwareId()));
+        if(validateHardware!=null)
+            throw new BadRequestException("Hardware is already in use");
         if(barn!=null)
         {
             return Helper.await(areasDao.create(area));
@@ -62,8 +65,9 @@ public class AreasServiceImpl implements AreasService {
         try{
             if(area.getName().isEmpty() || area.getHardwareId().isEmpty())
                 throw new BadRequestException("Please fill in all the required fields");
-            if(!(Helper.await(areasDao.readByHardwareId(area.getHardwareId())).getAreaId() == area.getAreaId()))
-                throw new BadRequestException("Please use another hardware");
+            Area validateHardware = Helper.await(areasDao.readByHardwareId(area.getHardwareId()));
+            if(validateHardware!=null && !(validateHardware.getAreaId() == area.getAreaId()))
+                throw new BadRequestException("Hardware is already in use");
             return Helper.await(areasDao.update(area));
         }catch (Exception e){
             throw new BadRequestException(e.getMessage());
