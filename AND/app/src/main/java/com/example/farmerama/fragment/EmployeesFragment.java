@@ -45,7 +45,7 @@ public class EmployeesFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         EmployeeAdapter adapter = new EmployeeAdapter();
 
-        mployeeViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
+        employeeViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
             adapter.setUserList(employees);
             progressBar.setVisibility(View.INVISIBLE);
         });

@@ -102,7 +102,7 @@ public class AddEditAreaFragment extends Fragment {
                 areaName.setText(area.getAreaName());
                 areaName.setSelection(areaName.getText().length());
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    if (adapter.getItem(i).equals(area.getBarnArea())) {
+                    if (adapter.getItem(i).equals(area.getBarn())) {
                         barnSpinner.setSelection(i);
                         break;
                     }
