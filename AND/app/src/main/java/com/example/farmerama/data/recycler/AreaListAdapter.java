@@ -32,7 +32,7 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AreaListAdapter.ViewHolder holder, int position) {
         holder.areaName.setText(areas.get(position).getAreaName());
-        holder.barnName.setText(areas.get(position).getBarnArea().getBarnName());
+        holder.barnName.setText(areas.get(position).getBarn().getName());
         holder.nrOfPigs.setText(String.valueOf(areas.get(position).getNoOfPigs()));
     }
 

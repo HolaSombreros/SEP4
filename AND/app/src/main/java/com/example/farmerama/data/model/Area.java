@@ -2,18 +2,17 @@ package com.example.farmerama.data.model;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
 @Entity(tableName = "area_table")
 public class Area {
-    @Embedded
-    private Barn barnArea;
+    @Embedded(prefix = "barn")
+    private Barn barn;
     @PrimaryKey
     private int areaId;
-    private String areaName;
+    private String name;
     private String description;
     private int numberOfPigs;
     private String hardwareId;
@@ -21,28 +20,36 @@ public class Area {
     public Area(){}
 
     public Area(Barn barn, String areaName, String description, int numberOfPigs, String hardwareId) {
-        this.barnArea = barn;
-        this.areaName = areaName;
+        this.barn = barn;
+        this.name = areaName;
         this.description = description;
         this.numberOfPigs = numberOfPigs;
         this.hardwareId = hardwareId;
     }
 
-    public Area(int areaId, Barn barnArea, String areaName, String description, int noOfPigs, String hardwareId) {
-        this.barnArea = barnArea;
+    public Area(int areaId, Barn barn, String areaName, String description, int noOfPigs, String hardwareId) {
+        this.barn = barn;
         this.areaId = areaId;
-        this.areaName = areaName;
+        this.name = areaName;
         this.description = description;
         this.numberOfPigs = noOfPigs;
         this.hardwareId = hardwareId;
     }
 
-    public Barn getBarnArea() {
-        return barnArea;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Barn getBarn() {
+        return barn;
     }
 
     public void setBarnId(Barn barn) {
-        barn = barn;
+        this.barn = barn;
     }
 
     public int getNumberOfPigs() {
@@ -62,11 +69,11 @@ public class Area {
     }
 
     public String getAreaName() {
-        return areaName;
+        return name;
     }
 
     public void setAreaName(String areaName) {
-        this.areaName = areaName;
+        this.name = areaName;
     }
 
     public String getDescription() {
@@ -93,8 +100,8 @@ public class Area {
         this.hardwareId = hardwareId;
     }
 
-    public void setBarnArea(Barn barnArea) {
-        this.barnArea = barnArea;
+    public void setBarn(Barn barn) {
+        this.barn = barn;
     }
 
     @Override
@@ -102,6 +109,6 @@ public class Area {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Area area = (Area) o;
-        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barnArea, area.barnArea) && Objects.equals(areaName, area.areaName) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
+        return areaId == area.areaId && numberOfPigs == area.numberOfPigs && Objects.equals(barn, area.barn) && Objects.equals(name, area.name) && Objects.equals(description, area.description) && Objects.equals(hardwareId, area.hardwareId);
     }
 }

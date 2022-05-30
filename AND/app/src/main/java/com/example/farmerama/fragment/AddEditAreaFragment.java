@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -25,6 +24,8 @@ import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.viewmodel.AddEditAreaViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AddEditAreaFragment extends Fragment {
 
@@ -73,7 +74,6 @@ public class AddEditAreaFragment extends Fragment {
         ArrayAdapter<Barn> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         viewModel.getBarns().observe(getViewLifecycleOwner(), barns -> {
             int position = barnSpinner.getSelectedItemPosition();
             adapter.clear();
@@ -140,6 +140,7 @@ public class AddEditAreaFragment extends Fragment {
         AlertDialog.Builder deleteDialogBuilder = new AlertDialog.Builder(getActivity());
         deleteDialogBuilder.setMessage("Are you sure you want to delete this area?");
         deleteDialogBuilder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            viewModel.getSpecificArea(getArguments().getInt("areaId"));
             viewModel.removeArea(getArguments().getInt("areaId"));
             navController.popBackStack();
         });

@@ -99,6 +99,7 @@ public class ThresholdRepository {
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if (response.isSuccessful()) {
                         thresholdData.setValue(response.body().getThreshold());
+                        executorService.execute(() -> database.thresholdDAO().updateThreshold(response.body().getThreshold()));
                         ToastMessage.setToastMessage("Threshold edited!");
                     } else {
                         ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
@@ -125,6 +126,7 @@ public class ThresholdRepository {
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if(response.isSuccessful()) {
                         thresholdData.setValue(response.body().getThreshold());
+                        executorService.execute(() -> database.thresholdDAO().createThreshold(response.body().getThreshold()));
                         ToastMessage.setToastMessage("Threshold created!");
                     }
                     else {

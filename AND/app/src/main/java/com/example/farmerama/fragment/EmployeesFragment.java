@@ -14,11 +14,10 @@ import android.widget.ProgressBar;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
-import com.example.farmerama.viewmodel.RegisterViewModel;
+import com.example.farmerama.viewmodel.EmployeeViewModel;
 
 public class EmployeesFragment extends Fragment {
-
-    private RegisterViewModel registerViewModel;
+    private EmployeeViewModel employeeViewModel;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
 
@@ -30,7 +29,7 @@ public class EmployeesFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
+        employeeViewModel = new ViewModelProvider(getActivity()).get(EmployeeViewModel.class);
         initializeViews(view);
         setUpViews();
     }
@@ -46,14 +45,17 @@ public class EmployeesFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         EmployeeAdapter adapter = new EmployeeAdapter();
 
-        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-            if(employees != null) {
-                adapter.setUserList(employees);
-                recyclerView.setAdapter(adapter);
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-
+        mployeeViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
+            adapter.setUserList(employees);
+            progressBar.setVisibility(View.INVISIBLE);
         });
-        registerViewModel.retrieveAllEmployees();
+        recyclerView.setAdapter(adapter);
+        employeeViewModel.retrieveAllEmployees();
+
+        adapter.setOnDeleteListener(user -> {
+            employeeViewModel.deleteEmployeeById(user);
+            employeeViewModel.getUserById(user.getUserId());
+            employeeViewModel.retrieveAllEmployees();
+        });
     }
 }

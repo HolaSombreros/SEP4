@@ -1,6 +1,5 @@
 package com.example.farmerama.data.persistence;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,6 +21,11 @@ public interface IUserDAO {
     @Query("DELETE FROM user_table")
     void removeUsers();
 
+    @Delete
+    void removeUser(User user);
+
+    @Update
+    void updateUser(User user);
 
     @Query("SELECT * FROM user_table")
     ListenableFuture<List<User>> getAllEmployees();
