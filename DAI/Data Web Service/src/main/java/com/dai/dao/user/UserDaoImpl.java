@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
     @Async
     public Future<User> update(User employee) {
         User byId = repository.findById(employee.getUserId()).get();
-        byId.setName(employee.getName());
+        byId.setUserName(employee.getUserName());
         byId.setEmail(employee.getEmail());
         byId.setPassword(employee.getPassword());
         return new AsyncResult<>(repository.save(byId));
