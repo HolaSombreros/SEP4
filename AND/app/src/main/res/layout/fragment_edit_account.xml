@@ -56,65 +56,171 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <EditText
-                android:id="@+id/editAccount_email"
-                android:layout_width="0dp"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editAccountEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:hint="Email"
-                android:layout_marginHorizontal="32dp"
-                android:drawableStart="@drawable/custom_email_icon"
-                android:focusable="true"
-                android:nextFocusDown="@id/editAccount_firstName"
-                android:inputType="text"
-                android:minHeight="48dp"
+                android:hint="@string/e_mail"
+                android:textColorHint="#A7A7A7"
+                app:boxStrokeColor="#EAEAEE"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-            <EditText
-                android:id="@+id/editAccount_firstName"
-                android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAccount_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/custom_email_icon"
+                    android:inputType="textEmailAddress"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:nextFocusDown="@id/editAccount_firstName"
+                    app:boxStrokeColor="#EAEAEE" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editAccountFirstName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:drawableStart="@drawable/custom_name"
-                android:focusable="true"
-                android:hint="First Name"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:nextFocusDown="@id/editAccount_LastName"
-                app:layout_constraintEnd_toEndOf="@+id/editAccount_email"
-                app:layout_constraintStart_toStartOf="@+id/editAccount_email"
-                app:layout_constraintTop_toBottomOf="@+id/editAccount_email" />
+                android:hint="@string/first_name"
+                android:textColorHint="#A7A7A7"
+                app:boxStrokeColor="#EAEAEE"
+                app:layout_constraintEnd_toEndOf="@+id/editAccountEmail"
+                app:layout_constraintStart_toStartOf="@+id/editAccountEmail"
+                app:layout_constraintTop_toBottomOf="@+id/editAccountEmail">
 
-            <EditText
-                android:id="@+id/editAccount_LastName"
-                android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAccount_firstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/custom_name"
+                    android:inputType="textEmailAddress"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:nextFocusDown="@id/editAccount_LastName"
+                    app:boxStrokeColor="#EAEAEE" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editAccountLastName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:drawableStart="@drawable/custom_name"
-                android:focusable="true"
-                android:hint="Last Name"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:nextFocusDown="@id/editAccount_password"
-                app:layout_constraintEnd_toEndOf="@+id/editAccount_firstName"
-                app:layout_constraintStart_toStartOf="@+id/editAccount_firstName"
-                app:layout_constraintTop_toBottomOf="@+id/editAccount_firstName" />
+                android:hint="@string/last_name"
+                android:textColorHint="#A7A7A7"
+                app:boxStrokeColor="#EAEAEE"
+                app:layout_constraintEnd_toEndOf="@+id/editAccountFirstName"
+                app:layout_constraintStart_toStartOf="@+id/editAccountFirstName"
+                app:layout_constraintTop_toBottomOf="@+id/editAccountFirstName">
 
-            <EditText
-                android:id="@+id/editAccount_password"
-                android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAccount_LastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/custom_name"
+                    android:inputType="textEmailAddress"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:nextFocusDown="@id/editAccount_password"
+                    app:boxStrokeColor="#EAEAEE" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editAccountPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:drawableStart="@drawable/custom_password_icon"
-                android:focusable="true"
-                android:hint="Password"
-                android:inputType="text"
-                android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="@+id/editAccount_LastName"
-                app:layout_constraintStart_toStartOf="@+id/editAccount_LastName"
-                app:layout_constraintTop_toBottomOf="@+id/editAccount_LastName" />
+                android:hint="@string/password"
+                android:textColorHint="#A7A7A7"
+                app:boxStrokeColor="#EAEAEE"
+                app:layout_constraintEnd_toEndOf="@+id/editAccountLastName"
+                app:layout_constraintStart_toStartOf="@+id/editAccountLastName"
+                app:layout_constraintTop_toBottomOf="@+id/editAccountLastName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAccount_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/custom_password_icon"
+                    android:inputType="textEmailAddress"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:nextFocusDown="@id/editAccount_password"
+                    app:boxStrokeColor="#EAEAEE" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+<!--            <EditText-->
+<!--                android:id="@+id/editAccount_email"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:hint="Email"-->
+<!--                android:layout_marginHorizontal="32dp"-->
+<!--                android:drawableStart="@drawable/custom_email_icon"-->
+<!--                android:focusable="true"-->
+<!--                android:nextFocusDown="@id/editAccount_firstName"-->
+<!--                android:inputType="text"-->
+<!--                android:minHeight="48dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editAccount_firstName"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:drawableStart="@drawable/custom_name"-->
+<!--                android:focusable="true"-->
+<!--                android:hint="@string/first_name"-->
+<!--                android:inputType="text"-->
+<!--                android:minHeight="48dp"-->
+<!--                android:nextFocusDown="@id/editAccount_LastName"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/editAccount_email"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/editAccount_email"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editAccount_email" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editAccount_LastName"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:drawableStart="@drawable/custom_name"-->
+<!--                android:focusable="true"-->
+<!--                android:hint="Last Name"-->
+<!--                android:inputType="text"-->
+<!--                android:minHeight="48dp"-->
+<!--                android:nextFocusDown="@id/editAccount_password"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/editAccount_firstName"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/editAccount_firstName"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editAccount_firstName" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editAccount_password"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:drawableStart="@drawable/custom_password_icon"-->
+<!--                android:focusable="true"-->
+<!--                android:hint="Password"-->
+<!--                android:inputType="text"-->
+<!--                android:minHeight="48dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/editAccount_LastName"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/editAccount_LastName"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editAccount_LastName" />-->
 
 
             <Spinner
@@ -122,9 +228,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                app:layout_constraintEnd_toEndOf="@+id/editAccount_password"
-                app:layout_constraintStart_toStartOf="@+id/editAccount_password"
-                app:layout_constraintTop_toBottomOf="@+id/editAccount_password" />
+                app:layout_constraintEnd_toEndOf="@+id/editAccountPassword"
+                app:layout_constraintStart_toStartOf="@+id/editAccountPassword"
+                app:layout_constraintTop_toBottomOf="@+id/editAccountPassword" />
 
             <Button
                 android:id="@+id/editAccount_saveButton"
