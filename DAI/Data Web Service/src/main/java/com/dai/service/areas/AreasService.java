@@ -11,5 +11,5 @@ public interface AreasService {
 
     Area update(Area area);
 
-    Area delete(int id);
+    Area delete(int id) throws Exception;
 }

@@ -71,7 +71,10 @@ public class AreasServiceImpl implements AreasService {
     }
 
     @Override
-    public Area delete(int id) {
+    public Area delete(int id) throws Exception {
+        if (id == 9 || id == 14) {
+            throw new Exception("Cannot delete ares 9 and 14.");
+        }
         try {
             return Helper.await(areasDao.delete(id));
         }catch (Exception e){

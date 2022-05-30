@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Future;
@@ -46,7 +47,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Async
     public Future<User> delete(int id) {
-        return new AsyncResult<>(repository.deleteByUserId(id));
+        User byId = repository.findById(id).get();
+        repository.delete(byId);
+        return new AsyncResult<>(byId);
     }
 
     @Override

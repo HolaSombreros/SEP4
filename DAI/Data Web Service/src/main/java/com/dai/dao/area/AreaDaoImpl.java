@@ -58,6 +58,8 @@ public class AreaDaoImpl implements AreaDao{
 
     @Override
     public Future<Area> delete(int id) {
-        return new AsyncResult<>(repository.deleteByAreaId(id));
+        Area area = repository.findById(id).get();
+        repository.deleteById(id);
+        return new AsyncResult<>(area);
     }
 }
