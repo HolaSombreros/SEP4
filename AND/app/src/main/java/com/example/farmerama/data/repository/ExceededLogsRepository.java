@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.response.LogResponse;
@@ -15,6 +16,7 @@ import com.example.farmerama.data.persistence.IExceededLogDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +91,15 @@ public class ExceededLogsRepository {
             });
         }
         else {
-            executorService.execute( () -> logs.postValue(database.exceededLogDAO().getExceededLogs()));
+            ListenableFuture<List<ExceededLog>> result = database.exceededLogDAO().getExceededLogs();
+            result.addListener(() -> {
+                try {
+                    logs.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 

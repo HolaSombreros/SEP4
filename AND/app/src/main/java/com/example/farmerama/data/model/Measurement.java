@@ -1,16 +1,13 @@
 package com.example.farmerama.data.model;
 
-import static java.time.LocalDateTime.parse;
-
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import com.example.farmerama.data.util.DateFormatter;
+import com.example.farmerama.data.util.Converters;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 @Entity(tableName = "measurement_table", primaryKeys = {"measurementId", "measurementType"})
@@ -20,28 +17,28 @@ public class Measurement {
     private boolean latest;
     private int areaId;
     private double value;
-    private String measuredDate;
+    @TypeConverters(Converters.class)
+    private LocalDateTime measuredDate;
     @NonNull
     private MeasurementType measurementType;
 
     public Measurement(){}
 
-    public Measurement(double value, String measuredDate, MeasurementType type) {
+    public Measurement(double value, LocalDateTime measuredDate, MeasurementType type) {
         this.value = value;
         this.measuredDate = measuredDate;
-        this.measuredDate = DateFormatter.formatDate(measuredDate);
         this.measurementType = type;
     }
 
-    public Measurement(int measurementId, int areaId, double value, String measuredDate, MeasurementType measurementType) {
+    public Measurement(int measurementId, int areaId, double value, LocalDateTime measuredDate, MeasurementType measurementType) {
         this.measurementId = measurementId;
         this.value = value;
         this.areaId = areaId;
-        this.measuredDate = DateFormatter.formatDate(measuredDate);
+        this.measuredDate = measuredDate;
         this.measurementType = measurementType;
     }
 
-    public Measurement(int measurementId, boolean latest, int areaId, double value, String measuredDate, MeasurementType measurementType) {
+    public Measurement(int measurementId, boolean latest, int areaId, double value, LocalDateTime measuredDate, MeasurementType measurementType) {
         this.measurementId = measurementId;
         this.latest = latest;
         this.areaId = areaId;
@@ -50,7 +47,7 @@ public class Measurement {
         this.measurementType = measurementType;
     }
 
-    public String getMeasuredDate() {
+    public LocalDateTime getMeasuredDate() {
         return measuredDate;
     }
 
@@ -86,11 +83,11 @@ public class Measurement {
         this.value = value;
     }
 
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return measuredDate;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.measuredDate = dateTime;
     }
 
@@ -102,7 +99,7 @@ public class Measurement {
         this.measurementType = measurementType;
     }
 
-    public void setMeasuredDate(String measuredDate) {
+    public void setMeasuredDate(LocalDateTime measuredDate) {
         this.measuredDate = measuredDate;
     }
 

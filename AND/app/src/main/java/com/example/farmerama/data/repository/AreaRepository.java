@@ -18,6 +18,7 @@ import com.example.farmerama.data.persistence.IAreaDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +94,15 @@ public class AreaRepository {
             });
         }
         else {
-            executorService.execute(() -> areas.postValue(database.areaDAO().getAreas()));
+            ListenableFuture<List<Area>> result = database.areaDAO().getAreas();
+            result.addListener(() -> {
+                try {
+                    areas.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 
@@ -121,7 +130,15 @@ public class AreaRepository {
             });
         }
         else {
-            executorService.execute(()-> specificArea.postValue(database.areaDAO().getAreaById(areaId)));
+            ListenableFuture<Area> result = database.areaDAO().getAreaById(areaId);
+            result.addListener(() -> {
+                try {
+                    specificArea.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 
@@ -134,6 +151,7 @@ public class AreaRepository {
                 @Override
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
+                        executorService.execute(() -> database.areaDAO().createArea(response.body().getArea()));
                         specificArea.setValue(response.body().getArea());
                         ToastMessage.setToastMessage("Area has been created!");
                     }
@@ -164,6 +182,7 @@ public class AreaRepository {
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
                         specificArea.setValue(response.body().getArea());
+                        executorService.execute(() -> database.areaDAO().updateArea(response.body().getArea()));
                     }
                     else {
                         ErrorReader<AreaResponse> responseErrorReader = new ErrorReader<>();
@@ -191,6 +210,7 @@ public class AreaRepository {
                 @Override
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
+                        executorService.execute(() -> database.areaDAO().removeArea(specificArea.getValue()));
                         ToastMessage.setToastMessage("The area has been successfully deleted");
                     }
                     else {

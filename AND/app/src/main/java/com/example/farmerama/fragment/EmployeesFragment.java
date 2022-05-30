@@ -14,51 +14,49 @@ import android.widget.Button;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
+import com.example.farmerama.data.util.ToastMessage;
+import com.example.farmerama.viewmodel.EmployeeViewModel;
 import com.example.farmerama.viewmodel.RegisterViewModel;
 
 public class EmployeesFragment extends Fragment {
-
-    private RegisterViewModel registerViewModel;
+    private EmployeeViewModel employeeViewModel;
     private RecyclerView recyclerView;
-    Button delete;
-    public EmployeesFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_employees, container, false);
-        delete = view.findViewById(R.id.deleteEmployee);
-        return view;
+        return inflater.inflate(R.layout.fragment_employees, container, false);
+    }
+
+    private void initViews(View view){
+        employeeViewModel = new ViewModelProvider(getActivity()).get(EmployeeViewModel.class);
+        recyclerView = view.findViewById(R.id.rev);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.hasFixedSize();
     }
 
 
-
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
-        recyclerView = view.findViewById(R.id.rev);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.hasFixedSize();
+        initViews(view);
 
         EmployeeAdapter adapter = new EmployeeAdapter();
 
-
-        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
+        employeeViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
             adapter.setUserList(employees);
         });
         recyclerView.setAdapter(adapter);
-        registerViewModel.retrieveAllEmployees();
+        employeeViewModel.retrieveAllEmployees();
 
-        adapter.setOnDeleteListener(userId -> {
-            registerViewModel.deleteEmployeeById(userId);
+        /*
+        Deleting the user from the API, as well as the user from the Roomdatabase
+        No possibility of deleting yourself
+         */
+
+        adapter.setOnDeleteListener(user -> {
+            employeeViewModel.deleteEmployeeById(user);
+            employeeViewModel.getUserById(user.getUserId());
+            employeeViewModel.retrieveAllEmployees();
         });
-
-
-//        registerViewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
-
-//        });
 
     }
 

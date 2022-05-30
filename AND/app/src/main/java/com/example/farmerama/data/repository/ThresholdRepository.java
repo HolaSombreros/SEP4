@@ -80,15 +80,12 @@ public class ThresholdRepository {
         }
         else {
             ListenableFuture<Threshold> future = database.thresholdDAO().getThreshold(areaId, type.getType());
-            future.addListener(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        thresholdData.postValue(future.get());
-                    }
-                    catch (Exception e) {
-
-                    }
+            future.addListener(() -> {
+                try{
+                    thresholdData.postValue(future.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
                 }
             }, Executors.newSingleThreadExecutor());
         }
@@ -102,6 +99,7 @@ public class ThresholdRepository {
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if (response.isSuccessful()) {
                         thresholdData.setValue(response.body().getThreshold());
+                        executorService.execute(() -> database.thresholdDAO().updateThreshold(response.body().getThreshold()));
                         ToastMessage.setToastMessage("Threshold edited!");
                     } else {
                         ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
@@ -128,6 +126,7 @@ public class ThresholdRepository {
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if(response.isSuccessful()) {
                         thresholdData.setValue(response.body().getThreshold());
+                        executorService.execute(() -> database.thresholdDAO().createThreshold(response.body().getThreshold()));
                         ToastMessage.setToastMessage("Threshold created!");
                     }
                     else {

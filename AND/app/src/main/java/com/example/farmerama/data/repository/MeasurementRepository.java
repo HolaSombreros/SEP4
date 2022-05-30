@@ -15,6 +15,7 @@ import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +90,15 @@ public class MeasurementRepository {
             });
         }
         else {
-            executorService.execute(() -> {
-                latestMeasurement.postValue(database.measurementDAO().getLatestMeasurement(type, areaId));
-            });
+            ListenableFuture<Measurement> result = database.measurementDAO().getLatestMeasurement(type, areaId);
+            result.addListener(() -> {
+                try {
+                    latestMeasurement.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 
@@ -128,9 +135,15 @@ public class MeasurementRepository {
             });
         }
         else {
-            executorService.execute(() -> {
-                measurements.postValue(database.measurementDAO().getHistoricalMeasurements(type, areaId));
-            });
+            ListenableFuture<List<Measurement>> result = database.measurementDAO().getHistoricalMeasurements(type, areaId);
+            result.addListener(() -> {
+                try {
+                    measurements.postValue(result.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newFixedThreadPool(5));
         }
     }
 }

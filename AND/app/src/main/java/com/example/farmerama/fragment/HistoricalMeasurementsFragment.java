@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.farmerama.R;
+import com.example.farmerama.data.util.DateFormatter;
 import com.example.farmerama.viewmodel.MeasurementsViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.MarkerView;
@@ -88,7 +89,7 @@ public class HistoricalMeasurementsFragment extends Fragment {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
                     TimeMarkerView tmv = new TimeMarkerView(getContext(), R.layout.marker_date);
-                    tmv.refreshContent(measurements.get((int) e.getX()).getDateTime());
+                    tmv.refreshContent(DateFormatter.formatDate(measurements.get((int) e.getX()).getDateTime().toString()));
                     lineChart.setMarker(tmv);
                 }
 

@@ -31,6 +31,7 @@ import androidx.work.WorkRequest;
 import android.content.SharedPreferences;
 
 import com.example.farmerama.data.model.ExceededLog;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.fragment.IntroVPFragment;
@@ -172,11 +173,12 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(true);
                 }
-                if (loggedInUser.getRole().equals("EMPLOYEE")) {
+                if (loggedInUser.getRole().equals(UserRole.EMPLOYEE)) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                     navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
+                    navigationDrawer.getMenu().findItem(R.id.employeesFragment).setVisible(false);
                 }
-                if (loggedInUser.getRole().equals("OFFLINE")) {
+                if (loggedInUser.getRole().equals(UserRole.OFFLINE)) {
 
                 }
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(false);
@@ -186,7 +188,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 viewModel.setLogged(true);
-            } else {
+            }
+            else {
                 for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
                     navigationDrawer.getMenu().getItem(i).setVisible(false);
                 }

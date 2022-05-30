@@ -4,8 +4,12 @@ package com.example.farmerama.data.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.farmerama.data.util.Converters;
 import com.example.farmerama.data.util.DateFormatter;
 import androidx.annotation.NonNull;
+import androidx.room.TypeConverters;
+
+import java.time.LocalDateTime;
 
 @Entity(tableName = "exceeded_log_table", primaryKeys = {"logId", "measurementType"})
 public class ExceededLog {
@@ -14,23 +18,24 @@ public class ExceededLog {
     @NonNull
     private MeasurementType measurementType;
     private String areaName;
-    private String measuredDate;
+    @TypeConverters(Converters.class)
+    private LocalDateTime measuredDate;
     private double thresholdValue;
     private double exceededValue;
 
     public ExceededLog(){}
 
-    public ExceededLog(int logId, MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
+    public ExceededLog(int logId, MeasurementType measurementType, LocalDateTime measuredDate, double thresholdValue, double exceededValue) {
         this.logId = logId;
         this.measurementType = measurementType;
-        this.measuredDate = DateFormatter.formatDate(measuredDate);
+        this.measuredDate = measuredDate;
         this.thresholdValue = thresholdValue;
         this.exceededValue = exceededValue;
     }
 
-    public ExceededLog(MeasurementType measurementType, String measuredDate, double thresholdValue, double exceededValue) {
+    public ExceededLog(MeasurementType measurementType, LocalDateTime measuredDate, double thresholdValue, double exceededValue) {
         this.measurementType = measurementType;
-        this.measuredDate = DateFormatter.formatDate(measuredDate);
+        this.measuredDate = measuredDate;
         this.thresholdValue = thresholdValue;
         this.exceededValue = exceededValue;
     }
@@ -64,11 +69,11 @@ public class ExceededLog {
         this.areaName = areaName;
     }
 
-    public String getMeasuredDate() {
+    public LocalDateTime getMeasuredDate() {
         return measuredDate;
     }
 
-    public void setMeasuredDate(String measuredDate) {
+    public void setMeasuredDate(LocalDateTime measuredDate) {
         this.measuredDate = measuredDate;
     }
 

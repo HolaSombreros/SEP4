@@ -12,10 +12,10 @@ import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
-import com.example.farmerama.data.persistence.IUserDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,9 +113,15 @@ public class UserRepository {
             });
         }
         else {
-            executorService.execute(()->{
-                users.postValue(database.userDAO().getAllEmployees());
-            });
+            ListenableFuture<List<User>> future = database.userDAO().getAllEmployees();
+            future.addListener(() -> {
+                try{
+                    users.postValue(future.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newSingleThreadExecutor());
         }
     }
 
@@ -143,9 +149,15 @@ public class UserRepository {
             });
         }
         else {
-            executorService.execute(() -> {
-                user.postValue(database.userDAO().getEmployeeById(id));
-            });
+            ListenableFuture<User> future = database.userDAO().getEmployeeById(id);
+            future.addListener(() -> {
+                try{
+                    user.postValue(future.get());
+                }
+                catch (Exception e) {
+                    Log.i("Room", "Could not retrieve data");
+                }
+            }, Executors.newSingleThreadExecutor());
         }
     }
 
@@ -159,6 +171,7 @@ public class UserRepository {
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if (response.isSuccessful()) {
                         user.setValue(response.body().getUser());
+                        executorService.execute(() -> database.userDAO().registerUser(response.body().getUser()));
                         ToastMessage.setToastMessage("Account successfully added");
                     }
                     else {
@@ -207,8 +220,7 @@ public class UserRepository {
         }
     }
 
-    public void deleteEmployeeById(int id)
-    {
+    public void deleteEmployeeById(int id) {
         if(checker.isOnlineMode()) {
             UserApi userApi = ServiceGenerator.getUserApi();
             Call<UserResponse> call = userApi.deleteEmployeeById(id);
@@ -216,6 +228,7 @@ public class UserRepository {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if(response.isSuccessful()) {
+                        executorService.execute(() -> database.userDAO().removeUser(user.getValue()));
                         ToastMessage.setToastMessage("Employee Deleted");
                     }
                     else{
@@ -245,6 +258,7 @@ public class UserRepository {
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if(response.isSuccessful()) {
                         loggedInUser.setValue(response.body().getUser());
+                        executorService.execute(() -> database.userDAO().updateUser(response.body().getUser()));
                         ToastMessage.setToastMessage("The account has been successfully updated");
                     }
                     else {
