@@ -35,16 +35,25 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
-        setupViews(view);
+        initializeViews(view);
+
+        if (!viewModel.isSeen()) {
+            viewModel.setSeen(true);
+            navController.navigate(R.id.introVPFragment);
+        }
+
+        setupViews();
     }
 
-    private void setupViews(View view) {
+    private void initializeViews (View view) {
         navController = Navigation.findNavController(view);
         email = view.findViewById(R.id.LoginEmailAddress);
         password = view.findViewById(R.id.LoginPassword);
         loginButton = view.findViewById(R.id.loginButton);
         continueAsGuest = view.findViewById(R.id.continueAsGuest);
+    }
 
+    private void setupViews() {
         loginButton.setOnClickListener(l -> {
             if (viewModel.validate(email.getText().toString(), password.getText().toString())) {
                 viewModel.loginUser(email.getText().toString(), password.getText().toString());

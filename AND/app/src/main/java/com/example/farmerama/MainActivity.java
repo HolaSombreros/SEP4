@@ -26,17 +26,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.preference.PreferenceManager;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 
 import android.content.SharedPreferences;
 
 import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
-import com.example.farmerama.fragment.IntroVPFragment;
 import com.example.farmerama.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private MainActivityViewModel viewModel;
-    private String prevStarted = "yes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +58,6 @@ public class MainActivity extends AppCompatActivity {
         setUpViews();
         setupNavigation();
         setUpLoggedInUser();
-
-        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(prevStarted, Boolean.TRUE);
-            editor.apply();
-        }
     }
 
     @Override
@@ -97,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
         });
 
-        viewModel.getTodayLogs().observeForever(logObjs -> {
-            for (int i = 0; i < logObjs.size(); i++) {
-                publishNotification(logObjs.get(i), i);
+        viewModel.getTodayLogs().observeForever(exceededLogs -> {
+            for (int i = 0; i < exceededLogs.size(); i++) {
+                publishNotification(exceededLogs.get(i), i);
             }
         });
     }
