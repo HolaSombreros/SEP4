@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.recycler.EmployeeAdapter;
@@ -20,47 +20,40 @@ public class EmployeesFragment extends Fragment {
 
     private RegisterViewModel registerViewModel;
     private RecyclerView recyclerView;
-    Button delete;
-    public EmployeesFragment() {
-        // Required empty public constructor
-    }
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_employees, container, false);
-        delete = view.findViewById(R.id.deleteEmployee);
-        return view;
+        return inflater.inflate(R.layout.fragment_employees, container, false);
     }
-
-
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
-        recyclerView = view.findViewById(R.id.rev);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.hasFixedSize();
-
-        EmployeeAdapter adapter = new EmployeeAdapter();
-
-
-        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-            adapter.setUserList(employees);
-        });
-        recyclerView.setAdapter(adapter);
-        registerViewModel.retrieveAllEmployees();
-
-        adapter.setOnDeleteListener(userId -> {
-            registerViewModel.deleteEmployeeById(userId);
-        });
-
-
-//        registerViewModel.getEmployee().observe(getViewLifecycleOwner(), employee -> {
-
-//        });
-
+        initializeViews(view);
+        setUpViews();
     }
 
+    private void initializeViews(View view) {
+        recyclerView = view.findViewById(R.id.rev);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.hasFixedSize();
+        progressBar = view.findViewById(R.id.pbEmployees);
+    }
 
+    private void setUpViews() {
+        progressBar.setVisibility(View.VISIBLE);
+        EmployeeAdapter adapter = new EmployeeAdapter();
+
+        registerViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
+            if(employees != null) {
+                adapter.setUserList(employees);
+                recyclerView.setAdapter(adapter);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+        });
+        registerViewModel.retrieveAllEmployees();
+    }
 }
