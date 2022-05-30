@@ -40,7 +40,16 @@ public class RegisterViewModel extends FactoryViewModel
         getUserRepository().register(employee);
     }
 
+    public LiveData<User> getLoggedInUser() {
+        return repository.getLoggedInUser();
+    }
+
     public boolean validate(String firstName, String lastName,String email, String password, String role){
         return validation.verifyUserInput(firstName, lastName, email, password, role);
+    }
+
+    public void deleteEmployeeById(User id)
+    {
+        repository.deleteEmployeeById(id.getId());
     }
 }

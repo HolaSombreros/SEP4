@@ -1,6 +1,5 @@
 package com.example.farmerama.data.recycler;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
     private List<User> userList;
+    private UserRepository userRepository;
+    private onDeleteListener onDeleteListener;
+
 
     public EmployeeAdapter(){
          this.userList = new ArrayList<>();
@@ -25,26 +28,34 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+        notifyDataSetChanged();
+    }
+
+    public void setOnDeleteListener(onDeleteListener onDeleteListener)
+    {
+      this.onDeleteListener = onDeleteListener;
     }
 
     @NonNull
     @Override
     public EmployeeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate (R.layout.item_employee, parent, false);
+        View view = inflater.inflate (R.layout.employee_item, parent, false);
+        userRepository = UserRepository.getInstance();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmployeeAdapter.ViewHolder holder, int position) {
-        holder.name.setText(userList.get(position).getUserName());
+
+        holder.name.setText(userList.get(position).getName());
         //TODO: need to get lifeCycleOwner such that it verifies the user loggedin and it doesn't allow to delete that one
         //TODO: if delete user with you are logged in = throws null exception error and app stops working.
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*      userRepository.deleteEmployeeById(userList.get(holder.getPosition()).getId());
-                    userList.remove(holder.getPosition());*/
+                userRepository.deleteEmployeeById(userList.get(holder.getPosition()).getId());
+                userList.remove(holder.getPosition());
             }
         });
     }
@@ -62,6 +73,14 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
             super(itemView);
             name = itemView.findViewById(R.id.employeeName);
             delete = itemView.findViewById(R.id.deleteEmployee);
+
+            delete.setOnClickListener(v -> onDeleteListener.onDelete(userList.get(getBindingAdapterPosition())));
         }
     }
+
+    public interface onDeleteListener
+    {
+        void onDelete(User user);
+    }
+
 }
