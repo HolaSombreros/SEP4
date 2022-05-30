@@ -8,14 +8,6 @@
         android:id="@+id/ivInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
         android:src="@drawable/intro_farmerama" />
 
     <Button
@@ -30,7 +22,7 @@
         android:layout_marginBottom="13dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:text="NEXT"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/colorPrimary"
         android:textSize="18sp" />
 
     <Button
@@ -45,7 +37,7 @@
         android:layout_marginEnd="2dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:text="SKIP"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/colorPrimary"
         android:textSize="20sp" />
 
 </RelativeLayout>

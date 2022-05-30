@@ -82,12 +82,9 @@ public class EditAccountFragment extends Fragment {
                 viewModel.setUserId(user.getUserId());
                 progressBar.setVisibility(View.VISIBLE);
                 storageRef = FirebaseStorage.getInstance().getReference().child("users/"+user.getUserId()+"/profile.jpg");
-                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profilePicture);
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
+                storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    Picasso.get().load(uri).into(profilePicture);
+                    progressBar.setVisibility(View.INVISIBLE);
                 });
 
                 email.setText(user.getEmail());
@@ -128,7 +125,6 @@ public class EditAccountFragment extends Fragment {
                         role.getSelectedItem().toString());
                 user.setUserId(viewModel.getUserId());
                 viewModel.saveAccount(user);
-                Toast.makeText(getActivity(), "Information saved", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,30 +139,16 @@ public class EditAccountFragment extends Fragment {
         pd.setMessage("Loading");
         pd.show();
 
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                pd.dismiss();
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profilePicture);
-                    }
-                });
+        fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            pd.dismiss();
+            fileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profilePicture));
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
-                Toast.makeText(getContext(), "Try again", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                double progressPercent = (100.00*snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
-                pd.setMessage("Percentage: " +(int) progressPercent+ "");
-            }
+        }).addOnFailureListener(e -> {
+            pd.dismiss();
+            Toast.makeText(getContext(), "Try again", Toast.LENGTH_SHORT).show();
+        }).addOnProgressListener(snapshot -> {
+            double progressPercent = (100.00*snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
+            pd.setMessage("Percentage: " +(int) progressPercent+ "");
         });
     }
 }

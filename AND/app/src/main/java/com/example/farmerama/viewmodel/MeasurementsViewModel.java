@@ -21,7 +21,6 @@ public class MeasurementsViewModel extends AndroidViewModel {
     private AreaRepository areaRepository;
     private SharedPreferences sharedPreferences;
     private int areaId;
-    private MeasurementType measurementType;
 
     public MeasurementsViewModel(Application application) {
         super(application);
@@ -42,20 +41,11 @@ public class MeasurementsViewModel extends AndroidViewModel {
         return measurementRepository.getLatestMeasurement();
     }
 
-    public void retrieveLatestMeasurement(MeasurementType measurementType, int areaId) {
-        measurementRepository.retrieveLatestMeasurement(areaId, measurementType, true);
-    }
-
-    public void saveLatestInformation(MeasurementType measurementType, int areaId){
-        this.areaId = areaId;
-        this.measurementType = measurementType;
-    }
-    // for historical
     public void retrieveMeasurements(MeasurementType type, String date) {
         measurementRepository.retrieveMeasurements(areaId, type, date);
     }
 
-    public void getAllAreas() {
+    public void retrieveAreas() {
         areaRepository.retrieveAreas();
     }
 

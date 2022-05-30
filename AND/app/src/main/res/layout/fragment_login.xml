@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
+            android:textColor="?android:attr/colorPrimary"
             android:text="@string/app_name"
-            android:textColor="@color/blue_700"
             android:textSize="30sp"
             android:textStyle="bold" />
 

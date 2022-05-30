@@ -3,7 +3,6 @@ package com.example.farmerama.data.repository;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,18 +12,12 @@ import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.response.MeasurementResponse;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
-import com.example.farmerama.data.persistence.IMeasurementDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
 import com.example.farmerama.data.util.ErrorReader;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.firebase.firestore.local.QueryResult;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,7 +34,6 @@ public class MeasurementRepository {
     private MeasurementApiAdapterInterface adapter;
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
-    private IMeasurementDAO measurementDAO;
     private ConnectivityChecker onlineChecker;
 
 
@@ -51,7 +43,6 @@ public class MeasurementRepository {
         adapter = new MeasurementApiAdapter();
         executorService = Executors.newFixedThreadPool(5);
         database = FarmeramaDatabase.getInstance(application);
-        measurementDAO = database.measurementDAO();
         onlineChecker = new ConnectivityChecker(application);
     }
 
@@ -80,7 +71,7 @@ public class MeasurementRepository {
                     if (response.isSuccessful()) {
                         executorService.execute(() -> {
                             for (MeasurementResponse measurement : response.body()) {
-                                measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                                database.measurementDAO().createMeasurement(measurement.getMeasurement(type));
                                 latestMeasurement.postValue(measurement.getMeasurement(type));
                             }
                         });
@@ -99,7 +90,7 @@ public class MeasurementRepository {
         }
         else {
             executorService.execute(() -> {
-                latestMeasurement.postValue(measurementDAO.getLatestMeasurement(type, areaId));
+                latestMeasurement.postValue(database.measurementDAO().getLatestMeasurement(type, areaId));
             });
         }
     }
@@ -115,11 +106,14 @@ public class MeasurementRepository {
                         List<Measurement> measurementsList = new ArrayList<>();
                         executorService.execute(() -> {
                             for (MeasurementResponse measurement : response.body()) {
-                                measurementDAO.createMeasurement(measurement.getMeasurement(type));
+                                database.measurementDAO().createMeasurement(measurement.getMeasurement(type));
                                 measurementsList.add(measurement.getMeasurement(type));
                             }
                             measurements.postValue(measurementsList);
                         });
+                        if (measurementsList.size() == 0) {
+                            ToastMessage.setToastMessage("No data available");
+                        }
                     } else {
                         ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
@@ -135,7 +129,7 @@ public class MeasurementRepository {
         }
         else {
             executorService.execute(() -> {
-                measurements.postValue(measurementDAO.getHistoricalMeasurements(type, areaId));
+                measurements.postValue(database.measurementDAO().getHistoricalMeasurements(type, areaId));
             });
         }
     }

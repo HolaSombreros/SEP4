@@ -35,7 +35,6 @@ public class UserRepository {
     private final ExecutorService executorService;
     private final FarmeramaDatabase database;
     private ConnectivityChecker checker;
-    private IUserDAO userDAO;
 
     private UserRepository(Application application) {
         super();
@@ -44,7 +43,6 @@ public class UserRepository {
         user = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
-        userDAO = database.userDAO();
         executorService = Executors.newFixedThreadPool(5);
     }
 
@@ -83,7 +81,7 @@ public class UserRepository {
                         List<User> usersList = new ArrayList<>();
                         executorService.execute(() -> {
                             for(UserResponse user : response.body()) {
-                                userDAO.registerUser(user.getUser());
+                                database.userDAO().registerUser(user.getUser());
                                 usersList.add(user.getUser());
                             }
                         });
@@ -104,7 +102,7 @@ public class UserRepository {
         }
         else {
             executorService.execute(()->{
-                users.postValue(userDAO.getAllEmployees());
+                users.postValue(database.userDAO().getAllEmployees());
             });
         }
     }
@@ -134,7 +132,7 @@ public class UserRepository {
         }
         else {
             executorService.execute(() -> {
-                user.postValue(userDAO.getEmployeeById(id));
+                user.postValue(database.userDAO().getEmployeeById(id));
             });
         }
     }

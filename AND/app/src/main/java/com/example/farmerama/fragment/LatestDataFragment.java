@@ -79,13 +79,13 @@ public class LatestDataFragment extends Fragment {
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             areaSpinner.setAdapter(adapter2);
         });
-        viewModel.getAllAreas();
+        viewModel.retrieveAreas();
 
         areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 viewModel.setAreaId(areasRetrieved[0].get(i).getAreaId());
-                viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], areasRetrieved[0].get(i).getAreaId());
+                viewModel.retrieveLatestMeasurement(MeasurementType.values()[viewPager2.getCurrentItem()], true);
             }
 
             @Override

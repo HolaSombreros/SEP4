@@ -33,14 +33,12 @@ public class ExceededLogsRepository {
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
     private static ExceededLogsRepository instance;
-    private IExceededLogDAO exceededLogDAO;
 
     private ExceededLogsRepository(Application application) {
         logs = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
         checker = new ConnectivityChecker(application);
-        exceededLogDAO = database.exceededLogDAO();
         latestLogs = new MutableLiveData<>();
     }
 
@@ -71,11 +69,13 @@ public class ExceededLogsRepository {
                         executorService.execute( () -> {
                             for (LogResponse logResponse : response.body()) {
                                 list.add(logResponse.getLog(type));
-                                exceededLogDAO.createExceededLog(logResponse.getLog(type));
+                                database.exceededLogDAO().createExceededLog(logResponse.getLog(type));
                             }
                             logs.postValue(list);
                         });
-                        list.size();
+                        if (list.size() == 0) {
+                            ToastMessage.setToastMessage("No data available");
+                        }
                     } else {
                         ErrorReader<List<LogResponse>> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
@@ -89,7 +89,7 @@ public class ExceededLogsRepository {
             });
         }
         else {
-            executorService.execute( () -> logs.postValue(exceededLogDAO.getExceededLogs()));
+            executorService.execute( () -> logs.postValue(database.exceededLogDAO().getExceededLogs()));
         }
     }
 

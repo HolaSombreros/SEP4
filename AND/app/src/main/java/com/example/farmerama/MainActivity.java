@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         return viewModel.isLogged();
     }
 
-
     private void initViews() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationDrawer = findViewById(R.id.nav_view);
