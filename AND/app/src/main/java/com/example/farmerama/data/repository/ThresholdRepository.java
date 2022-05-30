@@ -6,11 +6,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.ThresholdModification;
-import com.example.farmerama.data.model.response.LogResponse;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
@@ -21,7 +19,6 @@ import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -30,12 +27,10 @@ import java.util.concurrent.Executors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.internal.EverythingIsNonNull;
 
 public class ThresholdRepository {
     private static ThresholdRepository instance;
-    private MutableLiveData<Threshold> threshold;
-    private MutableLiveData<List<ThresholdModification>> thresholdModifications;
+    private MutableLiveData<Threshold> thresholdData;
     private FarmeramaDatabase database;
     private final ExecutorService executorService;
     private ConnectivityChecker checker;
@@ -43,8 +38,7 @@ public class ThresholdRepository {
 
     private ThresholdRepository(Application application) {
         checker = new ConnectivityChecker(application);
-        threshold = new MutableLiveData<>();
-        thresholdModifications = new MutableLiveData<>();
+        thresholdData = new MutableLiveData<>();
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
     }
@@ -56,13 +50,10 @@ public class ThresholdRepository {
         return instance;
     }
 
-    public LiveData<Threshold> getThreshold() {
-        return threshold;
+    public LiveData<Threshold> getThresholdData() {
+        return thresholdData;
     }
 
-    public LiveData<List<ThresholdModification>> getThresholdModifications() {
-        return thresholdModifications;
-    }
 
     public void retrieveThreshold(MeasurementType type, int areaId) {
         if(checker.isOnlineMode()){
@@ -71,9 +62,12 @@ public class ThresholdRepository {
                 @Override
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if (response.isSuccessful()) {
-                        executorService.execute(() -> database.thresholdDAO().createThreshold(response.body().getThreshold()));
-                        threshold.postValue(response.body().getThreshold());
+                        executorService.execute(() -> {
+                            database.thresholdDAO().createThreshold(response.body().getThreshold());
+                            thresholdData.postValue(response.body().getThreshold());
+                        });
                     } else {
+                        thresholdData.postValue(null);
                         ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
                     }
@@ -90,7 +84,7 @@ public class ThresholdRepository {
                 @Override
                 public void run() {
                     try{
-                        threshold.postValue(future.get());
+                        thresholdData.postValue(future.get());
                     }
                     catch (Exception e) {
 
@@ -107,7 +101,7 @@ public class ThresholdRepository {
                 @Override
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if (response.isSuccessful()) {
-                        ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
+                        thresholdData.setValue(response.body().getThreshold());
                         ToastMessage.setToastMessage("Threshold edited!");
                     } else {
                         ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
@@ -133,7 +127,7 @@ public class ThresholdRepository {
                 @Override
                 public void onResponse(Call<ThresholdResponse> call, Response<ThresholdResponse> response) {
                     if(response.isSuccessful()) {
-                        ThresholdRepository.this.threshold.setValue(response.body().getThreshold());
+                        thresholdData.setValue(response.body().getThreshold());
                         ToastMessage.setToastMessage("Threshold created!");
                     }
                     else {
@@ -151,43 +145,5 @@ public class ThresholdRepository {
         else {
             ToastMessage.setToastMessage("OFFLINE MODE");
         }
-    }
-
-
-    public void retrieveThresholdModifications(String date) {
-        if(checker.isOnlineMode()) {
-            Call<List<ThresholdModificationsResponse>> call = ServiceGenerator.getThresholdsApi().getThresholdModifications(date);
-            call.enqueue(new Callback<List<ThresholdModificationsResponse>>() {
-                @Override
-                public void onResponse(Call<List<ThresholdModificationsResponse>> call, Response<List<ThresholdModificationsResponse>> response) {
-                    if (response.isSuccessful()) {
-                        List<ThresholdModification> list = new ArrayList<>();
-                        executorService.execute( () -> {
-                            for (ThresholdModificationsResponse modification : response.body()) {
-                                list.add(modification.getModification());
-                                database.thresholdDAO().createThresholdModification(modification.getModification());
-                            }
-                            thresholdModifications.postValue(list);
-                        });
-                        if (list.size() == 0) {
-                            ToastMessage.setToastMessage("No data available");
-                        }
-                    } else {
-                        ErrorReader<List<ThresholdModificationsResponse>> responseErrorReader = new ErrorReader<>();
-                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
-                    }
-                }
-                @Override
-                public void onFailure(Call<List<ThresholdModificationsResponse>> call, Throwable t) {
-                    Log.i("Retrofit", "Could not retrieve data");
-                }
-            });
-        }
-        else {
-            executorService.execute( () -> {
-                thresholdModifications.postValue(database.thresholdDAO().getThresholdModifications(date));
-            });
-        }
-
     }
 }

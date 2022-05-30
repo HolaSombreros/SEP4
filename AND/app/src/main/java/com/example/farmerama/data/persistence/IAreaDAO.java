@@ -22,7 +22,6 @@ public interface IAreaDAO {
     @Query("DELETE FROM area_table")
     void removeAreas();
 
-
     @Query("SELECT * FROM area_table")
     List<Area> getAreas();
 

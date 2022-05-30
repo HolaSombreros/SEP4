@@ -3,59 +3,48 @@ package com.example.farmerama.viewmodel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.Threshold;
-import com.example.farmerama.data.repository.AreaRepository;
-import com.example.farmerama.data.repository.ThresholdRepository;
-import com.example.farmerama.data.repository.UserRepository;
 
 import java.util.List;
 
-public class ThresholdViewModel extends AndroidViewModel {
-
-    private ThresholdRepository thresholdRepository;
-    private AreaRepository areaRepository;
-    private UserRepository userRepository;
+public class ThresholdViewModel extends FactoryViewModel {
     private int areaId;
     private MeasurementType measurementType;
 
     public ThresholdViewModel(@NonNull Application application) {
         super(application);
-        this.thresholdRepository = ThresholdRepository.getInstance(application);
-        this.userRepository = UserRepository.getInstance(application);
-        this.areaRepository = AreaRepository.getInstance(application);
     }
 
     public LiveData<Threshold> getThreshold() {
-        return thresholdRepository.getThreshold();
+        return getThresholdRepository().getThresholdData();
     }
 
     public void getLatestThresholds(MeasurementType type) {
-        thresholdRepository.retrieveThreshold(type, areaId);
+        getThresholdRepository().retrieveThreshold(type, areaId);
     }
 
     public LiveData<List<Area>> getAreas() {
-        return areaRepository.getAreas();
+        return getAreaRepository().getAreas();
     }
 
     public void getAllAreas() {
-        areaRepository.retrieveAreas();
+        getAreaRepository().retrieveAreas();
     }
 
 
 
     public void editThreshold(Threshold threshold) {
-        if(userRepository.getLoggedInUser().getValue().getUserId() != 0)
-            thresholdRepository.editThreshold(areaId, measurementType, threshold, userRepository.getLoggedInUser().getValue().getUserId());
+        if(getUserRepository().getLoggedInUser().getValue().getUserId() != 0)
+            getThresholdRepository().editThreshold(areaId, measurementType, threshold, getUserRepository().getLoggedInUser().getValue().getUserId());
     }
 
     public void createThreshold(Threshold threshold) {
-        if(userRepository.getLoggedInUser().getValue().getUserId() != 0) {
-            thresholdRepository.createThreshold(areaId, measurementType, threshold);
+        if(getUserRepository().getLoggedInUser().getValue().getUserId() != 0) {
+            getThresholdRepository().createThreshold(areaId, measurementType, threshold);
         }
     }
 

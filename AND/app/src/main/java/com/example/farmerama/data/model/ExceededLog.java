@@ -1,14 +1,12 @@
 package com.example.farmerama.data.model;
 
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.farmerama.data.util.DateFormatter;
+import androidx.annotation.NonNull;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 @Entity(tableName = "exceeded_log_table", primaryKeys = {"logId", "measurementType"})
 public class ExceededLog {
     @NonNull

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.model.response.UserResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.network.UserApi;
@@ -69,6 +70,18 @@ public class UserRepository {
         return user;
     }
 
+    public void removeLocalData() {
+        executorService.execute(() -> {
+            database.areaDAO().removeAreas();
+            database.thresholdModificationDAO().removeThresholdModification();
+            database.userDAO().removeUsers();
+            database.exceededLogDAO().removeExceededLogs();
+            database.barnDAO().removeAllBarns();
+            database.measurementDAO().removeMeasurements();
+            database.thresholdDAO().removeThresholds();
+        });
+    }
+
     public void retrieveAllEmployees() {
         if(checker.isOnlineMode()) {
             UserApi userApi = ServiceGenerator.getUserApi();
@@ -96,7 +109,6 @@ public class UserRepository {
                 @Override
                 public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                     Log.i("Retrofit", "Could not retrieve data");
-                    //users.setValue(usersRoom.getValue());
                 }
             });
         }
@@ -138,98 +150,117 @@ public class UserRepository {
     }
 
     public void register(User employee) {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.register(employee);
-        call.enqueue(new Callback<UserResponse>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.isSuccessful()) {
-                    user.setValue(response.body().getUser());
-                    ToastMessage.setToastMessage("Account successfully added");
+        if(checker.isOnlineMode()) {
+            UserApi userApi = ServiceGenerator.getUserApi();
+            Call<UserResponse> call = userApi.register(employee);
+            call.enqueue(new Callback<UserResponse>() {
+                @EverythingIsNonNull
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if (response.isSuccessful()) {
+                        user.setValue(response.body().getUser());
+                        ToastMessage.setToastMessage("Account successfully added");
+                    }
+                    else {
+                        ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else {
-                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
-                }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+                @EverythingIsNonNull
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
                     Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
+                }
+            });
+        }
+        else {
+            ToastMessage.setToastMessage("OFFLINE MODE");
+        }
     }
 
     public void loginUser(User employee) {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.login(employee);
-        call.enqueue(new Callback<UserResponse>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if(response.isSuccessful()) {
-                    loggedInUser.setValue(response.body().getUser());
+        if(checker.isOnlineMode()) {
+            UserApi userApi = ServiceGenerator.getUserApi();
+            Call<UserResponse> call = userApi.login(employee);
+            call.enqueue(new Callback<UserResponse>() {
+                @EverythingIsNonNull
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if(response.isSuccessful()) {
+                        loggedInUser.setValue(response.body().getUser());
+                    }
+                    else {
+                        ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else {
-                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                @EverythingIsNonNull
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
+                    loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), UserRole.OFFLINE));
                 }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-                loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), "OFFLINE"));
-            }
-        });
+            });
+        }
+        else {
+            ToastMessage.setToastMessage("OFFLINE MODE");
+        }
     }
 
     public void deleteEmployeeById(int id)
     {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.deleteEmployeeById(id);
-        call.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if(response.isSuccessful())
-                {
-                    ToastMessage.setToastMessage("Employee Deleted");
+        if(checker.isOnlineMode()) {
+            UserApi userApi = ServiceGenerator.getUserApi();
+            Call<UserResponse> call = userApi.deleteEmployeeById(id);
+            call.enqueue(new Callback<UserResponse>() {
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if(response.isSuccessful()) {
+                        ToastMessage.setToastMessage("Employee Deleted");
+                    }
+                    else{
+                        ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else{
-                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
-                }
-            }
 
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit","Could not delete the employee.");
-            }
-        });
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
+                    Log.i("Retrofit","Could not delete the employee.");
+                }
+            });
+        }
+        else {
+            ToastMessage.setToastMessage("OFFLINE MODE");
+        }
     }
 
     public void updateUser(User user) {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call<UserResponse> call = userApi.updateUser(user.getUserId(), user);
-        call.enqueue(new Callback<UserResponse>() {
-            @EverythingIsNonNull
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if(response.isSuccessful()) {
-                    loggedInUser.setValue(response.body().getUser());
-                    ToastMessage.setToastMessage("The account has been successfully updated");
+        if(checker.isOnlineMode()) {
+            UserApi userApi = ServiceGenerator.getUserApi();
+            Call<UserResponse> call = userApi.updateUser(user.getUserId(), user);
+            call.enqueue(new Callback<UserResponse>() {
+                @EverythingIsNonNull
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if(response.isSuccessful()) {
+                        loggedInUser.setValue(response.body().getUser());
+                        ToastMessage.setToastMessage("The account has been successfully updated");
+                    }
+                    else {
+                        ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
+                        ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                    }
                 }
-                else {
-                    ErrorReader<UserResponse> responseErrorReader = new ErrorReader<>();
-                    ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
+                @EverythingIsNonNull
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
+                    Log.i("Retrofit", "Could not retrieve data");
                 }
-            }
-            @EverythingIsNonNull
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Log.i("Retrofit", "Could not retrieve data");
-            }
-        });
+            });
+        }
+        else {
+            ToastMessage.setToastMessage("OFFLINE MODE");
+        }
     }
 }

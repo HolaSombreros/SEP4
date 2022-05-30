@@ -1,5 +1,6 @@
 package com.example.farmerama.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,18 +11,19 @@ public class User {
     private String userName;
     private String email;
     private String password;
-    private String role;
+    @NonNull
+    private UserRole role;
 
     public User(){}
 
-    public User(String firstname,String lastname, String email, String password,String role) {
+    public User(String firstname,String lastname, String email, String password,UserRole role) {
         this.userName = firstname + " " + lastname;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public User(int userId, String userName, String email, String password, String role) {
+    public User(int userId, String userName, String email, String password, UserRole role) {
         this.userId = userId;
         this.email = email;
         this.userName = userName;
@@ -34,7 +36,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String password, String role) {
+    public User(String email, String password, UserRole role) {
         this.email = email;
         this.password = password;
         this.role = role;
@@ -73,11 +75,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 

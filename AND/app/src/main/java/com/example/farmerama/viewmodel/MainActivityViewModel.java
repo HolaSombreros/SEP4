@@ -17,41 +17,29 @@ import com.example.farmerama.data.repository.UserRepository;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends FactoryViewModel {
 
-    private UserRepository userRepository;
-    private BarnRepository barnRepository;
-    private AreaRepository areaRepository;
     private SharedPreferences loginPreferences;
     private SharedPreferences notificationPreferences;
-    private ExceededLogsRepository exceededLogsRepository;
     private boolean logged;
 
     public MainActivityViewModel(Application application) {
         super(application);
         loginPreferences = application.getSharedPreferences("Login", Context.MODE_PRIVATE);
         notificationPreferences = application.getSharedPreferences("Notification", Context.MODE_PRIVATE);
-        userRepository = UserRepository.getInstance(application);
-        barnRepository = BarnRepository.getInstance(application);
-        exceededLogsRepository = ExceededLogsRepository.getInstance(application);
-        areaRepository = AreaRepository.getInstance(application);
     }
     public void retrieveBarns() {
-        barnRepository.retrieveBarns();
+        getBarnRepository().retrieveBarns();
     }
 
-    public void retrieveAreas(){areaRepository.retrieveAreas();}
-
-    public void retrieveEmployees() {
-        //userRepository.retrieveAllEmployees();
-    }
+    public void retrieveAreas(){getAreaRepository().retrieveAreas();}
 
     public LiveData<User> getLoggedInUser() {
-        return userRepository.getLoggedInUser();
+        return getUserRepository().getLoggedInUser();
     }
 
     public void logOut() {
-        userRepository.logOut();
+        getUserRepository().logOut();
     }
 
     public void saveLoggedInUser(User user) {
@@ -66,7 +54,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
 
     public LiveData<List<ExceededLog>> getTodayLogs() {
-        return exceededLogsRepository.getLatestLogs();
+        return getExceededLogsRepository().getLatestLogs();
     }
 
     public void setLogged(boolean b) {

@@ -16,7 +16,7 @@ import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.User;
 import com.example.farmerama.data.util.Converters;
 
-@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 11)
+@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 12)
 @TypeConverters({Converters.class})
 public abstract class FarmeramaDatabase extends RoomDatabase {
 
@@ -27,6 +27,7 @@ public abstract class FarmeramaDatabase extends RoomDatabase {
     public abstract IUserDAO userDAO();
     public abstract IBarnDAO barnDAO();
     public abstract IExceededLogDAO exceededLogDAO();
+    public abstract IThresholdModificationDAO thresholdModificationDAO();
 
     public static FarmeramaDatabase getInstance(Context context){
         if(instance == null) {

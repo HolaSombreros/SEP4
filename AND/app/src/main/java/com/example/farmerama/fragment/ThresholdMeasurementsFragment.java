@@ -18,9 +18,7 @@ import com.example.farmerama.viewmodel.ThresholdViewModel;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThresholdMeasurementsFragment extends Fragment {
-    private TextView upperThreshold;
     private EditText upperThresholdValue;
-    private TextView lowerThreshold;
     private EditText lowerThresholdValue;
     private ThresholdViewModel viewModel;
     private Button button;
@@ -40,9 +38,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-       upperThreshold = view.findViewById(R.id.upperThresholdText);
        upperThresholdValue = view.findViewById(R.id.upperThreshold);
-       lowerThreshold = view.findViewById(R.id.lowerThresholdText);
        lowerThresholdValue = view.findViewById(R.id.lowerThreshold);
        button = view.findViewById(R.id.saveThreshold);
     }
@@ -73,7 +69,7 @@ public class ThresholdMeasurementsFragment extends Fragment {
                 viewModel.editThreshold(new Threshold(Double.parseDouble(lowerThresholdValue.getText().toString()),
                         Double.parseDouble(upperThresholdValue.getText().toString())));
             }
-
+            createThreshold.set(false);
         });
     }
 

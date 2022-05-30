@@ -67,7 +67,7 @@ public class AccountFragment extends Fragment {
                 email.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_alternate_email_24, 0, 0, 0);
                 name.setText(user.getUserName());
                 name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_account_circle_24, 0, 0, 0);
-                role.setText(user.getRole());
+                role.setText(user.getRole().getRole());
                 role.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_work_24, 0, 0, 0);
                 progressBar.setVisibility(View.VISIBLE);
                 storageRef = FirebaseStorage.getInstance().getReference().child("users/"+user.getUserId()+"/profile.jpg");

@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.User;
+import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.viewmodel.EditAccountViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -97,11 +98,12 @@ public class EditAccountFragment extends Fragment {
                 password.setText(user.getPassword());
 
 
-                if (user.getRole().equals("ADMINISTRATOR"))
+                if (user.getRole().equals(UserRole.ADMINISTRATOR))
                     role.setSelection(1);
-                else
+                else {
                     role.setSelection(0);
-                role.setEnabled(false);
+                    role.setEnabled(false);
+                }
             }
         });
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -122,7 +124,7 @@ public class EditAccountFragment extends Fragment {
                     role.getSelectedItem().toString())) {
                 User user = new User(firstName.getText().toString(), lastName.getText().toString(),
                         email.getText().toString(), password.getText().toString(),
-                        role.getSelectedItem().toString());
+                        UserRole.valueOf(role.getSelectedItem().toString()));
                 user.setUserId(viewModel.getUserId());
                 viewModel.saveAccount(user);
             }
