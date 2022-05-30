@@ -15,7 +15,7 @@ public class User {
     @NotNull(message = "Please fill in all the required fields")
     @NotEmpty(message = "Please fill in all the required fields")
     @Column(name = "name")
-    private String name;
+    private String userName;
 
     @NotNull(message = "Please fill in all the required fields")
     @NotEmpty(message = "Please fill in all the required fields")
@@ -37,7 +37,7 @@ public class User {
     }
 
     public User(String name, String email, String password, UserRole role) {
-        this.name = name;
+        this.userName = name;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -55,8 +55,8 @@ public class User {
         return password;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
     public UserRole getRole() {
@@ -67,8 +67,8 @@ public class User {
         this.userId = userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setEmail(String email) {
