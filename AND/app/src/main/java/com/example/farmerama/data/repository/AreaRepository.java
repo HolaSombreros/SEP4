@@ -205,7 +205,7 @@ public class AreaRepository {
                 @Override
                 public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                     if (response.isSuccessful()) {
-                        executorService.execute(() -> database.areaDAO().removeArea(specificArea.getValue()));
+                        executorService.execute(() -> database.areaDAO().removeAreaById(areaId));
                         ToastMessage.setToastMessage("The area has been successfully deleted");
                     }
                     else {

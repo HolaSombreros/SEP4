@@ -2,7 +2,6 @@ package com.example.farmerama.data.model.response;
 
 import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
-
 import java.time.LocalDateTime;
 
 public class LogResponse {

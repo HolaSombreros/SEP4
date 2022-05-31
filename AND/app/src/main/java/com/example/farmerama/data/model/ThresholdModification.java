@@ -6,9 +6,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+
 import com.example.farmerama.data.util.Converters;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity(tableName = "threshold_modifications_table")
 public class ThresholdModification {
@@ -19,7 +20,7 @@ public class ThresholdModification {
     @Embedded
     private User user;
     @TypeConverters(Converters.class)
-    private LocalDateTime changedOn;
+    private LocalDate changedOn;
     private double oldValue;
     private double newValue;
     @NonNull
@@ -27,7 +28,7 @@ public class ThresholdModification {
 
     public ThresholdModification(){}
 
-    public ThresholdModification(int modificationId, Threshold threshold, User user, LocalDateTime changedOn, double oldValue, double newValue, ThresholdLogType type) {
+    public ThresholdModification(int modificationId, Threshold threshold, User user, LocalDate changedOn, double oldValue, double newValue, ThresholdLogType type) {
         this.modificationId = modificationId;
         this.threshold = threshold;
         this.user = user;
@@ -61,11 +62,11 @@ public class ThresholdModification {
         this.user = user;
     }
 
-    public LocalDateTime getChangedOn() {
+    public LocalDate getChangedOn() {
         return changedOn;
     }
 
-    public void setChangedOn(LocalDateTime changedOn) {
+    public void setChangedOn(LocalDate changedOn) {
         this.changedOn = changedOn;
     }
 

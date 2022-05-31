@@ -212,11 +212,16 @@ public class UserRepository {
                 @Override
                 public void onFailure(Call<UserResponse> call, Throwable t) {
                     Log.i("Retrofit", "Could not retrieve data");
-                    loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), UserRole.OFFLINE));
+                    User user = new User(employee.getEmail(), employee.getPassword(), UserRole.OFFLINE);
+                    user.setUserName("OFFLINE");
+                    loggedInUser.setValue(user);
                 }
             });
         }
         else {
+            User user = new User(employee.getEmail(), employee.getPassword(), UserRole.OFFLINE);
+            user.setUserName("OFFLINE");
+            loggedInUser.setValue(user);
             ToastMessage.setToastMessage("OFFLINE MODE");
         }
     }
@@ -229,7 +234,7 @@ public class UserRepository {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if(response.isSuccessful()) {
-                        executorService.execute(() -> database.userDAO().removeUser(user.getValue()));
+                        executorService.execute(() -> database.userDAO().removeUserById(id));
                         ToastMessage.setToastMessage("Employee Deleted");
                     }
                     else{

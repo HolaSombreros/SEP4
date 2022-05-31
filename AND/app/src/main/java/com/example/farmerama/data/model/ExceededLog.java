@@ -2,9 +2,7 @@ package com.example.farmerama.data.model;
 
 import androidx.room.Entity;
 
-import com.example.farmerama.data.util.Converters;
 import androidx.annotation.NonNull;
-import androidx.room.TypeConverters;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +13,6 @@ public class ExceededLog {
     @NonNull
     private MeasurementType measurementType;
     private String areaName;
-    @TypeConverters(Converters.class)
     private LocalDateTime measuredDate;
     private double thresholdValue;
     private double exceededValue;

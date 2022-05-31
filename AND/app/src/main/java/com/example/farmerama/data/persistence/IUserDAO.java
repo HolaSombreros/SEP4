@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface IUserDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void registerUser(User user);
 
     @Query("DELETE FROM user_table")
@@ -23,6 +23,9 @@ public interface IUserDAO {
 
     @Delete
     void removeUser(User user);
+
+    @Query("DELETE FROM user_table WHERE userId = (:id)")
+    void removeUserById(int id);
 
     @Update
     void updateUser(User user);

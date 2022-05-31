@@ -14,10 +14,12 @@ import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.Threshold;
 import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.util.Converters;
 
-@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 16)
-@TypeConverters({Converters.class})
+import com.example.farmerama.data.util.Converters;
+import com.example.farmerama.data.util.MeasurementConverter;
+
+@Database(entities = {Area.class, Threshold.class, Measurement.class, User.class, Barn.class, ExceededLog.class, ThresholdModification.class}, version = 23)
+@TypeConverters({Converters.class,MeasurementConverter.class})
 public abstract class FarmeramaDatabase extends RoomDatabase {
 
     private static FarmeramaDatabase instance;

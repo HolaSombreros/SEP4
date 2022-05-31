@@ -14,11 +14,10 @@ import java.util.List;
 @Dao
 public interface IBarnDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createBarn(Barn barn);
 
     @Query("DELETE FROM barn_table")
-
     void removeAllBarns();
 
     @Update
