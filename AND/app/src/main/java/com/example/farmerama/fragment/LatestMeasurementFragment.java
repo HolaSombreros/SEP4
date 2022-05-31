@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.farmerama.R;
@@ -29,6 +30,7 @@ public class LatestMeasurementFragment extends Fragment {
     private TextView typeTextView;
     private MeasurementsViewModel viewModel;
     private DonutProgressView donut;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,11 +51,14 @@ public class LatestMeasurementFragment extends Fragment {
         timeText = view.findViewById(R.id.latestTemperature_time);
         typeTextView = view.findViewById(R.id.latestTemperature_measurementType);
         donut = view.findViewById(R.id.latestMeasurements_donut);
+        progressBar = view.findViewById(R.id.latestProgressBar);
     }
 
     private void setUpViews() {
+        progressBar.setVisibility(View.VISIBLE);
         viewModel.getLatestMeasurement().observe(getViewLifecycleOwner(), measurement -> {
             if (measurement != null) {
+                progressBar.setVisibility(View.INVISIBLE);
                 List<DonutSection> donutSection = new ArrayList<>();
                 donut.clear();
                 donut.setCap(measurement.getMeasurementType().getMaximum());
