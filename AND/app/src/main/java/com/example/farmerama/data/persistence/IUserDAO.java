@@ -21,9 +21,6 @@ public interface IUserDAO {
     @Query("DELETE FROM user_table")
     void removeUsers();
 
-    @Delete
-    void removeUser(User user);
-
     @Query("DELETE FROM user_table WHERE userId = (:id)")
     void removeUserById(int id);
 

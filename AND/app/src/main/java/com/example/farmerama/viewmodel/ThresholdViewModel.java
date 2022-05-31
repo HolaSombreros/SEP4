@@ -8,12 +8,15 @@ import androidx.lifecycle.LiveData;
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.Threshold;
+import com.example.farmerama.data.util.ToastMessage;
 
 import java.util.List;
 
 public class ThresholdViewModel extends FactoryViewModel {
     private int areaId;
     private MeasurementType measurementType;
+    private double max;
+    private double min;
 
     public ThresholdViewModel(@NonNull Application application) {
         super(application);
@@ -35,16 +38,34 @@ public class ThresholdViewModel extends FactoryViewModel {
         getAreaRepository().retrieveAreas();
     }
 
-
-
-    public void editThreshold(Threshold threshold) {
-        if(getUserRepository().getLoggedInUser().getValue().getUserId() != 0)
-            getThresholdRepository().editThreshold(areaId, measurementType, threshold, getUserRepository().getLoggedInUser().getValue().getUserId());
+    public void editThreshold(String maximum, String minimum) {
+        if(verifyThresholdsValues(maximum, minimum))
+            if(getUserRepository().getLoggedInUser().getValue().getUserId() != 0)
+                getThresholdRepository().editThreshold(areaId, measurementType, new Threshold(min, max), getUserRepository().getLoggedInUser().getValue().getUserId());
     }
 
-    public void createThreshold(Threshold threshold) {
-        if(getUserRepository().getLoggedInUser().getValue().getUserId() != 0) {
-            getThresholdRepository().createThreshold(areaId, measurementType, threshold);
+    public boolean verifyThresholdsValues(String maximum, String minimum) {
+        if(maximum.trim().equals("")|| minimum.trim().equals("")) {
+            ToastMessage.setToastMessage("Cannot create threshold with no value");
+            return false;
+        }
+        try{
+            max = Double.parseDouble(maximum);
+            min = Double.parseDouble(minimum);
+            if(max < 0 || min <0)
+                return false;
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void createThreshold(String maximum, String minimum) {
+        if(verifyThresholdsValues(maximum, minimum)) {
+            if(getUserRepository().getLoggedInUser().getValue().getUserId() != 0) {
+                getThresholdRepository().createThreshold(areaId, measurementType, new Threshold(min, max));
+            }
         }
     }
 
