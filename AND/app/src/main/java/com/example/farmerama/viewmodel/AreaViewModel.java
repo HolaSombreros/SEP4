@@ -2,12 +2,10 @@ package com.example.farmerama.viewmodel;
 
 import android.app.Application;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
-import com.example.farmerama.data.repository.AreaRepository;
 
 import java.util.ArrayList;
 import java.util.List;

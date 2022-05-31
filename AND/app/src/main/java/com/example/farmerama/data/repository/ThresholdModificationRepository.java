@@ -6,12 +6,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.ThresholdModification;
 import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
-import com.example.farmerama.data.persistence.IThresholdModificationDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;

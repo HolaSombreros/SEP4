@@ -1,11 +1,8 @@
 package com.example.farmerama.data.model;
 
-
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.example.farmerama.data.util.Converters;
-import com.example.farmerama.data.util.DateFormatter;
 import androidx.annotation.NonNull;
 import androidx.room.TypeConverters;
 

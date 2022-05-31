@@ -3,16 +3,12 @@ package com.example.farmerama.viewmodel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
-import com.example.farmerama.data.repository.AreaRepository;
-import com.example.farmerama.data.repository.ExceededLogsRepository;
-import com.example.farmerama.data.repository.ThresholdRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

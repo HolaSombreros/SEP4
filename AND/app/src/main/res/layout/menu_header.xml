@@ -5,10 +5,10 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#3875a1"
-    >
+    android:background="#3875a1">
+
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profilePicture_imageView"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="28dp"
@@ -18,17 +18,17 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
     <TextView
-        android:id="@+id/UsernameHeader"
+        android:id="@+id/usernameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:text="@string/guest"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicture_imageView" />
 
     <TextView
-        android:id="@+id/EmailHeader"
+        android:id="@+id/emailHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -36,7 +36,7 @@
         android:text="@string/no_email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameHeader"
+        app:layout_constraintTop_toBottomOf="@+id/usernameHeader"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline

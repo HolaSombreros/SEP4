@@ -1,10 +1,5 @@
 package com.example.farmerama;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -29,9 +22,6 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.content.SharedPreferences;
-
-import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
@@ -50,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationDrawer;
     private MainActivityViewModel viewModel;
+    private TextView usernameHeader;
+    private TextView emailHeader;
+    private ImageView profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,25 +65,19 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        View header = navigationDrawer.getHeaderView(0);
+        usernameHeader = header.findViewById(R.id.usernameHeader);
+        emailHeader = header.findViewById(R.id.emailHeader);
+        profilePicture = header.findViewById(R.id.profilePicture_imageView);
     }
 
     private void setUpViews() {
         viewModel.retrieveAreas();
         viewModel.retrieveBarns();
-        NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("Channel for the notification regarding exceeding thresholds");
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
 
         ToastMessage.getToastMessage().observe(this, toast -> {
             if (!toast.isEmpty())
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
-        });
-
-        viewModel.getTodayLogs().observeForever(exceededLogs -> {
-            for (int i = 0; i < exceededLogs.size(); i++) {
-                publishNotification(exceededLogs.get(i), i);
-            }
         });
     }
 
@@ -119,13 +106,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
-            navigationDrawer.getMenu().getItem(i).setVisible(false);
-        }
-        invalidateOptionsMenu();
-        navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
-        navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
-
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
 
@@ -150,19 +130,19 @@ public class MainActivity extends AppCompatActivity {
                 if (viewModel.isGettingNotifications())
                     WorkManager.getInstance(this).enqueueUniquePeriodicWork("notification", ExistingPeriodicWorkPolicy.KEEP, request);
 
-                TextView usernameHeader = findViewById(R.id.UsernameHeader);
-                TextView emailHeader = findViewById(R.id.EmailHeader);
-                ImageView profilePicture = findViewById(R.id.imageView);
-                if (usernameHeader != null && emailHeader != null) {
-                    usernameHeader.setText(loggedInUser.getUserName());
-                    emailHeader.setText(loggedInUser.getEmail());
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/" + loggedInUser.getUserId() + "/profile.jpg");
-                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profilePicture));
-                }
+                usernameHeader.setText(loggedInUser.getUserName());
+                emailHeader.setText(loggedInUser.getEmail());
+                profilePicture.setVisibility(View.VISIBLE);
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("users/" + loggedInUser.getUserId() + "/profile.jpg");
+                storageRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(profilePicture));
                 toolbar.setVisibility(View.VISIBLE);
-                for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
-                    navigationDrawer.getMenu().getItem(i).setVisible(true);
+
+                for (int i=0; i<navigationDrawer.getMenu().size();i++) {
+                    for (int j=0; j< navigationDrawer.getMenu().getItem(i).getSubMenu().size(); j++) {
+                        navigationDrawer.getMenu().getItem(i).getSubMenu().getItem(j).setVisible(true);
+                    }
                 }
+
                 if (loggedInUser.getRole().equals(UserRole.EMPLOYEE)) {
                     navigationDrawer.getMenu().findItem(R.id.registerFragment).setVisible(false);
                     navigationDrawer.getMenu().findItem(R.id.thresholdModificationFragment).setVisible(false);
@@ -178,44 +158,27 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 viewModel.setLogged(true);
-            }
-            else {
-                for (int i = 0; i < navigationDrawer.getMenu().size(); i++) {
-                    navigationDrawer.getMenu().getItem(i).setVisible(false);
-                }
-                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
-                navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
-
+            } else {
                 WorkManager.getInstance(this).cancelAllWork();
 
-                viewModel.removeLoggedInUser();
-                navController.navigate(R.id.loginFragment);
-                viewModel.setLogged(false);
-            }
+                profilePicture.setVisibility(View.INVISIBLE);
+                usernameHeader.setText("Guest");
+                emailHeader.setText("Email");
 
+                for (int i=0; i<navigationDrawer.getMenu().size();i++) {
+                    for (int j=0; j< navigationDrawer.getMenu().getItem(i).getSubMenu().size(); j++) {
+                        navigationDrawer.getMenu().getItem(i).getSubMenu().getItem(j).setVisible(false);
+                    }
+                }
+                navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
+                navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
+
+                WorkManager.getInstance(this).cancelAllWork();
+                viewModel.setLogged(false);
+                navController.navigate(R.id.loginFragment);
+            }
             invalidateOptionsMenu();
         });
-    }
-
-    private void publishNotification(ExceededLog log, int id) {
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0,
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
-                .setSmallIcon(R.mipmap.application_launcher)
-                .setContentTitle("Measurement out of the thresholds")
-                .setContentText(String.format("Exceeded %s in area %s", log.getMeasurementType(), log.getAreaName()))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setGroup("Exceeded Measurements")
-                .setContentIntent(resultPendingIntent)
-                .setChannelId("22");
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
-        notificationManager.notify(id, builder.build());
     }
 
     @Override
@@ -240,6 +203,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
+        return super.onSupportNavigateUp();
     }
 }

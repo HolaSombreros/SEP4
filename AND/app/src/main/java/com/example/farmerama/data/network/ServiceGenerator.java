@@ -2,7 +2,6 @@ package com.example.farmerama.data.network;
 
 import com.example.farmerama.data.util.EndpointsHelper;
 
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

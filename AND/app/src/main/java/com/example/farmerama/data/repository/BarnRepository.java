@@ -6,12 +6,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.response.BarnResponse;
 import com.example.farmerama.data.network.BarnApi;
 import com.example.farmerama.data.network.ServiceGenerator;
-import com.example.farmerama.data.persistence.IBarnDAO;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ToastMessage;
