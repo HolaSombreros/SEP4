@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.ExceededLog;
+import com.example.farmerama.data.util.DateFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull LogsAdapter.ViewHolder holder, int position) {
         holder.thresholdValue.setText("Threshold: " + logs.get(position).getThresholdValue());
         holder.exceededValue.setText("Exceeded: " + logs.get(position).getExceededValue());
-        holder.date.setText("Date: " + logs.get(position).getMeasuredDate());
+        holder.date.setText(DateFormatter.formatDate(logs.get(position).getMeasuredDate().toString()));
     }
 
     @Override

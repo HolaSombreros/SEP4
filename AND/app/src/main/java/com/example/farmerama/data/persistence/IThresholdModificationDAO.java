@@ -11,7 +11,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.List;
 @Dao
 public interface IThresholdModificationDAO {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createThresholdModification(ThresholdModification thresholdModification);
 
     @Query("DELETE FROM threshold_modifications_table")

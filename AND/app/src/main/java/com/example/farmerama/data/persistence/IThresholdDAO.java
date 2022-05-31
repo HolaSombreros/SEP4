@@ -12,7 +12,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 @Dao
 public interface IThresholdDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createThreshold(Threshold threshold);
 
     @Query("DELETE FROM threshold_table")

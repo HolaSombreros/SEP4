@@ -15,11 +15,8 @@ import java.util.List;
 @Dao
 public interface IMeasurementDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createMeasurement(Measurement measurement);
-
-//    @Query("SELECT * FROM measurement_table")
-//    ListenableFuture<LiveData<List<Measurement>>> getMeasurements();
 
     @Query("DELETE FROM measurement_table")
     void removeMeasurements();

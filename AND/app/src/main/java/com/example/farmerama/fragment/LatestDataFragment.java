@@ -51,6 +51,7 @@ public class LatestDataFragment extends Fragment {
     }
 
     private void setUpViews() {
+        viewModel.setAreaId(1);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
         viewPager2.setAdapter(adapter);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
