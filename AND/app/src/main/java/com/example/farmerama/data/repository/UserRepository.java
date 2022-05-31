@@ -217,6 +217,7 @@ public class UserRepository {
             });
         }
         else {
+            loggedInUser.setValue(new User(employee.getEmail(), employee.getPassword(), UserRole.OFFLINE));
             ToastMessage.setToastMessage("OFFLINE MODE");
         }
     }
@@ -229,7 +230,7 @@ public class UserRepository {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if(response.isSuccessful()) {
-                        executorService.execute(() -> database.userDAO().removeUser(user.getValue()));
+                        executorService.execute(() -> database.userDAO().removeUserById(id));
                         ToastMessage.setToastMessage("Employee Deleted");
                     }
                     else{

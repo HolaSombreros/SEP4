@@ -54,7 +54,6 @@ public class EmployeesFragment extends Fragment {
 
         adapter.setOnDeleteListener(user -> {
             employeeViewModel.deleteEmployeeById(user);
-            employeeViewModel.getUserById(user.getUserId());
             employeeViewModel.retrieveAllEmployees();
         });
     }
