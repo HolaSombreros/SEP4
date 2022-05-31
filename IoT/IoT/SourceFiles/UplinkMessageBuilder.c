@@ -65,3 +65,7 @@ void uplinkMessageBuilder_setSoundData(uint16_t data) {
 		_validationBits |= 1 << 0;
 	}
 }
+
+void uplinkMessageBuilder_setSystemErrorState(){
+	_validationBits = 0;
+}

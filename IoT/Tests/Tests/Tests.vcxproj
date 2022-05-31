@@ -34,7 +34,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\4. SEMESTER\SEP4\IoT\IoT\HeaderFiles;D:\4. SEMESTER\SEP4\IoT\Tests\FFF;D:\4. SEMESTER\SEP4\IoT\Tests\FakeFreeRTOS;D:\SEP4\IoT\Tests\FakeFreeRTOS;D:\SEP4\IoT\Tests\FFF;D:\SEP4\IoT\IoT\HeaderFiles;.;$(IncludePath)</IncludePath>
+    <IncludePath>.;D:\SEP4\IoT\Tests\FakeFreeRTOS;D:\SEP4\IoT\Tests\FFF;D:\SEP4\IoT\IoT\HeaderFiles;D:\4. SEMESTER\SEP4\IoT\IoT\HeaderFiles;D:\4. SEMESTER\SEP4\IoT\Tests\FFF;D:\4. SEMESTER\SEP4\IoT\Tests\FakeFreeRTOS;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\..\IoT\SourceFiles\Farmerama.c" />
