@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface IExceededLogDAO {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createExceededLog(ExceededLog log);
 
     @Query("SELECT * FROM exceeded_log_table")

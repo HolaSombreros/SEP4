@@ -10,8 +10,7 @@ public class UserResponse {
     private String password;
     private UserRole role;
 
-    public User getUser(){
-
+    public User getUser() {
         return new User(userId, userName, email, password, role);
     }
 }

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.TypeConverters;
 
-import com.example.farmerama.data.util.Converters;
+import com.example.farmerama.data.util.MeasurementConverter;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +17,7 @@ public class Measurement {
     private boolean latest;
     private int areaId;
     private double value;
-    @TypeConverters(Converters.class)
+    @TypeConverters(MeasurementConverter.class)
     private LocalDateTime measuredDate;
     @NonNull
     private MeasurementType measurementType;
