@@ -39,6 +39,10 @@ public class Area implements Serializable{
     @JoinColumn(name = "area_id")
     private List<Measurement> measurements;
 
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "area_id")
+    private List<Threshold> thresholds;
+
     public Area() {
     }
 

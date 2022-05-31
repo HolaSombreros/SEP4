@@ -11,7 +11,7 @@ public class ThresholdLogs {
     @Column(name = "log_id")
     private int logId;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "threshold_id")
     private Threshold threshold;
 

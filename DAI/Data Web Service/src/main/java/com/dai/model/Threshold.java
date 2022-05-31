@@ -1,6 +1,7 @@
 package com.dai.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "threshold")
@@ -21,9 +22,13 @@ public class Threshold {
     @Column(name = "type")
     private ThresholdType type;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private Area area;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "threshold_id")
+    private List<ThresholdLogs> thresholdLogs;
 
     protected Threshold() {
     }
