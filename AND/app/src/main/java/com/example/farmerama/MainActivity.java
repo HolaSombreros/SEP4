@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
-                if (viewModel.isGettingNotifications())
+                if (viewModel.isGettingNotifications() && (loggedInUser.getRole() == UserRole.EMPLOYEE || loggedInUser.getRole() == UserRole.ADMINISTRATOR))
                     WorkManager.getInstance(this).enqueueUniquePeriodicWork("notification", ExistingPeriodicWorkPolicy.KEEP, request);
 
                 usernameHeader.setText(loggedInUser.getUserName());
