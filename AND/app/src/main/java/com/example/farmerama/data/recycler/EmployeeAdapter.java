@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

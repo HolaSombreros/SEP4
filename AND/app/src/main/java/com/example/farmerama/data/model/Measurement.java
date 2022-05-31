@@ -1,6 +1,5 @@
 package com.example.farmerama.data.model;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.TypeConverters;
@@ -8,7 +7,6 @@ import androidx.room.TypeConverters;
 import com.example.farmerama.data.util.MeasurementConverter;
 
 import java.time.LocalDateTime;
-
 
 @Entity(tableName = "measurement_table", primaryKeys = {"measurementId", "measurementType"})
 public class Measurement {

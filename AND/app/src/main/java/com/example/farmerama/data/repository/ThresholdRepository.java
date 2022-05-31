@@ -8,19 +8,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.Threshold;
-import com.example.farmerama.data.model.ThresholdModification;
-import com.example.farmerama.data.model.response.ThresholdModificationsResponse;
 import com.example.farmerama.data.model.response.ThresholdResponse;
 import com.example.farmerama.data.network.ServiceGenerator;
 import com.example.farmerama.data.persistence.FarmeramaDatabase;
-import com.example.farmerama.data.persistence.IThresholdDAO;
 import com.example.farmerama.data.util.ConnectivityChecker;
 import com.example.farmerama.data.util.ErrorReader;
 import com.example.farmerama.data.util.ToastMessage;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

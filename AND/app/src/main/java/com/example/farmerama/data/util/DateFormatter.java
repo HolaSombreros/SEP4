@@ -2,9 +2,6 @@ package com.example.farmerama.data.util;
 
 import static java.time.LocalDateTime.parse;
 
-import androidx.room.TypeConverter;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

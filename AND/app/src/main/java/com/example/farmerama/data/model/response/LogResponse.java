@@ -4,7 +4,6 @@ import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.MeasurementType;
 import java.time.LocalDateTime;
 
-
 public class LogResponse {
     private String measuredDate;
     private int measurementId;

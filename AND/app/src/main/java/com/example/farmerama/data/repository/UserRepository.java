@@ -43,6 +43,7 @@ public class UserRepository {
         users = new MutableLiveData<>();
         user = new MutableLiveData<>();
         loggedInUser = new MutableLiveData<>();
+        loggedInUser.setValue(null);
         database = FarmeramaDatabase.getInstance(application);
         executorService = Executors.newFixedThreadPool(5);
     }

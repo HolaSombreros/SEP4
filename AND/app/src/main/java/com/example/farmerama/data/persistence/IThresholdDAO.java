@@ -9,7 +9,6 @@ import androidx.room.Update;
 import com.example.farmerama.data.model.Threshold;
 import com.google.common.util.concurrent.ListenableFuture;
 
-
 @Dao
 public interface IThresholdDAO {
 

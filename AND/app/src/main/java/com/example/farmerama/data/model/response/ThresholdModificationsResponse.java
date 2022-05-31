@@ -3,8 +3,8 @@ package com.example.farmerama.data.model.response;
 import com.example.farmerama.data.model.ThresholdLogType;
 import com.example.farmerama.data.model.ThresholdModification;
 
-
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 public class ThresholdModificationsResponse {

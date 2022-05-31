@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.model.ThresholdModification;
 
 import java.util.ArrayList;

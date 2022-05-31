@@ -4,18 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.AreaRepository;
-import com.example.farmerama.data.repository.BarnRepository;
-import com.example.farmerama.data.repository.ExceededLogsRepository;
-import com.example.farmerama.data.repository.ThresholdRepository;
-import com.example.farmerama.data.repository.UserRepository;
-
-import java.util.List;
 
 public class MainActivityViewModel extends FactoryViewModel {
 
@@ -40,21 +31,13 @@ public class MainActivityViewModel extends FactoryViewModel {
 
     public void logOut() {
         getUserRepository().logOut();
+        loginPreferences.edit().putString("userEmail", "null").apply();
+        loginPreferences.edit().putString("userPassword", "null").apply();
     }
 
     public void saveLoggedInUser(User user) {
         loginPreferences.edit().putString("userEmail", user.getEmail()).apply();
         loginPreferences.edit().putString("userPassword", user.getPassword()).apply();
-    }
-
-    public void removeLoggedInUser() {
-        loginPreferences.edit().putString("userEmail", "null").apply();
-        loginPreferences.edit().putString("userPassword", "null").apply();
-    }
-
-
-    public LiveData<List<ExceededLog>> getTodayLogs() {
-        return getExceededLogsRepository().getLatestLogs();
     }
 
     public void setLogged(boolean b) {
