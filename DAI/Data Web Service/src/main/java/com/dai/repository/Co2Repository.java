@@ -32,10 +32,10 @@ public interface Co2Repository extends JpaRepository<Measurement, Integer> {
     List<SentThresholdLog> getAllExceedingMin(@Param("area_id") int area_id, @Param("type") String type, @Param("date")Date date);
 
     @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT co2 as value, minimum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
-            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , 115, CURRENT_TIMESTAMP) AND type like :type")
+            "WHERE value < threshold AND measured_date >= DATEADD(MINUTE , 110, CURRENT_TIMESTAMP) AND type like :type")
     List<NotificationLogs> getAllMin(@Param("type")String type);
 
     @Query(nativeQuery = true, value = "SELECT value, threshold, type, areaName FROM (SELECT co2 as value, maximum as threshold, type, name as areaName, measured_date from measurement join threshold t on measurement.area_id = t.area_id join area a on a.area_id = measurement.area_id) measurements\n" +
-            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , 115, CURRENT_TIMESTAMP) AND type like :type")
+            "WHERE value > threshold AND measured_date >= DATEADD(MINUTE , 110, CURRENT_TIMESTAMP) AND type like :type")
     List<NotificationLogs> getAllMax(@Param("type")String type);
 }
