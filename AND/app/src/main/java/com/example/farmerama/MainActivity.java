@@ -1,9 +1,5 @@
 package com.example.farmerama;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -28,7 +22,6 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import com.example.farmerama.data.model.ExceededLog;
 import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.data.util.NotificationWorker;
 import com.example.farmerama.data.util.ToastMessage;
@@ -81,20 +74,10 @@ public class MainActivity extends AppCompatActivity {
     private void setUpViews() {
         viewModel.retrieveAreas();
         viewModel.retrieveBarns();
-        NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("Channel for the notification regarding exceeding thresholds");
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
 
         ToastMessage.getToastMessage().observe(this, toast -> {
             if (!toast.isEmpty())
                 Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
-        });
-
-        viewModel.getTodayLogs().observeForever(exceededLogs -> {
-            for (int i = 0; i < exceededLogs.size(); i++) {
-                publishNotification(exceededLogs.get(i), i);
-            }
         });
     }
 
@@ -176,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
                 viewModel.setLogged(true);
             } else {
+                WorkManager.getInstance(this).cancelAllWork();
+
                 profilePicture.setVisibility(View.INVISIBLE);
                 usernameHeader.setText("Guest");
                 emailHeader.setText("Email");
@@ -194,27 +179,6 @@ public class MainActivity extends AppCompatActivity {
             }
             invalidateOptionsMenu();
         });
-    }
-
-    private void publishNotification(ExceededLog log, int id) {
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0,
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), "22")
-                .setSmallIcon(R.mipmap.application_launcher)
-                .setContentTitle("Measurement out of the thresholds")
-                .setContentText(String.format("Exceeded %s in area %s", log.getMeasurementType(), log.getAreaName()))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setGroup("Exceeded Measurements")
-                .setContentIntent(resultPendingIntent)
-                .setChannelId("22");
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
-        notificationManager.notify(id, builder.build());
     }
 
     @Override

@@ -4,15 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Measurement;
 import com.example.farmerama.data.model.MeasurementType;
-import com.example.farmerama.data.repository.AreaRepository;
-import com.example.farmerama.data.repository.MeasurementRepository;
 
 import java.util.List;
 

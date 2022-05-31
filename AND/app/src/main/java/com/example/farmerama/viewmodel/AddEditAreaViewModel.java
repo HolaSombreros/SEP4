@@ -2,15 +2,11 @@ package com.example.farmerama.viewmodel;
 
 import android.app.Application;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.farmerama.data.model.Area;
 import com.example.farmerama.data.model.Barn;
 import com.example.farmerama.data.model.User;
-import com.example.farmerama.data.repository.AreaRepository;
-import com.example.farmerama.data.repository.BarnRepository;
-import com.example.farmerama.data.repository.UserRepository;
 import com.example.farmerama.data.util.ToastMessage;
 
 import java.util.List;

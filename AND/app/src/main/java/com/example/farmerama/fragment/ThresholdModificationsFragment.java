@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmerama.R;
-import com.example.farmerama.data.model.MeasurementType;
 import com.example.farmerama.data.recycler.ThresholdModificationsAdapter;
 import com.example.farmerama.viewmodel.ThresholdModificationsViewModel;
 
@@ -51,8 +49,6 @@ public class ThresholdModificationsFragment extends Fragment {
     }
 
     private void setupViews() {
-
-
         date.setText(LocalDate.now().toString());
         progressBar.setVisibility(View.VISIBLE);
 
@@ -71,19 +67,19 @@ public class ThresholdModificationsFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.retrieveThresholdsModifications(date.getText().toString());
+                viewModel.retrieveThresholdModifications(date.getText().toString());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
 
-        viewModel.retrieveThresholdsModifications(date.getText().toString());
+        viewModel.retrieveThresholdModifications(date.getText().toString());
 
         recycler.hasFixedSize();
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         ThresholdModificationsAdapter adapter = new ThresholdModificationsAdapter();
-        viewModel.getThresholdsModifications().observe(getViewLifecycleOwner(), thresholdModifications -> {
+        viewModel.getThresholdModifications().observe(getViewLifecycleOwner(), thresholdModifications -> {
             adapter.setModifications(thresholdModifications);
             progressBar.setVisibility(View.INVISIBLE);
         });

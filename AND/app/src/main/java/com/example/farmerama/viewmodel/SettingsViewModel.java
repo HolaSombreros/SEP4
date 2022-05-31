@@ -4,10 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.lifecycle.AndroidViewModel;
-
-import com.example.farmerama.data.repository.UserRepository;
-
 public class SettingsViewModel extends FactoryViewModel {
 
     private SharedPreferences notificationPreferences;

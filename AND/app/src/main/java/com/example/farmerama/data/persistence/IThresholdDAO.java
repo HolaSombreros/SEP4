@@ -7,11 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.farmerama.data.model.Threshold;
-import com.example.farmerama.data.model.ThresholdModification;
 import com.google.common.util.concurrent.ListenableFuture;
-
-import java.util.List;
-
 
 @Dao
 public interface IThresholdDAO {

@@ -24,8 +24,6 @@ import com.example.farmerama.data.model.UserRole;
 import com.example.farmerama.viewmodel.AddEditAreaViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AddEditAreaFragment extends Fragment {
 

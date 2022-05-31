@@ -16,11 +16,11 @@ public class ThresholdModificationsViewModel extends FactoryViewModel {
         super(application);
     }
 
-    public void retrieveThresholdsModifications(String date) {
+    public void retrieveThresholdModifications(String date) {
         getThresholdModificationRepository().retrieveThresholdModifications(date);
     }
 
-    public LiveData<List<ThresholdModification>> getThresholdsModifications() {
+    public LiveData<List<ThresholdModification>> getThresholdModifications() {
         return getThresholdModificationRepository().getThresholdModifications();
     }
 }
