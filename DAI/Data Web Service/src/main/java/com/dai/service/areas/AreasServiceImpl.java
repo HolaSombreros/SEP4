@@ -76,6 +76,9 @@ public class AreasServiceImpl implements AreasService {
 
     @Override
     public Area delete(int id) throws Exception {
+
+        //Areas with these ids contains data that is used for SEP4 data analytics and therefore should not be deleted
+        //In a production scenario, this if statement would be removed
         if (id == 1 || id == 9 || id == 14) {
             throw new Exception("Cannot delete area");
         }
