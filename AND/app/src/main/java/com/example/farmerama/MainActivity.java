@@ -122,12 +122,16 @@ public class MainActivity extends AppCompatActivity {
     private void setUpLoggedInUser() {
         PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
 
+        if (viewModel.isGettingNotifications()) {
+            WorkManager.getInstance(this).cancelAllWork();
+        }
+
         viewModel.getLoggedInUser().observe(this, loggedInUser -> {
             if (loggedInUser != null) {
                 Toast.makeText(this, "Logged in user", Toast.LENGTH_SHORT).show();
                 viewModel.saveLoggedInUser(loggedInUser);
 
-                if (viewModel.isGettingNotifications())
+                if (viewModel.isGettingNotifications() && (loggedInUser.getRole() == UserRole.EMPLOYEE || loggedInUser.getRole() == UserRole.ADMINISTRATOR))
                     WorkManager.getInstance(this).enqueueUniquePeriodicWork("notification", ExistingPeriodicWorkPolicy.KEEP, request);
 
                 usernameHeader.setText(loggedInUser.getUserName());
@@ -159,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
                 viewModel.setLogged(true);
             } else {
-                WorkManager.getInstance(this).cancelAllWork();
-
                 profilePicture.setVisibility(View.INVISIBLE);
                 usernameHeader.setText("Guest");
                 emailHeader.setText("Email");
@@ -173,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
                 navigationDrawer.getMenu().findItem(R.id.latestDataFragment).setVisible(true);
                 navigationDrawer.getMenu().findItem(R.id.loginFragment).setVisible(true);
 
-                WorkManager.getInstance(this).cancelAllWork();
                 viewModel.setLogged(false);
                 navController.navigate(R.id.loginFragment);
             }
