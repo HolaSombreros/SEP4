@@ -1,131 +1,89 @@
-/*
-* main.c
-* Author : IHA
-*
-* Example main file including LoRaWAN setup
-* Just for inspiration :)
-*/
-
 #include <stdio.h>
 #include <avr/io.h>
-
-#include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-#include <semphr.h>
-
 #include <stdio_driver.h>
 #include <serial.h>
-
- // Needed for LoRaWAN
+#include <ATMEGA_FreeRTOS.h>
+#include <queue.h>
+#include <event_groups.h>
+#include <hih8120.h>
+#include <mh_z19.h>
+#include <sen14262.h>
 #include <lora_driver.h>
-#include <status_leds.h>
+#include <semphr.h>
+#include <rc_servo.h>
+#include <message_buffer.h>
 
-// define two Tasks
-void task1( void *pvParameters );
-void task2( void *pvParameters );
+#include <Farmerama.h>
+#include <HumidityTemperatureTask.h>
+#include <CO2Task.h>
+#include <SoundTask.h>
+#include <SenderTask.h>
+#include <ServoTask.h>
+#include <Configuration.h>
+#include <ReceiverTask.h>
 
-// define semaphore handle
-SemaphoreHandle_t xTestSemaphore;
+static QueueHandle_t _humidityQueue;
+static QueueHandle_t _temperatureQueue;
+static QueueHandle_t _co2Queue;
+static QueueHandle_t _soundQueue;
+static QueueHandle_t _servoQueue;
+static QueueHandle_t _senderQueue;
 
-// Prototype for LoRaWAN handler
-void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
+static EventGroupHandle_t _actEventGroup;
+static EventGroupHandle_t _doneEventGroup;
 
-/*-----------------------------------------------------------*/
-void create_tasks_and_semaphores(void)
-{
-	// Semaphores are useful to stop a Task proceeding, where it should be paused to wait,
-	// because it is sharing a resource, such as the Serial port.
-	// Semaphores should only be used whilst the scheduler is running, but we can set it up here.
-	if ( xTestSemaphore == NULL )  // Check to confirm that the Semaphore has not already been created.
-	{
-		xTestSemaphore = xSemaphoreCreateMutex();  // Create a mutex semaphore.
-		if ( ( xTestSemaphore ) != NULL )
-		{
-			xSemaphoreGive( ( xTestSemaphore ) );  // Make the mutex available for use, by initially "Giving" the Semaphore.
-		}
-	}
+static SemaphoreHandle_t _mutex;
 
-	xTaskCreate(
-	task1
-	,  "Task1"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
+static MessageBufferHandle_t _messageBuffer;
 
-	xTaskCreate(
-	task2
-	,  "Task2"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
+static void _createQueues(void) {
+	_humidityQueue = xQueueCreate(10, sizeof(uint16_t));
+	_temperatureQueue = xQueueCreate(10, sizeof(int16_t));
+	_co2Queue = xQueueCreate(10, sizeof(uint16_t));
+	_soundQueue = xQueueCreate(10, sizeof(uint16_t));
+	_servoQueue = xQueueCreate(10, sizeof(int16_t));
+	_messageBuffer = xMessageBufferCreate(sizeof(lora_driver_payload_t)*5);
+	_senderQueue = xQueueCreate(10, sizeof(lora_driver_payload_t));
 }
 
-/*-----------------------------------------------------------*/
-void task1( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 500/portTICK_PERIOD_MS; // 500 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task1"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA0);
-	}
+static void _createEventGroups(void) {
+	_actEventGroup = xEventGroupCreate();
+	_doneEventGroup = xEventGroupCreate();
 }
 
-/*-----------------------------------------------------------*/
-void task2( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 1000/portTICK_PERIOD_MS; // 1000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task2"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA7);
-	}
+static void _createMutexes(void){
+	_mutex = xSemaphoreCreateMutex();
 }
 
-/*-----------------------------------------------------------*/
-void initialiseSystem()
-{
-	// Set output ports for leds used in the example
-	DDRA |= _BV(DDA0) | _BV(DDA7);
+static void _initDrivers(void) {
+	puts("Initializing drivers...");
+	hih8120_initialise();
+	mh_z19_initialise(ser_USART3);
+	rc_servo_initialise();
+	sen14262_initialise();
+	lora_driver_initialise(ser_USART1, _messageBuffer);
+}
 
-	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
+static void _createTasks(void) {
+	farmerama_create(_senderQueue, _humidityQueue, _temperatureQueue, _co2Queue, _soundQueue, _servoQueue, _actEventGroup, _doneEventGroup);
+	humidityTemperatureTask_create(_humidityQueue, _temperatureQueue, _actEventGroup, _doneEventGroup);
+	co2Task_create(_co2Queue, _actEventGroup, _doneEventGroup);
+	soundTask_create(_soundQueue, _actEventGroup, _doneEventGroup);
+	servoTask_create(_servoQueue);
+	senderTask_create(_senderQueue);
+	receiverTask_create(_messageBuffer);
+}
+
+int main(void) {
 	stdio_initialise(ser_USART0);
-	// Let's create some tasks
-	create_tasks_and_semaphores();
-
-	// vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-	// Status Leds driver
-	status_leds_initialise(5); // Priority 5 for internal task
-	// Initialise the LoRaWAN driver without down-link buffer
-	lora_driver_initialise(1, NULL);
-	// Create LoRaWAN task and start it up with priority 3
-	lora_handler_initialise(3);
+	
+	_createQueues();
+	_initDrivers();
+	_createEventGroups();
+	_createTasks();
+	_createMutexes();
+	configuration_create(_mutex);
+	
+	puts("Starting...");
+	vTaskStartScheduler();
 }
-
-/*-----------------------------------------------------------*/
-int main(void)
-{
-	initialiseSystem(); // Must be done as the very first thing!!
-	printf("Program Started!!\n");
-	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.
-
-	/* Replace with your application code */
-	while (1)
-	{
-	}
-}
-

@@ -24,24 +24,7 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
           "awslogs-region": "${var.aws_region}",
           "awslogs-stream-prefix": "${var.task_name}"
         }
-      },  "environment": [
-        {
-          "value": "ServiceDatabase12345",
-          "name": "DB_PASSWORD"
-        },
-        {
-          "value": "SEP4",
-          "name": "DB_SCHEMA"
-        },
-        {
-          "value": "jdbc:mysql://sep4-service-database.chdijkbljcqv.eu-central-1.rds.amazonaws.com:3300/SEP4",
-          "name": "DB_URL"
-        },
-        {
-          "value": "ServiceDatabaseUserName",
-          "name": "DB_USERNAME"
-        }
-      ],
+      },
       "portMappings": [
         {
           "containerPort": 8888,
