@@ -1,14 +1,13 @@
 package com.dai.dao.user;
 
-import com.dai.shared.User;
-import com.dai.shared.UserRole;
+import com.dai.model.User;
 import com.dai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Future;
@@ -38,8 +37,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Async
     public Future<User> update(User employee) {
-        User byId = repository.findById(employee.getId()).get();
-        byId.setName(employee.getName());
+        User byId = repository.findById(employee.getUserId()).get();
+        byId.setUserName(employee.getUserName());
         byId.setEmail(employee.getEmail());
         byId.setPassword(employee.getPassword());
         return new AsyncResult<>(repository.save(byId));
@@ -48,18 +47,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Async
     public Future<User> delete(int id) {
-        return new AsyncResult<>(repository.deleteById(id));
+        User byId = repository.findById(id).get();
+        repository.delete(byId);
+        return new AsyncResult<>(byId);
     }
 
     @Override
     @Async
-    public Future<List<User>> getAll() {
+    public Future<List<User>> readAll() {
         return new AsyncResult<>(repository.findAll());
     }
 
     @Override
     @Async
-    public Future<User> getUserByMail(String email) {
+    public Future<User> readByMail(String email) {
         return new AsyncResult<>(repository.findFirstByEmail(email));
     }
 

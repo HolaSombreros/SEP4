@@ -1,8 +1,7 @@
 package com.dai.dao.area;
 
 import com.dai.repository.AreaRepository;
-import com.dai.shared.Area;
-import com.dai.shared.Barn;
+import com.dai.model.Area;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -34,22 +33,33 @@ public class AreaDaoImpl implements AreaDao{
     }
 
     @Override
-    public Area update(Area area) {
-        return null;
+    public Future<Area> update(Area area) {
+        Area byId = repository.findById(area.getAreaId()).get();
+        byId.setName(area.getName());
+        byId.setDescription(area.getDescription());
+        byId.setHardwareId(area.getHardwareId());
+        byId.setNumberOfPigs(area.getNumberOfPigs());
+        return new AsyncResult<>(repository.save(byId));
     }
-
     @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public Future<Area> getAreaByHardwareId(String id) {
+    public Future<Area> readByHardwareId(String id) {
         return new AsyncResult<>(repository.getFirstByHardwareIdEquals(id));
     }
 
     @Override
-    public Future<List<Area>> getAll() {
+    public Future<List<Area>> readAll() {
         return new AsyncResult<>(repository.findAll());
+    }
+
+    @Override
+    public Future<Boolean> readByNameAndBarn(String name, int barnId) {
+        return new AsyncResult<>(repository.existsByNameAndBarnBarnId(name, barnId));
+    }
+
+    @Override
+    public Future<Area> delete(int id) {
+        Area area = repository.findById(id).get();
+        repository.deleteById(id);
+        return new AsyncResult<>(area);
     }
 }

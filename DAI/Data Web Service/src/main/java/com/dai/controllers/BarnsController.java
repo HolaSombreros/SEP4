@@ -1,8 +1,8 @@
 package com.dai.controllers;
 
 import com.dai.exceptions.BadRequestException;
-import com.dai.model.barns.BarnModel;
-import com.dai.shared.Barn;
+import com.dai.service.barns.BarnService;
+import com.dai.model.Barn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,26 +12,26 @@ import java.util.List;
 @RequestMapping("/barns")
 public class BarnsController {
 
-    private BarnModel barnModel;
+    private BarnService barnService;
 
     @Autowired
-    public BarnsController(BarnModel barnModel) {
-        this.barnModel = barnModel;
+    public BarnsController(BarnService barnService) {
+        this.barnService = barnService;
     }
 
     @PostMapping
     public Barn create(@RequestBody Barn barn) {
         try {
-            return barnModel.create(barn);
+            return barnService.create(barn);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
 
     @GetMapping
-    public List<Barn> getAll() {
+    public List<Barn> readAll() {
         try {
-            return barnModel.getAll();
+            return barnService.readAll();
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

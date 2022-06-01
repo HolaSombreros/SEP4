@@ -1,37 +1,32 @@
 package com.dai.controllers;
-
-import com.dai.model.socketMeasurement.SocketMeasurementModel;
-import com.dai.shared.Measurement;
-import com.dai.shared.SocketData;
-import com.dai.shared.SocketProperties;
+import com.dai.service.socketMeasurement.SocketMeasurementService;
+import com.dai.model.SocketData;
+import com.dai.model.SocketProperties;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+@Profile("prod")
 @Component
 public class WebsocketClientController implements WebSocket.Listener {
 
-    private SocketMeasurementModel measurementModel;
+    private SocketMeasurementService measurementModel;
     private WebSocket server = null;
 
     @Autowired
-    public WebsocketClientController(SocketMeasurementModel measurementModel, SocketProperties properties, Environment environment) {
+    public WebsocketClientController(SocketMeasurementService measurementModel, SocketProperties properties) {
         this.measurementModel = measurementModel;
-        if (Arrays.stream(environment.getActiveProfiles()).allMatch("prod"::equals)) {
-            HttpClient client = HttpClient.newHttpClient();
-            CompletableFuture<WebSocket> ws = client.newWebSocketBuilder()
-                    .buildAsync(URI.create(properties.getUrl()), this);
-            server = ws.join();
-        }
+        HttpClient client = HttpClient.newHttpClient();
+        CompletableFuture<WebSocket> ws = client.newWebSocketBuilder()
+                .buildAsync(URI.create(properties.getUrl()), this);
+        server = ws.join();
     }
 
     public void sendDownLink(String jsonTelegram) {
@@ -73,13 +68,12 @@ public class WebsocketClientController implements WebSocket.Listener {
         String json = data.toString();
         Gson gson = new Gson();
         SocketData socketData = gson.fromJson(json, SocketData.class);
-
+        System.out.println("Received data: " + socketData.toString());
         try {
             measurementModel.saveSocketData(socketData);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         webSocket.request(1);
         return new CompletableFuture().completedFuture("onText() completed.").thenAccept(System.out::println);
     }

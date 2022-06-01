@@ -1,7 +1,7 @@
 package com.dai.dao.barn;
 
 import com.dai.repository.BarnRepository;
-import com.dai.shared.Barn;
+import com.dai.model.Barn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -34,18 +34,18 @@ public class BarnDaoImpl implements BarnDao {
 
     @Override
     public Future<Barn> update(Barn barn) {
-        Barn entity = barnRepository.findById(barn.getId()).get();
+        Barn entity = barnRepository.findById(barn.getBarnId()).get();
         entity.setName(barn.getName());
         return new AsyncResult<>(barnRepository.save(entity));
     }
 
     @Override
     public Future<Barn> delete(int id) {
-        return new AsyncResult<>(barnRepository.deleteById(id));
+        return new AsyncResult<>(barnRepository.deleteByBarnId(id));
     }
 
     @Override
-    public Future<List<Barn>> getAll() {
+    public Future<List<Barn>> readAll() {
         return new AsyncResult<>(barnRepository.findAll());
     }
 }
