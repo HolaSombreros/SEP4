@@ -33,6 +33,7 @@ class SocketMeasurementModelImplTest {
     private AreaDao areaDao;
 
     @Mock
+
     private MeasurementValidator measurementValidator;
     @Mock
     private ThresholdDao thresholdDao;
@@ -41,19 +42,19 @@ class SocketMeasurementModelImplTest {
     public void saveSocketData() throws Exception {
         //Arrange
         when(measurementDao.create(anyObject())).then(i -> new AsyncResult<>(i.getArguments()[0]));
-        when(areaDao.readByHardwareId(anyString())).then(i -> new AsyncResult<>(new Area(1, new Barn("Barn"), "Area Name", "Description", 100, i.getArgument(0))));
+        when(areaDao.readByHardwareId(anyString())).then(i -> new AsyncResult<>(new Area(1,
+                new Barn("Barn"), "Area Name", "Description", 100, i.getArgument(0))));
 
         when(measurementValidator.isCo2ValueValid(anyInt())).thenReturn(true);
         when(measurementValidator.isHumidityValueValid(anyDouble())).thenReturn(true);
         when(measurementValidator.isTemperatureValueValid(anyDouble())).thenReturn(true);
 
         model = new SocketMeasurementServiceImpl(measurementDao, areaDao, measurementValidator, thresholdDao);
-        when(measurementValidator.isCo2ValueValid(anyInt())).then(i -> true);
 
-        LocalDateTime now = LocalDateTime.now();
-        long nowLinux = now.toEpochSecond(ZoneId.of("Europe/Copenhagen").getRules().getOffset(now));
-        SocketData data = new SocketData("rx", "0004A30B002528D3", String.valueOf(nowLinux), "02C100FD022B00320E");
-
+        SocketData data = new SocketData("rx", "0004A30B002528D3",
+                "1654003641848", "02C100FD022B00320E");
+        LocalDateTime expectedDateTime = LocalDateTime.of(2022, 5, 31,
+                15, 27, 21, 848000000);
         Measurement result;
 
         //Act
@@ -63,5 +64,7 @@ class SocketMeasurementModelImplTest {
         assertEquals(555, result.getCo2());
         assertEquals(70.5, result.getHumidity());
         assertEquals(25.3, result.getTemperature());
+        assertEquals(-1000, result.getSound());
+        assertEquals(expectedDateTime, result.getMeasuredDate());
     }
 }
