@@ -29,6 +29,13 @@ public class NotificationWorker extends Worker {
 
     private PendingIntent resultPendingIntent;
 
+    /**
+     * A notification channel is created
+     * The intent is set to open the main activity
+     * @param context
+     * @param workerParams
+     */
+
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         NotificationChannel channel = new NotificationChannel("22", "thresholdNotification", NotificationManager.IMPORTANCE_DEFAULT);
@@ -44,6 +51,11 @@ public class NotificationWorker extends Worker {
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
+    /**
+     * API is called to retrieve the latest logs
+     * For each log, a notification is published
+     * @return
+     */
     @NonNull
     @Override
     public Result doWork() {

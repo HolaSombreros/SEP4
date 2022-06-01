@@ -6,6 +6,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MeasurementConverter {
+    /**
+     * Converter for Measurements so that the latest and historical
+     * will show the time in case of offline mode
+     * @param date
+     * @return
+     */
 
     @TypeConverter
     public static LocalDateTime fromStringMeasurement(String date) {

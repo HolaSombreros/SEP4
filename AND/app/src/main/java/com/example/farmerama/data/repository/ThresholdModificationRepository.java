@@ -48,6 +48,13 @@ public class ThresholdModificationRepository {
         return thresholdModifications;
     }
 
+    /**
+     * Method that checks if the user is online
+     * If the user is online, the data is retrieved from the webservice,
+     * loaded in the database and posted to the user
+     * In case of offline mode, the data will be retrieved from the local databse
+     */
+
     public void retrieveThresholdModifications(String date) {
         if(checker.isOnlineMode()) {
             Call<List<ThresholdModificationsResponse>> call = ServiceGenerator.getThresholdsApi().getThresholdModifications(date);

@@ -12,6 +12,11 @@ public class ConnectivityChecker {
         this.application = application;
     }
 
+    /**
+     * Checks if the user is online or not
+     * It is used in the Repositories to check for retrieval of data
+     * @return
+     */
     public boolean isOnlineMode() {
         ConnectivityManager connectivityManager = (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

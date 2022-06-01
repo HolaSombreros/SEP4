@@ -6,7 +6,11 @@ import java.io.InputStreamReader;
 import retrofit2.Response;
 
 public class ErrorReader<T> {
-
+    /**
+     * Reads from the API error messages and wraps it into a message
+     * @param response
+     * @return
+     */
     public String errorReader(Response<T> response) {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;

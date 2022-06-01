@@ -49,7 +49,12 @@ public class ThresholdRepository {
         return thresholdData;
     }
 
-
+    /**
+     * Method that checks if the user is online
+     * If the user is online, the data is retrieved from the webservice,
+     * loaded in the database and posted to the user
+     * In case of offline mode, the data will be retrieved from the local databse
+     */
     public void retrieveThreshold(MeasurementType type, int areaId) {
         if(checker.isOnlineMode()){
             Call<ThresholdResponse> call = ServiceGenerator.getThresholdsApi().getLatestThresholds(areaId, type.toString());
@@ -61,7 +66,8 @@ public class ThresholdRepository {
                             database.thresholdDAO().createThreshold(response.body().getThreshold());
                             thresholdData.postValue(response.body().getThreshold());
                         });
-                    } else {
+                    }
+                    else {
                         thresholdData.postValue(null);
                         ErrorReader<ThresholdResponse> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));
