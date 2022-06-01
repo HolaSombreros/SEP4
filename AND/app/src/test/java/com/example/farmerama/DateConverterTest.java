@@ -23,17 +23,13 @@ import java.time.LocalDateTime;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class DateConverterTest {
-
-    private ValidationUser validationUser;
-    @Before
-    public void setUp() {
-        validationUser = new ValidationUser();
-    }
     @Test
     public void fromStringToLocalDate() {
         assertEquals(LocalDate.of(2022,5,31),
                 Converters.fromString("2022-05-31"));
         assertNotEquals(null, Converters.fromString("2022-05-31"));
+        assertNotEquals("31-05-2022", Converters.fromString("2022-05-31"));
+        assertNotEquals("Yes", Converters.fromString("2011-08-21"));
     }
 
     @Test
@@ -44,5 +40,7 @@ public class DateConverterTest {
                 LocalDate.of(2022,5,31)));
         assertNotEquals(null, Converters.fromLocalDateTime(
                 LocalDate.of(2022,4,7)));
+        assertNotEquals("Hello", Converters.fromLocalDateTime(
+                LocalDate.of(2015, 5, 9)));
     }
 }
