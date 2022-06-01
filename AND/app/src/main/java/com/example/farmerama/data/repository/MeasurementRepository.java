@@ -125,9 +125,6 @@ public class MeasurementRepository {
                             }
                             measurements.postValue(measurementsList);
                         });
-                        if (measurementsList.size() == 0) {
-                            ToastMessage.setToastMessage("No data available");
-                        }
                     } else {
                         ErrorReader<List<MeasurementResponse>> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));

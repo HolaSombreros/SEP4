@@ -13,12 +13,10 @@ import com.example.farmerama.data.model.MeasurementType;
 import java.util.List;
 
 public class MeasurementsViewModel extends FactoryViewModel {
-    private SharedPreferences sharedPreferences;
     private int areaId;
 
     public MeasurementsViewModel(Application application) {
         super(application);
-        this.sharedPreferences = application.getSharedPreferences("Latest", Context.MODE_PRIVATE);
     }
 
     public LiveData<List<Measurement>> getMeasurements() {

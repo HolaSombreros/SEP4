@@ -73,9 +73,6 @@ public class ExceededLogsRepository {
                             }
                             logs.postValue(list);
                         });
-                        if (list.size() == 0) {
-                            ToastMessage.setToastMessage("No data available");
-                        }
                     } else {
                         ErrorReader<List<LogResponse>> responseErrorReader = new ErrorReader<>();
                         ToastMessage.setToastMessage(responseErrorReader.errorReader(response));

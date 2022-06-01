@@ -20,7 +20,7 @@ public enum MeasurementType {
     public float getMaximum() {
         switch (type) {
             case "TEMPERATURE": return 35;
-            case "HUMIDITY": return 80;
+            case "HUMIDITY": return 100;
             case "SOUND": return 140;
             case "CO2": return 2500;
             default: return 0;

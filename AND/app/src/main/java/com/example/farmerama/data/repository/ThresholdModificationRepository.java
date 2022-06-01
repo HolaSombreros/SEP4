@@ -70,9 +70,6 @@ public class ThresholdModificationRepository {
                             }
                             thresholdModifications.postValue(list);
                         });
-                        if (list.size() == 0) {
-                            ToastMessage.setToastMessage("No data available");
-                        }
 
                     } else {
                         ErrorReader<List<ThresholdModificationsResponse>> responseErrorReader = new ErrorReader<>();
