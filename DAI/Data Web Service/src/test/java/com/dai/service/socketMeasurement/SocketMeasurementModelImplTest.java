@@ -49,7 +49,6 @@ class SocketMeasurementModelImplTest {
         when(measurementValidator.isTemperatureValueValid(anyDouble())).thenReturn(true);
 
         model = new SocketMeasurementServiceImpl(measurementDao, areaDao, measurementValidator, thresholdDao);
-        when(measurementValidator.isCo2ValueValid(anyInt())).then(i -> true);
 
         LocalDateTime now = LocalDateTime.now();
         long nowLinux = now.toEpochSecond(ZoneId.of("Europe/Copenhagen").getRules().getOffset(now));
