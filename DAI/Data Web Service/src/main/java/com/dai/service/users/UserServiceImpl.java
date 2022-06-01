@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService {
             throw new Exception("User with the given ID doesn't exist");
         if(user.getEmail().isEmpty() || user.getUserName().isEmpty() || user.getPassword().isEmpty())
             throw new Exception("Please fill in all the fields");
+        User userExistingCheck = Helper.await(userDao.readByMail(user.getEmail()));
+        if (userExistingCheck != null && userExistingCheck.getUserId() != user.getUserId()) {
+            throw new Exception("Email already exists");
+        }
         return Helper.await(userDao.update(user));
     }
 

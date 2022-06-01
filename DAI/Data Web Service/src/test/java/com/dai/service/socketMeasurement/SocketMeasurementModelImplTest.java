@@ -40,8 +40,9 @@ class SocketMeasurementModelImplTest {
     @Test
     public void saveSocketData() throws Exception {
         //Arrange
-        when(measurementDao.create(anyObject())).then(i -> new AsyncResult<>(i.getArguments()[0]));
-        when(areaDao.readByHardwareId(anyString())).then(i -> new AsyncResult<>(new Area(1, new Barn("Barn"), "Area Name", "Description", 100, i.getArgument(0))));
+        when(measurementDao.create(any())).then(i -> new AsyncResult<>(i.getArguments()[0]));
+        when(areaDao.readByHardwareId(anyString())).then(i -> new AsyncResult<>(new Area(1, new Barn("Barn"),
+                "Area Name", "Description", 100, i.getArgument(0))));
 
         when(measurementValidator.isCo2ValueValid(anyInt())).thenReturn(true);
         when(measurementValidator.isHumidityValueValid(anyDouble())).thenReturn(true);

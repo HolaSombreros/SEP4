@@ -43,7 +43,6 @@ public class SocketServiceImpl implements SocketService {
     private String parseValuesToString(int areaId) throws Exception {
         String values = "";
         String bytes = "";
-        //TODO the futures can be joined so that they are awaited together
         Threshold temp = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.TEMPERATURE));
         Threshold humidity = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.HUMIDITY));
         Threshold co2 = Helper.await(thresholdDao.readByAreaIdAndType(areaId, ThresholdType.CO2));
