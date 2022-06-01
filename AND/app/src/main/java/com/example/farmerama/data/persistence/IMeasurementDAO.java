@@ -21,10 +21,12 @@ public interface IMeasurementDAO {
     @Query("DELETE FROM measurement_table")
     void removeMeasurements();
 
-    @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType) AND areaId = (:areaId) ORDER BY measurementId DESC")
+    @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType)" +
+            " AND areaId = (:areaId) ORDER BY measurementId DESC")
     ListenableFuture<Measurement> getLatestMeasurement(MeasurementType measurementType, int areaId);
 
-    @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType) AND areaId = (:areaId)")
+    @Query("SELECT * FROM measurement_table WHERE measurementType = (:measurementType)" +
+            " AND areaId = (:areaId)")
     ListenableFuture<List<Measurement>> getHistoricalMeasurements(MeasurementType measurementType, int areaId);
 
 }
