@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_layout"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/latestMeasurementFragment"
+        android:name="com.example.farmerama.drawer_fragments.LatestDataFragment"
+        android:label="Latest Measurements"
+        tools:layout="@layout/fragment_latest_data" />
+    <fragment
+        android:id="@+id/latestTemperatureFragment"
+        android:name="com.example.farmerama.drawer_fragments.LatestMeasurementFragment"
+        android:label="fragment_latest_temperature"
+        tools:layout="@layout/fragment_latest_measurement" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.farmerama.drawer_fragments.AccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/fragment_account" >
+    </fragment>
+    <fragment
+        android:id="@+id/sensorsFragment"
+        android:name="com.example.farmerama.drawer_fragments.SensorsFragment"
+        android:label="Sensors"
+        tools:layout="@layout/fragment_sensors" >
+    </fragment>
+    <fragment
+        android:id="@+id/employeesFragment"
+        android:name="com.example.farmerama.drawer_fragments.EmployeesFragment"
+        android:label="Employees"
+        tools:layout="@layout/fragment_employees" >
+    </fragment>
+    <fragment
+        android:id="@+id/areasFragment"
+        android:name="com.example.farmerama.drawer_fragments.AreasFragment"
+        android:label="Areas"
+        tools:layout="@layout/fragment_areas" >
+        <action
+            android:id="@+id/action_areasFragment_to_addAreaFragment"
+            app:destination="@id/addAreaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAreaFragment"
+        android:name="com.example.farmerama.drawer_fragments.AddAreaFragment"
+        android:label="AddArea"
+        tools:layout="@layout/fragment_add_area">
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.farmerama.drawer_fragments.LoginFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_login"
+    />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.farmerama.drawer_fragments.RegisterFragment"
+        android:label=" Register a new user!"
+        tools:layout="@layout/fragment_register"
+    />
+    <fragment
+        android:id="@+id/employeeAreasFragment"
+        android:name="com.example.farmerama.uilayer.environment.EmployeeAreasFragment"
+        android:label="EmployeeAreasFragment"
+        tools:layout="@layout/fragment_employee_areas"
+        />
+</navigation>

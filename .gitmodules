@@ -1,0 +1,12 @@
+[submodule "IoT/IoT/drivers"]
+	path = IoT/IoT/drivers
+	url = https://github.com/ihavn/IoT_Semester_project.git
+[submodule "IoT/IoT/FreeRTOS"]
+	path = IoT/IoT/FreeRTOS
+	url = https://github.com/ihavn/VIA_FreeRTOS_AVRMEGA
+[submodule "IoT/GoogleTests/FFF"]
+	path = IoT/GoogleTests/FFF
+	url = https://github.com/meekrosoft/fff
+[submodule "IoT/Tests/FFF"]
+	path = IoT/Tests/FFF
+	url = https://github.com/meekrosoft/fff
