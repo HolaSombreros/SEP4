@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--make somehow the background photo to be blurry? -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ic_launcher_background"
-    >
+    android:background="#3875a1">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/profilePicture_imageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
         android:src="@mipmap/ic_launcher"
@@ -20,25 +18,25 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/usernameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:text="Nameee"
+        android:text="@string/guest"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicture_imageView" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/emailHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="6dp"
-        android:text="Email"
+        android:text="@string/no_email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/usernameHeader"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -46,6 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="33dp" />
+        app:layout_constraintGuide_begin="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

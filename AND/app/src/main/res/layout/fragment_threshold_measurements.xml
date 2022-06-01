@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/upperThresholdContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/upper_threshold"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/upperThreshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:ellipsize="start"
+                android:focusable="true"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@id/lowerThreshold"
+                android:textStyle="bold"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/upperThresholdText"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/upper_threshold"-->
+<!--            android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/upperThreshold"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:ems="10"-->
+<!--            android:focusable="true"-->
+<!--            android:nextFocusDown="@id/lowerThreshold"-->
+<!--            android:inputType="number"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/upperThresholdText" />-->
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lowerThresholdContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:hint="@string/lower_threshold"
+            android:textColorHint="#A7A7A7"
+            app:boxStrokeColor="#EAEAEE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upperThresholdContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lowerThreshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:inputType="numberDecimal"
+                android:ellipsize="start"
+                android:textStyle="bold"
+                android:focusable="true"
+                android:nextFocusDown="@id/lowerThreshold"
+                app:boxStrokeColor="#EAEAEE" />
+        </com.google.android.material.textfield.TextInputLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/lowerThreshold"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/lower_threshold"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.498"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/upperThreshold" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/lowerThreshold"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:ems="10"-->
+<!--            android:focusable="true"-->
+<!--            android:inputType="number"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/lowerThresholdText" />-->
+
+        <ProgressBar
+            android:id="@+id/pbThresholds"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="72dp"
+            android:backgroundTint="@color/white"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/blue_500"
+            android:max="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/saveThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lowerThresholdContainer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
