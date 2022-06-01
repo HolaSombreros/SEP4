@@ -21,7 +21,7 @@ RealFoXsTeRDOTA - Morten Hansen
 
 stefaniatomuta - Stefania Tomuta
 
-Tabita-Roxana - Tabita-Roxana Varlan
+Tabita, Tabita-Roxana - Tabita-Roxana Varlan
 
 tomondre - Tomas Ondrejka
 
